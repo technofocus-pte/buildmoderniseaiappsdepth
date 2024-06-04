@@ -22,7 +22,8 @@ load balancing, autoscaling, and DevOps integration. You can leave the
 OS and Tomcat management to Azure and concentrate on building
 applications.
 
-(./images/image1.png)
+./images/image1.png
+
 
 Task 0 : Set up Environment Variables
 
@@ -30,7 +31,7 @@ Task 0 : Set up Environment Variables
     variables**](urn:gd:lg:a:send-vm-keys) from your Windows start menu
     and select Edit Environment variables.
 
-(./images/image2.png)
+./images/image2.png
 
 2.  On System Properties window, Click on **Advanced -\> Environment
     variables**.
