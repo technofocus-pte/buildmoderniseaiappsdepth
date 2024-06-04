@@ -36,16 +36,14 @@ Task 0 : Set up Environment Variables
 2.  On System Properties window, Click on **Advanced -\> Environment
     variables**.
 
-![Screenshot](./media/image3.png){width="6.086111111111111in"
-height="6.802777777777778in"}
+![Screenshot](./media/image3.png)
 
 3.  Select **JAVA_HOME** and then click on **Edit** button .Update the
     value to [**C:\\Program
     Files\\Java\\jdk1.8.0_202**](urn:gd:lg:a:send-vm-keys) and then
     click on **OK**.
 
-![Screenshot](./media/image4.png){width="6.5in"
-height="5.061805555555556in"}
+![Screenshot](./media/image4.png)
 
 4.  Click on New and Add below MAVEN variable and value and then click
     on **OK**.
@@ -55,8 +53,7 @@ Variable Name : [**MAVEN_HOME**](urn:gd:lg:a:send-vm-keys)
 Variable value : [**C:\\Software
 folder\\apache-maven-3.9.4**](urn:gd:lg:a:send-vm-keys)
 
-![Screenshot](./media/image5.png){width="6.5in"
-height="4.938888888888889in"}
+![Screenshot](./media/image5.png)
 
 5.  Make sure **TOMCAT** variable set correctly.
 
@@ -65,61 +62,53 @@ Variable Name : [**TOMCAT_HOME**](urn:gd:lg:a:send-vm-keys)
 Variable value : [**C:\\Program Files\\Apache Software
 Foundation\\Tomcat 9.0**](urn:gd:lg:a:send-vm-keys)
 
-![Screenshot](./media/image6.png){width="6.5in" height="4.75625in"}
+![Screenshot](./media/image6.png)
 
 6.  Select the **Path** and then click on **Edit**.
 
-![Screenshot](./media/image7.png){width="6.5in"
-height="5.914583333333334in"}
+![Screenshot](./media/image7.png)
 
 7.  Click on New and add below variable
     paths [**%JAVA_HOME%\\bin**](urn:gd:lg:a:send-vm-keys)
 
-![Screenshot](./media/image8.png){width="6.5in"
-height="6.204861111111111in"}
+![Screenshot](./media/image8.png)
 
 8.  Click on **New** again and add below path.
 
 [**%MAVEN_HOME%\\bin**](urn:gd:lg:a:send-vm-keys)
 
-![Screenshot](./media/image9.png){width="6.5in"
-height="6.165277777777778in"}
+![Screenshot](./media/image9.png)
 
 9.  Click on New and add Chocolatey
     path [**C:\\ProgramData\\chocolatey\\bin**](urn:gd:lg:a:send-vm-keys)
 
-![Screenshot](./media/image10.png){width="6.5in"
-height="3.967361111111111in"}
+![Screenshot](./media/image10.png)
 
 10. Click OK on **edit Environment Variables** and Environment
     variables.
 
-![Screenshot](./media/image11.png){width="6.5in"
-height="5.559722222222222in"}
+![Screenshot](./media/image11.png)
 
 11. On System variables windows, click on **OK**.
 
-![Screenshot](./media/image12.png){width="6.197222222222222in"
-height="7.080555555555556in"}
+![Screenshot](./media/image12.png)
 
 Task 1 : Cloud slice resource group
 
 1.  Open a browser and go to <https://portal.azure.com> and sign in with
     the cloud slice account specified in home page.
 
-![](./media/image13.png){width="6.492361111111111in"
-height="2.9770833333333333in"}
+![](./media/image13.png)
 
 2.  On the **Home** page, click on the **Resource groups** tile.
 
-> ![](./media/image14.png){width="6.5in" height="4.121527777777778in"}
+> ![](./media/image14.png)
 
 3.  Make sure resource group already got created in your cloud slice
     account .You will be using the same resource and creating all your
     resources within this resource in this course.
 
-> ![](./media/image15.png){width="6.492361111111111in"
-> height="3.2729166666666667in"}
+> ![](./media/image15.png)
 
 Task 1 : Get sample JSF applications
 
@@ -135,55 +124,45 @@ Please continue the login in the web browser. If no web browser is
 available or if the web browser fails to open, use device code flow
 with [**az login \--use-device-code**](urn:gd:lg:a:send-vm-keys).
 
-![Screenshot](./media/image16.png){width="6.271527777777778in"
-height="0.7715277777777778in"}
+![Screenshot](./media/image16.png)
 
 2.  Default browser opens to sign in .Sign in with your Azure
     subscription account.
 
-> ![Screenshot](./media/image17.png){width="6.271527777777778in"
-> height="2.0125in"}
+> ![Screenshot](./media/image17.png)
 >
-> ![Screenshot](./media/image18.png){width="6.271527777777778in"
-> height="4.290277777777778in"}
+> ![Screenshot](./media/image18.png)
 
 3.  Open **intellij IDEA** as administrator and open the above project
     from C:\\Labfiles. Select the **Start trail** radio button and then
     click on Start trail button.
 
-![Screenshot](./media/image19.png){width="6.5in"
-height="5.079861111111111in"}
+![Screenshot](./media/image19.png)
 
-![Screenshot](./media/image20.png){width="6.5in" height="5.2in"}
+![Screenshot](./media/image20.png)
 
 4.  Click on **Allow access** button.
 
-![Screenshot](./media/image21.png){width="6.5in"
-height="4.752083333333333in"}
+![Screenshot](./media/image21.png)
 
 5.  Click on **Accept all.**
 
-![Screenshot](./media/image22.png){width="6.5in"
-height="4.433333333333334in"}
+![Screenshot](./media/image22.png)
 
 6.  Switch back to IntelliJ window and then click on Continue button.
 
-![Screenshot](./media/image23.png){width="6.5in"
-height="4.872222222222222in"}
+![Screenshot](./media/image23.png)
 
 7.  Click on **Open** and browse the above project
     from **C:\\LabFiles\\Deploy-PrimeFaces-JSF-Web-App-on-Tomcat-9.0-master\\Deploy-PrimeFaces-JSF-Web-App-on-Tomcat-9.0-master.**
 
-> ![Screenshot](./media/image24.png){width="6.271527777777778in"
-> height="4.771527777777778in"}
+> ![Screenshot](./media/image24.png)
 >
-> ![Screenshot](./media/image25.png){width="6.259027777777778in"
-> height="4.938194444444444in"}
+> ![Screenshot](./media/image25.png)
 
 8.  Click on **Trust the project.**
 
-> ![Screenshot](./media/image26.png){width="6.271527777777778in"
-> height="5.166666666666667in"}
+> ![Screenshot](./media/image26.png)
 
 9.  Then you\'ll see the following files in the directory:
 
@@ -239,8 +218,7 @@ height="4.872222222222222in"}
 >
 > └── index.xhtml
 >
-> ![Screenshot](./media/image27.png){width="6.271527777777778in"
-> height="3.6791666666666667in"}
+> ![Screenshot](./media/image27.png)
 
 Exercise 2 : Maven Plugin for Azure App Service
 
@@ -257,16 +235,14 @@ Task 1 : Configure the Maven Plugin for Azure App Service
 cd
 \"C:\\LabFiles\\Deploy-PrimeFaces-JSF-Web-App-on-Tomcat-9.0-master\\Deploy-PrimeFaces-JSF-Web-App-on-Tomcat-9.0-master\"
 
-![Screenshot](./media/image28.png){width="6.271527777777778in"
-height="0.9506944444444444in"}
+![Screenshot](./media/image28.png)
 
 2.  To configure the Maven Plugin for Azure App Service, execute the
     following **command:**
 
 > mvn com.microsoft.azure:azure-webapp-maven-plugin:2.5.0:config
 >
-> ![Screenshot](./media/image29.png){width="6.271527777777778in"
-> height="4.771527777777778in"}
+> ![Screenshot](./media/image29.png)
 
 3.  After the command, some questions will appear at the prompt, so
     enter and select the appropriate items and set them. Enter the
@@ -288,19 +264,16 @@ height="0.9506944444444444in"}
   Confirm (Y/N)                      Y
   -----------------------------------------------------------------------
 
-> ![Screenshot](./media/image30.png){width="6.271527777777778in"
-> height="4.691666666666666in"}
+> ![Screenshot](./media/image30.png)
 
 4.  After you execute the command, the results will appear:
 
-> ![Screenshot](./media/image31.png){width="6.271527777777778in"
-> height="5.592361111111111in"}
+> ![Screenshot](./media/image31.png)
 
 5.  Check your **Intelliji**. You\'ll see a new section in the  section
     in your **pom.xml** file.
 
-> ![Screenshot](./media/image32.png){width="6.271527777777778in"
-> height="4.074305555555555in"}
+> ![Screenshot](./media/image32.png)
 
 6.  Change below values in pom.xml and save it
 
@@ -312,10 +285,9 @@ height="0.9506944444444444in"}
 
 -   region -- eastus (line #72)
 
-> ![](./media/image33.png){width="6.49375in" height="3.49375in"}
+> ![](./media/image33.png)
 >
-> ![](./media/image34.png){width="6.49375in"
-> height="3.1347222222222224in"}
+> ![](./media/image34.png)
 
 Task 3 : Compile and deploy to Azure App Service
 
@@ -325,8 +297,7 @@ Task 3 : Compile and deploy to Azure App Service
 
 > mvn clean package
 >
-> ![Screenshot](./media/image35.png){width="6.271527777777778in"
-> height="4.271527777777778in"}
+> ![Screenshot](./media/image35.png)
 
 2.  Once compiled, use the Maven Plugin for Azure Web Apps command to
     deploy your application. Execute the following command:
@@ -335,27 +306,23 @@ Task 3 : Compile and deploy to Azure App Service
 
 **IMPORTANT**: Raise a support ticket if you see below error -
 subscription is not allowed to create or update Azure Web App
--[**https://learn.microsoft.com/en-gb/azure/azure-portal/supportability/how-to-create-azure-support-request**](urn:gd:lg:a:send-vm-keys) ![Screenshot](./media/image36.png){width="6.5in"
-height="0.6763888888888889in"}
+-[**https://learn.microsoft.com/en-gb/azure/azure-portal/supportability/how-to-create-azure-support-request**](urn:gd:lg:a:send-vm-keys) ![Screenshot](./media/image36.png)
 
 When the deployment is completed, the following message will be output.
 
 ![A screenshot of a computer program Description automatically
-generated](./media/image37.png){width="6.5in"
-height="3.282638888888889in"}
+generated](./media/image37.png)
 
 3.  The public URL of the deployed application is displayed
     in Successfully deployed the artifact to. Access your URL with a
     browser.
 
-> ![](./media/image38.png){width="6.4875in"
-> height="3.3270833333333334in"}
+> ![](./media/image38.png)
 >
 > [**https://azure-javaweb-app-XXXXXXXXXX.azurewebsites.net**](urn:gd:lg:a:send-vm-keys)
 >
 > ![A screenshot of a computer Description automatically
-> generated](./media/image39.png){width="6.5in"
-> height="4.497222222222222in"}
+> generated](./media/image39.png)
 
 Task 4 : Confirm the log stream from the command line
 
@@ -371,11 +338,9 @@ Task 4 : Confirm the log stream from the command line
 >
 > Then you can see the following result:
 >
-> ![Screenshot](./media/image40.png){width="6.271527777777778in"
-> height="2.9381944444444446in"}
+> ![Screenshot](./media/image40.png)
 >
-> ![Screenshot](./media/image41.png){width="6.271527777777778in"
-> height="3.8027777777777776in"}
+> ![Screenshot](./media/image41.png)
 
 Exercise 3 : Auto scale a web app by using custom metrics
 
@@ -391,13 +356,12 @@ Configure the autoscale settings for your App Service plan.
     search bar or select **Autoscale** under **Settings** in the menu
     bar on the left.
 
-> ![Screenshot](./media/image42.png){width="6.259027777777778in"
-> height="3.654166666666667in"}
+> ![Screenshot](./media/image42.png)
 
 3.  Select your **App Service plan**. You can only configure production
     plans.
 
-> ![](./media/image43.png){width="6.5in" height="3.6666666666666665in"}
+> ![](./media/image43.png)
 
 Task 2 : Set up a scale-out rule
 
@@ -408,10 +372,9 @@ instance.
 1.  Select **Custom autoscale**.In the **Rules** section of the default
     scale condition, select **Add a rule**.
 
-> ![](./media/image44.png){width="6.5in" height="4.378472222222222in"}
+> ![](./media/image44.png)
 >
-> ![](./media/image45.png){width="6.492361111111111in"
-> height="4.197222222222222in"}
+> ![](./media/image45.png)
 
 2.  From the **Metric source** dropdown, select **Other resource**.
 
