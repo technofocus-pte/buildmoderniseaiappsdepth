@@ -1,5 +1,4 @@
-# Lab 05 -Java - Dev-Build Java app to connect and run SQL commands on
-Azure Cosmos DB for PostgreSQL
+# Lab 05 -Java - Dev-Build Java app to connect and run SQL commands on Azure Cosmos DB for PostgreSQL
 
 
 By the end of this lab, we'll be able to:
