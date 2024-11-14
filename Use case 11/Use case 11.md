@@ -71,7 +71,7 @@ template to Azure with both of these accounts.
 
 5.  Once the terminal starts, click on **Manage files -\> Upload**.
 
-![](./media/image8.jpeg)
+    ![](./media/image8.jpeg)
 
 6.  Select **azuredeploy.JSON** file from the path **C:\Labfiles\Build
     and Test a custom chat application Using Azure Cosmos DB and
@@ -345,7 +345,7 @@ conversation in a couple of words.
     return completionText;
     ```
 
-![](./media/image32.jpeg)
+    ![](./media/image32.jpeg)
 
 ### Task 4 - Connect to Azure Cosmos DB for NoSQL
 
@@ -359,18 +359,20 @@ client required to access Azure Cosmos DB for NoSQL using the client.
 
 1.  Open the **Services/CosmosDbService.cs** file.
 
-![](./media/image33.jpeg)
+    ![](./media/image33.jpeg)
 
 2.  The below code creates a variable named options of type
     CosmosSerializationOptions and Set the PropertyNamingPolicy property
     of the variable to CosmosPropertyNamingPolicy.CamelCase.
 
-CosmosSerializationOptions options = new()
-{
-    PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
-};
+    ```no-copy
+    CosmosSerializationOptions options = new()
+    {
+        PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
+    };
+    ```
 
-**Note:** Setting this property will ensure that the JSON produced by
+    **Note:** Setting this property will ensure that the JSON produced by
 the SDK is both serialized and deserialized in camel case regardless of
 how it's corresponding property is cased in the .NET class.
 
@@ -378,23 +380,27 @@ how it's corresponding property is cased in the .NET class.
     client using the CosmosClientBuilder class, endpoint, key, and
     serialization options you specified earlier.
 
-CosmosClient client = new CosmosClientBuilder(endpoint, key)
-    .WithSerializerOptions(options)
-    .Build();
-
+    ```no-copy
+    CosmosClient client = new CosmosClientBuilder(endpoint, key)
+        .WithSerializerOptions(options)
+        .Build();
+    ```
+    
 4.  The below code create a new nullable variable of type Database named
     database by calling the GetDatabase method of the client variable.
 
-**Database? database = client?.GetDatabase(databaseName);**
+    **Database? database = client?.GetDatabase(databaseName);**
 
 5.  The below code assigns the constructor's container variable to the
     class' \_container variable only if it's not null. If it's null,
     throw an ArgumentException.
 
-_container = container ??
-throw new ArgumentException("Unable to connect to existing Azure Cosmos DB container or database.");
-
-![](./media/image34.jpeg)
+    ```no-copy
+    _container = container ??
+    throw new ArgumentException("Unable to connect to existing Azure Cosmos DB container or database.");
+    ```
+    
+    ![](./media/image34.jpeg)
 
 ### Task 5 - Implement the Azure Cosmos DB for NoSQL service
 
@@ -435,10 +441,12 @@ differentiate between these types using a simple type field.
     passing in the session parameter and partitionKey variable. Returns
     the response as the result of the InsertSessionAsync method.
 
-return await _container.CreateItemAsync<Session>(
-    item: session,
-    partitionKey: partitionKey
-);
+    ```no-copy
+    return await _container.CreateItemAsync<Session>(
+        item: session,
+        partitionKey: partitionKey
+    );
+    ```
 
 4.  The below code creates a PartitionKey variable using
     session.SessionId as the value of the partition key.Creates a new
@@ -447,14 +455,16 @@ return await _container.CreateItemAsync<Session>(
     passing in both the new message and partition key variables. Return
     the response as the result of InsertMessageAsync.
 
-PartitionKey partitionKey = new(message.SessionId);
-Message newMessage = message with { TimeStamp = DateTime.UtcNow };
-return await _container.CreateItemAsync<Message>(
-    item: newMessage,
-    partitionKey: partitionKey
-);
-
-![](./media/image35.jpeg)
+    ```no-copy
+    PartitionKey partitionKey = new(message.SessionId);
+    Message newMessage = message with { TimeStamp = DateTime.UtcNow };
+    return await _container.CreateItemAsync<Message>(
+        item: newMessage,
+        partitionKey: partitionKey
+    );
+    ```
+    
+    ![](./media/image35.jpeg)
 
 ### Task 6: Retrieve multiple sessions or messages
 
@@ -473,34 +483,40 @@ queries are here implemented using the .NET SDK and a feed iterator.
     query variable as a parameter. Store the result in a variable of
     type FeedIterator named response.
 
-QueryDefinition query = new QueryDefinition("SELECT DISTINCT * FROM c WHERE c.type = @type")
-.WithParameter("@type", nameof(Session));
-FeedIterator<Session> response = _container.GetItemQueryIterator<Session>(query);
-
+    ```no-copy
+    QueryDefinition query = new QueryDefinition("SELECT DISTINCT * FROM c WHERE c.type = @type")
+    .WithParameter("@type", nameof(Session));
+    FeedIterator<Session> response = _container.GetItemQueryIterator<Session>(query);
+    ```
+    
 2.  The below code within the while loop, asynchronously get the next
     page of results by invoking ReadNextAsync on the response variable
     and then add those results to the list variable named output.
     Outside the while loop, the output variable is returned with a list
     of sessions as the result of the GetSessionsAsync method.
+    
+    ```no-copy
+    FeedResponse<Session> results = await response.ReadNextAsync();
+    output.AddRange(results);
+    return output;
+    ```
 
-FeedResponse<Session> results = await response.ReadNextAsync();
-output.AddRange(results);
-return output;
-
-3.  The below code uses the fluent WithParameter method to assign the
+4.  The below code uses the fluent WithParameter method to assign the
     @sessionId parameter to the session identifier passed in as a
     parameter, and the @type parameter to the name of the Message class.
 
-QueryDefinition query = new QueryDefinition("SELECT * FROM c WHERE  c.sessionId = @sessionId AND c.type = @type")
-    .WithParameter("@sessionId", sessionId)
-    .WithParameter("@type", nameof(Message));
-
+    ```no-copy
+    QueryDefinition query = new QueryDefinition("SELECT * FROM c WHERE  c.sessionId = @sessionId AND c.type = @type")
+        .WithParameter("@sessionId", sessionId)
+        .WithParameter("@type", nameof(Message));
+    ```
+    
 4.  Create a FeedIterator\< Message \> using the query variable and the
     GetItemQueryIterator\<\> method.
 
-FeedIterator<Message> response = _container.GetItemQueryIterator<Message>(query);
+    FeedIterator<Message> response = _container.GetItemQueryIterator<Message>(query);
 
-![](./media/image36.jpeg)
+    ![](./media/image36.jpeg)
 
 ## Exercise 4: Execute the app
 
@@ -511,40 +527,40 @@ solution.
 1.  From the **Visual Studio Code Terminal**, build the project using
     the below command.
 
-+++**dotnet build**+++
+    +++**dotnet build**+++
 
-![](./media/image37.jpeg)
+    ![](./media/image37.jpeg)
 
 2.  Start the application with hot reloads enabled using dotnet watch.
 
-+++**dotnet watch run --non-interactive**+++
-
-![](./media/image38.jpeg)
+    +++**dotnet watch run --non-interactive**+++
+    
+    ![](./media/image38.jpeg)
 
 3.  Visual Studio Code launches the in-tool simple browser with the web
     application running. In the web application, create a new chat
     session by clicking on **+ Create New Chat** and ask the AI
     assistant a question.
 
-![](./media/image39.jpeg)
+    ![](./media/image39.jpeg)
 
 4.  Paste the following text in the text box and click on
     the **Send** icon.
 
-+++How many wins does it take to promote to the Premier League? +++
-
-![](./media/image40.jpeg)
-
-![](./media/image41.jpeg)
+    +++How many wins does it take to promote to the Premier League? +++
+    
+    ![](./media/image40.jpeg)
+    
+    ![](./media/image41.jpeg)
 
 5.  Paste the following text in the text box and click on
     the **Send** icon.
 
-+++What is Azure OpenAI?+++
-
-> ![](./media/image42.jpeg)
-
-![](./media/image43.jpeg)
+    +++What is Azure OpenAI?+++
+    
+    ![](./media/image42.jpeg)
+    
+    ![](./media/image43.jpeg)
 
 6.  Close the terminal.
 
@@ -564,34 +580,34 @@ solution.
 4.  In the Resource group page, navigate to command bar and click
     on **Delete resource group**.
 
-![](./media/image44.jpeg)
+    ![](./media/image44.jpeg)
 
 5.  In the **Delete Resource group** pane that appears on the right
     side, enter the **resource group name** and click
     on **Delete** button.
 
-![](./media/image45.jpeg)
+    ![](./media/image45.jpeg)
 
 6.  Once the Resource group is deleted, from the Azure portal home page,
     search for **Azure AI Services** and select it.
 
-![](./media/image46.jpeg)
+    ![](./media/image46.jpeg)
 
 7.  Select **Azure OpenAI** from the left pane and then select **Manage
     deleted resources**.
 
-![](./media/image47.jpeg)
+    ![](./media/image47.jpeg)
 
 8.  Select the resource that gets listed there and then click
     on **Purge**.
 
-![](./media/image48.jpeg)
+    ![](./media/image48.jpeg)
 
 9.  Click on **Yes**.
 
-![](./media/image49.jpeg)
-
-![](./media/image50.jpeg)
+    ![](./media/image49.jpeg)
+    
+    ![](./media/image50.jpeg)
 
 **Summary**
 
