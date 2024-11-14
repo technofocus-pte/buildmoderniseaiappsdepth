@@ -246,7 +246,7 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
     using the endpoint to build a Uri and the key to build an
     AzureKeyCredential.
 
-  ```no-copy
+    ```no-copy
       Uri uri = new(endpoint);
           AzureKeyCredential credential = new(key);
           _client = new(
