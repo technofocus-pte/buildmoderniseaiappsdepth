@@ -422,7 +422,7 @@ In this task, you create a new Azure OpenAI service.
 10.  Wait for the deployment to complete. The deployment will take around
     2-3 minutes.
 
-    **Note:** If you see a message that the Azure OpenAI Service is
+     >[!Note] **Note:** If you see a message that the Azure OpenAI Service is
 currently available to customers via an application form. The selected
 subscription has not been enabled for the service and does not have a
 quota for any pricing tiers; you will need to click the link to request
