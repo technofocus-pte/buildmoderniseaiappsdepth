@@ -18,7 +18,7 @@ Database.
 
 1.  From the Windows **Search** bar, type +++**Visual studio**+++ and select Visual Studio 2022. If it asks you to Sign in, continue with the steps 2 and 3 or continue from Step 4.
 
-![](./media/image1.jpeg)
+    ![](./media/image1.jpeg)
 
 2.  Click on **Sign in** and Sign in **Username** and **password** under
     the **User Credentials** section in the **Resources** tab of the VM.
