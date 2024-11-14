@@ -112,58 +112,68 @@ correct account.
 
 6.  Enter the below details.
 
-    [TABLE]
+    |  **Property**  |  **Description**  |
+    |:------|:-------|
+    |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
+    | Resource group   |  Click on New -> +++RGForWebAppSQL+++ and click on **OK**  |
 
     ![](./media/image21.jpeg)
 
-7.  Click **New** on **Hosting Plan** option and enter the below details
+8.  Click **New** on **Hosting Plan** option and enter the below details
     and click **OK**.
 
-    [TABLE]
+    |  **Property**  |  **Description**  |
+    |:------|:-------|
+    |  Hosting Plan  | +++myAppServicePlan+++   |
+    | Location   |  **East US**  |
+    |  Size  |   **Free** |
 
     **Note:** The location here is selected as East US. Please select a
 closest region if East US does not work for you.
 
-8.  Click **Create** on the App Service window and wait for Azure
+9.  Click **Create** on the App Service window and wait for Azure
     resources to get created.
 
     ![](./media/image22.jpeg)
 
-9.  The **Publish** dialog shows the resources you have configured.
+10.  The **Publish** dialog shows the resources you have configured.
     Click **Finish**.
 
     ![](./media/image23.jpeg)
 
-10. Click on **Close**.
+11. Click on **Close**.
 
     ![](./media/image24.jpeg)
 
-11. Scroll down to the Server Dependencies section and click on
+12. Scroll down to the Server Dependencies section and click on
     the **+** sign to add dependency.
 
     ![](./media/image25.jpeg)
 
-12. Select **Azure SQL Database** in the **Add dependency** page and
+13. Select **Azure SQL Database** in the **Add dependency** page and
     click on **Next**.
 
     ![](./media/image26.jpeg)
 
-13. Click on **Create New** next to SQL databases, in the **Connect to
+14. Click on **Create New** next to SQL databases, in the **Connect to
     Azure SQL Database** dialog box.
 
     ![](./media/image27.jpeg)
 
-14. In the **Azure SQL Database Create new** dialog box, click
+15. In the **Azure SQL Database Create new** dialog box, click
     on **New** next to the Database server.
 
     ![](./media/image28.jpeg)
 
-15. Fill in the below details and click on **OK**.
+16. Fill in the below details and click on **OK**.
 
-[TABLE]
+    | **Property**   |  **Description**  |
+    |:-------|:--------|
+    |  Database server name  | +++dotnetappsqldbdbserver98+++   |
+    |  Administrator username  |   +++sqladmin+++ |
+    |  Administrator password  |  +++PassWord98+++  |
 
-    >**Note:** The location here is selected as East US. Please select a
-> closest region if East US does not work for you.
+    >[!Note] **Note:** The location here is selected as East US. Please select a closest region if East US does not work for you.
 
     ![](./media/image29.jpeg)
 
@@ -181,22 +191,27 @@ closest region if East US does not work for you.
 2.  Fill in the below details in the **Connect to Azure SQL
     Database** dialog and click **Finish**.
 
-    [TABLE]
+    | **Property**   |  **Description**  |
+    |:-------|:--------|
+    |  Database connection string Name  | +++MyDbConnection+++  |
+    |  Database connection user name |   +++Sqladmin+++ |
+    |  Database connection password |  +++PassWord98+++  |
+    |  Azure App Settings  |  Selected  |
 
     ![](./media/image32.jpeg)
 
-3.  Wait for configuration wizard to finish and click **Close**. The
+4.  Wait for configuration wizard to finish and click **Close**. The
     Azure SQL Db is now **connected** to your app.
 
     ![](./media/image33.jpeg)
 
-4.  From the Publish page, click **Publish** on the top right corner.
+5.  From the Publish page, click **Publish** on the top right corner.
 
     ![](./media/image34.jpeg)
 
     **Note:** This will take around 5 minutes
 
-5.  Once your ASP.NET app is deployed to Azure, your default browser is
+6.  Once your ASP.NET app is deployed to Azure, your default browser is
     launched with the URL to the deployed app. Add a few to-do items.
 
     ![](./media/image35.jpeg)
