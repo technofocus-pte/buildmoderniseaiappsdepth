@@ -144,17 +144,17 @@ Database for PostgreSQL.
     following resources are created from the deployment that we just
     performed.
 
-    - App Service plan
+        - App Service plan
+    
+        - App Service
+    
+        - Virtual network
+    
+        - Azure Database for PostgreSQL flexible server
+    
+        - Private DNS zone
 
-    - App Service
-
-    - Virtual network
-
-    - Azure Database for PostgreSQL flexible server
-
-    - Private DNS zone
-
-    ![](./media/image20.jpeg)
+        ![](./media/image20.jpeg)
 
 ## Exercise 3: Verify connection settings
 
