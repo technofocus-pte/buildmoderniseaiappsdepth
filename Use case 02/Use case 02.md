@@ -105,32 +105,42 @@ Database for PostgreSQL.
 4.  On **Create Web App + Database**, fill in the below details and
     select **Review + create**
 
-[TABLE]
+    | **Property**   |  **Value**  |
+    |:-------|:-------|
+    |  Subscription  |  Select your subscription  |
+    | Resource group   |  Click **Create New** -> Enter +++RGForAppService+++  |
+    |  Region  |  Select your nearest region(East US is selected here for this execution)  |
+    | **Web App Details**   |    |
+    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
+    | Runtime stack   |  **Java 17**  |
+    |  **Database**  |    |
+    |  Engine  |  Select **PostgreSQL – Flexible Server**  |
+    |  Hosting Plan  |  Select **Basic**  |
     
     ![](./media/image14.jpeg)
 
     ![](./media/image15.jpeg)
 
-5.  Once the validation passes, click on **Create**.
+6.  Once the validation passes, click on **Create**.
 
     ![](./media/image16.jpeg)
 
     **Note:** The app creation takes around 15 minutes.
 
-6.  Once the deployment is complete, click on **Go to resource**.
+7.  Once the deployment is complete, click on **Go to resource**.
 
     ![](./media/image17.jpeg)
 
-7.  You're taken directly to the **App Service page.** Click
+8.  You're taken directly to the **App Service page.** Click
     on **Home** at the top left corner.
 
     ![](./media/image18.jpeg)
 
-8.  Click on the Portal menu and select **Resource Groups** from it.
+9.  Click on the Portal menu and select **Resource Groups** from it.
 
     ![](./media/image19.jpeg)
 
-9.  Select the Resource group **RGForAppService** and see that the
+10.  Select the Resource group **RGForAppService** and see that the
     following resources are created from the deployment that we just
     performed.
 
@@ -215,35 +225,39 @@ build and deploy action.
 4.  Fill in the details as below, leave the remaining to the default and
     click on **Save**.
 
-    [TABLE]
-
+    |  **Property**  | **Value**   |
+    |:--------|:---------|
+    |  Organization  |  Your GitHub account  |
+    |  Repository  |  Select **msdocs-quarkus-postgresql-sample-app**  |
+    |  Branch  |   **main** |
+    
     ![](./media/image31.jpeg)
 
-5.  Once **Save** is clicked on, App Service commits a workflow file
+6.  Once **Save** is clicked on, App Service commits a workflow file
     into the chosen GitHub repository, in the .github/workflows
     directory.
 
-6.  Back in the GitHub codespace of your sample fork, run **git pull
+7.  Back in the GitHub codespace of your sample fork, run **git pull
     origin main**. This pulls the newly committed workflow file into
     your codespace.
 
     ![](./media/image32.jpeg)
 
-7.  Open **src/main/resources/application.properties** in the explorer.
+8.  Open **src/main/resources/application.properties** in the explorer.
     Quarkus uses this file to load Java properties.
 
-8.  Find the code (lines 10-11). This code sets the production variable
+9.  Find the code (lines 10-11). This code sets the production variable
     %prod.quarkus.datasource.jdbc.url to the app setting that the
     creation wizard for you. The quarkus.package.type is set to build an
     Uber-Jar, which you need to run in App Service.
 
     ![](./media/image33.jpeg)
 
-9.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
+10.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
     the explorer. This file was created by the App Service create
     wizard.
 
-10. Under the Build with Maven step, change the Maven command to **mvn
+11. Under the Build with Maven step, change the Maven command to **mvn
     clean install -DskipTests**.
 
     **-DskipTests** skips the tests in your Quarkus project, to avoid the
@@ -251,32 +265,32 @@ GitHub workflow failing prematurely.
 
     ![](./media/image34.jpeg)
 
-11. Select the **Source Control** extension.
+12. Select the **Source Control** extension.
 
     ![](./media/image35.jpeg)
 
-12. In the textbox, type a commit message like +++**Configure DB and
+13. In the textbox, type a commit message like +++**Configure DB and
     deployment workflow**+++. Select **Commit**, then confirm
     with **Yes**.
 
     ![](./media/image36.jpeg)
 
-13. Select **Sync changes 1**, then confirm with **OK**.
+14. Select **Sync changes 1**, then confirm with **OK**.
 
     ![](./media/image37.jpeg)
 
     ![](./media/image38.jpeg)
 
-14. Back in the Deployment Center page in the Azure portal,
+15. Back in the Deployment Center page in the Azure portal,
     Select **Logs**. A new deployment run is already started from your
     committed changes.
 
-15. In the log item for the deployment run, select the **Build/Deploy
+16. In the log item for the deployment run, select the **Build/Deploy
     Logs** entry with the latest timestamp.
 
     ![](./media/image39.jpeg)
 
-16. You're taken to your GitHub repository and see that the GitHub
+17. You're taken to your GitHub repository and see that the GitHub
     action is running. The workflow file defines two separate stages,
     build and deploy. Wait for the GitHub run to show a status of
     Complete. It takes about 5 minutes.
