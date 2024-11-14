@@ -556,7 +556,7 @@ database by the extension.
 1.  You can use the \dx meta-command from the **psql** command prompt to
     list the objects contained within the extension.
 
-**Note:** Click on any key to continue when the cloud shell prompts
+    >[!Note] **Note:** Click on any key to continue when the cloud shell prompts
 with **More…**
 
     +++\dx+ azure_ai+++
