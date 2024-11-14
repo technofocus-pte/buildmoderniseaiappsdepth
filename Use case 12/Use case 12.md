@@ -1,4 +1,4 @@
-  # Use case 12- Integrate generative AI capabilities with Azure Database for PostgreSQL Flexible Server to evaluate reviews of given AI listings
+# Use case 12- Integrate generative AI capabilities with Azure Database for PostgreSQL Flexible Server to evaluate reviews of given AI listings
 
 **Lab Duration --** 40 minutes
 
@@ -395,26 +395,31 @@ In this task, you create a new Azure OpenAI service.
 5.  On the Create Azure OpenAI **Basics** tab, enter the following
     information and click on **Next** button.
 
-[TABLE]
+    | **Subscription** | Select **Azure subscription** |
+    |:-----|:----|
+    | **Resource group** | Select resource group **rg-postgresql-labs**(which you have created in Ex1> Task 1) |
+    | **Region** | Select East US2 |
+    | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++ (XXXX can be a unique number) |
+    | **Pricing tier** | Select Standard S0 |    
 
     ![](./media/image38.jpeg)
 
-6.  In the **Network** tab, leave all the radio buttons in the default
+7.  In the **Network** tab, leave all the radio buttons in the default
     state, and click on the **Next** button.
 
     ![](./media/image39.jpeg)
 
-7.  In the **Tags** tab, leave all the fields in the default state, and
+8.  In the **Tags** tab, leave all the fields in the default state, and
     click on the **Next** button.
 
     ![](./media/image40.jpeg)
 
-8.  In the **Review+submit** tab, once the Validation is Passed, click
+9.  In the **Review+submit** tab, once the Validation is Passed, click
     on the **Create** button.
 
     ![](./media/image41.jpeg)
 
-9.  Wait for the deployment to complete. The deployment will take around
+10.  Wait for the deployment to complete. The deployment will take around
     2-3 minutes.
 
     **Note:** If you see a message that the Azure OpenAI Service is
@@ -565,7 +570,11 @@ schemas, multiple user-defined functions (UDFs), and several composite
 types in the database. The table below lists the schemas added by the
 extension and describes each.
 
-[TABLE]
+    | **Schema** | **Description** |
+    |:-----|:-------|
+    | azure_ai | The principal schema where the configuration table and UDFs for interacting with it reside. |
+    | azure_openai | Contains the UDFs that enable calling an Azure OpenAI endpoint. |
+    | azure_cognitive | Provides UDFs and composite types related to integrating the database with Azure Cognitive Services. |
 
 2.  The functions and types are all associated with one of the schemas.
     To review the functions defined in the azure_ai schema, use the \df
@@ -678,9 +687,14 @@ description_vector column in the listings table.
 azure_openai.\* command reveals the list of arguments the function
 expects.
 
-    [TABLE]
-
-2.  Using the deployment name, run the following query to update each
+    | **Argument** | **Type** | **Default** | **Description**  |
+    |:---|:----|:-------|:--------|
+    | deployment_name | text |  | Name of the deployment in Azure OpenAI studio that contains the text-embeddings-ada-002 model. |
+    | input | text |  | Input text used to create embeddings. |
+    |timeout_ms  | integer | 3600000 | Timeout in milliseconds after which the operation is stopped. |
+    | throw_on_error |  boolean| true | Flag indicating whether the function should, on error, throw an exception resulting in a rollback of the wrapping transactions. |
+    
+3.  Using the deployment name, run the following query to update each
     record in the listings table, inserting the generated vector
     embeddings for the description field into the description_vector
     column using the azure_openai.create_embeddings() function. Replace
@@ -738,7 +752,7 @@ warnings similar to the following in the output:
 
     ![](./media/image64.jpeg)
 
-3.  You can verify that the description_vector column has been populated
+4.  You can verify that the description_vector column has been populated
     for all listings records by running the following query:
 
     +++SELECT COUNT(*) FROM listings WHERE description_vector IS NULL AND description <> '';+++
@@ -909,22 +923,32 @@ create an Azure AI Language service.
 
 4.  On the Create Language **Basics** tab, enter the following:
 
-    [TABLE]
+
+    | **Parameter** | **Value** | 
+    |:---|:----|
+    |Project details | |
+    | Subscription | Select the subscription you use for lab resources. | 
+    |Resource group  | Select the resource group you created in Exercise 1>Task 1. | 
+    | Instance details |  |
+    | Region | Select the **region** you used for your **Azure Database for PostgreSQL Flexible Server resource**. |
+    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, where SUFFIX is a unique string, such as your initials. |
+    | Pricing tier | Select the standard pricing tier, S (1K Calls per minute). |
+    |Responsible AI Notice  | Check the box to certify you have reviewed and acknowledged the Responsible AI Notice. |
     
     ![](./media/image79.jpeg)
     
     ![](./media/image80.jpeg)
 
-5.  The default settings will be used for the remaining tabs of the
+6.  The default settings will be used for the remaining tabs of the
     Language service configuration, so select the **Review +
     create** button.
 
-6.  Select the **Create** button on the **Review + create** tab to
+7.  Select the **Create** button on the **Review + create** tab to
     provision the Language service.
 
     ![](./media/image81.jpeg)
 
-7.  Select **Go to resource group** on the deployment page when the
+8.  Select **Go to resource group** on the deployment page when the
     language service deployment is complete.
 
     ![](./media/image82.jpeg)
