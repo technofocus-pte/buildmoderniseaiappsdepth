@@ -47,14 +47,14 @@ credentials. If you do not have, please create one from here
 
 ### Task 2 : Deploy Services and application to Azure
 
-1.  Open a browser and go to  ``https:\\\github.com``and sign in with
+1.  Open a browser and go to  `https:\\github.com` and sign in with
     your Github account.Search for the below repo
 
 ![](./media/image3.jpeg)
 
 2.  Search for the below repo and click on **Fork**.
 
-    ``https://github.com/technofocus-pte/chat-csharp-cosmos-db-nosql-openai``
+    `https://github.com/technofocus-pte/chat-csharp-cosmos-db-nosql-openai`
 
 ![](./media/image4.jpeg)
 
@@ -86,11 +86,11 @@ credentials. If you do not have, please create one from here
 8.  Run below command to Initialize the project in the current
     directory.Say **yes** when asked to Continue initializing app
 
-    ``azd init --template chat-csharp-cosmos-db-nosql-openai``
+    `azd init --template chat-csharp-cosmos-db-nosql-openai`
 
 ![](./media/image11.jpeg)
 
-9.  Enter the Environment name as ``cosmoschatapp`` and press
+9.  Enter the Environment name as `cosmoschatapp` and press
     Enter.
 
 ![](./media/image12.jpeg)
@@ -98,7 +98,7 @@ credentials. If you do not have, please create one from here
 10. Run below command to deploy the services to Azure, build your
     container, and deploy the application.
 
-   ``azd up``
+   `azd up`
 
 ![](./media/image13.jpeg)
 
@@ -126,13 +126,13 @@ credentials. If you do not have, please create one from here
 
 16. Click on **Create New Chat** button.Enter the below prompt.
 
-    ``What is the seating capacity for Lumen in Seattle?``
+    `What is the seating capacity for Lumen in Seattle?`
 
 ![](./media/image19.jpeg)
 
 17. Enter below prompt . Explore the app with different prompts.
 
-    ``is that bigger than Dogger stadium??``
+    `is that bigger than Dogger stadium??`
 
 ![](./media/image20.jpeg)
 
@@ -185,7 +185,7 @@ credentials. If you do not have, please create one from here
 
 To clean up all the resources created by this sample:
 
-1.  Go back Github codespace tab and run ``zd down –purge``
+1.  Go back Github codespace tab and run `zd down –purge`
 
 ![](./media/image27.jpeg)
 

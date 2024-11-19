@@ -10,7 +10,7 @@ pattern. It uses Azure OpenAI Service to access the ChatGPT model
 ![A diagram of a software process Description automatically
 generated](./media/image1.jpeg)
 
-The usecase includes sample data so it\\'s ready to try end to end. In
+The usecase includes sample data so it\'s ready to try end to end. In
 this sample application we use a fictitious company called Contoso Real
 Estate, and the experience allows its customers to ask support questions
 about the usage of its products. The sample data includes a set of
@@ -57,7 +57,7 @@ generated](./media/image2.jpeg)
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL:  ``https://github.com/technofocus-pte/azure-search-openai-javascript\`` and
+    URL:  `https://github.com/technofocus-pte/azure-search-openai-javascript\` and
     sign in with your Github account.
 
 ![A screenshot of a computer Description automatically
@@ -91,7 +91,7 @@ generated](./media/image8.jpeg)
 1.  Sign in to Azure with the Azure Developer CLI. Run the following
     command on the Terminal. Copy the code and press enter
 
-    ``azd auth login``
+    `azd auth login`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image9.jpeg)
@@ -115,7 +115,7 @@ generated](./media/image13.jpeg)
     ‘Y’ when asked” Continue initializing an app in
     '/workspaces/azure-search-openai-javascript'?”
 
-    ``azd init -t azure-search-openai-javascript``
+    `azd init -t azure-search-openai-javascript`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image14.jpeg)
@@ -132,7 +132,7 @@ generated](./media/image15.jpeg)
 5.  Run the following Azure Developer CLI command to provision the Azure
     resources and deploy the code.
 
-    ``azd up``
+    `azd up`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image16.jpeg)
@@ -228,7 +228,7 @@ generated](./media/image28.jpeg)
 
 To clean up all the resources created by this sample:
 
-1.  Go back Visual Studio terminal and run  ``azd down –purge``
+1.  Go back Visual Studio terminal and run  `azd down –purge`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image29.jpeg)

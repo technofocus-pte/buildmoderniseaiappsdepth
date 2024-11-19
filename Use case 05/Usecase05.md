@@ -25,7 +25,7 @@ Python in a Linux server environment.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
-- **https://github.com/signup?user_email=&source=form-home-signupobjectives**
+- `**https://github.com/signup?user_email=&source=form-home-signupobjectives**`
 
 The **requirements.txt** has the following packages, all used by a
 typical data-driven Flask application:
@@ -39,23 +39,22 @@ develop apps locally, deploy them to Azure, and monitor them. The
 easiest way to run this sample application is inside a GitHub codespace.
 Follow these steps:
 
-1.  Open a browser and go to \`\`**https:\\\github.com\`\`** and sign in
+1.  Open a browser and go to `https://github.com` and sign in
     with your Github account.
 
-2.  Fork this
-    repository https://github.com/technofocus-pte/msdocs-flask-postgresql-sample-app to
+2.  Fork this repository ` https://github.com/technofocus-pte/msdocs-flask-postgresql-sample-app` to
     your account by clicking on **Fork** as shown in below image.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image2.jpeg)
 
-3.  Enter unique name and then click on **Create repo**.
+3.  Enter unique name and then click on **Create fork**.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
 4.  From the repository root of your fork,
-    select **Code** \> **Codespaces** \> **+**.
+    select **Code** > **Codespaces** > **+**.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image4.jpeg)
@@ -72,7 +71,7 @@ generated](./media/image6.jpeg)
 
 7.  \# Install requirements
 
-\`\`python3 -m pip install -r requirements.txt\`\`
+    `python3 -m pip install -r requirements.txt`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image7.jpeg)
@@ -81,16 +80,16 @@ generated](./media/image7.jpeg)
 
 9.  \# Create .env with environment variables
 
-\`\`cp .env.sample.devcontainer .env\`\`
+    `cp .env.sample.devcontainer .env`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image8.jpeg)
 
 10. Run below command for data migration
 
-> \# Run database migrations
+    \# Run database migrations
 
-\`\`python3 -m flask db upgrade\`\`
+    `python3 -m flask db upgrade`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image9.jpeg)
@@ -123,12 +122,11 @@ generated](./media/image13.jpeg)
 
 14. Enter the details below and click on **Submit** button.
 
-Name : \`\`**Contoso Rica\`\`**
+Name : `Contoso Rica`
 
-Street Adress - \`\`**3A ,8th cross, Ferns street , Singapore\`\`**
+Street Adress - `3A ,8th cross, Ferns street , Singapore`
 
-Description - \`\`**This is a medium to high priced restaurant in the
-city shopping center\`\`**
+Description - `This is a medium to high priced restaurant in the city shopping center`
 
 ![A screenshot of a restaurant Description automatically
 generated](./media/image14.jpeg)
@@ -144,13 +142,15 @@ generated](./media/image15.jpeg)
 
 **Rating : your rating**
 
-\`\`This is a medium to high priced restaurant in the city shopping
-center. Service was a little bit confusing as we had at least 6 waiters
-coming to ask us things. Food took some time to come. We had 2 menus:
-one indian and one thai. The thai is 30% cheaper so we went for some
-appetizers and thai red curry. Food took some time but it was worth it.
-It was delicious and very well prepared. Overall, this is a good
-eat.\`\`
+    ```CLI
+    This is a medium to high priced restaurant in the city shopping
+    center. Service was a little bit confusing as we had at least 6 waiters
+    coming to ask us things. Food took some time to come. We had 2 menus:
+    one indian and one thai. The thai is 30% cheaper so we went for some
+    appetizers and thai red curry. Food took some time but it was worth it.
+    It was delicious and very well prepared. Overall, this is a good
+    eat.
+    ``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image16.jpeg)
@@ -172,7 +172,7 @@ monitor them.
 1.  Switch back to Github code space tab,Run below command to Initialize
     a new azd environment:
 
-\`\`azd init\`\`
+    `azd init`
 
 ![](./media/image19.jpeg)
 
@@ -182,7 +182,7 @@ monitor them.
 
 ![](./media/image20.jpeg)
 
-3.  Login if required **azd auth login** .copy the code and press enter.
+3.  Login if required `azd auth login` .copy the code and press enter.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image21.jpeg)
@@ -204,7 +204,7 @@ generated](./media/image25.jpeg)
 5.  Switch back Gtihub codespace tab and run below command to provision
     and deploy all the resources:
 
-**\`\`azd up\`\`**
+    `azd up`
 
 It will prompt you to login, pick a subscription, and provide a location
 (like "eastus"). Then it will provision the resources in your account
@@ -242,11 +242,11 @@ generated](./media/image31.jpeg)
 
 8.  When you've made any changes to the app code, you can just run:
 
-\`\`azd deploy\`\`
+    `azd deploy`
 
 ### Task 3. Verify deployed resources
 
-1.  Open \`\`**https:\\\portal.azure.com\`\`** in browser and sign in
+1.  Open \`https://portal.azure.com` in browser and sign in
     with your Azure subscription account.
 
 2.  Click on Resource group tile from home page,
@@ -326,7 +326,6 @@ generated](./media/image39.jpeg)
 generated](./media/image40.jpeg)
 
 **Summary**
-
 You have learnt deploying a Python web app using the Flask framework and
 the Azure Database for PostgreSQL relational database service. Azure App
 Service supports Python in a Linux server environment.

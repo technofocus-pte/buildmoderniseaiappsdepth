@@ -29,7 +29,7 @@ against these listings by generating a query's embedding vector and
 performing a vector cosine distance search.
 
 1.  Open a web browser and navigate to
-    the \`\`https:\\\portal.azure.com/\`\`
+    the `https://portal.azure.com`
 
 2.  Select the **Cloud Shell** icon in the Azure portal toolbar to open
     a new Cloud Shell pane at the bottom of your browser window.
@@ -46,14 +46,14 @@ generated](./media/image2.jpeg)
 
 4.  At the Cloud Shell prompt, run below command to clone the project
 
-``git clone https://github.com/technofocus-pte/postgresql-case``
+`git clone https://github.com/technofocus-pte/postgresql-case`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
 5.  Navigate to the project folder.
 
-``cd postgresql-case``
+`cd postgresql-case`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image4.jpeg)
@@ -72,7 +72,7 @@ generated](./media/image4.jpeg)
     abstractive summarization\]{.underline} to ensure you can complete
     all of the tasks in the modules in this learning path.
 
-    ``REGION=westus``
+    `REGION=westus`
 
 8.  The following command assigns the name to be used for the resource
     group that will house all the resources used in this exercise. The
@@ -81,7 +81,7 @@ generated](./media/image4.jpeg)
     you specified above. However, you can change it to any other
     resource group name that suits your preference.
 
-    ``RG_NAME=rg-learn-postgresql-ai$RANDOM-rg``
+    `RG_NAME=rg-learn-postgresql-ai$RANDOM-rg`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image5.jpeg)
@@ -99,21 +99,22 @@ generated](./media/image5.jpeg)
     ADMIN_PASSWORD=$(IFS=; echo "${a[*]::18}")
     echo "Your randomly generated PostgreSQL admin user's password is:"
     ```
-    ``echo $ADMIN_PASSWORD``
+
+    `echo $ADMIN_PASSWORD`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image6.jpeg)
 
 10. Run the following Azure CLI command to create your resource group:
 
-    ``az group create --name $RG_NAME --location $REGION``
+    `az group create --name $RG_NAME --location $REGION`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image7.jpeg)
 
 ### Task 1 : Assign Cognitive Services Contributor
 
-1.  Open a browser and go to``https://portal.azure.com`` and sign in with
+1.  Open a browser and go to `https://portal.azure.com` and sign in with
     your Azure subscription and then click on **Subscription** tile.
 
 ![A screenshot of a computer Description automatically
@@ -130,7 +131,7 @@ generated](./media/image9.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image10.jpeg)
 
-4.  Search for ``Cognitive Services Contributor`` and select it and
+4.  Search for `Cognitive Services Contributor` and select it and
     then click on **Next** button.
 
 ![A screenshot of a service assignment Description automatically
@@ -154,7 +155,7 @@ Use the following steps to create a Text Analytics resource in your
 Azure subscription:
 
 1.  In another browser tab, open the Azure portal
-    at:  ``https://portal.azure.com``
+    at:  `https://portal.azure.com`
 
 2.  In the search bar type **Azure AI services** And select it.
 
@@ -181,7 +182,7 @@ generated](./media/image16.jpeg)
 
 - Region -- West US (Select the region near to you)
 
-- Name - ``ailnresource-XXX``( XXX can be unique number)
+- Name - `ailnresource-XXX`( XXX can be unique number)
 
 - Pricing tier -- **Free F0**
 
@@ -211,7 +212,7 @@ generated](./media/image20.jpeg)
     a Bicep deployment script to provision Azure resources in your
     resource group: Deployment takes 3 - 5min
 
-    ``cd``
+    `cd`
 
     ```cli
     az deployment group create --resource-group $RG_NAME --template-file
@@ -273,7 +274,7 @@ In this task, you connect to the rentals database on your Azure Database
 for PostgreSQL server using the psql command-line utility from the Azure
 Cloud Shell.
 
-1.  In the Azure portal - ``https://portal.azure.com/`` , navigate to your
+1.  In the Azure portal - `https://portal.azure.com/` , navigate to your
     newly created Azure Database for PostgreSQL - Flexible Server.
 
 ![A screenshot of a computer Description automatically
@@ -338,7 +339,7 @@ generated](./media/image35.jpeg)
     following SQL command to enable the vector extension. For detailed
     instructions
 
-    ``CREATE EXTENSION vector;``
+    `CREATE EXTENSION vector;`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image36.jpeg)
@@ -347,12 +348,13 @@ generated](./media/image36.jpeg)
     SQL command. You’ll need the endpoint and API key for the Azure
     OpenAI resource.
 
-    ``CREATE EXTENSION azure_ai;``
+    `CREATE EXTENSION azure_ai;`
 
     ```SQL
     SELECT azure_ai.set_setting('azure_openai.endpoint', 'https://<endpoint>.openai.azure.com');
     ```
-    ``SELECT azure_ai.set_setting('azure_openai.subscription_key', '<API Key>');``
+
+    `SELECT azure_ai.set_setting('azure_openai.subscription_key', '<API Key>');`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image37.jpeg)
@@ -401,7 +403,7 @@ generated](./media/image39.jpeg)
     table you created above. Start by running the following command to
     populate the listings table:
 
-``\COPY listings FROM 'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER``
+`\COPY listings FROM 'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER`
 
 The command output should be COPY 50, indicating that 50 rows were
 written into the table from the CSV file.
@@ -412,7 +414,7 @@ generated](./media/image40.jpeg)
 3.  Finally, run the command below to load customer reviews into the
     reviews table:
 
-``\COPY reviews FROM 'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER``
+`\COPY reviews FROM 'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER`
 
 The command output should be COPY 354, indicating that 354 rows were
 written into the table from the CSV file.
@@ -432,8 +434,7 @@ embedding API easy.
 
 The text-embedding-ada-002 model is configured to return 1,536
 dimensions, so use that for the vector column size.
-
-    ``ALTER TABLE listings ADD COLUMN listing_vector vector(1536);``
+    ``ALTER TABLE listings ADD COLUMN listing_vector vector(1536);`
 
 ![A computer screen shot of a black screen Description automatically
 generated](./media/image42.jpeg)
@@ -503,7 +504,7 @@ semantic searches.
 1.  Confirm the listings table has four columns: id, name, description,
     and listing_vector.
 
-    ``\d listings``
+    `\d listings`
 
 It should print something like:
 
@@ -512,7 +513,7 @@ generated](./media/image46.jpeg)
 
 2.  Confirm that at least one row has a populated listing_vector column.
 
-    ``SELECT COUNT(*) > 0 FROM listings WHERE listing_vector IS NOT NULL;``
+    `SELECT COUNT(*) > 0 FROM listings WHERE listing_vector IS NOT NULL;`
 
 The result must show a t, meaning true. An indication that there’s at
 least one row with embeddings of its corresponding description column:
@@ -522,7 +523,7 @@ generated](./media/image47.jpeg)
 
 3.  Confirm the embedding vector has 1536 dimensions:
 
-    ``SELECT vector_dims(listing_vector) FROM listings WHERE listing_vector IS NOT NULL LIMIT 1;``
+    `SELECT vector_dims(listing_vector) FROM listings WHERE listing_vector IS NOT NULL LIMIT 1;`
 
 Yielding:
 
@@ -578,7 +579,7 @@ Cloud Shell to create a resource group and run a Bicep script to deploy
 the Azure services necessary for completing this exercise into your
 Azure subscription.
 
-**Note:** If you are doing multiple modules in this learning path, you
+>**Note:** If you are doing multiple modules in this learning path, you
 can share the Azure environment between them. In that case, you only
 need to complete this resource deployment step once.
 
@@ -686,7 +687,7 @@ generated](./media/image56.jpeg)
 
 1.  Make sure the function exists with the correct signature:
 
-    ``\df recommend_listing``
+    `\df recommend_listing`
 
 You should see the following:
 
