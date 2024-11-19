@@ -46,14 +46,14 @@ generated](./media/image2.jpeg)
 
 4.  At the Cloud Shell prompt, run below command to clone the project
 
-+++git clone https://github.com/technofocus-pte/postgresql-case+++
+    +++git clone https://github.com/technofocus-pte/postgresql-case+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
 5.  Navigate to the project folder.
 
-`cd postgresql-case`
+    +++cd postgresql-case+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image4.jpeg)
@@ -72,7 +72,7 @@ generated](./media/image4.jpeg)
     abstractive summarization\]{.underline} to ensure you can complete
     all of the tasks in the modules in this learning path.
 
-    `REGION=westus`
+    +++REGION=westus+++
 
 8.  The following command assigns the name to be used for the resource
     group that will house all the resources used in this exercise. The
@@ -81,7 +81,7 @@ generated](./media/image4.jpeg)
     you specified above. However, you can change it to any other
     resource group name that suits your preference.
 
-    `RG_NAME=rg-learn-postgresql-ai$RANDOM-rg`
+    +++G_NAME=rg-learn-postgresql-ai$RANDOM-rg+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image5.jpeg)
