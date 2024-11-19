@@ -46,7 +46,7 @@ generated](./media/image2.jpeg)
 
 4.  At the Cloud Shell prompt, run below command to clone the project
 
-`git clone https://github.com/technofocus-pte/postgresql-case`
++++git clone https://github.com/technofocus-pte/postgresql-case+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
