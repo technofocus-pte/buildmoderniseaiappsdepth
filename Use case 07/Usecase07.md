@@ -46,14 +46,14 @@ generated](./media/image2.jpeg)
 
 4.  At the Cloud Shell prompt, run below command to clone the project
 
-\`\`git clone https://github.com/technofocus-pte/postgresql-case\`\`
+``git clone https://github.com/technofocus-pte/postgresql-case``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
 5.  Navigate to the project folder.
 
-**\`\`cd postgresql-case\`\`**
+``cd postgresql-case``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image4.jpeg)
@@ -72,7 +72,7 @@ generated](./media/image4.jpeg)
     abstractive summarization\]{.underline} to ensure you can complete
     all of the tasks in the modules in this learning path.
 
-\`\`REGION=westus\`\`
+    ``REGION=westus``
 
 8.  The following command assigns the name to be used for the resource
     group that will house all the resources used in this exercise. The
@@ -81,7 +81,7 @@ generated](./media/image4.jpeg)
     you specified above. However, you can change it to any other
     resource group name that suits your preference.
 
-\`\`RG_NAME=rg-learn-postgresql-ai$RANDOM-rg\`\`
+    ``RG_NAME=rg-learn-postgresql-ai$RANDOM-rg``
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image5.jpeg)
@@ -90,35 +90,30 @@ generated](./media/image5.jpeg)
     admin login. **Make sure you copy it** to a safe place to use later
     to connect to your PostgreSQL flexible server.
 
-> a=()
->
-> for i in {a..z} {A..Z} {0..9};
->
-> do
->
-> a\[$RANDOM\]=$i
->
-> done
->
-> ADMIN_PASSWORD=$(IFS=; echo "${a\[\*\]::18}")
->
-> echo "Your randomly generated PostgreSQL admin user's password is:"
-
-echo $ADMIN_PASSWORD
+    ```cli
+    a=()
+    for i in {a..z} {A..Z} {0..9}; 
+    do
+    a[$RANDOM]=$i
+    done
+    ADMIN_PASSWORD=$(IFS=; echo "${a[*]::18}")
+    echo "Your randomly generated PostgreSQL admin user's password is:"
+    ```
+    ``echo $ADMIN_PASSWORD``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image6.jpeg)
 
 10. Run the following Azure CLI command to create your resource group:
 
-\`\`az group create --name $RG_NAME --location $REGION\`\`
+    ``az group create --name $RG_NAME --location $REGION``
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image7.jpeg)
 
 ### Task 1 : Assign Cognitive Services Contributor
 
-1.  Open a browser and go to https://portal.azure.com and sign in with
+1.  Open a browser and go to``https://portal.azure.com`` and sign in with
     your Azure subscription and then click on **Subscription** tile.
 
 ![A screenshot of a computer Description automatically
@@ -135,7 +130,7 @@ generated](./media/image9.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image10.jpeg)
 
-4.  Search for  \`\`Cognitive Services Contributor\`\` and select it and
+4.  Search for ``Cognitive Services Contributor`` and select it and
     then click on **Next** button.
 
 ![A screenshot of a service assignment Description automatically
@@ -159,7 +154,7 @@ Use the following steps to create a Text Analytics resource in your
 Azure subscription:
 
 1.  In another browser tab, open the Azure portal
-    at: \`\`https:\\\portal.azure.com\`\`
+    at:  ``https://portal.azure.com``
 
 2.  In the search bar type **Azure AI services** And select it.
 
@@ -186,7 +181,7 @@ generated](./media/image16.jpeg)
 
 - Region -- West US (Select the region near to you)
 
-- Name - \`\`**ailnresource-XXX\`\`**( XXX can be unique number)
+- Name - ``ailnresource-XXX``( XXX can be unique number)
 
 - Pricing tier -- **Free F0**
 
@@ -216,11 +211,13 @@ generated](./media/image20.jpeg)
     a Bicep deployment script to provision Azure resources in your
     resource group: Deployment takes 3 - 5min
 
-\`\`cd\`\`
+    ``cd``
 
-\`\`az deployment group create --resource-group $RG_NAME --template-file
-"postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
-restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD\`\`
+    ```cli
+    az deployment group create --resource-group $RG_NAME --template-file
+    "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
+    restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD
+    ```
 
 ![A screenshot of a computer Description automatically
 generated](./media/image21.jpeg)
@@ -276,7 +273,7 @@ In this task, you connect to the rentals database on your Azure Database
 for PostgreSQL server using the psql command-line utility from the Azure
 Cloud Shell.
 
-1.  In the Azure portal (https://portal.azure.com/), navigate to your
+1.  In the Azure portal - ``https://portal.azure.com/`` , navigate to your
     newly created Azure Database for PostgreSQL - Flexible Server.
 
 ![A screenshot of a computer Description automatically
@@ -341,7 +338,7 @@ generated](./media/image35.jpeg)
     following SQL command to enable the vector extension. For detailed
     instructions
 
-\`\`CREATE EXTENSION vector;\`\`
+    ``CREATE EXTENSION vector;``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image36.jpeg)
@@ -350,13 +347,12 @@ generated](./media/image36.jpeg)
     SQL command. You’ll need the endpoint and API key for the Azure
     OpenAI resource.
 
-> \`\`CREATE EXTENSION azure_ai;\`\`
->
-> \`\`SELECT azure_ai.set_setting('azure_openai.endpoint',
-> 'https://\<endpoint\>.openai.azure.com');\`\`
+    ``CREATE EXTENSION azure_ai;``
 
-\`\`SELECT azure_ai.set_setting('azure_openai.subscription_key', '\<API
-Key\>');\`\`
+    ```SQL
+    SELECT azure_ai.set_setting('azure_openai.endpoint', 'https://<endpoint>.openai.azure.com');
+    ```
+    ``SELECT azure_ai.set_setting('azure_openai.subscription_key', '<API Key>');``
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image37.jpeg)
@@ -370,42 +366,33 @@ information to work with as you review the extension's functionality.
 1.  Run the following commands to create the listings and reviews tables
     for storing rental property listing and customer review data:
 
-DROP TABLE IF EXISTS listings;
-
-CREATE TABLE listings (
-
-id int,
-
-name varchar(100),
-
-description text,
-
-property_type varchar(25),
-
-room_type varchar(30),
-
-price numeric,
-
-weekly_price numeric
-
-);
+    ```SQL
+    DROP TABLE IF EXISTS listings;
+    CREATE TABLE listings (
+    id int,
+    name varchar(100),
+    description text,
+    property_type varchar(25),
+    room_type varchar(30),
+    price numeric,
+    weekly_price numeric
+    );
+    ```
 
 ![A screenshot of a computer Description automatically
 generated](./media/image38.jpeg)
 
-DROP TABLE IF EXISTS reviews;
+    ``DROP TABLE IF EXISTS reviews;``
 
-CREATE TABLE reviews (
+    ```SQL
+    CREATE TABLE reviews (
+    id int,
+    listing_id int, 
+    date date,
+    comments text
+    );
+    ```
 
-id int,
-
-listing_id int,
-
-date date,
-
-comments text
-
-);
 
 ![A screenshot of a computer Description automatically
 generated](./media/image39.jpeg)
@@ -414,8 +401,7 @@ generated](./media/image39.jpeg)
     table you created above. Start by running the following command to
     populate the listings table:
 
-\`\`\COPY listings FROM
-'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER\`\`
+``\COPY listings FROM 'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER``
 
 The command output should be COPY 50, indicating that 50 rows were
 written into the table from the CSV file.
@@ -426,8 +412,7 @@ generated](./media/image40.jpeg)
 3.  Finally, run the command below to load customer reviews into the
     reviews table:
 
-\`\`\COPY reviews FROM
-'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER\`\`
+``\COPY reviews FROM 'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER``
 
 The command output should be COPY 354, indicating that 354 rows were
 written into the table from the CSV file.
@@ -448,7 +433,7 @@ embedding API easy.
 The text-embedding-ada-002 model is configured to return 1,536
 dimensions, so use that for the vector column size.
 
-\`\`ALTER TABLE listings ADD COLUMN listing_vector vector(1536);\`\`
+    ``ALTER TABLE listings ADD COLUMN listing_vector vector(1536);``
 
 ![A computer screen shot of a black screen Description automatically
 generated](./media/image42.jpeg)
@@ -457,14 +442,13 @@ generated](./media/image42.jpeg)
     calling Azure OpenAI through the create_embeddings user-defined
     function, which is implemented by the azure_ai extension:
 
-> UPDATE listings
->
-> SET listing_vector = azure_openai.create_embeddings('embedding',
-> description, max_attempts =\> 5, retry_delay_ms =\> 500)
+    ```SQL
+    UPDATE listings
+    SET listing_vector = azure_openai.create_embeddings('embedding', description, max_attempts => 5, retry_delay_ms => 500)
+    WHERE listing_vector IS NULL;
+    ```
 
-WHERE listing_vector IS NULL;
-
-Note that this may take several minutes, depending on the available
+>Note that this may take several minutes, depending on the available
 quota.
 
 ![A computer screen with white text Description automatically
@@ -481,9 +465,9 @@ whose descriptions are most semantically similar to the query.
     distance operation), fetching the top 10 most similar listings to
     the query.
 
-SELECT id, name FROM listings ORDER BY listing_vector \<=\>
-azure_openai.create_embeddings('embedding', 'bright natural
-light')::vector LIMIT 10;
+     ```SQL
+     SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;
+     ```
 
 You’ll get a result similar to this. Results may vary, as embedding
 vectors are not guaranteed to be deterministic:
@@ -495,9 +479,9 @@ generated](./media/image44.jpeg)
     text of the matching rows whose descriptions were semantically
     similar. For example, this query returns the best match:
 
-SELECT id, description FROM listings ORDER BY listing_vector \<=\>
-azure_openai.create_embeddings('embedding', 'bright natural
-light')::vector LIMIT 1;
+    ```SQL
+    SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;
+    ```
 
 Which prints something like:
 
@@ -519,7 +503,7 @@ semantic searches.
 1.  Confirm the listings table has four columns: id, name, description,
     and listing_vector.
 
-\`\`\d listings\`\`
+    ``\d listings``
 
 It should print something like:
 
@@ -528,8 +512,7 @@ generated](./media/image46.jpeg)
 
 2.  Confirm that at least one row has a populated listing_vector column.
 
-\`\`SELECT COUNT(\*) \> 0 FROM listings WHERE listing_vector IS NOT
-NULL;\`\`
+    ``SELECT COUNT(*) > 0 FROM listings WHERE listing_vector IS NOT NULL;``
 
 The result must show a t, meaning true. An indication that there’s at
 least one row with embeddings of its corresponding description column:
@@ -539,8 +522,7 @@ generated](./media/image47.jpeg)
 
 3.  Confirm the embedding vector has 1536 dimensions:
 
-\`\`SELECT vector_dims(listing_vector) FROM listings WHERE
-listing_vector IS NOT NULL LIMIT 1;\`\`
+    ``SELECT vector_dims(listing_vector) FROM listings WHERE listing_vector IS NOT NULL LIMIT 1;``
 
 Yielding:
 
@@ -559,7 +541,7 @@ light')::vector LIMIT 10;
 ![A screenshot of a computer program Description automatically
 generated](./media/image49.jpeg)
 
-5.  Open a browser and go to the Azrue portal- https:\portal.azure.com
+5.  Open a browser and go to the Azure portal- https:\portal.azure.com
     and sign in with your Azure subscription account. On home page,
     select Resource groups tile under Azure services.
 
@@ -575,7 +557,7 @@ extension's capabilities for integrating [Azure
 OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) into
 your database.
 
-### Task 1 : Create a search function for a recommendation system
+### Create a search function for a recommendation system
 
 Let's build a recommendation system using semantic search. The system
 will recommend several listings based on a provided sample listing. The
@@ -635,72 +617,43 @@ generated](./media/image52.jpeg)
     embedding of the sample listing's name and description and runs a
     semantic search of that query vector against the listing embeddings.
 
-> CREATE FUNCTION
+    ```SQL
+    CREATE FUNCTION
+    recommend_listing(sampleListingId int, numResults int) 
+    RETURNS TABLE(
+       out_listingName text,
+    out_listingDescription text,
+    out_score real)
+    AS $$ 
+    DECLARE
+    queryEmbedding vector(1536); 
+    sampleListingText text; 
+    BEGIN 
+    sampleListingText := (
+    SELECT
+               name || ' ' || description
+    FROM
+    listings WHERE id = sampleListingId
+    ); 
 
-2.  recommend_listing(sampleListingId int, numResults int)
+    queryEmbedding := (
+    azure_openai.create_embeddings('embedding', sampleListingText, max_attempts => 5, retry_delay_ms => 500)
+    );
 
-3.  RETURNS TABLE(
+    RETURN QUERY 
+    SELECT
+    name::text,
+    description,
+    -- cosine distance:
+    (listings.listing_vector <=> queryEmbedding)::real AS score
+    FROM
+   listings 
+    ORDER BY score ASC LIMIT numResults;
+    END $$
+    LANGUAGE plpgsql; 
+    ```
 
-4.  out_listingName text,
 
-5.  out_listingDescription text,
-
-6.  out_score real)
-
-7.  AS $$
-
-8.  DECLARE
-
-9.  queryEmbedding vector(1536);
-
-10. sampleListingText text;
-
-11. BEGIN
-
-12. sampleListingText := (
-
-13. SELECT
-
-14. name || ' ' || description
-
-15. FROM
-
-16. listings WHERE id = sampleListingId
-
-17. );
-
-18. 
-
-19. queryEmbedding := (
-
-20. azure_openai.create_embeddings('embedding', sampleListingText,
-    max_attempts =\> 5, retry_delay_ms =\> 500)
-
-21. );
-
-22. 
-
-23. RETURN QUERY
-
-24. SELECT
-
-25. name::text,
-
-26. description,
-
-27. -- cosine distance:
-
-28. (listings.listing_vector \<=\> queryEmbedding)::real AS score
-
-29. FROM
-
-30. listings
-
-31. ORDER BY score ASC LIMIT numResults;
-
-32. END $$
-
-LANGUAGE plpgsql;
 
 ![A screenshot of a computer Description automatically
 generated](./media/image53.jpeg)
@@ -710,9 +663,9 @@ generated](./media/image53.jpeg)
 1.  To query the recommendation function, pass it a listing ID and the
     number of recommendations it should make.
 
-select out_listingName, out_score from recommend_listing( (SELECT id
-from listings limit 1), 20); -- search for 20 listing recommendations
-closest to a listing
+    ```SQL
+    select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations closest to a listing
+    ```
 
 The result will be something like:
 
@@ -733,7 +686,7 @@ generated](./media/image56.jpeg)
 
 1.  Make sure the function exists with the correct signature:
 
-\`\`\df recommend_listing\`\`
+    ``\df recommend_listing``
 
 You should see the following:
 
