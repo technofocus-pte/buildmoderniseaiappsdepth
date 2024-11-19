@@ -51,33 +51,28 @@ generated](./media/image3.jpeg)
 
 2.  Run below commands to install stable version of winget.
 
-> $progressPreference = 'silentlyContinue'
->
-> Write-Information "Downloading WinGet and its dependencies..."
->
-> Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile
-> Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
->
-> Invoke-WebRequest -Uri
-> https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile
-> Microsoft.VCLibs.x64.14.00.Desktop.appx
->
-> Invoke-WebRequest -Uri
-> https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.8.6/Microsoft.UI.Xaml.2.8.x64.appx
-> -OutFile Microsoft.UI.Xaml.2.8.x64.appx
->
-> Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx
->
-> Add-AppxPackage Microsoft.UI.Xaml.2.8.x64.appx
+``$progressPreference = 'silentlyContinue'`
 
-Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+``Write-Information "Downloading WinGet and its dependencies..."``
+
+``Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle``
+
+``Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx``
+
+``Invoke-WebRequest -Uri  https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.8.6/Microsoft.UI.Xaml.2.8.x64.appx -OutFile Microsoft.UI.Xaml.2.8.x64.appx``
+
+``Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx``
+
+``Add-AppxPackage Microsoft.UI.Xaml.2.8.x64.appx``
+
+``Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle``
 
 ![A blue screen with white text Description automatically
 generated](./media/image4.jpeg)
 
 3.  Run the following command to install Azure Cli on the PowerShell
 
-**\`\`winget install microsoft.azd\`\`**
+``winget install microsoft.azd\``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image5.jpeg)
@@ -85,7 +80,7 @@ generated](./media/image5.jpeg)
 4.  Run the below command to set the policy to **Unrestricted** and
     enter **A** when asked to change the execution policy.
 
-**\`\`Set-ExecutionPolicy Unrestricted\`\`**
+``Set-ExecutionPolicy Unrestricted\``
 
 ![A computer screen with white text Description automatically
 generated](./media/image6.jpeg)
@@ -93,7 +88,7 @@ generated](./media/image6.jpeg)
 ### Task 2: Assign a user as an owner of an Azure subscription
 
 1.  Open your browser, open Azure
-    portal \`\`https:\\\portal.azure.com\`\`.  Sign in with your Azure
+    portal ``https:\\\portal.azure.com\``.  Sign in with your Azure
     subscription account.
 
 ![A screenshot of a computer Description automatically
@@ -170,7 +165,7 @@ generated](./media/image18.jpeg)
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to \`\`https:\\\portal.azure.com\`\` and sign
+1.  Open a browser and go to ``https://portal.azure.com\` and sign
     in with your Azure subscription account.
 
 2.  Click on the **Subscription** tile.
@@ -184,7 +179,7 @@ generated](./media/image19.jpeg)
 generated](./media/image20.jpeg)
 
 4.  Click on Resource provider from left navigation menu,
-    type \`\`Microsoft.AlertsManagement\`\` and press enter. Select it
+    type ``Microsoft.AlertsManagement`` and press enter. Select it
     and then click on **Register**.
 
 ![](./media/image21.jpeg)
@@ -196,7 +191,7 @@ generated](./media/image22.jpeg)
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL: \`\`https://github.com/technofocus-pte/rag-postgres-openai-python.git\`\` tab
+    URL: ``https://github.com/technofocus-pte/rag-postgres-openai-python.git`` tab
     opens and ask you to open in Visual studio code. Select **Open
     Visual Studio Code.**
 
@@ -230,7 +225,7 @@ generated](./media/image28.jpeg)
 1.  Sign in to Azure with the Azure Developer CLI. Run the following
     command on the Terminal
 
-\`\`azd auth login\`\`
+``azd auth login``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image29.jpeg)
@@ -257,7 +252,7 @@ generated](./media/image33.jpeg)
 **Note:** When creating an environment, ensure that the name consists of
 lowercase letters.
 
-\`\`azd env new\`\`
+``azd env new``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image34.jpeg)
@@ -265,7 +260,7 @@ generated](./media/image34.jpeg)
 4.  Run the following Azure Developer CLI command to provision the Azure
     resources and deploy the code.
 
-\`\`azd up\`\`
+``azd up``
 
 ![A screen shot of a computer Description automatically
 generated](./media/image35.jpeg)
@@ -386,7 +381,7 @@ generated](./media/image53.jpeg)
 
 To clean up all the resources created by this sample:
 
-1.  Go back Visual Studio terminal and run \`\`**azd down –purge\`\`**
+1.  Go back Visual Studio terminal and run ``azd down –purge``
 
 ![A close-up of a computer code Description automatically
 generated](./media/image54.jpeg)
