@@ -81,7 +81,7 @@ generated](./media/image4.jpeg)
     you specified above. However, you can change it to any other
     resource group name that suits your preference.
 
-    +++G_NAME=rg-learn-postgresql-ai$RANDOM-rg+++
+    +++RG_NAME=rg-learn-postgresql-ai$RANDOM-rg+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image5.jpeg)
