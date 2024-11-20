@@ -346,7 +346,7 @@ generated](./media/image36.jpeg)
     SQL command. You’ll need the endpoint and API key for the Azure
     OpenAI resource.
 
-    ++CREATE EXTENSION azure_ai;+++
+    +++CREATE EXTENSION azure_ai;+++
 
 +++SELECT azure_ai.set_setting('azure_openai.endpoint', 'https://<endpoint>.openai.azure.com');+++
  
@@ -382,6 +382,7 @@ information to work with as you review the extension's functionality.
 generated](./media/image38.jpeg)
 
     +++DROP TABLE IF EXISTS reviews;+++
+
 
     ```SQL
     CREATE TABLE reviews (
@@ -432,7 +433,7 @@ embedding API easy.
 The text-embedding-ada-002 model is configured to return 1,536
 dimensions, so use that for the vector column size.
 
-    +++ALTER TABLE listings ADD COLUMN listing_vector vector(1536);+++
+ +++ALTER TABLE listings ADD COLUMN listing_vector vector(1536);+++
 
 ![A computer screen shot of a black screen Description automatically
 generated](./media/image42.jpeg)
@@ -478,9 +479,8 @@ generated](./media/image44.jpeg)
     text of the matching rows whose descriptions were semantically
     similar. For example, this query returns the best match:
 
-    ```SQL
-    SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;
-    ```
+++++SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;+++
+    
 
 Which prints something like:
 
@@ -502,7 +502,7 @@ semantic searches.
 1.  Confirm the listings table has four columns: id, name, description,
     and listing_vector.
 
-    `\d listings`
++++\d listings+++
 
 It should print something like:
 
@@ -511,7 +511,7 @@ generated](./media/image46.jpeg)
 
 2.  Confirm that at least one row has a populated listing_vector column.
 
-    `SELECT COUNT(*) > 0 FROM listings WHERE listing_vector IS NOT NULL;`
++++SELECT COUNT(*) > 0 FROM listings WHERE listing_vector IS NOT NULL;+++
 
 The result must show a t, meaning true. An indication that there’s at
 least one row with embeddings of its corresponding description column:
@@ -521,7 +521,7 @@ generated](./media/image47.jpeg)
 
 3.  Confirm the embedding vector has 1536 dimensions:
 
-    `SELECT vector_dims(listing_vector) FROM listings WHERE listing_vector IS NOT NULL LIMIT 1;`
++++SELECT vector_dims(listing_vector) FROM listings WHERE listing_vector IS NOT NULL LIMIT 1;+++
 
 Yielding:
 
@@ -533,9 +533,9 @@ generated](./media/image48.jpeg)
 Use the embedding in a cosine search, fetching the top 10 most similar
 listings to the query.
 
-SELECT id, name FROM listings ORDER BY listing_vector \<=\>
++++SELECT id, name FROM listings ORDER BY listing_vector \<=\>
 azure_openai.create_embeddings('embedding', 'bright natural
-light')::vector LIMIT 10;
+light')::vector LIMIT 10;+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image49.jpeg)
@@ -545,7 +545,7 @@ generated](./media/image49.jpeg)
     select Resource groups tile under Azure services.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image50.jpeg)
+generated](./media/image59.png)
 
 ## Exercise 2 - Create a search function for a recommendation system
 
@@ -662,16 +662,15 @@ generated](./media/image53.jpeg)
 1.  To query the recommendation function, pass it a listing ID and the
     number of recommendations it should make.
 
-    ```SQL
-    select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations closest to a listing
-    ```
+ +++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations closest to a listing+++
+
 
 The result will be something like:
 
 ![A screenshot of a computer Description automatically
 generated](./media/image54.jpeg)
 
-2.  To see the function runtime, make sure **track_functions** is
+2.  To see the function runtime, make sure `track_functions` is
     enabled in the **Server Parameters** section on the Azure Portal
     (you can use PL or ALL):
 
@@ -685,7 +684,7 @@ generated](./media/image56.jpeg)
 
 1.  Make sure the function exists with the correct signature:
 
-    `\df recommend_listing`
++++\df recommend_listing+++
 
 You should see the following:
 
@@ -711,14 +710,13 @@ group and all resources you created for this lab.
 1.  On Home page, Search for **Azure Open AI** and select it.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image59.jpeg)
+generated](./media/image67.png)
 
 2.  Select the Open AI resource and then click on **Delete** .
 
-![](./media/image60.jpeg)
+![](./media/image68.png)
 
-3.  Type **delete\* in the text box and then click on
-    \*\*Delete.** Confirm deletion.
+3.  Type `delete` in the text box and then click on **Delete.** Confirm deletion.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image61.jpeg)
@@ -727,7 +725,7 @@ generated](./media/image61.jpeg)
     click on **Purge** button as shown in below image.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image62.jpeg)
+generated](./media/image69.png)
 
 5.  Confirm purge by clicking on Yes.
 
@@ -737,7 +735,7 @@ generated](./media/image63.jpeg)
 6.  On the home page, select **Resource groups** under Azure services.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image50.jpeg)
+generated](./media/image50.png)
 
 7.  On the **Overview** page of your resource group, select **Delete
     resource group**.
@@ -753,7 +751,7 @@ generated](./media/image65.jpeg)
 
 9.  Confirmation deletion by clicking on **Delete** button.
 
-![](./media/image66.jpeg)
+![](./media/image66.p)
 
 **Summary**:
 
