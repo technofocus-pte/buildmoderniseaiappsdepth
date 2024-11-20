@@ -320,7 +320,7 @@ generated](./media/image31.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image32.jpeg)
 
-4.  Search for the **azure.extensions** parameter.
+4.  Search for the `azure.extensions` parameter.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image33.jpeg)
@@ -337,7 +337,7 @@ generated](./media/image35.jpeg)
     following SQL command to enable the vector extension. For detailed
     instructions
 
-    `CREATE EXTENSION vector;`
+    +++CREATE EXTENSION vector;+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image36.jpeg)
@@ -346,13 +346,12 @@ generated](./media/image36.jpeg)
     SQL command. You’ll need the endpoint and API key for the Azure
     OpenAI resource.
 
-    `CREATE EXTENSION azure_ai;`
+    ++CREATE EXTENSION azure_ai;+++
 
-    ```SQL
-    SELECT azure_ai.set_setting('azure_openai.endpoint', 'https://<endpoint>.openai.azure.com');
-    ```
++++SELECT azure_ai.set_setting('azure_openai.endpoint', 'https://<endpoint>.openai.azure.com');+++
+ 
 
-    `SELECT azure_ai.set_setting('azure_openai.subscription_key', '<API Key>');`
++++SELECT azure_ai.set_setting('azure_openai.subscription_key', '<API Key>');`+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image37.jpeg)
@@ -382,7 +381,7 @@ information to work with as you review the extension's functionality.
 ![A screenshot of a computer Description automatically
 generated](./media/image38.jpeg)
 
-    ``DROP TABLE IF EXISTS reviews;``
+    +++DROP TABLE IF EXISTS reviews;+++
 
     ```SQL
     CREATE TABLE reviews (
@@ -401,7 +400,7 @@ generated](./media/image39.jpeg)
     table you created above. Start by running the following command to
     populate the listings table:
 
-`\COPY listings FROM 'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER`
++++\COPY listings FROM 'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER+++
 
 The command output should be COPY 50, indicating that 50 rows were
 written into the table from the CSV file.
@@ -412,7 +411,7 @@ generated](./media/image40.jpeg)
 3.  Finally, run the command below to load customer reviews into the
     reviews table:
 
-`\COPY reviews FROM 'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER`
++++\COPY reviews FROM 'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER+++
 
 The command output should be COPY 354, indicating that 354 rows were
 written into the table from the CSV file.
@@ -432,7 +431,8 @@ embedding API easy.
 
 The text-embedding-ada-002 model is configured to return 1,536
 dimensions, so use that for the vector column size.
-    ``ALTER TABLE listings ADD COLUMN listing_vector vector(1536);`
+
+    +++ALTER TABLE listings ADD COLUMN listing_vector vector(1536);+++
 
 ![A computer screen shot of a black screen Description automatically
 generated](./media/image42.jpeg)
@@ -464,9 +464,9 @@ whose descriptions are most semantically similar to the query.
     distance operation), fetching the top 10 most similar listings to
     the query.
 
-     ```SQL
-     SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;
-     ```
+
++++SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;+++
+   
 
 You’ll get a result similar to this. Results may vary, as embedding
 vectors are not guaranteed to be deterministic:
