@@ -36,8 +36,7 @@ chat history across conversations.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
--\`\` **https://github.com/signup?user_email=&source=form-home-signupobjectives\`\`**
-
+- +++https://github.com/signup?user_email=&source=form-home-signupobjectives+++
 ### Task 1 : Run the Docker
 
 1.  In your Windows search box, type **Docker** , then click on **Docker
@@ -47,7 +46,7 @@ credentials. If you do not have, please create one from here
 
 ### Task 2 : Deploy Services and application to Azure
 
-1.  Open a browser and go to  `https:\\github.com` and sign in with
+1.  Open a browser and go to  `https://github.com` and sign in with
     your Github account.Search for the below repo
 
 ![](./media/image3.jpeg)
@@ -73,7 +72,7 @@ credentials. If you do not have, please create one from here
 6.  Run below command to log in to AZD. Copy the generated code and
     press Enter. 
 
-    azd auth login
+    `azd auth login`
 
 ![](./media/image8.jpeg)
 
@@ -103,7 +102,7 @@ credentials. If you do not have, please create one from here
 ![](./media/image13.jpeg)
 
 11. Select your Subscription and your nearest location . we have
-    taken **East US** location for this usecase.Sometimes, East US might
+    taken **East US/West Europe/UKSouth** location for this usecase.Sometimes, East US might
     not be available, choose different location and deploy.
 
 ![](./media/image14.jpeg)
@@ -185,7 +184,7 @@ credentials. If you do not have, please create one from here
 
 To clean up all the resources created by this sample:
 
-1.  Go back Github codespace tab and run `zd down –purge`
+1.  Go back Github codespace tab and run `azd down –purge`
 
 ![](./media/image27.jpeg)
 

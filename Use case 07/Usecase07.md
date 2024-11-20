@@ -100,14 +100,14 @@ generated](./media/image5.jpeg)
     echo "Your randomly generated PostgreSQL admin user's password is:"
     ```
 
-    `echo $ADMIN_PASSWORD`
+    +++echo $ADMIN_PASSWORD+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image6.jpeg)
 
 10. Run the following Azure CLI command to create your resource group:
 
-    `az group create --name $RG_NAME --location $REGION`
+    +++az group create --name $RG_NAME --location $REGION+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image7.jpeg)
@@ -157,7 +157,7 @@ Azure subscription:
 1.  In another browser tab, open the Azure portal
     at:  `https://portal.azure.com`
 
-2.  In the search bar type **Azure AI services** And select it.
+2.  In the search bar type `Azure AI services` And select it.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image14.jpeg)
@@ -212,13 +212,11 @@ generated](./media/image20.jpeg)
     a Bicep deployment script to provision Azure resources in your
     resource group: Deployment takes 3 - 5min
 
-    `cd`
+    +++cd+++
 
-    ```cli
-    az deployment group create --resource-group $RG_NAME --template-file
-    "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
-    restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD
-    ```
+```
+az deployment group create --resource-group $RG_NAME --template-file "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD
+```
 
 ![A screenshot of a computer Description automatically
 generated](./media/image21.jpeg)

@@ -57,7 +57,7 @@ generated](./media/image2.jpeg)
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL:  `https://github.com/technofocus-pte/azure-search-openai-javascript\` and
+    URL:  `https://github.com/technofocus-pte/azure-search-openai-javascript/` and
     sign in with your Github account.
 
 ![A screenshot of a computer Description automatically
