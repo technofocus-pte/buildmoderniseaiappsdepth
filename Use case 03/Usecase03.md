@@ -55,7 +55,7 @@ generated](./media/image4.jpeg)
 
 4.  Now we will enable our Azure subscription execute the below command
 
-    +++az account set --subscription "\< YOUR_SUBSCRIPTION_ID+++
+    +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
 
     +++az account list --output table+++
 
@@ -66,9 +66,13 @@ generated](./media/image5.jpeg)
     executed further down, set up the following environment variables
 
     +++export AZ_RESOURCE_GROUP="aztes001_rg_"$RANDOM+++
+
     +++export AZ_CONTAINER_REGISTRY="javaaksregist"$RANDOM+++
+
     +++export AZ_KUBERNETES_CLUSTER="javaakscluster"$RANDOM+++
+
     +++export AZ_LOCATION="westus"+++
+
     +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
 >**Note:** You'll want to replace with your region of choice, for
@@ -121,8 +125,7 @@ generated](./media/image10.jpeg)
 12. Create an Azure Kubernetes Cluster, You'll need an Azure Kubernetes
     Cluster to deploy the Java app (container image) to.
 
-    +++az aks create --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER --attach-acr $AZ_CONTAINER_REGISTRY
---dns-name-prefix=$AZ_KUBERNETES_CLUSTER_DNS_PREFIX --generate-ssh-keys | jq+++
+    +++az aks create --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER --attach-acr $AZ_CONTAINER_REGISTRY --dns-name-prefix=$AZ_KUBERNETES_CLUSTER_DNS_PREFIX --generate-ssh-keys | jq+++
 
 ![A computer screen with white text Description automatically
 generated](./media/image11.jpeg)
@@ -193,6 +196,8 @@ generated](./media/image15.jpeg)
 
 Add the following contents to Dockerfile and then save and exit
 
+>Note : Copy the code to the Notepad and then copy to the Dockerfile in Gitbash
+
 ```
 #
 # Build stage
@@ -241,7 +246,7 @@ container images (JDK/JRE) for the Linux architecture.
 
 >**IMPORTANT** : This lab require jdk 11 . set java_home to jdk 11
 
-    +++docker build -t flightbookingsystemsample .+++
+    `docker build -t flightbookingsystemsample .`
 
 ![A computer screen with text Description automatically
 generated](./media/image18.jpeg)
@@ -294,8 +299,7 @@ mentioned port
     +++docker run -p 8081:8080 flightbookingsystemsample+++
 
 3.  Open up a browser and visit the Flight Booking System for Airline
-    Reservations landing page
-    at http://localhost:8080/FlightBookingSystemSample
+    Reservations landing page     at `http://localhost:8080/FlightBookingSystemSample`
 
     - You should see the following:
 
@@ -331,7 +335,7 @@ generated](./media/image24.jpeg)
 
 3.  Run the following command in your CLI
 
-    +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"
+    +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"+++
 
 4.  We will be using the same Authenticate with Azure Resource Manager
     we have created earlier in the Exercise 1 Task 1.set below variables
@@ -419,25 +423,25 @@ AZ_CONTAINER_REGISTRY= javaaksregist )
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: flightbookingsystemsample
+  name: flightbookingsystemsample
 spec:
-replicas: 1
-selector:
+  replicas: 1
+  selector:
     matchLabels:
-    app: flightbookingsystemsample
-template:
+      app: flightbookingsystemsample
+  template:
     metadata:
-    labels:
+      labels:
         app: flightbookingsystemsample
     spec:
-    containers:
-    - name: flightbookingsystemsample
+      containers:
+      - name: flightbookingsystemsample
         image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
         resources:
-        requests:
+          requests:
             cpu: "1"
             memory: "1Gi"
-        limits:
+          limits:
             cpu: "2"
             memory: "2Gi"
         ports:
@@ -446,13 +450,13 @@ template:
 apiVersion: v1
 kind: Service
 metadata:
-name: flightbookingsystemsample
+  name: flightbookingsystemsample
 spec:
-type: LoadBalancer
-ports:
-- port: 8080
+  type: LoadBalancer
+  ports:
+  - port: 8080
     targetPort: 8080
-selector:
+  selector:
     app: flightbookingsystemsample
 ```
 ![A screenshot of a computer program Description automatically
