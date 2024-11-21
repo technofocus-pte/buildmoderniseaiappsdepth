@@ -32,7 +32,8 @@ Database for PostgreSQL and azure-container-apps,ai-azd-templates.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
-- `https://github.com/signup?user_email=&source=form-home-signupobjectives`
+
+`https://github.com/signup?user_email=&source=form-home-signupobjectives`
 
 ## Exercise 1: Set up environment
 
@@ -78,7 +79,7 @@ generated](./media/image5.jpeg)
 4.  Run the below command to set the policy to **Unrestricted** and
     enter **A** when asked to change the execution policy.
 
-    `Set-ExecutionPolicy Unrestricted\`
+    `Set-ExecutionPolicy Unrestricted`
 
 ![A computer screen with white text Description automatically
 generated](./media/image6.jpeg)
