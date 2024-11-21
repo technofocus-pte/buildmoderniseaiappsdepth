@@ -136,7 +136,7 @@ generated](./media/image14.jpeg)
 
 ### Task 3: Install Dev Containers extension
 
-1.  In your Windows search box, type Visual Studio, then click
+1.  In your Windows search box, type `Visual Studio`, then click
     on **Visual Studio Code**.You can also open it form **Desktop**.
 
 ![A screenshot of a computer Description automatically
@@ -273,7 +273,7 @@ generated](./media/image36.jpeg)
 
 6.  When prompted, **enter a value for the 'openAILocation'
     infrastructure parameter** select the region closest to your
-    location; in this lab, we have chosen the **East US** region
+    location; in this lab, we have chosen the **North central US** region
 
 ![A screenshot of a computer Description automatically
 generated](./media/image37.jpeg)
