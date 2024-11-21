@@ -38,7 +38,7 @@ credentials. If you do not have, please create one from here
 
 ### Task 1: Install Azure Cli and set the policy scope to Local machine
 
-1.  In your windows search bar, search for `**PowerShell`. Open
+1.  In your windows search bar, search for `PowerShell`. Open
     as **Run as administrator**. If you see the dialog box - **Do you
     want to allow this app to make changes to your device?** then click
     on the **Yes** button.
@@ -51,7 +51,7 @@ generated](./media/image3.jpeg)
 
 2.  Run below commands to install stable version of winget.
 
-`$progressPreference = 'silentlyContinue`
+`$progressPreference = 'silentlyContinue'`
 
 `Write-Information "Downloading WinGet and its dependencies..."`
 
@@ -60,8 +60,6 @@ generated](./media/image3.jpeg)
 `Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx`
 
 `Invoke-WebRequest -Uri  https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.8.6/Microsoft.UI.Xaml.2.8.x64.appx -OutFile Microsoft.UI.Xaml.2.8.x64.appx`
-
-`Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx`
 
 `Add-AppxPackage Microsoft.UI.Xaml.2.8.x64.appx`
 
@@ -72,7 +70,7 @@ generated](./media/image4.jpeg)
 
 3.  Run the following command to install Azure Cli on the PowerShell
 
-    `winget install microsoft.azd\`
+    `winget install microsoft.azd`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image5.jpeg)
@@ -88,7 +86,7 @@ generated](./media/image6.jpeg)
 ### Task 2: Assign a user as an owner of an Azure subscription
 
 1.  Open your browser, open Azure
-    portal `https:\\\portal.azure.com\`.  Sign in with your Azure
+    portal `https://portal.azure.com`.  Sign in with your Azure
     subscription account.
 
 ![A screenshot of a computer Description automatically
@@ -165,7 +163,7 @@ generated](./media/image18.jpeg)
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to `https://portal.azure.com\` and sign
+1.  Open a browser and go to `https://portal.azure.com` and sign
     in with your Azure subscription account.
 
 2.  Click on the **Subscription** tile.
@@ -247,7 +245,7 @@ generated](./media/image33.jpeg)
 
 3.  To create an environment for Azure resources, run the following
     Azure Developer CLI command.It asks you to enter environment name
-    .Enter any name of your choice and press enter (eg :**ragpgpy**)
+    .Enter any name of your choice and press enter (eg : `ragpgpy`)
 
 **Note:** When creating an environment, ensure that the name consists of
 lowercase letters.
