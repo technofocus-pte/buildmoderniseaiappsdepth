@@ -144,15 +144,12 @@ generated](./media/image15.jpeg)
 
 **Rating : your rating**
 
-    ```
-    This is a medium to high priced restaurant in the city shopping
-    center. Service was a little bit confusing as we had at least 6 waiters
-    coming to ask us things. Food took some time to come. We had 2 menus:
-    one indian and one thai. The thai is 30% cheaper so we went for some
-    appetizers and thai red curry. Food took some time but it was worth it.
-    It was delicious and very well prepared. Overall, this is a good
-    eat.
-    ``
+```
+This is a medium to high priced restaurant in the city shopping center. Service was a little bit confusing as we had at least 6 waiters
+coming to ask us things. Food took some time to come. We had 2 menus:one indian and one thai. The thai is 30% cheaper so we went for some
+appetizers and thai red curry. Food took some time but it was worth it.It was delicious and very well prepared. Overall, this is a good
+eat.
+```
 
 ![A screenshot of a computer Description automatically
 generated](./media/image16.jpeg)

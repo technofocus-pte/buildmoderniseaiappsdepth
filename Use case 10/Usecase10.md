@@ -11,7 +11,7 @@ single container within Azure Cosmos DB for NoSQL.
 
 In short, the application will:
 
-- **Connect** to Azure OpenAI\\'s model using the .NET SDK
+- **Connect** to Azure OpenAI's model using the .NET SDK
 
 - **Send** prompts to the model and parse the completion response
 
@@ -199,7 +199,7 @@ To clean up all the resources created by this sample:
 
 4. Navigate back to your Github browser tab and delete the codespace used for this lab.
 
->**Summary :**You have implemented service classes using the Microsoft.Azure.Cosmos and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure OpenAI conversational interface along with contextual prefixes and
+>**Summary:** You have implemented service classes using the Microsoft.Azure.Cosmos and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure OpenAI conversational interface along with contextual prefixes and
 parsed the usage and body properties of the response. You also used
 Azure Cosmos DB for NoSQL to store the conversation sessions and
 messages within a single container.
