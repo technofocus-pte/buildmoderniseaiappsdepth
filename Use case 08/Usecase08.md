@@ -91,7 +91,7 @@ generated](./media/image8.jpeg)
 1.  Sign in to Azure with the Azure Developer CLI. Run the following
     command on the Terminal. Copy the code and press enter
 
-    `azd auth login`
+    +++azd auth login+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image9.jpeg)
@@ -113,16 +113,16 @@ generated](./media/image13.jpeg)
 
 3.  Run below command to command to initialize a git repository. Enter
     ‘Y’ when asked” Continue initializing an app in
-    '/workspaces/azure-search-openai-javascript'?”
+    'workspaces/azure-search-openai-javascript'?”
 
-    `azd init -t azure-search-openai-javascript`
+    +++azd init -t azure-search-openai-javascript+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image14.jpeg)
 
 4.  To create an environment for Azure resources, run the following
     Azure Developer CLI command.It asks you to enter environment name
-    .Enter any name of your choice and press enter (eg :**ragpgpy**)
+    .Enter any name of your choice and press enter (eg :+++ragpgpy+++)
 
 >**Note:** When creating an environment, ensure that the name consists of lowercase letters.
 
@@ -132,7 +132,7 @@ generated](./media/image15.jpeg)
 5.  Run the following Azure Developer CLI command to provision the Azure
     resources and deploy the code.
 
-    `azd up`
+    +++azd up+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image16.jpeg)
@@ -228,7 +228,7 @@ generated](./media/image28.jpeg)
 
 To clean up all the resources created by this sample:
 
-1.  Go back Visual Studio terminal and run  `azd down –purge`
+1.  Go back Visual Studio terminal and run  +++azd down –purge+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image29.jpeg)
@@ -244,9 +244,6 @@ generated](./media/image30.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image31.jpeg)
 
-**Summary:**
-
-This use case thought you , deploying a chat application for the
-Retrieval Augmented Generation pattern running on Azure, using Azure AI
+>**Summary:**This use case thought you , deploying a chat application for the Retrieval Augmented Generation pattern running on Azure, using Azure AI
 Search for retrieval and Azure OpenAI and LangChain large language
 models (LLMs) to power ChatGPT-style and Q&A experiences

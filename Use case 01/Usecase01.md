@@ -30,7 +30,7 @@ running on Azure App Service on Linux.
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
-4.  Enter the variable value as **C:\Program Files\Java\jdk-17** and
+4.  Enter the variable value as `C:\Program Files\Java\jdk-17` and
     then click on **Ok**.
 
 ![](./media/image4.jpeg)
@@ -58,7 +58,7 @@ generated](./media/image7.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image8.jpeg)
 
-9.  On **Environmental Variable**s window, click on **Ok** and
+9.  On **Environmental Variables** window, click on **Ok** and
     again **OK**.
 
 ![](./media/image9.jpeg)
@@ -214,8 +214,7 @@ generated](./media/image19.jpeg)
 
 ![](./media/image22.jpeg)
 
-2.  Rename the generated ***MyEntity.java*** class
-    to  `**Todo.java`  (located in the same folder as
+2.  Rename the generated **MyEntity.java** class to `Todo.java`  (located in the same folder as
     the *TodoResource.java* file)
 
 ![](./media/image23.jpeg)
@@ -352,9 +351,9 @@ generated](./media/image27.jpeg)
 2.  Go back to Gitbash and run the to-do application by using this
     command:
 
-`cd todo`
++++cd todo+++
 
-`./mvnw quarkus:dev`
++++./mvnw quarkus:dev+++
 
 ![](./media/image28.jpeg)
 
@@ -412,7 +411,7 @@ generated](./media/image34.jpeg)
 
 8.  Next, retrieve the data by using a new cURL request:
 
-`curl http://127.0.0.1:8080/api/todos`
++++curl http://127.0.0.1:8080/api/todos+++
 
 This command returns the list of to-do items, including the items you
 created:
@@ -475,7 +474,7 @@ generated](./media/image36.jpeg)
 3.  Switch back to **Gitbash** and Ctrl + C. Run below commands to test
     the application by using this command:
 
-`./mvnw clean test`
++++./mvnw clean test+++
 
 ![A computer screen with text and images Description automatically
 generated](./media/image37.jpeg)
@@ -518,28 +517,28 @@ This article provides example abbreviations for many Azure resources
 
 
 
-`export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM`
++++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
 
-`export AZ_RESOURCE_GROUP="rg${AZ_PROJECT_Quarkus}"`
++++export AZ_RESOURCE_GROUP="rg${AZ_PROJECT_Quarkus}"+++
 
-`export AZ_LOCATION="Location near to you"` (eg : NorthEurope)
++++export AZ_LOCATION="Location near to you"+++ (eg : NorthEurope)
 
-`export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"`
++++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
 
-`export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"`
++++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
 
-`export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"`
++++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
 
-`export AZ_POSTGRES_USERNAME="azuser123"`
++++export AZ_POSTGRES_USERNAME="azuser123"+++
 
-`export AZ_POSTGRES_PASSWORD="P@55w.rd12345"`
++++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
 
-`export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"`
++++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
 
 ![A computer screen with text Description automatically
 generated](./media/image39.jpeg)
 
-2.  Run `az login` It opens the default browser to sign in. Sign
+2.  Run +++az login+++ ault browser to sign in. Sign
     in with your Azure subscription account.
 
 ![A screenshot of a computer Description automatically
@@ -548,7 +547,7 @@ generated](./media/image40.jpeg)
 3.  Switch back to Gitbash and run below command to create a resource
     group in Azure Portal.
 
-`az group create --name $AZ_RESOURCE_GROUP --location $AZ_LOCATION`
++++az group create --name $AZ_RESOURCE_GROUP --location $AZ_LOCATION+++
 
 ![A computer screen with white text Description automatically
 generated](./media/image41.jpeg)
@@ -602,9 +601,9 @@ export POSTGRES_CONNECTION_STRING=$(
 )
 ```
 
-`export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"`
++++export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"+++
 
-`echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"`
++++echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"+++
 
 
 
@@ -928,14 +927,12 @@ generated](./media/image75.jpeg)
 1.  Switch back to your Gitbash and run below command to delete resource
     goup
 
-\`\`az group delete --name $AZ_RESOURCE_GROUP –yes\`\`
++++az group delete --name $AZ_RESOURCE_GROUP –yes+++
 
 ![A black screen with yellow text Description automatically
 generated](./media/image76.jpeg)
 
-**Summary**
-
-\[You learnt how to use Maven to bootstrap the application and an
+**Summary** :You learnt how to use Maven to bootstrap the application and an
 integrated development environment (IDE) to edit the code.. You learnt
 how to use Docker to start a local PostgreSQL database so you can run
 and test the application locally. You have successfully run the Quarkus

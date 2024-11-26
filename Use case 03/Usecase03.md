@@ -97,7 +97,7 @@ in this module.
 
 8.  Next, create a resource group using the following command:
 
-    +++az group create --name $AZ_RESOURCE_GROUP --location $AZ_LOCATION |jq+++
+    +++az group create --name $AZ_RESOURCE_GROUP --location $AZ_LOCATION | jq+++
 
 ![A screen shot of a computer Description automatically
 generated](./media/image7.jpeg)
@@ -301,10 +301,10 @@ generated](./media/image22.jpeg)
 >**Note:** if the command "docker run -p 8080:8080 flightbookingsystemsample" comes up with an error, then use the below
 mentioned port
 
-    +++docker run -p 8081:8080 flightbookingsystemsample+++
++++docker run -p 8081:8080 flightbookingsystemsample+++
 
 3.  Open up a browser and visit the Flight Booking System for Airline
-    Reservations landing page     at `http://localhost:8080/FlightBookingSystemSample`
+    Reservations landing page     at +++http://localhost:8080/FlightBookingSystemSample+++
 
     - You should see the following:
 

@@ -25,7 +25,7 @@ Python in a Linux server environment.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
-- `**https://github.com/signup?user_email=&source=form-home-signupobjectives**`
+- `https://github.com/signup?user_email=&source=form-home-signupobjectives`
 
 The **requirements.txt** has the following packages, all used by a
 typical data-driven Flask application:
@@ -75,36 +75,32 @@ generated](./media/image6.jpeg)
 
 6.  In the codespace terminal, run the following commands:
 
-7.  \# Install requirements
+7.  Install requirements
 
-    `python3 -m pip install -r requirements.txt`
+    +++python3 -m pip install -r requirements.txt+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image7.jpeg)
 
 8.  Run below command to create environment varaible
 
-9.  \# Create .env with environment variables
+9.  Create .env with environment variables
 
-    `cp .env.sample.devcontainer .env`
+    +++cp .env.sample.devcontainer .env+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image8.jpeg)
 
-10. Run below command for data migration
+10. Run below command for data migration. Run database migrations
 
-    \# Run database migrations
-
-    `python3 -m flask db upgrade`
+    +++python3 -m flask db upgrade+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image9.jpeg)
 
-11. Run below command to
+11. Run below command to Start the development server
 
-> \# Start the development server
-
-\`\`python3 -m flask run\`\`
+    +++python3 -m flask run+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image10.jpeg)
@@ -148,7 +144,7 @@ generated](./media/image15.jpeg)
 
 **Rating : your rating**
 
-    ```CLI
+    ```
     This is a medium to high priced restaurant in the city shopping
     center. Service was a little bit confusing as we had at least 6 waiters
     coming to ask us things. Food took some time to come. We had 2 menus:
@@ -178,7 +174,7 @@ monitor them.
 1.  Switch back to Github code space tab,Run below command to Initialize
     a new azd environment:
 
-    `azd init`
+    +++azd init+++
 
 ![](./media/image19.jpeg)
 
@@ -210,7 +206,7 @@ generated](./media/image25.jpeg)
 5.  Switch back Gtihub codespace tab and run below command to provision
     and deploy all the resources:
 
-    `azd up`
+    +++azd up+++
 
 It will prompt you to login, pick a subscription, and provide a location
 (like "eastus"). Then it will provision the resources in your account
@@ -248,11 +244,11 @@ generated](./media/image31.jpeg)
 
 8.  When you've made any changes to the app code, you can just run:
 
-    `azd deploy`
+    +++azd deploy+++
 
 ### Task 3. Verify deployed resources
 
-1.  Open \`https://portal.azure.com` in browser and sign in
+1.  Open +++https://portal.azure.com+++ in browser and sign in
     with your Azure subscription account.
 
 2.  Click on Resource group tile from home page,

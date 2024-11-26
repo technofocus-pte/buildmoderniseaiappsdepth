@@ -197,11 +197,9 @@ To clean up all the resources created by this sample:
 
 ![](./media/image29.jpeg)
 
-**Summary :**
+4. Navigate back to your Github browser tab and delete the codespace used for this lab.
 
-You have implemented service classes using the Microsoft.Azure.Cosmos
-and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure
-OpenAI conversational interface along with contextual prefixes and
+>**Summary :**You have implemented service classes using the Microsoft.Azure.Cosmos and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure OpenAI conversational interface along with contextual prefixes and
 parsed the usage and body properties of the response. You also used
 Azure Cosmos DB for NoSQL to store the conversation sessions and
 messages within a single container.
