@@ -30,7 +30,13 @@ credentials. If you do not have, please create one from here
 The **requirements.txt** has the following packages, all used by a
 typical data-driven Flask application:
 
-[TABLE]
+- **Flask** : Web application framework
+- **SQLAlchemy**: Provides a database abstraction layer to communicate with PostgreSQL.
+- **Flask-SQLAlchemy** : Adds SQLAlchemy support to Flask application by simplifying using SQLAlchemy. Requires SQLAlchemy.
+- **Flask-Migrate** : SQLAlchemy database migrations for Flask applications using Alembic. Allows functionality parity with Django version of this sample app.
+- **pyscopg2** : PostgreSQL database adapter for Python.
+- **python-dotenv** : Read key-value pairs from .env file and set them as environment variables. In this sample app, those variables describe how to connect to the database locally. Flask's dotenv support sets environment variables automatically from an .env file.
+- **flask_wtf**: Form rendering, validation, and CSRF protection for Flask with WTForms. Uses CSRFProtect extension.
 
 ### Task 1 : Run the sample
 
@@ -325,7 +331,8 @@ generated](./media/image39.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image40.jpeg)
 
-**Summary**
-You have learnt deploying a Python web app using the Flask framework and
+4. Navigate back to your Github browser tab and delete the codespace used for this lab.
+
+>**Summary**:You have learnt deploying a Python web app using the Flask framework and
 the Azure Database for PostgreSQL relational database service. Azure App
 Service supports Python in a Linux server environment.

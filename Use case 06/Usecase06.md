@@ -396,9 +396,9 @@ generated](./media/image55.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image56.jpeg)
 
-**Summary:**
+4.  Navigate back to your Github browser tab and delete the codespace used for this lab.
 
-This use case walks you through deploying a chat application with
+>**Summary:**:This use case walks you through deploying a chat application with
 PostgreSQL and OpenAI on Azure, focusing on cloud-based application
 deployment and management. you’ve set up the development environment,
 installed necessary tools like Azure CLI, configured Azure resources

@@ -48,7 +48,7 @@ generated](./media/image2.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
-3.  Once authenticated switch back to the Gitbash
+3.  Once authenticated switch back to the Gitbash and copy the subscirption id to use it in the next step
 
 ![A computer screen with white text Description automatically
 generated](./media/image4.jpeg)
@@ -58,6 +58,11 @@ generated](./media/image4.jpeg)
     +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
 
     +++az account list --output table+++
+
+    +++az provider register --namespace Microsoft.Compute+++
+
+    +++az provider register --namespace Microsoft.CloudShell+++
+    
 
 ![A computer screen with white text Description automatically
 generated](./media/image5.jpeg)
@@ -244,7 +249,7 @@ container images (JDK/JRE) for the Linux architecture.
     the **.** is the location for Docker to find the Dockerfile. Run the
     following command in your CLI.
 
->**IMPORTANT** : This lab require jdk 11 . set java_home to jdk 11
+>**IMPORTANT** : This lab require jdk 11 . set java_home to jdk 11 . Refer Lab 01 set JAVA_HOME
 
     `docker build -t flightbookingsystemsample .`
 
@@ -417,7 +422,7 @@ Service.
 3.  Add the following contents to deployment.yml and then save and exit:
 
 >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
-AZ_CONTAINER_REGISTRY= javaaksregist )
+AZ_CONTAINER_REGISTRY= `javaaksregist` )
 
 ```
 apiVersion: apps/v1
@@ -470,7 +475,7 @@ rename/update the contents of that file.
 
 5.  In the deployment.yml above you'll notice this deployment.yml contains a Deployment and a Service. The deployment is used to
     administer a set of pods while the service is used to allow network access to the pods. You'll notice the pods are configured to pull a
-    single image, the \< AZ_CONTAINER_REGISTRY >.azurecr.io/flightbookingsystemsample:latest from Azure Container
+    single image, the < AZ_CONTAINER_REGISTRY >.azurecr.io/flightbookingsystemsample:latest from Azure Container
     Registry. You'll also notice the service is configured to allow incoming HTTP pod traffic to port 8080, similarly to the way you ran
     the container image locally with the -p port argument.
 
