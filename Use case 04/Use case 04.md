@@ -363,7 +363,7 @@ Make some changes in your code to use the Done property.
     empty **th** element, after the **th** element for
     the **CreatedDate**.
 
-    +++@Html.DisplayNameFor(model =\> model.Done) +++
+    +++@Html.DisplayNameFor(model =\> model.Done)+++
 
     ![](./media/image52.jpeg)
 
