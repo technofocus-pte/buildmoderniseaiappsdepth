@@ -94,16 +94,7 @@ to Azure Container Apps.
 
 1.  Open **Git Bash** from the Window start menu and run below command
 
-```
-mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create \
-    -DplatformVersion=3.7.3 \
-    -DprojectGroupId=com.example.demo \
-    -DprojectArtifactId=todo \
-    -DclassName="com.example.demo.TodoResource" \
-    -Dpath="/api/todos" \
-    -DjavaVersion=17 \
-    -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"
-```
++++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create  -DplatformVersion=3.7.3  -DprojectGroupId=com.example.demo  -DprojectArtifactId=todo  -DclassName="com.example.demo.TodoResource"   -Dpath="/api/todos"  -DjavaVersion=17  -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
 
 ![](./media/image11.jpeg)
 
@@ -124,9 +115,7 @@ generated](./media/image12.jpeg)
 ![A screenshot of a computer screen Description automatically
 generated](./media/image13.jpeg)
 
-5.  Close the Data sharing window.
-
-![](./media/image14.jpeg)
+5.  Click on Don't send.
 
 6.  Select the **Start trial** radio button and then click on
     the **Start trial** button.
@@ -381,12 +370,9 @@ In a separate new instance of Gitbash , create a new to-do item in the
 database with the following command. You should see the log in the
 Quarkus console:
 
-```
-curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' \
-    http://127.0.0.1:8080/api/todos
-```
+
++++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'  http://127.0.0.1:8080/api/todos+++
+
 
 ![A computer screen with white text Description automatically
 generated](./media/image33.jpeg)
@@ -398,12 +384,9 @@ generated](./media/image33.jpeg)
 
 7.  Create a second to-do by using the following cURL command:
 
-```
-curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' \
-    http://127.0.0.1:8080/api/todos
-```
+
++++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
+
 
 
 ![A screenshot of a computer program Description automatically
@@ -557,20 +540,7 @@ generated](./media/image41.jpeg)
 1.  You'll now create a managed PostgreSQL server. Run the following
     command to create a small instance of Azure Database for PostgreSQL:
 
-```
-az postgres flexible-server create \
-    --resource-group "$AZ_RESOURCE_GROUP" \
-    --location "$AZ_LOCATION" \
-    --name "$AZ_POSTGRES_SERVER_NAME" \
-    --database-name "$AZ_POSTGRES_DB_NAME" \
-    --admin-user "$AZ_POSTGRES_USERNAME" \
-    --admin-password "$AZ_POSTGRES_PASSWORD" \
-    --public-access "All" \
-    --tier "Burstable" \
-    --sku-name "Standard_B1ms" \
-    --storage-size 32 \
-    --version "16"
-```
++++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
 
 ![A screen shot of a computer code Description automatically
 generated](./media/image42.jpeg)
@@ -589,17 +559,7 @@ generated](./media/image43.jpeg)
 
 2.  Run below command to obtain the connection string for the database.
 
-```
-export POSTGRES_CONNECTION_STRING=$(
-    az postgres flexible-server show-connection-string \
-    --server-name "$AZ_POSTGRES_SERVER_NAME" \
-    --database-name "$AZ_POSTGRES_DB_NAME" \
-    --admin-user "$AZ_POSTGRES_USERNAME" \
-    --admin-password "$AZ_POSTGRES_PASSWORD" \
-    --query "connectionStrings.jdbc" \
-    --output tsv
-)
-```
++++export POSTGRES_CONNECTION_STRING=$(az postgres flexible-server show-connection-string --server-name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --query "connectionStrings.jdbc" --output tsv)+++
 
 +++export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"+++
 
@@ -655,22 +615,12 @@ generated](./media/image49.jpeg)
 2.  When Quarkus is running, create a few to-dos by using the following
     cURL commands in a separate terminal window:
 
-```
-curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' \
-    http://127.0.0.1:8080/api/todos
-```
++++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' http://127.0.0.1:8080/api/todos+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image51.jpeg)
 
-```
-curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' \
-    http://127.0.0.1:8080/api/todos
-```
++++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
 ![](./media/image52.jpeg)
 
@@ -767,16 +717,7 @@ generated](./media/image59.jpeg)
     single Azure CLI command. Run the following command at the root of
     the project:
 
-```
-az containerapp up \
-    --name "$AZ_CONTAINERAPP" \
-    --environment "$AZ_CONTAINERAPP_ENV" \
-    --location "$AZ_LOCATION" \
-    --resource-group "$AZ_RESOURCE_GROUP" \
-    --ingress external \
-    --target-port 8080 \
-    --source .
-```
++++az containerapp up --name "$AZ_CONTAINERAPP" --environment "$AZ_CONTAINERAPP_ENV" --location "$AZ_LOCATION" --resource-group "$AZ_RESOURCE_GROUP" --ingress external --target-port 8080 --source .+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image60.jpeg)
@@ -848,15 +789,7 @@ generated](./media/image67.jpeg)
 2.  Switch back to Gitbash and run below command to get the URL of the
     application.
 
-```
-export AZ_APP_URL=$(
-    az containerapp show \
-        --name "$AZ_CONTAINERAPP" \
-        --resource-group "$AZ_RESOURCE_GROUP" \
-        --query "properties.configuration.ingress.fqdn" \
-        --output tsv \
-)
-```
++++export AZ_APP_URL=$(az containerapp show --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --query "properties.configuration.ingress.fqdn" --output tsv)+++
 
 +++echo "AZ_APP_URL=$AZ_APP_URL"+++
 
@@ -867,12 +800,8 @@ generated](./media/image68.jpeg)
     protocol. That protocol is used because the application is deployed
     with a TLS certificate. To test the application, you can use cURL:
 
-```
-curl --header "Content-Type: application/json" \
-    --request POST \
-    --data '{"description":"Configuration","details":"Congratulations, you have set up your Quarkus application correctly!","done": "true"}' \
-    https://$AZ_APP_URL/api/todos
-```
++++curl --header "Content-Type: application/json" --request POST --data '{"description":"Configuration","details":"Congratulations, you have set up your Quarkus application correctly!","done": "true"}' https://$AZ_APP_URL/api/todos+++
+
 
 ![A computer screen with white text Description automatically
 generated](./media/image69.jpeg)
@@ -902,12 +831,8 @@ generated](./media/image73.jpeg)
 8.  Run this command, you can stream the logs for your container when
     you create new to-dos:
 
-```
-az containerapp logs show \
-    --name "$AZ_CONTAINERAPP" \
-    --resource-group "$AZ_RESOURCE_GROUP" \
-    --follow
-```
++++az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --follow+++
+
 
 ![A computer screen with white text Description automatically
 generated](./media/image74.jpeg)
