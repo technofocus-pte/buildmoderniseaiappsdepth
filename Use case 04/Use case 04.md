@@ -21,11 +21,11 @@ Database.
     ![](./media/image1.jpeg)
 
 2.  Click on **Sign in** and Sign in **Username** and **password** under
-    the **User Credentials** section in the **Resources** tab of the VM.
+    the **Azure Portal** section in the **Resources** tab of the VM.
 
     ![](./media/image2.jpeg)
 
-    ![](./media/image3.jpeg)
+    ![](./media/image72.png)
 
 3.  Select **Start Visual Studio**.
 
@@ -93,7 +93,7 @@ Click on **View -\> Solution Explorer.**
     ![](./media/image18.jpeg)
 
 3.  Select **Azure App Service(Windows)** in **Which Azure service would
-    you like to use to host your application?** Screen and click
+    you like to use to host your application?** screen and click
     on **Next**.
 
     ![](./media/image19.jpeg)
@@ -115,11 +115,11 @@ correct account.
     |  **Property**  |  **Description**  |
     |:------|:-------|
     |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Click on New -> +++RGForWebAppSQL+++ and click on **OK**  |
+    | Resource group   |  Select the **assigned Resource group**  |
 
     ![](./media/image21.jpeg)
 
-8.  Click **New** on **Hosting Plan** option and enter the below details
+7.  Click **New** on **Hosting Plan** option and enter the below details
     and click **OK**.
 
     |  **Property**  |  **Description**  |
@@ -128,13 +128,15 @@ correct account.
     | Location   |  **East US**  |
     |  Size  |   **Free** |
 
+    ![](./media/image77.png)
+    
     **Note:** The location here is selected as East US. Please select a
 closest region if East US does not work for you.
 
 9.  Click **Create** on the App Service window and wait for Azure
     resources to get created.
 
-    ![](./media/image22.jpeg)
+    ![](./media/image73.jpeg)
 
 10.  The **Publish** dialog shows the resources you have configured.
     Click **Finish**.
@@ -200,6 +202,10 @@ closest region if East US does not work for you.
 
     ![](./media/image32.jpeg)
 
+3.	Click on **Finish** after reviewing the **summary of changes**.
+
+    ![](./media/image74.jpeg)
+  	
 4.  Wait for configuration wizard to finish and click **Close**. The
     Azure SQL Db is now **connected** to your app.
 
@@ -212,7 +218,7 @@ closest region if East US does not work for you.
     **Note:** This will take around 5 minutes
 
 6.  Once your ASP.NET app is deployed to Azure, your default browser is
-    launched with the URL to the deployed app. Add a few to-do items.
+    launched with the URL to the deployed app. **Add a few to-do items**.
 
     ![](./media/image35.jpeg)
 
@@ -335,7 +341,7 @@ Run a few commands to make updates to your local database.
 Make some changes in your code to use the Done property.
 
 1.  From the Visual Studio, open **Controllers\TodosController.cs**.
-    Find the **Create()** method on line 52 and add **Done** to the list
+    Find the **Create()** method on line 52 and add +++**Done**+++ to the list
     of properties in the Bind attribute. When you're done, your Create()
     method signature look like the following code:
 
@@ -437,8 +443,7 @@ not see them yet.
 
     ![](./media/image63.jpeg)
 
-2.  In the Azure portal -- app page, select App Service Logs from the
-    left pane.
+2.	In the Azure portal – app page, select **App Service Logs** from the left pane under the **Monitoring** section.
 
     ![](./media/image64.jpeg)
 
@@ -466,18 +471,17 @@ not see them yet.
 
 ## Exercise 4: Clean up resources
 
-1.  From the Azure portal, open the Resourcegroup **RGForWebAppSQL**.
-    Click on **Delete resource group.**
+1.	From the Azure portal, open your assigned **Resourcegroup**.
 
-    ![](./media/image69.jpeg)
+    ![](./media/image75.jpeg)
 
-2.  Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
+2.	Select all the resources and click on **Delete**.
 
-    ![](./media/image70.jpeg)
+    ![](./media/image76.jpeg) 
+   	
+3.	Type +++delete+++ in the text box and select **Delete**. Select **Delete** in the confirmation dialog box.
 
-3.  Click Delete on the Delete confirmation dialog box.
-
-    ![](./media/image71.jpeg)
+    ![](./media/image77.jpeg)
 
 **Summary**
 
