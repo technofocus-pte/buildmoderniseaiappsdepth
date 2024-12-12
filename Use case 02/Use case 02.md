@@ -369,7 +369,7 @@ capability as shown below.
   
 4.	Next, from the Resource group page, select you **assigned Resource group**.
 
-    ![](./media/image60.jpeg)
+    ![](./media/image60.png)
 
 5.	Select all the **resources**, and then select **Delete**.
 
