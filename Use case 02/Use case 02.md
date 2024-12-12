@@ -87,8 +87,7 @@ Database for PostgreSQL.
 
 1.  Login to Azure portal
     at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **User
-    Credentials** section in the **Resources** tab of the VM.
+    the **Username** and **password** under the **Azure Portal** section in the **Resources** tab of the VM.
 
     ![](./media/image65.png)
 
