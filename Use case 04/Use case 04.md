@@ -204,7 +204,7 @@ closest region if East US does not work for you.
 
 3.	Click on **Finish** after reviewing the **summary of changes**.
 
-    ![](./media/image74.jpeg)
+    ![](./media/image74.png)
   	
 4.  Wait for configuration wizard to finish and click **Close**. The
     Azure SQL Db is now **connected** to your app.
