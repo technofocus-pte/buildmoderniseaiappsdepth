@@ -136,9 +136,9 @@ closest region if East US does not work for you.
 9.  Click **Create** on the App Service window and wait for Azure
     resources to get created.
 
-    ![](./media/image73.jpeg)
+    ![](./media/image73.png)
 
-10.  The **Publish** dialog shows the resources you have configured.
+10. The **Publish** dialog shows the resources you have configured.
     Click **Finish**.
 
     ![](./media/image23.jpeg)
@@ -473,15 +473,15 @@ not see them yet.
 
 1.	From the Azure portal, open your assigned **Resourcegroup**.
 
-    ![](./media/image75.jpeg)
+    ![](./media/image75.png)
 
 2.	Select all the resources and click on **Delete**.
 
-    ![](./media/image76.jpeg) 
+    ![](./media/image76.png) 
    	
 3.	Type +++delete+++ in the text box and select **Delete**. Select **Delete** in the confirmation dialog box.
 
-    ![](./media/image77.jpeg)
+    ![](./media/image77.png)
 
 **Summary**
 
