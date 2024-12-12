@@ -92,15 +92,15 @@ Database for PostgreSQL.
 
     ![](./media/image65.png)
 
-    >[!Alert:] **Important:** The Reources tab has got the basic credentials for you to perform the labs
+    >[!Alert] **Important:** The **Resources** tab has got the basic credentials for you to perform the labs
     >
-    >Username - Login user name to Azure
+    >**Username** - **Login** user name to **Azure**
     >
-    >Password - Password to the login to Azure
+    >**Password** - **Password** to the login to **Azure**
     >
-    >Subscription - Your assigned subscription for Azure in this VM instance
+    >**Subscription** - Your assigned subscription for Azure in this VM instance
     >
-    >Resource Group - This will be the Resource group under which you will be creating all the resources as per the lab.
+    >**Resource Group** - This will be the Resource group under which you will be creating all the resources as per the lab.
 
 3.  Select **Cancel** or the close button in the Welcome page.
 
