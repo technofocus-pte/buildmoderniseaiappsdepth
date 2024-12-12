@@ -57,7 +57,7 @@ the + symbol next to Codespaces.
 
     ![](./media/image5.jpeg)
 
-6.  Execute mvn quarkus:dev in the Terminal. Click on **Allow** in the
+6.  Execute +++mvn quarkus:dev+++ in the Terminal. Click on **Allow** in the
     pop up.
 
     ![](./media/image6.jpeg)
@@ -86,30 +86,36 @@ a set of secure-by-default resources that include App Service and Azure
 Database for PostgreSQL.
 
 1.  Login to Azure portal
-    at https://portal.azure.com/ and **login** with
+    at +++https://portal.azure.com/+++ and **login** with
     the **Username** and **password** under the **User
     Credentials** section in the **Resources** tab of the VM.
 
-    ![](./media/image11.jpeg)
+    ![](./media/image1.jpeg)
 
-2.  Select Cancel or the close button in the Welcome page.
+    >[!Alert:] **Important:** The Reources tab has got the basic credentials for you to perform the labs
+    >Username - Login user name to Azure
+    >Password - PAssword to the login to Azure
+    >Subscription - Your assigned subscription for Azure in this VM instance
+    >Resource Group - This will be the Resource group under which you will be creating all the resources as per the lab.
+
+3.  Select **Cancel** or the close button in the Welcome page.
 
     ![](./media/image12.jpeg)
 
-3.  Enter **web app database** in the search bar at the top of the Azure
+4.  Enter +++**web app database**+++ in the search bar at the top of the Azure
     portal. Select the item labelled **Web App + Database** under
     the **Marketplace** heading.
 
     ![](./media/image13.jpeg)
 
-4.  On **Create Web App + Database**, fill in the below details and
+5.  On **Create Web App + Database**, fill in the below details and
     select **Review + create**
 
     | **Property**   |  **Value**  |
     |:-------|:-------|
-    |  Subscription  |  Select your subscription  |
-    | Resource group   |  Click **Create New** -> Enter +++RGForAppService+++  |
-    |  Region  |  Select your nearest region(East US is selected here for this execution)  |
+    |  Subscription  |  Select your **assigned subscription**  |
+    | Resource group   |  Select your **assigned Resource group**  |
+    |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
     | **Web App Details**   |    |
     | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
     | Runtime stack   |  **Java 17**  |
@@ -117,7 +123,7 @@ Database for PostgreSQL.
     |  Engine  |  Select **PostgreSQL – Flexible Server**  |
     |  Hosting Plan  |  Select **Basic**  |
     
-    ![](./media/image14.jpeg)
+    ![](./media/image2.jpeg)
 
     ![](./media/image15.jpeg)
 
@@ -140,7 +146,7 @@ Database for PostgreSQL.
 
     ![](./media/image19.jpeg)
 
-10.  Select the Resource group **RGForAppService** and see that the
+10.  Select the Resource group assigned to you and see that the
     following resources are created from the deployment that we just
     performed.
 
@@ -154,7 +160,7 @@ Database for PostgreSQL.
     
         - Private DNS zone
 
-        ![](./media/image20.jpeg)
+     ![](./media/image20.jpeg)
 
 ## Exercise 3: Verify connection settings
 
@@ -237,8 +243,7 @@ build and deploy action.
     into the chosen GitHub repository, in the .github/workflows
     directory.
 
-7.  Back in the GitHub codespace of your sample fork, run **git pull
-    origin main**. This pulls the newly committed workflow file into
+7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into
     your codespace.
 
     ![](./media/image32.jpeg)
@@ -247,8 +252,8 @@ build and deploy action.
     Quarkus uses this file to load Java properties.
 
 9.  Find the code (lines 10-11). This code sets the production variable
-    %prod.quarkus.datasource.jdbc.url to the app setting that the
-    creation wizard for you. The quarkus.package.type is set to build an
+    **%prod.quarkus.datasource.jdbc.url** to the app setting that the
+    creation wizard for you. The **quarkus.package.type** is set to build an
     Uber-Jar, which you need to run in App Service.
 
     ![](./media/image33.jpeg)
@@ -257,8 +262,7 @@ build and deploy action.
     the explorer. This file was created by the App Service create
     wizard.
 
-11. Under the Build with Maven step, change the Maven command to **mvn
-    clean install -DskipTests**.
+11. Under the Build with Maven step, change the Maven command to +++**mvn clean install -DskipTests**+++.
 
     **-DskipTests** skips the tests in your Quarkus project, to avoid the
 GitHub workflow failing prematurely.
@@ -349,35 +353,31 @@ capability as shown below.
 
     ![](./media/image49.jpeg)
 
-2.  Select the Resource group **RGForAppService.**
+2.	Select the **NetworkWatcherRG** and click on **Delete resource group**.
 
-    ![](./media/image50.jpeg)
+    ![](./media/image3.jpeg)
 
-3.  Click on **Delete resource group**.
+3.	Type +++NetworkWatcherRG+++ in the text box and click on **Delete**.
+ 
+    ![](./media/image4.jpeg)
 
-    ![](./media/image51.jpeg)
+    ![](./media/image5.jpeg)
+  
+4.	Next, from the Resource group page, select you **assigned Resource group**.
 
-4.  Type the resource group name in the text field
-    as **RGForAppService** and click on **Delete**.
+    ![](./media/image6.jpeg)
 
-    ![](./media/image52.jpeg)
+5.	Select all the **resources**, and then select **Delete**.
 
-5.  Click on **Delete** in the confirmation dialog.
+    ![](./media/image7.jpeg)
 
-    ![](./media/image53.jpeg)
+6.	Type in +++delete+++ in the text box and click on **Delete**.
+ 
+    ![](./media/image8.jpeg)
 
-6.  A notification stating **Deleted resource group
-    RGForAppService** confirms the deletion.
+    ![](./media/image9.jpeg)
 
-    ![](./media/image54.jpeg)
-
-7.  Navigate to https://github.com and select the forked repository.
-
-8.  Select the drop down next to **Code** and select the 3 dots next to
-    your Codespace. Select **Delete** to delete the
-    codespace. **Confirm** the deletion in the confirmation dialog.
-
-    ![](./media/image55.jpeg)
+7.	A success notification on the deleted resources confirms the deletion.
 
 **Summary:**
 
