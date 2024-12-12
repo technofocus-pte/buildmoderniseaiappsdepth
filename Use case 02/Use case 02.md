@@ -90,7 +90,7 @@ Database for PostgreSQL.
     the **Username** and **password** under the **User
     Credentials** section in the **Resources** tab of the VM.
 
-    ![](./media/image65.jpeg)
+    ![](./media/image65.png)
 
     >[!Alert:] **Important:** The Reources tab has got the basic credentials for you to perform the labs
     >
@@ -127,7 +127,7 @@ Database for PostgreSQL.
     |  Engine  |  Select **PostgreSQL – Flexible Server**  |
     |  Hosting Plan  |  Select **Basic**  |
     
-    ![](./media/image56.jpeg)
+    ![](./media/image56.png)
 
     ![](./media/image15.jpeg)
 
@@ -359,13 +359,13 @@ capability as shown below.
 
 2.	Select the **NetworkWatcherRG** and click on **Delete resource group**.
 
-    ![](./media/image57.jpeg)
+    ![](./media/image57.png)
 
 3.	Type +++NetworkWatcherRG+++ in the text box and click on **Delete**.
  
-    ![](./media/image58.jpeg)
+    ![](./media/image58.png)
 
-    ![](./media/image59.jpeg)
+    ![](./media/image59.png)
   
 4.	Next, from the Resource group page, select you **assigned Resource group**.
 
@@ -373,13 +373,13 @@ capability as shown below.
 
 5.	Select all the **resources**, and then select **Delete**.
 
-    ![](./media/image61.jpeg)
+    ![](./media/image61.png)
 
 6.	Type in +++delete+++ in the text box and click on **Delete**.
  
-    ![](./media/image62.jpeg)
+    ![](./media/image62.png)
 
-    ![](./media/image63.jpeg)
+    ![](./media/image63.png)
 
 7.	A success notification on the deleted resources confirms the deletion.
 8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
