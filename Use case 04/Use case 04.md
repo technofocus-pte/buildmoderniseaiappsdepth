@@ -477,11 +477,11 @@ not see them yet.
 
 2.	Select all the resources and click on **Delete**.
 
-    ![](./media/image76.png) 
+    ![](./media/image78.png) 
    	
 3.	Type +++delete+++ in the text box and select **Delete**. Select **Delete** in the confirmation dialog box.
 
-    ![](./media/image77.png)
+    ![](./media/image79.png)
 
 **Summary**
 
