@@ -41,7 +41,7 @@ copy and paste from the notepad onto the CloudShell.
 
 ### Task 1: Provision an Azure Database for PostgreSQL Flexible Server
 
-1.  Open a web browser and navigate to the https://portal.azure.com
+1.  Open a web browser and navigate to the +++https://portal.azure.com+++
 
 2.  Select the **Cloud Shell** icon in the Azure portal toolbar to open
     a new Cloud Shell pane at the top of your browser window.
@@ -174,7 +174,7 @@ Shell to connect to your database.
 
 11. At the Cloud Shell prompt, replace the **{your_password}** token
     with the password you assigned to the **s2admin** user when creating
-    your database, the password should be **Seattle123Seattle123**.
+    your database, the password should be +++**Seattle123Seattle123**+++.
 
     ![](./media/image19.jpeg)
 
@@ -336,7 +336,7 @@ described in how to use PostgreSQL extensions.
 
 4.  From the database's left-hand navigation menu, select **Server
     parameters** under **Settings**, then
-    enter **azure.extensions** into the search box. Expand
+    enter +++**azure.extensions**+++ into the search box. Expand
     the **VALUE** dropdown list, then locate and check the box next to
     each of the following extensions:
 
@@ -390,7 +390,7 @@ In this task, you create a new Azure OpenAI service.
     already clicked on the **Azure** **OpenAI** tile, then click on
     the **Create** button on the **Azure OpenAI page**).
 
-    ![](./media/image37.jpeg)
+    ![](./media/Picture1.png)
 
 5.  On the Create Azure OpenAI **Basics** tab, enter the following
     information and click on **Next** button.
@@ -412,7 +412,7 @@ In this task, you create a new Azure OpenAI service.
 8.  In the **Tags** tab, leave all the fields in the default state, and
     click on the **Next** button.
 
-    ![](./media/image40.jpeg)
+    ![](./media/Picture2.jpeg)
 
 9.  In the **Review+submit** tab, once the Validation is Passed, click
     on the **Create** button.
@@ -465,7 +465,7 @@ model deployment that you can employ.
     navigation menu, scroll down and click on **Go to Azure OpenAI
     Studio** button as shown in the below image.
 
-    ![](./media/image46.jpeg)
+    ![](./media/Picture3.png)
 
     >[!Alert] **Important:** If you’re in the new Azure OpenAI Studio, switch to the
     old look of Azure OpenAI Studio.
@@ -485,7 +485,7 @@ model deployment that you can employ.
 
     - **Model version**: Ensure **2 (Default)** is selected.
 
-    - **Deployment name**: Enter **embeddings**
+    - **Deployment name**: Enter +++**embeddings**+++
 
     ![](./media/image49.jpeg)
     
@@ -584,7 +584,7 @@ extension and describes each.
     output from the command easier to view in the Azure Cloud Shell.
 
      +++\x auto+++
-     +++\df+ azure_ai.* +++
+     +++\df+ azure_ai.*+++
 
     ![](./media/image56.jpeg)
 
@@ -694,7 +694,7 @@ expects.
     |timeout_ms  | integer | 3600000 | Timeout in milliseconds after which the operation is stopped. |
     | throw_on_error |  boolean| true | Flag indicating whether the function should, on error, throw an exception resulting in a rollback of the wrapping transactions. |
     
-3.  Using the deployment name, run the following query to update each
+2.  Using the deployment name, run the following query to update each
     record in the listings table, inserting the generated vector
     embeddings for the description field into the description_vector
     column using the azure_openai.create_embeddings() function. Replace
@@ -752,7 +752,7 @@ warnings similar to the following in the output:
 
     ![](./media/image64.jpeg)
 
-4.  You can verify that the description_vector column has been populated
+3.  You can verify that the description_vector column has been populated
     for all listings records by running the following query:
 
     +++SELECT COUNT(*) FROM listings WHERE description_vector IS NULL AND description <> '';+++
@@ -794,7 +794,9 @@ text in the description field with the natural language query provided.
     {your-deployment-name} with the **Deployment name** value you copied
     from the Azure OpenAI Studio **Deployments** page.
 
-    +++SELECT listing_id, name, description FROM listings ORDER BY description_vector <=> azure_openai.create_embeddings('{your-deployment-name}', 'Properties with a private room near Discovery Park')::vector LIMIT 3;+++
+    +++SELECT listing_id, name, description FROM listings
+ORDER BY description_vector <=> azure_openai.create_embeddings('{your-deployment-name}', 'Properties with a private room near Discovery Park')::vector
+LIMIT 3;+++
 
     ![](./media/image67.jpeg)
 
@@ -1118,8 +1120,8 @@ In this task, you will open pgAdmin and connect to your database.
     ![](./media/image101.jpeg)
 
 4.  Next, select the **Connection** tab and paste your server name into
-    the **Hostname/address** field. Enter **s2admin** into
-    the **Username** field, enter **Seattle123Seattle123** into
+    the **Hostname/address** field. Enter +++**s2admin**+++ into
+    the **Username** field, enter +++**Seattle123Seattle123**+++ into
     the **Password** box, and optionally, select **Save password**.
 
     ![](./media/image102.jpeg)
