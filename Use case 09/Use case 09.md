@@ -25,7 +25,13 @@ copy and paste from the notepad onto the PowerShell.
 
 ### Task 1: Create Azure resources using script
 
-1.  From the VM, search for **power shell**, right click on **Windows
+1.	Login to Azure portal at +++**https://portal.azure.com**+++ and login using your Azure login credentials from the **Resources** tab.
+   
+2.	From Azure portal, select your subscription. From the left pane, select Resource providers under Settings, select +++**Microsoft.Alertsmanagement**+++ and click on **Register**.
+
+    ![](./media/pic100.jpeg)
+
+3.  From the VM, search for +++**power shell**+++, right click on **Windows
     PowerShell** and select **Run as administrator**. Click
     on **Yes** in the confirmation dialog.
 
@@ -33,7 +39,7 @@ copy and paste from the notepad onto the PowerShell.
 
     ![](./media/image3.jpeg)
 
-2.  Execute the below command to install Az in the PowerShell.
+4.  Execute the below command to install Az in the PowerShell.
 
     +++**Install-Module Az**+++
 
@@ -45,34 +51,34 @@ copy and paste from the notepad onto the PowerShell.
     
     ![](./media/image5.jpeg)
 
-3.  Once done, execute the below command to import the Az module.
+5.  Once done, execute the below command to import the Az module.
 
     +++**Import-Module Az**+++
 
     ![](./media/image6.jpeg)
 
-4.  Execute the below command to use browser-based sign-in
+6.  Execute the below command to use browser-based sign-in
 
     +++Update-AzConfig -EnableLoginByWam $false+++
 
     ![](./media/image7.jpeg)
 
-5.  Execute the below command and select your Azure login if prompted,
+7.  Execute the below command and select your Azure login if prompted,
     to login to Azure.
 
     +++Connect-AzAccount+++
     
     ![](./media/image8.jpeg)
 
-6.  Execute the below commands to navigate to the **LabFiles** folder.
+8.  Execute the below commands to navigate to the **LabFiles** folder.
 
-    +++cd\\++
+    +++cd\\+++
     
-    +++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
+    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
 
     ![](./media/image9.jpeg)
 
-7.  Execute the below command to install **Microsoft
+9.  Execute the below command to install **Microsoft
     Bicep** using **winget**.
 
     +++winget install -e --id Microsoft.Bicep+++
@@ -81,41 +87,40 @@ copy and paste from the notepad onto the PowerShell.
     
     ![](./media/image10.jpeg)
 
-8.  **Close** the PowerShell and **open** it again.
+10.  **Close** the PowerShell and **open** it again.
 
-9.  Redo Step 9 to **login** to **Azure**.
+11.  Redo the **login to Azure** step of executing Connect-AzAccount.
 
-10. Execute the below commands to navigate to the **LabFiles** folder.
+12. Execute the below commands to navigate to the **LabFiles** folder.
 
-    +++cd\\++
-    +++cd LabFiles\\Build a Chat bot’\Labs\deploy+++
+    +++cd\\+++
+    +++cd LabFiles\’Build a Chat bot’\Labs\deploy+++
 
     ![](./media/image9.jpeg)
 
-11. Execute the below command replacing **\< Subscription id \>** with
+13. Execute the below command replacing **\< Subscription id \>** with
     your subscription id.
 
-+++Set-AzContext -SubscriptionId \< Subscription id \>+++
+    +++Set-AzContext -SubscriptionId < Subscription id >+++
 
-    **Note:** To get your subscription id, login to https://portal.azure.com and click on Subscriptions. Copy the
+    >[!Note] **Note:** To get your subscription id, login to https://portal.azure.com and click on Subscriptions. Copy the
 Subscription id from the Subscription page.
 
     ![](./media/image11.jpeg)
     
     ![](./media/image12.jpeg)
 
-12. Create a new **Resource group** named **mongo-devguide-rg** in Azure
+14. Create a new **Resource group** named **mongo-devguide-rg** in Azure
     by executing the below command.
 
-    +++New-AzResourceGroup -Name mongo-devguide-rg -Location
-    'francecentral'+++
+    +++New-AzResourceGroup -Name mongo-devguide-rg -Location 'francecentral'+++
 
     ![](./media/image13.jpeg)
 
-    **Note:** The location **francecentral** is used here. It can be changed
+    >[!Note] **Note:** The location **francecentral** is used here. It can be changed
 to a **nearest location**
 
-13. Execute the below command to deploy the resources like Azure Cosmos
+15. Execute the below command to deploy the resources like Azure Cosmos
     DB workspace, Azure OpenAI in Azure.
 
     ```
@@ -132,7 +137,7 @@ to a **nearest location**
 
 ### Task 2: Check the created resources in Azure
 
-1.  Login to **Azure portal** at https://portal.azure.com/ using
+1.  Login to **Azure portal** at +++https://portal.azure.com/+++ using
     your **Azure login credentials**. Select **Resource groups**.
 
     ![](./media/image16.jpeg)
@@ -165,10 +170,9 @@ to a **nearest location**
 
     ![](./media/image22.jpeg)
 
-8.  Click on **Connection strings** under **Settings**. Copy
-    the **Connection string** value.
+8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
 
-    ![](./media/image23.jpeg)
+    ![](./media/image99.jpeg)
 
 9.  Copy the connection string and paste it in a notepad. Replace the
     \< **password** \> with +++**myMongoDB98**+++ in the copied
@@ -222,18 +226,9 @@ to a **nearest location**
     
     ![](./media/image32.jpeg)
 
-10. There is an example env file named **env.EXAMPLE** under the Labs
-    folder. Copy and paste the file to create a copy of it.
+10. Open the **.env** file
 
-    ![](./media/image33.jpeg)
-    
-    ![](./media/image34.jpeg)
-
-11. Rename the file to +++**.env**+++
-
-    ![](./media/image35.jpeg)
-
-12. Replace **DB_CONNECTION
+11. Replace **DB_CONNECTION
     STRING**, **AOAI_KEY** and **AOAI_Endpoint** that we saved in
     the **notepad** earlier in Task 2 of Exercise 1.
 
