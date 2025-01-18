@@ -54,26 +54,27 @@ template to Azure with both of these accounts.
     
     ![](./media/image3.jpeg)
 
-3.  In **You have no storage mounted** dialog box, click on the **Create
-    storage.**
+3.  In the **Getting Started** dialog, select **Mount storage account**, select your **subscription** and then click on **Apply**.
 
     ![](./media/image4.jpeg)
+
+4.	In the **Mount storage account** dialog, select **we will create a storage account for you** and click on **Next**.
 
     ![](./media/image5.jpeg)
     
     ![](./media/image6.jpeg)
 
-4.  Ensure the type of shell indicated on the top left of the Cloud
+5.  Ensure the type of shell indicated on the top left of the Cloud
     Shell pane is switched to **Bash**. If it's **PowerShell**, switch
     to **Bash** by using the drop-down menu.
 
     ![](./media/image7.jpeg)
 
-5.  Once the terminal starts, click on **Manage files -\> Upload**.
+6.  Once the terminal starts, click on **Manage files -\> Upload**.
 
     ![](./media/image8.jpeg)
 
-6.  Select **azuredeploy.JSON** file from the path **C:\Labfiles\Build
+7.  Select **azuredeploy.JSON** file from the path **C:\Labfiles\Build
     and Test a custom chat application Using Azure Cosmos DB and
     AzureOpenAI** and select **Open**.
 
@@ -83,7 +84,7 @@ template to Azure with both of these accounts.
 
     ![](./media/image10.jpeg)
 
-7.  Create a new shell variable named **resourceGroupName** with the
+8.  Create a new shell variable named **resourceGroupName** with the
     name of the Azure resource group that you create
     (mslearn-cosmos-openai).
 
@@ -102,8 +103,7 @@ template to Azure with both of these accounts.
     using az group deployment create. Then, execute the following
     command.
 
-    +++az deployment group create --resource-group $resourceGroupName --name
-    zero-touch-deployment --template-file azuredeploy.json+++
+    +++az deployment group create --resource-group $resourceGroupName --name zero-touch-deployment --template-file azuredeploy.json+++
     
     **Note:** This deployment can take approximately 5-10 minutes.
     
@@ -455,7 +455,7 @@ differentiate between these types using a simple type field.
     passing in both the new message and partition key variables. Return
     the response as the result of InsertMessageAsync.
 
-    ```no-copy
+    ```nocopy
     PartitionKey partitionKey = new(message.SessionId);
     Message newMessage = message with { TimeStamp = DateTime.UtcNow };
     return await _container.CreateItemAsync<Message>(
@@ -483,7 +483,7 @@ queries are here implemented using the .NET SDK and a feed iterator.
     query variable as a parameter. Store the result in a variable of
     type FeedIterator named response.
 
-    ```no-copy
+    ```nocopy
     QueryDefinition query = new QueryDefinition("SELECT DISTINCT * FROM c WHERE c.type = @type")
     .WithParameter("@type", nameof(Session));
     FeedIterator<Session> response = _container.GetItemQueryIterator<Session>(query);
@@ -495,7 +495,7 @@ queries are here implemented using the .NET SDK and a feed iterator.
     Outside the while loop, the output variable is returned with a list
     of sessions as the result of the GetSessionsAsync method.
     
-    ```no-copy
+    ```nocopy
     FeedResponse<Session> results = await response.ReadNextAsync();
     output.AddRange(results);
     return output;
@@ -505,7 +505,7 @@ queries are here implemented using the .NET SDK and a feed iterator.
     @sessionId parameter to the session identifier passed in as a
     parameter, and the @type parameter to the name of the Message class.
 
-    ```no-copy
+    ```nocopy
     QueryDefinition query = new QueryDefinition("SELECT * FROM c WHERE  c.sessionId = @sessionId AND c.type = @type")
         .WithParameter("@sessionId", sessionId)
         .WithParameter("@type", nameof(Message));
@@ -540,7 +540,7 @@ solution.
 3.  Visual Studio Code launches the in-tool simple browser with the web
     application running. In the web application, create a new chat
     session by clicking on **+ Create New Chat** and ask the AI
-    assistant a question.
+    assistant a question. Then, close the running web application.
 
     ![](./media/image39.jpeg)
 
