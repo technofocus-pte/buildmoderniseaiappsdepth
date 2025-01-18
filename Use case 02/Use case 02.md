@@ -89,7 +89,7 @@ Database for PostgreSQL.
     at +++https://portal.azure.com/+++ and **login** with
     the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
 
-    ![](./media/image11.png)
+    ![](./media/image11.jpeg)
 
 2.  Select **Cancel** or the close button in the Welcome page.
 
@@ -116,7 +116,7 @@ Database for PostgreSQL.
     |  Engine  |  Select **PostgreSQL – Flexible Server**  |
     |  Hosting Plan  |  Select **Basic**  |
     
-    ![](./media/image14.png)
+    ![](./media/image14.jpeg)
 
     ![](./media/image15.jpeg)
 
@@ -358,23 +358,23 @@ capability as shown below.
   
 4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
 
-    ![](./media/image50.png)
+    ![](./media/image50.jpeg)
 
 5.	Click on **Delete resource group**.
 
-    ![](./media/image51.png)
+    ![](./media/image51.jpeg)
 
 6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
  
-    ![](./media/image52.png)
+    ![](./media/image52.jpeg)
 
 7.	Click on **Delete** in the confirmation dialog.
 
-    ![](./media/image53.png)
+    ![](./media/image53.jpeg)
 
 8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
 
-    ![](./media/image54.png)
+    ![](./media/image54.jpeg)
   	
 8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
    
