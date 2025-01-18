@@ -29,7 +29,7 @@ copy and paste from the notepad onto the PowerShell.
    
 2.	From Azure portal, select your subscription. From the left pane, select Resource providers under Settings, select +++**Microsoft.Alertsmanagement**+++ and click on **Register**.
 
-    ![](./media/pic100.jpeg)
+    ![](./media/pic100.jpg)
 
 3.  From the VM, search for +++**power shell**+++, right click on **Windows
     PowerShell** and select **Run as administrator**. Click
