@@ -94,11 +94,12 @@ copy and paste from the notepad onto the PowerShell.
 12. Execute the below commands to navigate to the **LabFiles** folder.
 
     +++cd\\+++
-    +++cd LabFiles\’Build a Chat bot’\Labs\deploy+++
+    
+    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
 
     ![](./media/image9.jpeg)
 
-13. Execute the below command replacing **\< Subscription id \>** with
+14. Execute the below command replacing **\< Subscription id \>** with
     your subscription id.
 
     +++Set-AzContext -SubscriptionId < Subscription id >+++
@@ -110,7 +111,7 @@ Subscription id from the Subscription page.
     
     ![](./media/image12.jpeg)
 
-14. Create a new **Resource group** named **mongo-devguide-rg** in Azure
+15. Create a new **Resource group** named **mongo-devguide-rg** in Azure
     by executing the below command.
 
     +++New-AzResourceGroup -Name mongo-devguide-rg -Location 'francecentral'+++
@@ -120,7 +121,7 @@ Subscription id from the Subscription page.
     >[!Note] **Note:** The location **francecentral** is used here. It can be changed
 to a **nearest location**
 
-15. Execute the below command to deploy the resources like Azure Cosmos
+16. Execute the below command to deploy the resources like Azure Cosmos
     DB workspace, Azure OpenAI in Azure.
 
     ```
