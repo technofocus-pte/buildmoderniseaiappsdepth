@@ -20,12 +20,11 @@ Database.
 
     ![](./media/image1.jpeg)
 
-2.  Click on **Sign in** and Sign in **Username** and **password** under
-    the **Azure Portal** section in the **Resources** tab of the VM.
+2.	Click on **Sign in** and and **sign in** with the **Username** and **password** under the **User Credentials** section in the Resources tab of the VM.
 
     ![](./media/image2.jpeg)
 
-    ![](./media/image72.png)
+    ![](./media/image3.jpeg)
 
 3.  Select **Start Visual Studio**.
 
@@ -115,7 +114,7 @@ correct account.
     |  **Property**  |  **Description**  |
     |:------|:-------|
     |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Select the **assigned Resource group**  |
+    | Resource group   |  Click on New -> **RGForWebAppSQL** and click on OK |
 
     ![](./media/image21.jpeg)
 
@@ -471,17 +470,17 @@ not see them yet.
 
 ## Exercise 4: Clean up resources
 
-1.	From the Azure portal, open your assigned **Resourcegroup**.
+1.	From the Azure portal, open the Resourcegroup **RGForWebAppSQL**. Click on **Delete resource group**.
 
-    ![](./media/image75.png)
+    ![](./media/image69.jpeg)
 
-2.	Select all the resources and click on **Delete**.
+2.	Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
 
-    ![](./media/image78.png) 
+    ![](./media/image70.jpeg) 
    	
-3.	Type +++delete+++ in the text box and select **Delete**. Select **Delete** in the confirmation dialog box.
+3.	Click **Delete** on the Delete confirmation dialog box.
 
-    ![](./media/image79.png)
+    ![](./media/image71.jpeg)
 
 **Summary**
 
