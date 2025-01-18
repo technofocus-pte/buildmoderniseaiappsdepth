@@ -87,37 +87,27 @@ Database for PostgreSQL.
 
 1.  Login to Azure portal
     at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **Azure Portal** section in the **Resources** tab of the VM.
+    the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
 
-    ![](./media/image65.png)
+    ![](./media/image11.png)
 
-    >[!Alert] **Important:** The **Resources** tab has got the basic credentials for you to perform the labs
-    >
-    >**Username** - **Login** user name to **Azure**
-    >
-    >**Password** - **Password** to the login to **Azure**
-    >
-    >**Subscription** - Your assigned subscription for Azure in this VM instance
-    >
-    >**Resource Group** - This will be the Resource group under which you will be creating all the resources as per the lab.
-
-3.  Select **Cancel** or the close button in the Welcome page.
+2.  Select **Cancel** or the close button in the Welcome page.
 
     ![](./media/image12.jpeg)
 
-4.  Enter +++**web app database**+++ in the search bar at the top of the Azure
+3.  Enter +++**web app database**+++ in the search bar at the top of the Azure
     portal. Select the item labelled **Web App + Database** under
     the **Marketplace** heading.
 
     ![](./media/image13.jpeg)
 
-5.  On **Create Web App + Database**, fill in the below details and
+4.  On **Create Web App + Database**, fill in the below details and
     select **Review + create**
 
     | **Property**   |  **Value**  |
     |:-------|:-------|
     |  Subscription  |  Select your **assigned subscription**  |
-    | Resource group   |  Select your **assigned Resource group**  |
+    | Resource group   |  Click **Create New** -> Enter +++**RGForAppService**+++  |
     |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
     | **Web App Details**   |    |
     | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
@@ -126,7 +116,7 @@ Database for PostgreSQL.
     |  Engine  |  Select **PostgreSQL – Flexible Server**  |
     |  Hosting Plan  |  Select **Basic**  |
     
-    ![](./media/image56.png)
+    ![](./media/image14.png)
 
     ![](./media/image15.jpeg)
 
@@ -366,21 +356,26 @@ capability as shown below.
 
     ![](./media/image59.png)
   
-4.	Next, from the Resource group page, select you **assigned Resource group**.
+4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
 
-    ![](./media/image60.png)
+    ![](./media/image50.png)
 
-5.	Select all the **resources**, and then select **Delete**.
+5.	Click on **Delete resource group**.
 
-    ![](./media/image61.png)
+    ![](./media/image51.png)
 
-6.	Type in +++delete+++ in the text box and click on **Delete**.
+6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
  
-    ![](./media/image62.png)
+    ![](./media/image52.png)
 
-    ![](./media/image63.png)
+7.	Click on **Delete** in the confirmation dialog.
 
-7.	A success notification on the deleted resources confirms the deletion.
+    ![](./media/image53.png)
+
+8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
+
+    ![](./media/image54.png)
+  	
 8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
    
     ![](./media/image64.jpeg)
