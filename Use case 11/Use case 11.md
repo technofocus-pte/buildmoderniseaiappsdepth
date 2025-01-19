@@ -246,7 +246,7 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
     using the endpoint to build a Uri and the key to build an
     AzureKeyCredential.
 
-    ```no-copy
+    ```nocopy
       Uri uri = new(endpoint);
           AzureKeyCredential credential = new(key);
           _client = new(
@@ -269,7 +269,7 @@ completion in this context).
     Messages list and sets the value of User to the sessionId
     constructor parameter.
 
-    ```no-copy
+    ```nocopy
     ChatCompletionsOptions options = new()
         {
             DeploymentName = "chatmodel",
@@ -297,7 +297,7 @@ completion in this context).
     as a string, the number of tokens associated with the prompt, and
     the number of tokens for the response.
 
-    ```no-copy
+    ```nocopy
     return (
             completionText: completions.Choices[0].Message.Content,
             completionTokens: completions.Usage.CompletionTokens
@@ -315,7 +315,7 @@ conversation in a couple of words.
     set to the sessionId constructor parameter, MaxTokens set to 200,
     and the remaining properties.
 
-    ```no-copy
+    ```nocopy
     ChatCompletionsOptions options = new()
         {
              DeploymentName = "chatmodel",
@@ -338,7 +338,7 @@ conversation in a couple of words.
     completions of type ChatCompletions. It returns the content of the
     completion as a string as the result of the SummarizeAsync method.
 
-    ```no-copy
+    ```nocopy
     Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(options);
     ChatCompletions completions = completionsResponse.Value;
     string completionText = completions.Choices[0].Message.Content;
@@ -365,7 +365,7 @@ client required to access Azure Cosmos DB for NoSQL using the client.
     CosmosSerializationOptions and Set the PropertyNamingPolicy property
     of the variable to CosmosPropertyNamingPolicy.CamelCase.
 
-    ```no-copy
+    ```nocopy
     CosmosSerializationOptions options = new()
     {
         PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
@@ -380,7 +380,7 @@ how it's corresponding property is cased in the .NET class.
     client using the CosmosClientBuilder class, endpoint, key, and
     serialization options you specified earlier.
 
-    ```no-copy
+    ```nocopy
     CosmosClient client = new CosmosClientBuilder(endpoint, key)
         .WithSerializerOptions(options)
         .Build();
@@ -395,7 +395,7 @@ how it's corresponding property is cased in the .NET class.
     class' \_container variable only if it's not null. If it's null,
     throw an ArgumentException.
 
-    ```no-copy
+    ```nocopy
     _container = container ??
     throw new ArgumentException("Unable to connect to existing Azure Cosmos DB container or database.");
     ```
@@ -441,7 +441,7 @@ differentiate between these types using a simple type field.
     passing in the session parameter and partitionKey variable. Returns
     the response as the result of the InsertSessionAsync method.
 
-    ```no-copy
+    ```nocopy
     return await _container.CreateItemAsync<Session>(
         item: session,
         partitionKey: partitionKey
