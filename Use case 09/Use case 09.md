@@ -448,8 +448,7 @@ Works JSON files into the database using the MongoDB API.
 10. **Execute** the next **3** cells to add **vector
     fields** to **products, customer and sales documents.**
 
-**Note:** The first cell will take around 5 minutes, second one around 3
-minutes and the third one around 20 minutes to complete execution.
+   **Note:** The first cell will take around 5 minutes, second one around 3 minutes and the third one around 20 minutes to complete execution.
 
     ![](./media/image77.jpeg)
 
