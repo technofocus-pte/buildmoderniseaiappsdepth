@@ -173,7 +173,7 @@ to a **nearest location**
 
 8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
 
-    ![](./media/image99.jpeg)
+    ![](./media/image99.jpg)
 
 9.  Copy the connection string and paste it in a notepad. Replace the
     \< **password** \> with +++**myMongoDB98**+++ in the copied
