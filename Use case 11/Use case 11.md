@@ -547,7 +547,7 @@ solution.
 4.  Paste the following text in the text box and click on
     the **Send** icon.
 
-    +++How many wins does it take to promote to the Premier League? +++
+    +++How many wins does it take to promote to the Premier League?+++
     
     ![](./media/image40.jpeg)
     
