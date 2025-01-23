@@ -251,7 +251,7 @@ container images (JDK/JRE) for the Linux architecture.
 
 >**IMPORTANT** : This lab require jdk 11 . set java_home to jdk 11 . Refer Lab 01 set JAVA_HOME
 
-    `docker build -t flightbookingsystemsample .`
+    +++docker build -t flightbookingsystemsample .+++
 
 ![A computer screen with text Description automatically
 generated](./media/image18.jpeg)
@@ -299,9 +299,7 @@ generated](./media/image21.jpeg)
 generated](./media/image22.jpeg)
 
 >**Note:** if the command "docker run -p 8080:8080 flightbookingsystemsample" comes up with an error, then use the below
-mentioned port
-
-+++docker run -p 8081:8080 flightbookingsystemsample+++
+mentioned port - +++docker run -p 8081:8080 flightbookingsystemsample+++
 
 3.  Open up a browser and visit the Flight Booking System for Airline
     Reservations landing page     at +++http://localhost:8080/FlightBookingSystemSample+++
