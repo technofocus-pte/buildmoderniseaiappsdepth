@@ -1,4 +1,4 @@
-# Usecase 10 : Deploying chat application to answer questions from the user and tracks chat history across conversations
+# Usecase 10 : Deploying chat application to answer questions from the user and tracks chat history acrossn conversations
 
 **Objective:**
 
@@ -11,7 +11,7 @@ single container within Azure Cosmos DB for NoSQL.
 
 In short, the application will:
 
-- **Connect** to Azure OpenAI\\'s model using the .NET SDK
+- **Connect** to Azure OpenAI's model using the .NET SDK
 
 - **Send** prompts to the model and parse the completion response
 
@@ -36,8 +36,7 @@ chat history across conversations.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
--``https://github.com/signup?user_email=&source=form-home-signupobjectives``
-
+- +++https://github.com/signup?user_email=&source=form-home-signupobjectives+++
 ### Task 1 : Run the Docker
 
 1.  In your Windows search box, type **Docker** , then click on **Docker
@@ -45,264 +44,162 @@ credentials. If you do not have, please create one from here
 
 ![](./media/image2.jpeg)
 
-### Task 2 : Register Service provider
+### Task 2 : Deploy Services and application to Azure
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with
-    your Azure credentials available in **Resource** tab of your VM.
+1.  Open a browser and go to  `https://github.com` and sign in with
+    your Github account.Search for the below repo
 
-> ![A screenshot of a computer Description automatically
-> generated](./media/image3.png)
-
-2.  On Home page of Azure portal, click on **Resource groups** tile.
-
-![A screenshot of a computer Description automatically
-generated](./media/image4.png)
-
-3.  Copy the resource group name and save it in notepad to use next task
-    to deploy required resources in this resource group.
-
-![A screenshot of a computer Description automatically
-generated](./media/image5.png)
-
-4.  Navigate back to Home page ,click on **Subscription** tile.
-
-![A screenshot of a computer Description automatically
-generated](./media/image6.png)
-
-5.  Click on subscription name.
-
-![A screenshot of a computer Description automatically
-generated](./media/image7.png)
-
-6.  Click on **Settings -> Resource provider** from left navigation
-    menu.
-
-![](./media/image8.png)
-
-7.  Type ``**Microsoft.AlertsManagement**`` and press enter. Select
-    it and then click on **Register**.
-
-![A screenshot of a computer Description automatically
-generated](./media/image9.png)
-
-![A screenshot of a computer Description automatically
-generated](./media/image10.png)
-
-### Task 3 : Provision Services and application to Azure
-
-1.  Open a browser and go to ``https:\\github.com`` and sign in
-    with your Github account. Search for the below repo
-
-![](./media/image11.jpeg)
+![](./media/image3.jpeg)
 
 2.  Search for the below repo and click on **Fork**.
 
-+++https://github.com/technofocus-pte/chat-csharp-cosmos-db-nosql-openai-CSTesting.git+++
+    `https://github.com/technofocus-pte/chat-csharp-cosmos-db-nosql-openai`
 
-![](./media/image12.jpeg)
+![](./media/image4.jpeg)
 
 3.  Enter the repository name and then click on **Create repository**.
 
-![](./media/image13.jpeg)
+![](./media/image5.jpeg)
 
-4.  Click on **Code -> Code space -\ Open Code space.**
+4.  Click on **Code -> Code space -> Open Code space.**
 
-![](./media/image14.jpeg)
+![](./media/image6.jpeg)
 
 5.  Wait for the Dev container to setup . it takes 3-5 min
 
-![](./media/image15.jpeg)
+![](./media/image7.jpeg)
 
 6.  Run below command to log in to AZD. Copy the generated code and
     press Enter. 
 
-+++azd auth login+++
+    `azd auth login`
+
+![](./media/image8.jpeg)
+
+7.  Paste the generated code and sign in with your Azure subscription.
+
+![](./media/image9.jpeg)
+
+![](./media/image10.jpeg)
+
+8.  Run below command to Initialize the project in the current
+    directory.Say **yes** when asked to Continue initializing app
+
+    `azd init --template chat-csharp-cosmos-db-nosql-openai`
+
+![](./media/image11.jpeg)
+
+9.  Enter the Environment name as `cosmoschatapp` and press
+    Enter.
+
+![](./media/image12.jpeg)
+
+10. Run below command to deploy the services to Azure, build your
+    container, and deploy the application.
+
+   `azd up`
+
+![](./media/image13.jpeg)
+
+11. Select your Subscription and your nearest location . we have
+    taken **East US/West Europe/UKSouth** location for this usecase.Sometimes, East US might
+    not be available, choose different location and deploy.
+
+![](./media/image14.jpeg)
+
+12. Wait for the resource to deploy completely.
+
+![](./media/image15.jpeg)
+
+13. After deployment successful, service end point url gets generated.
 
 ![](./media/image16.jpeg)
 
-7.  Paste the generated code and sign in with your Azure credentials.
+14. Open the web service endpoint url link.
 
 ![](./media/image17.jpeg)
 
+15. It opens the chat app.
+
 ![](./media/image18.jpeg)
 
-8.  Run below command to Initialize the project in the current    directory. Enter the Environment name as ``cosmoschatapp`` and press Enter.
+16. Click on **Create New Chat** button.Enter the below prompt.
 
-+++azd init+++
+    `What is the seating capacity for Lumen in Seattle?`
 
-![A screenshot of a computer Description automatically
-generated](./media/image19.png)
+![](./media/image19.jpeg)
 
-9.  Run below command to deploy the services to Azure, build your
-    container. Select below values.
+17. Enter below prompt . Explore the app with different prompts.
 
-+++azd provision+++
+    `is that bigger than Dogger stadium??`
 
-- Select an Azure location to use : East us/west us (Sometimes, East US might not be available, choose different location and deploy.) 
+![](./media/image20.jpeg)
 
-- Enter a value for the existingResourceGroupName infrastructure parameter: should be your resource group name (ResourceGroup1)
+### Task 3 : Explore the code
 
+1.  Expand **src -\> services- \> ChatService.cs.** This file has a code
+    returns list of chat session ids and name and returns the chat
+    messages to display on the main web page when the user selects a
+    chat from the left-hand nav
 
-![](./media/image20.png)
+![](./media/image21.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image21.png)
+2.  Click on CosmosDbService.cs 's code .Code is to create Cosmos DB
+    service and to create databases ,containers . create and get chat
+    messages etc
 
-10. Wait for the resource to provision completely. This process wil take
-    5-10 min to create al the required resources.
+![](./media/image22.jpeg)
 
-![](./media/image22.png)
+3.  Click on OpenAIService.CS .Code is to create resource sand deploy modesl .Also, send user prompts to instruct the model for chat
+    session,summarization
 
-### Task 4 : Deploy the application to Azure
+![](./media/image23.jpeg)
 
-1.  Switch back to Azure portal and click on Resource groups tile on
-    Home page.
+### Task 4: Varify the deployed resource in Azure portal
 
-![](./media/image23.png)
+1.  Switch back to Azure portal and click on your resource group
+    name.You should see below resources
 
-2.  Click on resource group name .
+- Container Registry
 
-![](./media/image24.png)
+- Azure Cosmos Db account
 
-3.  You should see below resources
+- AzureOpenAI
 
-- **Container**
+![](./media/image24.jpeg)
 
-- **Container Registry**
+2.  Click on **Azure Cosmos DB account** name.
 
-- **Azure Cosmos Db account**
+![](./media/image25.jpeg)
 
-- **AureOpenAI**
+3.  Click on Data explorer from left navigation menu, expand database
+    and click on Items. You should see the chat completions.
 
-![A screenshot of a computer Description automatically
-generated](./media/image25.png)
+![](./media/image26.jpeg)
 
-4.  Click on **Container registry** name.
+4.  Switch back to Chat app and enter some prompts .You can check
+    completions under items in Cosmos DB database.
 
-![](./media/image26.png)
-
-5.  Expand **Setting** from left navigation menu, click on **Access
-    keys.** Select **Admin user check box.** Copy the **Login server**,
-    **user name** and **password** to a notepad to use it to deploy the
-    app.
-
-![](./media/image27.png)
-
-6.  Duplicate the tab to open the Azrue portal in new tab.
-
-![](./media/image28.png)
-
-7.  Click on the resource group name form top navigation menu.
-
-![](./media/image29.png)
-
-8.  Click on Container App name .
-
-![](./media/image30.png)
-
-9.  Click on **Authorize** button under Github-Sign in to authenticate
-    with your GitHub account. Authorize your Github account.
-
-10. Select below values
-
-**Organization : your Github organization**
-
-**Repository:** chat-csharp-cosmos-db-nosql-openai
-
-**Branch :** main
-
-![](./media/image31.png)
-
-11. Scroll down to **Registry settings** and enter below values and then
-    click on **Start continuous deployment** button.
-
-- Repository source : **Docker Hub or other registries.**
-
-- Login server URL : Your Login server copied form Container registry
-  (step#5)
-
-- Username : your password from container registry (step #5)
-
-- Password : Your password from container registry (step # 5)
-
-![](./media/image32.png)
-
-12. Click on Workflow file link. It opens new tab with Github.
-
-![](./media/image33.png)
-
-13. Click on **Actions** tab.
-
-![](./media/image34.png)
-
-14. Wait for the deployment to complete.
-
-![](./media/image35.png)
-
-15. Do not close any tabs.
-
-### Task 5 : Access the chat app
-
-1.  Switch back to Azure portal and click on **Overview** from left
-    navigation and then click on **Application Url**. It opens a new to
-    load app.
-
-![](./media/image36.png)
-
-2.  Click on **Create New Chat** button.
-
-![](./media/image37.png)
-
-3.  Enter the below prompt.
-
-``What is the seating capacity for Lumen in Seattle?``
-
-![](./media/image38.jpeg)
-
-4.  Enter below prompt . Explore the app with different prompts.
-
-``is that bigger than Dogger stadium??``
-
-![](./media/image39.jpeg)
-
-### Task 6 : Clean up all the resources
+### Task 5: Clean up all the resources
 
 To clean up all the resources created by this sample:
 
-1.  Switch back to Github portal tab and refresh the page.
+1.  Go back Github codespace tab and run `azd down –purge`
 
-![A screenshot of a computer Description automatically
-generated](./media/image40.png)
+![](./media/image27.jpeg)
 
-2.  Click on Code , select the branch created for this lab and click on
-    **Delete**.
+2.  When asked if you are sure you want to continue, enter y
 
-![](./media/image41.png)
+![](./media/image28.jpeg)
 
-3.  Confirm the branch deletion by clicking on **Delete** button.
+3.  When asked if you want to permanently delete the resources,
+    enter **y**
 
-![A screenshot of a computer Description automatically
-generated](./media/image42.png)
+![](./media/image29.jpeg)
 
-5.  Switch back to **Azure portal -> Resource group-> Resource group
-    name.**
+4. Navigate back to your Github browser tab and delete the codespace used for this lab.
 
-![](./media/image43.png)
-
-6.  Select all the resource and then click on Delete as shown in below
-    image. (**DO NOT DELETE** resource group)
-
-![](./media/image44.png)
-
-7.  Type ``delete`` on the text box and then click on **Delete**.
-
-> ![](./media/image45.png)
-
-8.  Confirm the deletion by clicking on **Delete**.
-
-![](./media/image46.png)
-
-**Summary :** You have implemented service classes using the Microsoft.Azure.Cosmos and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure OpenAI conversational interface along with contextual prefixes and
+>**Summary:** You have implemented service classes using the Microsoft.Azure.Cosmos and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure OpenAI conversational interface along with contextual prefixes and
 parsed the usage and body properties of the response. You also used
 Azure Cosmos DB for NoSQL to store the conversation sessions and
 messages within a single container.
