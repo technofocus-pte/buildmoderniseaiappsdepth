@@ -138,9 +138,9 @@ generated](./media/image19.png)
 
 +++azd provision+++
 
-    - Select an Azure location to use : East us/west us (Sometimes, East US might not be available, choose different location and deploy.) 
+- Select an Azure location to use : East us/west us (Sometimes, East US might not be available, choose different location and deploy.) 
 
-    - Enter a value for the 'existingResourceGroupName' infrastructure parameter: ResourceGroup1
+- Enter a value for the existingResourceGroupName infrastructure parameter: should be your resource group name (ResourceGroup1)
 
 
 ![](./media/image20.png)
