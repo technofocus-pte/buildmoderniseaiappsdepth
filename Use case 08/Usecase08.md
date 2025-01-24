@@ -10,7 +10,7 @@ pattern. It uses Azure OpenAI Service to access the ChatGPT model
 ![A diagram of a software process Description automatically
 generated](./media/image1.jpeg)
 
-The usecase includes sample data so it\'s ready to try end to end. In
+The usecase includes sample data so it's ready to try end to end. In
 this sample application we use a fictitious company called Contoso Real
 Estate, and the experience allows its customers to ask support questions
 about the usage of its products. The sample data includes a set of
@@ -57,7 +57,7 @@ generated](./media/image2.jpeg)
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL:  `https://github.com/technofocus-pte/azure-search-openai-javascript/` and
+    URL: \`\`https://github.com/technofocus-pte/azure-search-openai-javascript\`\` and
     sign in with your Github account.
 
 ![A screenshot of a computer Description automatically
@@ -83,167 +83,136 @@ generated](./media/image6.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image7.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image8.jpeg)
+### Task 2: Provision required services to build and deploy chat app to Azure
 
-### Task 2: Deploy chat app to Azure
+1.  Run the following command on the Terminal. Copy the code and press
+    enter.
 
-1.  Sign in to Azure with the Azure Developer CLI. Run the following
-    command on the Terminal. Copy the code and press enter
-
-    +++azd auth login+++
+\`\`azd auth login\`\`
 
 ![A screenshot of a computer Description automatically
-generated](./media/image9.jpeg)
+generated](./media/image8.png)
 
-2.  Default browser opens to sign in. Sign in with your Azure
-    subscription account.
+2.  Default browser opens to enter a code.Enter the copied code and
+    click **Next**.
+
+![](./media/image9.png)
+
+3.  Sign in with your Azure credentials.
+
+![A screenshot of a computer Description automatically
+generated](./media/image10.png)
 
 ![A screenshot of a computer error Description automatically
-generated](./media/image10.jpeg)
+generated](./media/image11.png)
 
-![A screenshot of a login page Description automatically
-generated](./media/image11.jpeg)
+6.  Switch back to Github Codespace tab. Run below command to Initialize
+    the project environment in the current directory. Enter the
+    Environment name as \`\`**ragpgpy \`\`** and press Enter.
 
-![A screenshot of a computer Description automatically
-generated](./media/image12.jpeg)
+Note : env name should be unique
 
-![A screenshot of a computer Description automatically
-generated](./media/image13.jpeg)
+\`\` azd env new\`\`
 
-3.  Run below command to command to initialize a git repository. Enter
-    ‘Y’ when asked” Continue initializing an app in
-    'workspaces/azure-search-openai-javascript'?”
+![](./media/image12.png)
 
-    +++azd init -t azure-search-openai-javascript+++
+7.  Run below command to provision the services to Azure, build your
+    container.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image14.jpeg)
+generated](./media/image13.png)
 
-4.  To create an environment for Azure resources, run the following
-    Azure Developer CLI command.It asks you to enter environment name
-    .Enter any name of your choice and press enter (eg :+++ragpgpy+++)
+8.  Select below values.
 
->**Note:** When creating an environment, ensure that the name consists of lowercase letters.
+> \`\`azd provision\`\`
 
-![A computer screen shot of a computer Description automatically
-generated](./media/image15.jpeg)
+- **Select an Azure Subscription to use** : select your subscription
 
-5.  Run the following Azure Developer CLI command to provision the Azure
-    resources and deploy the code.
+- **Select an Azure location to use** : **East us2/west us2**
+  (Sometimes, East US might not be available, choose location from the
+  list mentioned below.)
 
-    +++azd up+++
+- Select existing resource group : Your existing resource group (eg
+  :**ResourceGroup1 )**
 
-![A screenshot of a computer Description automatically
-generated](./media/image16.jpeg)
+![](./media/image14.png)
 
-6.  When prompted, select a **subscription** to create the resources and
-    select the region closest to your location; in this lab, we have
-    chosen the **East US2** region.
+9.  Wait for the resource to provision completely. This process wil take
+    5-10 min to create al the required resources.
 
-![A screenshot of a computer Description automatically
-generated](./media/image17.jpeg)
+> ![A screenshot of a computer Description automatically
+> generated](./media/image15.png)
 
-7.  When prompted, **enter a value for the 'openAILocation'
-    infrastructure parameter** select the region closest to your
-    location; in this lab, we have chosen the **North Central
-    US** region
+### Task 3 : Deploy the chat app and explore it
 
-![A screenshot of a computer Description automatically
-generated](./media/image18.jpeg)
+10. Run the below command to deploy the app.
 
-8.  Deployment will take around 15 - 25 min. While the deployment is
-    going on, You can go next Task 3 and verify deployed resources.
+\`\`azd deploy\`\`
+
+![](./media/image16.png)
+
+11. Wait for the deployment .It takes \< 5 minutes.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image19.jpeg)
+generated](./media/image17.png)
+
+12. Click on the endpoint url generated.
+
+![](./media/image18.png)
+
+13. Click on **Open**.
+
+![](./media/image19.png)
+
+14. It opens app in new tab.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image20.jpeg)
+generated](./media/image20.png)
 
-9.  Deployment completed and front end hosted successfully. Click on the
-    generated webapp URL
+15. Select **How to search and book rental?** Container and then click
+    on enter button next to the text box.
 
-![A screenshot of a computer Description automatically
-generated](./media/image21.jpeg)
+![](./media/image21.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image20.jpeg)
+### Task 4 : Clean up all the resources
 
-![A screenshot of a chat Description automatically
-generated](./media/image22.jpeg)
-
-10. Explore the chat app with different prompts.
-
-### Task 3: Verify deployed resources in the Azure portal
-
-1.  On Home page of Azure portal, click on **Resource Groups**.
+1.  Switch back to **Azure portal -\> Resource group- \> Resource group
+    name.**
 
 ![A screenshot of a computer Description automatically
-generated](./media/image23.jpeg)
+generated](./media/image22.png)
 
-2.  Click on your resource group name
+2.  Select all the resource and then click on Delete as shown in below
+    image. (**DO NOT DELETE** resource group)
 
-![A screenshot of a computer Description automatically
-generated](./media/image24.jpeg)
+![](./media/image23.png)
 
-3.  Make sure the below resource got deployed successfully
+3.  Type \`\`**delete**\`\` on the text box and then click on
+    **Delete**.
 
-    - Container App
+![](./media/image24.png)
 
-    - AI Search
+4.  Confirm the deletion by clicking on **Delete**.
 
-    - Application Insights
+![](./media/image25.png)
 
-    - Container Apps Environment
-
-    - Log Analytics workspace
-
-    - Azure OpenAI
-
-    - Container registry
+5.  Switch back to Github portal tab and refresh the page.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image25.jpeg)
+generated](./media/image26.png)
 
-4.  Click on **Azure OpenAI** resource name.
+6.  Click on Code , select the branch created for this lab and click on
+    **Delete**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image26.jpeg)
+![](./media/image27.png)
 
-5.  On **Overview** in the left navigation menu, right click **Go to
-    Azure OpenAI Studio** and select to open a new tab.
+7.  Confirm the branch deletion by clicking on **Delete** button.
 
-![A screenshot of a computer Description automatically
-generated](./media/image27.jpeg)
+![](./media/image28.png)
 
-6.  Click on **Deployments** from left navigation menu and make
-    sure **gpt-35-turbo**, **text-embedding-ada-002** should be deployed
-    successfully
+### Summary:
 
-![A screenshot of a computer Description automatically
-generated](./media/image28.jpeg)
-
-### Task 5: Clean up all the resources
-
-To clean up all the resources created by this sample:
-
-1.  Go back Visual Studio terminal and run  +++azd down –purge+++
-
-![A screenshot of a computer program Description automatically
-generated](./media/image29.jpeg)
-
-2.  When asked if you are sure you want to continue, enter y
-
-![A screenshot of a computer Description automatically
-generated](./media/image30.jpeg)
-
-3.  When asked if you want to permanently delete the resources,
-    enter **y**
-
-![A screenshot of a computer Description automatically
-generated](./media/image31.jpeg)
-
->**Summary:**This use case thought you , deploying a chat application for the Retrieval Augmented Generation pattern running on Azure, using Azure AI
+This use case thought you , deploying a chat application for the
+Retrieval Augmented Generation pattern running on Azure, using Azure AI
 Search for retrieval and Azure OpenAI and LangChain large language
 models (LLMs) to power ChatGPT-style and Q&A experiences

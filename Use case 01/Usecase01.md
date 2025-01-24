@@ -30,7 +30,7 @@ running on Azure App Service on Linux.
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
-4.  Enter the variable value as `C:\Program Files\Java\jdk-17` and
+4.  Enter the variable value as **C:\Program Files\Java\jdk-17** and
     then click on **Ok**.
 
 ![](./media/image4.jpeg)
@@ -52,13 +52,13 @@ generated](./media/image6.jpeg)
 generated](./media/image7.jpeg)
 
 8.  Enter the Variable value
-    as `C:\Software\apache-maven-3.9.4-bin\apache-maven-3.9.4` and
+    as \`C:\Software\apache-maven-3.9.4-bin\apache-maven-3.9.4\` and
     then click on **OK**.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image8.jpeg)
 
-9.  On **Environmental Variables** window, click on **Ok** and
+9.  On **Environmental Variable**s window, click on **Ok** and
     again **OK**.
 
 ![](./media/image9.jpeg)
@@ -94,7 +94,22 @@ to Azure Container Apps.
 
 1.  Open **Git Bash** from the Window start menu and run below command
 
-+++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create  -DplatformVersion=3.7.3  -DprojectGroupId=com.example.demo  -DprojectArtifactId=todo  -DclassName="com.example.demo.TodoResource"   -Dpath="/api/todos"  -DjavaVersion=17  -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
+> mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create \\
+>
+> -DplatformVersion=3.7.3 \\
+>
+> -DprojectGroupId=com.example.demo \\
+>
+> -DprojectArtifactId=todo \\
+>
+> -DclassName="com.example.demo.TodoResource" \\
+>
+> -Dpath="/api/todos" \\
+>
+> -DjavaVersion=17 \\
+
+-Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql,
+docker"
 
 ![](./media/image11.jpeg)
 
@@ -104,7 +119,7 @@ to Azure Container Apps.
     Dockerfiles. It also generates a *pom.xml* file with all the needed
     dependencies (Hibernate, RESTEasy, Jackson, PostgreSQL, and Docker):
 
-3.  Click on Search and type `IntelliJ IDE` and then
+3.  Click on Search and type \`\`IntelliJ IDE\`\` and then
     select **IntelliJ IDE**
 
 ![A screenshot of a computer Description automatically
@@ -115,7 +130,9 @@ generated](./media/image12.jpeg)
 ![A screenshot of a computer screen Description automatically
 generated](./media/image13.jpeg)
 
-5.  Click on Don't send.
+5.  Close the Data sharing window.
+
+![](./media/image14.jpeg)
 
 6.  Select the **Start trial** radio button and then click on
     the **Start trial** button.
@@ -149,76 +166,115 @@ generated](./media/image19.jpeg)
 
 12. Open **pom.xml** and you should see below xml format.
 
-```
-<dependencies>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm-panache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-jackson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-postgresql</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-container-image-docker</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-arc</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-hibernate-orm</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-junit5</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.rest-assured</groupId>
-      <artifactId>rest-assured</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-```
+> \<dependencies\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-hibernate-orm-panache\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-resteasy-jackson\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-jdbc-postgresql\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-container-image-docker\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-arc\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-hibernate-orm\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-resteasy\</artifactId\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.quarkus\</groupId\>
+>
+> \<artifactId\>quarkus-junit5\</artifactId\>
+>
+> \<scope\>test\</scope\>
+>
+> \</dependency\>
+>
+> \<dependency\>
+>
+> \<groupId\>io.rest-assured\</groupId\>
+>
+> \<artifactId\>rest-assured\</artifactId\>
+>
+> \<scope\>test\</scope\>
+>
+> \</dependency\>
 
->**Note** All the dependencies in the *pom.xml* file are defined in the Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
+\</dependencies\>
+
+**Note** All the dependencies in the *pom.xml* file are defined in the
+Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
 
 ![](./media/image21.jpeg)
 
 ### Task 2 : Code the application
 
 1.  Go to **src/main/java/com.example.demo** and right click
-    on **MyEntity.Java -> Refactor -> Rename**.
+    on **MyEntity.Java -\> Refactor -\> Rename**.
 
 ![](./media/image22.jpeg)
 
-2.  Rename the generated **MyEntity.java** class to `Todo.java`  (located in the same folder as
+2.  Rename the generated ***MyEntity.java*** class
+    to \`\`**Todo.java\`\`** (located in the same folder as
     the *TodoResource.java* file)
 
 ![](./media/image23.jpeg)
 
 3.  Replace the existing code with the following Java code. It uses Java
-    Persistence API (jakarta.persistence.package) to store and
-    retrieve data from your PostgreSQL server. It also uses [Hibernate
-    ORM with Panache]{.underline} (inheriting from
+    Persistence API (jakarta.persistence.\* package) to store and
+    retrieve data from your PostgreSQL server. It also uses \[Hibernate
+    ORM with Panache\]{.underline} (inheriting from
     io.quarkus.hibernate.orm.panache.PanacheEntity) to simplify the
     persistence layer.
 
 4.  You use a JPA entity (@Entity) to map the Java Todo object directly
     to the PostgreSQL Todo table. The TodoResource REST endpoint then
     creates a new Todo entity class and persists it. This class is a
-    domain model that's mapped on the Todo table. The table is
+    domain model that\\'s mapped on the Todo table. The table is
     automatically created by JPA.
 
 5.  Extending PanacheEntity gets you a number of generic create, read,
@@ -234,37 +290,47 @@ generated](./media/image24.jpeg)
 7.  Replace the existing code with the following Java code to the Todo
     entity:
 
-```
 package com.example.demo;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import jakarta.persistence.Entity;
+
 import java.time.Instant;
 
 @Entity
+
 public class Todo extends PanacheEntity {
 
-    public String description;
+public String description;
 
-    public String details;
+public String details;
 
-    public boolean done;
+public boolean done;
 
-    public Instant createdAt = Instant.now();
+public Instant createdAt = Instant.now();
 
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", details='" + details + '\'' +
-                ", done=" + done +
-                ", createdAt=" + createdAt +
-                '}';
-    }
+@Override
+
+public String toString() {
+
+return "Todo{" +
+
+"id=" + id + '\\'' +
+
+", description='" + description + '\\'' +
+
+", details='" + details + '\\'' +
+
+", done=" + done +
+
+", createdAt=" + createdAt +
+
+'}';
+
 }
-```
+
+}
 
 ![A screenshot of a computer Description automatically
 generated](./media/image25.jpeg)
@@ -274,51 +340,78 @@ generated](./media/image25.jpeg)
     Open the **TodoResource** class and replace the code with the
     following:
 
-```
 package com.example.demo;
 
 import jakarta.inject.Inject;
+
 import jakarta.transaction.Transactional;
+
 import jakarta.ws.rs.Consumes;
+
 import jakarta.ws.rs.GET;
+
 import jakarta.ws.rs.POST;
+
 import jakarta.ws.rs.Path;
+
 import jakarta.ws.rs.Produces;
+
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+
 import jakarta.ws.rs.core.Response;
+
 import jakarta.ws.rs.core.UriBuilder;
+
 import jakarta.ws.rs.core.UriInfo;
+
 import org.jboss.logging.Logger;
 
 import java.util.List;
 
 @Path("/api/todos")
+
 @Consumes(APPLICATION_JSON)
+
 @Produces(APPLICATION_JSON)
+
 public class TodoResource {
 
-    @Inject
-    Logger logger;
+@Inject
 
-    @Inject
-    UriInfo uriInfo;
+Logger logger;
 
-    @POST
-    @Transactional
-    public Response createTodo(Todo todo) {
-        logger.info("Creating todo: " + todo);
-        Todo.persist(todo);
-        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(todo.id.toString());
-        return Response.created(uriBuilder.build()).entity(todo).build();
-    }
+@Inject
 
-    @GET
-    public List<Todo> getTodos() {
-        logger.info("Getting all todos");
-        return Todo.listAll();
-    }
+UriInfo uriInfo;
+
+@POST
+
+@Transactional
+
+public Response createTodo(Todo todo) {
+
+logger.info("Creating todo: " + todo);
+
+Todo.persist(todo);
+
+UriBuilder uriBuilder =
+uriInfo.getAbsolutePathBuilder().path(todo.id.toString());
+
+return Response.created(uriBuilder.build()).entity(todo).build();
+
 }
-```
+
+@GET
+
+public List\<Todo\> getTodos() {
+
+logger.info("Getting all todos");
+
+return Todo.listAll();
+
+}
+
+}
 
 ### ![A screenshot of a computer program Description automatically generated](./media/image26.jpeg)
 
@@ -340,9 +433,9 @@ generated](./media/image27.jpeg)
 2.  Go back to Gitbash and run the to-do application by using this
     command:
 
-+++cd todo+++
+cd todo
 
-+++./mvnw quarkus:dev+++
+./mvnw quarkus:dev
 
 ![](./media/image28.jpeg)
 
@@ -370,9 +463,14 @@ In a separate new instance of Gitbash , create a new to-do item in the
 database with the following command. You should see the log in the
 Quarkus console:
 
+curl --header "Content-Type: application/json" \\
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'  http://127.0.0.1:8080/api/todos+++
+--request POST \\
 
+--data '{"description":"Take Quarkus MS Learn","details":"Take the MS
+Learn on deploying Quarkus to Azure Container Apps","done": "true"}' \\
+
+http://127.0.0.1:8080/api/todos
 
 ![A computer screen with white text Description automatically
 generated](./media/image33.jpeg)
@@ -384,17 +482,21 @@ generated](./media/image33.jpeg)
 
 7.  Create a second to-do by using the following cURL command:
 
+> curl --header "Content-Type: application/json" \\
+>
+> --request POST \\
+>
+> --data '{"description":"Take Azure Container Apps MS
+> Learn","details":"Take the ACA Learn module","done": "false"}' \\
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
-
-
+http://127.0.0.1:8080/api/todos
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image34.jpeg)
 
 8.  Next, retrieve the data by using a new cURL request:
 
-+++curl http://127.0.0.1:8080/api/todos+++
+curl http://127.0.0.1:8080/api/todos
 
 This command returns the list of to-do items, including the items you
 created:
@@ -411,41 +513,62 @@ To test the endpoint, it uses \[RESTAssured\]{.underline}.
     from **src/test/java/com.example.demo**. Replace code in
     the **TodoResourceTest** class with the following code:
 
-```
 package com.example.demo;
 
 import io.quarkus.test.junit.QuarkusTest;
+
 import static io.restassured.RestAssured.given;
+
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
+
 class TodoResourceTest {
 
-    @Test
-    void shouldGetAllTodos() {
-        given()
-                .when().get("/api/todos")
-                .then()
-                .statusCode(200);
-    }
+@Test
 
-    @Test
-    void shouldCreateATodo() {
-        Todo todo = new Todo();
-        todo.description = "Take Quarkus MS Learn";
-        todo.details = "Take the MS Learn on deploying Quarkus to Azure Container Apps";
-        todo.done = true;
+void shouldGetAllTodos() {
 
-        given().body(todo)
-                .header(CONTENT_TYPE, APPLICATION_JSON)
-                .when().post("/api/todos")
-                .then()
-                .statusCode(201);
-    }
+given()
+
+.when().get("/api/todos")
+
+.then()
+
+.statusCode(200);
+
 }
-```
+
+@Test
+
+void shouldCreateATodo() {
+
+Todo todo = new Todo();
+
+todo.description = "Take Quarkus MS Learn";
+
+todo.details = "Take the MS Learn on deploying Quarkus to Azure
+Container Apps";
+
+todo.done = true;
+
+given().body(todo)
+
+.header(CONTENT_TYPE, APPLICATION_JSON)
+
+.when().post("/api/todos")
+
+.then()
+
+.statusCode(201);
+
+}
+
+}
 
 ![A computer screen shot of a program Description automatically
 generated](./media/image36.jpeg)
@@ -457,7 +580,7 @@ generated](./media/image36.jpeg)
 3.  Switch back to **Gitbash** and Ctrl + C. Run below commands to test
     the application by using this command:
 
-+++./mvnw clean test+++
+./mvnw clean test
 
 ![A computer screen with text and images Description automatically
 generated](./media/image37.jpeg)
@@ -475,22 +598,14 @@ by using the Azure CLI. Finally, you configure the Quarkus application
 to access the remote PostgreSQL database. Use a terminal of your choice
 to run the commands.
 
-**Task 1 : Prepare the working environment**
+## Task 1 : Prepare the working environment
 
 You need to set up some environment variables. Here are some notes about
 the variables you'll create:
 
-- **Variable**: The name of the project. To keep this value unique, we recommend that you use AZ_PROJECT_<your initials>.
-- **AZ_RESOURCE_GROUP**: The name of the resource group that holds the resources.
-- **AZ_LOCATION**: The Azure region. We recommend that you use a region that's close to where you live. To see the list of available regions, enter az account list-locations at a command prompt.
-- **AZ_CONTAINERAPP**: The name of the Azure Container Apps instance that holds the containers.
-- **AZ_CONTAINERAPP_ENV**: 	The name of the Azure Container Apps environment.
-- **AZ_POSTGRES_SERVER_NAME**: The name of your PostgreSQL server. Nonalphanumeric characters aren't allowed: -, _, !, $, #, %. The name should be unique across Azure. Be sure to use a unique identifier.
-- **AZ_POSTGRES_DB_NAME**: The PostgreSQL database name. The default name of the PostgreSQL database is postgres.
-- **AZ_POSTGRES_USERNAME**: 	The default admin user name for your PostgreSQL database server.
-- **AZ_POSTGRES_PASSWORD** : 	The default password for your PostgreSQL database server. Use a secure password.
+[TABLE]
 
->**Note:** You can name your Azure resources in any way that you want.
+**Note:** You can name your Azure resources in any way that you want.
 This article provides example abbreviations for many Azure resources
 (for example, rg for resource groups and ca for container apps).
 
@@ -498,58 +613,66 @@ This article provides example abbreviations for many Azure resources
     modify the values as described in the preceding table. These
     environment variables are used throughout the rest of this module.
 
+**Note:** PostgreSQL is supported only in **Westus** . Try in westus
+location first and it you have any issues then try in location near to
+you
 
+export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM
 
-+++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"
 
-+++export AZ_RESOURCE_GROUP="rg${AZ_PROJECT_Quarkus}"+++
+export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"
 
-+++export AZ_LOCATION="Location near to you"+++ (eg : NorthEurope)
+export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"
 
-+++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
+export AZ_POSTGRES_USERNAME="azuser123"
 
-+++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
+export AZ_POSTGRES_PASSWORD="P@55w.rd12345"
 
-+++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
+export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"
 
-+++export AZ_POSTGRES_USERNAME="azuser123"+++
+![A screen shot of a computer Description automatically
+generated](./media/image39.png)
 
-+++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
+2.  Switch back to Gitbash and run below command to set resource group
+    variable. Copy the resource group name.
 
-+++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
+> export AZ_RESOURCE_GROUP="Your existing resource group"
+>
+> export AZ_LOCATION="Location near to you"
 
-![A computer screen with text Description automatically
-generated](./media/image39.jpeg)
+![A screenshot of a computer Description automatically
+generated](./media/image40.png)
 
-2.  Run +++az login+++ ault browser to sign in. Sign
+![A computer screen shot of text Description automatically
+generated](./media/image41.png)
+
+3.  Run \`\`az login\`\` It opens the default browser to sign in. Sign
     in with your Azure subscription account.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image40.jpeg)
-
-3.  Switch back to Gitbash and run below command to create a resource
-    group in Azure Portal.
-
-+++az group create --name $AZ_RESOURCE_GROUP --location $AZ_LOCATION+++
-
-![A computer screen with white text Description automatically
-generated](./media/image41.jpeg)
+generated](./media/image42.png)
 
 ### Task 2 : Create an instance of Azure Database for PostgreSQL
 
 1.  You'll now create a managed PostgreSQL server. Run the following
     command to create a small instance of Azure Database for PostgreSQL:
 
-+++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
+az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP"
+--location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME"
+--database-name "$AZ_POSTGRES_DB_NAME" --admin-user
+"$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD"
+--public-access "All" --tier "Burstable" --sku-name "Standard_B1ms"
+--storage-size 32 --version "16"
 
 ![A screen shot of a computer code Description automatically
-generated](./media/image42.jpeg)
+generated](./media/image43.jpeg)
 
 2.  This command creates a small PostgreSQL server that uses the
     variables that you set up earlier.
 
 ![A screenshot of a computer screen Description automatically
-generated](./media/image43.jpeg)
+generated](./media/image44.jpeg)
 
 ### Task 3 : Configure Quarkus to access the PostgreSQL database
 
@@ -559,29 +682,37 @@ generated](./media/image43.jpeg)
 
 2.  Run below command to obtain the connection string for the database.
 
-+++export POSTGRES_CONNECTION_STRING=$(az postgres flexible-server show-connection-string --server-name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --query "connectionStrings.jdbc" --output tsv)+++
+3.  export POSTGRES_CONNECTION_STRING=$(
 
-+++export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"+++
+> az postgres flexible-server show-connection-string --server-name
+> "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME"
+> --admin-user "$AZ_POSTGRES_USERNAME" --admin-password
+> "$AZ_POSTGRES_PASSWORD" --query "connectionStrings.jdbc" --output tsv
 
-+++echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"+++
+)
 
+export
+POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"
 
-
-![A computer screen with white text Description automatically
-generated](./media/image44.jpeg)
-
-4.  Note the connection string that's returned.
+echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"
 
 ![A computer screen with white text Description automatically
 generated](./media/image45.jpeg)
 
+4.  Note the connection string that\\'s returned.
+
+![A computer screen with white text Description automatically
+generated](./media/image46.jpeg)
+
 ### Task 4 :Configure the Quarkus application to connect to the PostgreSQL database
 
-1.  Switch back to Intellij IDE. Update  the **application.properties** file in
-    the **src/main/resources** folder of the project to configure the connection string to the PostgreSQL database.
+1.  Switch back to Intellij IDE. Update
+    the **application.properties** file in
+    the **src/main/resources** folder of the project to configure the
+    connection string to the PostgreSQL database.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image46.jpeg)
+generated](./media/image47.jpeg)
 
 2.  Set the **quarkus.datasource.jdbc.url** property to the previously
     output **\\$POSTGRES_CONNECTION_STRING_SSL** value.
@@ -589,50 +720,64 @@ generated](./media/image46.jpeg)
     forces the driver to use SSL, a requirement for Azure Database for
     PostgreSQL.
 
-```
 quarkus.hibernate-orm.database.generation=update
-quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
-```
+
+quarkus.datasource.jdbc.url=\<the POSTGRES_CONNECTION_STRING_SSL value\>
 
 ![A screenshot of a computer Description automatically
-generated](./media/image47.jpeg)
+generated](./media/image48.jpeg)
 
 ### Task 5 : Run the Quarkus application locally to test the remote database connection
 
 1.  Switch back to Gitbash and run below command to run the application
     locally:
 
-+++./mvnw clean quarkus:dev+++
+./mvnw clean quarkus:dev
 
 ![A computer screen with text and images Description automatically
-generated](./media/image48.jpeg)
-
-![A screenshot of a computer program Description automatically
 generated](./media/image49.jpeg)
 
-![](./media/image50.jpeg)
+![A screenshot of a computer program Description automatically
+generated](./media/image50.jpeg)
+
+![](./media/image51.jpeg)
 
 2.  When Quarkus is running, create a few to-dos by using the following
     cURL commands in a separate terminal window:
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' http://127.0.0.1:8080/api/todos+++
+> curl --header "Content-Type: application/json" \\
+>
+> --request POST \\
+>
+> --data '{"description":"Take Quarkus MS Learn","details":"Take the MS
+> Learn on deploying Quarkus to Azure Container Apps","done": "true"}'
+> \\
+
+\`\`http://127.0.0.1:8080/api/todos\`\`
 
 ![A screenshot of a computer program Description automatically
-generated](./media/image51.jpeg)
+generated](./media/image52.jpeg)
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
+curl --header "Content-Type: application/json" \\
 
-![](./media/image52.jpeg)
+--request POST \\
+
+--data '{"description":"Take Azure Container Apps MS
+Learn","details":"Take the ACA Learn module","done": "false"}' \\
+
+\`\` http://127.0.0.1:8080/api/todos\`\`
+
+![](./media/image53.jpeg)
 
 3.  Next, check that the to-dos are in the database by accessing the GET
     endpoint that\\'s defined in the to-do app:
 
-+++curl http://127.0.0.1:8080/api/todos+++
+\`\`curl http://127.0.0.1:8080/api/todos\`\`
 
 You should see the following output:
 
 ![A computer screen with white text Description automatically
-generated](./media/image53.jpeg) If you see this output, you have
+generated](./media/image54.jpeg) If you see this output, you have
 successfully run the Quarkus application and connected to the remote
 PostgreSQL database.
 
@@ -649,46 +794,52 @@ using the Azure CLI.
     already generated some Dockerfiles under **src/main/docker**.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image54.jpeg)
+generated](./media/image55.jpeg)
 
 2.  Switch back to Gitbash and press Ctrl+C .Run below command to rename
     one of
     these **Dockerfiles, *Dockerfile.jvm*,** to ***Dockerfile*** and
     move it to the root folder:
 
-+++mv src/main/docker/Dockerfile.jvm ./Dockerfile+++
+\`\`mv src/main/docker/Dockerfile.jvm ./Dockerfile\`\`
 
 ![A black screen with white text Description automatically
+generated](./media/image56.jpeg)
+
+![A screenshot of a computer Description automatically
 generated](./media/image55.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image54.jpeg)
-
 3.  Replace the content after the long comment in
-    the **Dockerfile** with the following i.e at Line#80
+    the **Dockerfile** with the following i.e at Line \# 80
 
-```
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.18
+> FROM registry.access.redhat.com/ubi8/openjdk-17:1.18
+>
+> ENV LANGUAGE='en_US:en'
+>
+> \# We make four distinct layers so if there are application changes
+> the library layers can be re-used
+>
+> COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
+>
+> COPY --chown=185 target/quarkus-app/\*.jar /deployments/
+>
+> COPY --chown=185 target/quarkus-app/app/ /deployments/app/
+>
+> COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+>
+> EXPOSE 8080
+>
+> USER 185
+>
+> ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0
+> -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+>
+> ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
-ENV LANGUAGE='en_US:en'
-
-
-# We make four distinct layers so if there are application changes the library layers can be re-used
-COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
-COPY --chown=185 target/quarkus-app/*.jar /deployments/
-COPY --chown=185 target/quarkus-app/app/ /deployments/app/
-COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
-
-EXPOSE 8080
-USER 185
-ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
-
-ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
-```
+ENTRYPOINT \[ "/opt/jboss/container/java/run/run-java.sh" \]
 
 ![A screenshot of a computer Description automatically
-generated](./media/image56.jpeg)
+generated](./media/image57.jpeg)
 
 4.  This Dockerfile expects the Quarkus application to be packaged as
     a ***quarkus-run.jar* file**. This name is the default name for the
@@ -696,19 +847,19 @@ generated](./media/image56.jpeg)
     make sure that the Quarkus application is packaged as a JAR file. To
     do so, run the following Maven command:
 
-+++./mvnw package+++
+\`\`./mvnw package\`\`
 
 ![A computer screen with white text Description automatically
-generated](./media/image57.jpeg)
+generated](./media/image58.jpeg)
 
-![](./media/image58.jpeg)
+![](./media/image59.jpeg)
 
 5.  This command packages the Quarkus application into a JAR file and
     generates a ***quarkus-run.jar*** file in
     the ***target/quarkus-app*** folder.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image59.jpeg)
+generated](./media/image60.jpeg)
 
 ### Task 2 : Create the Container Apps environment and deploy the container
 
@@ -717,27 +868,29 @@ generated](./media/image59.jpeg)
     single Azure CLI command. Run the following command at the root of
     the project:
 
-+++az containerapp up --name "$AZ_CONTAINERAPP" --environment "$AZ_CONTAINERAPP_ENV" --location "$AZ_LOCATION" --resource-group "$AZ_RESOURCE_GROUP" --ingress external --target-port 8080 --source .+++
-
-![A screenshot of a computer program Description automatically
-generated](./media/image60.jpeg)
-
-![A screenshot of a computer program Description automatically
-generated](./media/image60.jpeg)
+az containerapp up --name "$AZ_CONTAINERAPP" --environment
+"$AZ_CONTAINERAPP_ENV" --location "$AZ_LOCATION" --resource-group
+"$AZ_RESOURCE_GROUP" --ingress external --target-port 8080 --source .
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image61.jpeg)
 
-![A screenshot of a computer Description automatically
+![A screenshot of a computer program Description automatically
+generated](./media/image61.jpeg)
+
+![A screenshot of a computer program Description automatically
 generated](./media/image62.jpeg)
+
+![A screenshot of a computer Description automatically
+generated](./media/image63.jpeg)
 
 2.  This command does several things:
 
-    - Creates a Container Apps environment if it doesn't exist
+    - Creates a Container Apps environment if it doesn\\'t exist
 
-    - Creates an Azure registry if it doesn't exist
+    - Creates an Azure registry if it doesn\\'t exist
 
-    - Creates a Log Analytics workspace if it doesn't exist
+    - Creates a Log Analytics workspace if it doesn\\'t exist
 
     - Builds the Docker image and pushes it to the Azure registry
 
@@ -747,7 +900,7 @@ The az containerapp up command takes some time to run. You should see
 output that's similar to the following:
 
 ![A computer screen with white text Description automatically
-generated](./media/image63.jpeg)
+generated](./media/image64.jpeg)
 
 ### Task 3 : Validate the deployment
 
@@ -755,31 +908,31 @@ You can validate that the deployment has succeeded in several ways. The
 easiest way is to search for your resource group on the Azure portal.
 You should see resources similar to the following:
 
-1.  Open a browser and go to  `https://portal.azure.com` and sign
+1.  Open a browser and go to \`\`https:\\\portal.azure.com\`\` and sign
     in with your Azure subscription account. Click on Resource Group
     tile.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image64.jpeg)
+generated](./media/image65.jpeg)
 
 2.  Click on the resource group name.
 
-![A screenshot of a computer Description automatically
-generated](./media/image65.jpeg)
+![](./media/image66.png)
 
 ![A screenshot of a computer Description automatically
-generated](./media/image66.jpeg)
+generated](./media/image67.png)
 
 3.  You can also check the deployment by running the following command.
     It lists all the resources created by the az containerapp up
     command.
 
-+++az resource list --location "$AZ_LOCATION" --resource-group "$AZ_RESOURCE_GROUP" --output table+++
+az resource list --location "$AZ_LOCATION" --resource-group
+"$AZ_RESOURCE_GROUP" --output table
 
 You should see output that's similar to this:
 
 ![A screenshot of a computer program Description automatically
-generated](./media/image67.jpeg)
+generated](./media/image68.png)
 
 ### Task 4 : Run the deployed Quarkus application
 
@@ -789,75 +942,107 @@ generated](./media/image67.jpeg)
 2.  Switch back to Gitbash and run below command to get the URL of the
     application.
 
-+++export AZ_APP_URL=$(az containerapp show --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --query "properties.configuration.ingress.fqdn" --output tsv)+++
+> export AZ_APP_URL=$(
+>
+> az containerapp show \\
+>
+> --name "$AZ_CONTAINERAPP" \\
+>
+> --resource-group "$AZ_RESOURCE_GROUP" \\
+>
+> --query "properties.configuration.ingress.fqdn" \\
+>
+> --output tsv \\ )
 
-+++echo "AZ_APP_URL=$AZ_APP_URL"+++
-
-![A computer screen with white text Description automatically
-generated](./media/image68.jpeg)
-
-3.  Your application is ready at `https://<app-name\>.azurecontainerapps.io/`. Notice the https
-    protocol. That protocol is used because the application is deployed
-    with a TLS certificate. To test the application, you can use cURL:
-
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Configuration","details":"Congratulations, you have set up your Quarkus application correctly!","done": "true"}' https://$AZ_APP_URL/api/todos+++
-
+\`\`echo "AZ_APP_URL=$AZ_APP_URL"\`\`
 
 ![A computer screen with white text Description automatically
 generated](./media/image69.jpeg)
 
-4.  Retrieve the data by using a new cURL request:
+3.  Your application is ready at
+    https://\\\<app-name\>.azurecontainerapps.io/. Notice the https
+    protocol. That protocol is used because the application is deployed
+    with a TLS certificate. To test the application, you can use cURL:
 
-+++curl https://$AZ_APP_URL/api/todos+++
+> curl --header "Content-Type: application/json" \\
+>
+> --request POST \\
+>
+> --data '{"description":"Configuration","details":"Congratulations, you
+> have set up your Quarkus application correctly!","done": "true"}' \\
 
-5.  This command returns the list of all to-do items from the database:
+\`\` https://$AZ_APP_URL/api/todos\`\`
 
 ![A computer screen with white text Description automatically
 generated](./media/image70.jpeg)
 
-6.  Switch back to the Azure portal and click on your container app name.
+4.  Retrieve the data by using a new cURL request:
 
-![A screenshot of a computer Description automatically
+\`\`curl https://$AZ_APP_URL/api/todos\`\`
+
+5.  This command returns the list of all to-do items from the database:
+
+![A computer screen with white text Description automatically
 generated](./media/image71.jpeg)
+
+6.  Switch back to the Azure portal and click on your container app
+    name.
+
+![](./media/image72.png)
 
 7.  Click on the application url link. It opens app in browser tab.
 
-![A screenshot of a computer Description automatically
-generated](./media/image72.jpeg)
+![](./media/image73.png)
 
 ![A screenshot of a computer Description automatically
-generated](./media/image73.jpeg)
+generated](./media/image74.png)
 
 8.  Run this command, you can stream the logs for your container when
     you create new to-dos:
 
-+++az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --follow+++
+az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group
+"$AZ_RESOURCE_GROUP" -–follow
 
-
-![A computer screen with white text Description automatically
-generated](./media/image74.jpeg)
+![A screenshot of a computer screen Description automatically
+generated](./media/image75.png)
 
 9.  Run more cURL commands. You should see the logs scrolling in the
     terminal.
 
-+++curl https://$AZ_APP_URL/api/todos+++
+\`\`curl https://$AZ_APP_URL/api/todos\`\`
 
-![A computer screen with white text Description automatically
-generated](./media/image75.jpeg)
+![A screenshot of a computer screen Description automatically
+generated](./media/image76.png)
 
-## Exercise 4 : Delete resources
+## Exercise 4 : Delete resources in the resource group
 
 ### Task 1 : Delete resources.
 
-1.  Switch back to your Gitbash and run below command to delete resource
-    goup
+1.  Switch back to Azure portal. Click on **Resource groups**.
 
-+++az group delete --name $AZ_RESOURCE_GROUP –yes+++
+![](./media/image77.png)
 
-![A black screen with yellow text Description automatically
-generated](./media/image76.jpeg)
+2.  Click on resource group name.
 
-**Summary** :You learnt how to use Maven to bootstrap the application and an
+![](./media/image78.png)
+
+3.  Select all resource and then click on **Delete** (Do NOT DELETE –
+    Resource group)
+
+![](./media/image79.png)
+
+4.  Enter \`\`delete\`\` and then click on **Delete**.
+
+![](./media/image80.png)
+
+5.  Confirm deletion of resources .
+
+![A screenshot of a computer Description automatically
+generated](./media/image81.png)
+
+**Summary**
+
+\[You learnt how to use Maven to bootstrap the application and an
 integrated development environment (IDE) to edit the code.. You learnt
 how to use Docker to start a local PostgreSQL database so you can run
 and test the application locally. You have successfully run the Quarkus
