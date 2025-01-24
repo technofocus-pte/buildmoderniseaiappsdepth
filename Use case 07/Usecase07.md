@@ -119,7 +119,7 @@ generated](./media/image7.jpeg)
 
 ![](./media/image9.png)
 
-4.  Search for \`\`Cognitive Services Contributor\`\` and select it and
+4.  Search for ``Cognitive Services Contributor`` and select it and
     then click on **Next** button.
 
 ![A screenshot of a service assignment Description automatically
@@ -524,9 +524,8 @@ generated](./media/image40.jpeg)
 1.  To query the recommendation function, pass it a listing ID and the
     number of recommendations it should make.
 
-select out_listingName, out_score from recommend_listing( (SELECT id
-from listings limit 1), 20); -- search for 20 listing recommendations
-closest to a listing
++++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations
+closest to a listing+++
 
 The result will be something like:
 
@@ -555,9 +554,8 @@ generated](./media/image44.jpeg)
 
 2.  Make sure you can query it using the following query:
 
-select out_listingName, out_score from recommend_listing( (SELECT id
-from listings limit 1), 20); -- search for 20 listing recommendations
-closest to a listing
++++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations
+closest to a listing+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image45.jpeg)
@@ -573,7 +571,7 @@ group and all resources you created for this lab.
 
 ![](./media/image46.png)
 
-2.  Select the Open AI resource and then click on **Delete** .
+2.  Select the Open AI resource and then click on **Delete**.
 
 ![](./media/image47.png)
 
@@ -586,7 +584,7 @@ group and all resources you created for this lab.
 generated](./media/image49.png)
 
 4.  Click on **Manage deleted resources**, select the resource and then
-    click on **Purge** button as shown in below image.
+    click on **Purge** button as shown in the below image.
 
 ![](./media/image50.png)
 
@@ -599,7 +597,7 @@ generated](./media/image49.png)
 ![A screenshot of a computer Description automatically
 generated](./media/image52.jpeg)
 
-7.  Click on Resource group name.
+7.  Click on the Resource group name.
 
 ![](./media/image53.png)
 
@@ -609,7 +607,7 @@ generated](./media/image52.jpeg)
 
 > ![](./media/image54.png)
 
-9.  Type +++Delete+++  and click on Delete. Confirm deleting resource by
+9.  Type +++Delete+++  and click on Delete. Confirm deleting resources by
     clicking on **Delete** button.
 
 ![](./media/image55.png)
