@@ -32,221 +32,130 @@ Database for PostgreSQL and azure-container-apps,ai-azd-templates.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
+- +++https://github.com/signup?user_email=&source=form-home-signupobjectives+++
 
-`https://github.com/signup?user_email=&source=form-home-signupobjectives`
+## Exercise 1 : Provision , deploy the application and test it from the browser
 
-## Exercise 1: Set up environment
+### Task 1: Copy the existing resource group name
 
-### Task 1: Install Azure Cli and set the policy scope to Local machine
-
-1.  In your windows search bar, search for `PowerShell`. Open
-    as **Run as administrator**. If you see the dialog box - **Do you
-    want to allow this app to make changes to your device?** then click
-    on the **Yes** button.
+1.  Open your browser, open Azure
+    portal +++https:\\portal.azure.com+++.  Sign in with your Azure
+    slice account(Azure Credentials) available under
+    instructions/Resources section of your host environment.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image2.jpeg)
 
-![A screenshot of a computer error Description automatically
-generated](./media/image3.jpeg)
-
-2.  Run below commands to install stable version of winget.
-
-+++$progressPreference = 'silentlyContinue'+++
-
-+++Write-Information "Downloading WinGet and its dependencies..."+++
-
-+++Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle+++
-
-+++Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx+++
-
-+++Invoke-WebRequest -Uri  https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.8.6/Microsoft.UI.Xaml.2.8.x64.appx -OutFile Microsoft.UI.Xaml.2.8.x64.appx+++
-
-+++Add-AppxPackage Microsoft.UI.Xaml.2.8.x64.appx+++
-
-+++Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle+++
-
-![A blue screen with white text Description automatically
-generated](./media/image4.jpeg)
-
-3.  Run the following command to install Azure Cli on the PowerShell
-
-    +++winget install microsoft.azd+++
+2.  On Home page, click on **Resource groups**  tile.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image5.jpeg)
+generated](./media/image3.png)
 
-4.  Run the below command to set the policy to **Unrestricted** and
-    enter **A** when asked to change the execution policy.
+3.  Make sure you already have a resource group created for you to work.
+    Never delete this resource group. Instead, you can delete resources
+    within the resource group, but not the resource group itself.
 
-    +++Set-ExecutionPolicy Unrestricted+++
-
-![A computer screen with white text Description automatically
-generated](./media/image6.jpeg)
-
-### Task 2: Assign a user as an owner of an Azure subscription
-
-1.  Open your browser, open Azure
-    portal +++https://portal.azure.com+++.  Sign in with your Azure
-    subscription account.
+4.  Click on resource group name
 
 ![A screenshot of a computer Description automatically
-generated](./media/image7.jpeg)
+generated](./media/image4.png)
 
-2.  On Home page, click on **Subscriptions** tile.
-
-![A screenshot of a computer Description automatically
-generated](./media/image8.jpeg)
-
-3.  Click on your **subscription name**.
+5.  Copy the resource group name and save it in Notepad to use for
+    deploying all resources into this resource group
 
 ![A screenshot of a computer Description automatically
-generated](./media/image9.jpeg)
+generated](./media/image5.png)
 
-4.  From the left menu, click on the **Access control(IAM).Click o
-    Add -> Add role assignment**
-
-![A screenshot of a computer Description automatically
-generated](./media/image10.jpeg)
-
-5.  In the Role tab, select the **Privileged administrator roles** and
-    select **Owner** . Click **Next**
-
-![A screenshot of a computer Description automatically
-generated](./media/image11.jpeg)
-
-6.  Select Assign access to User group or service principal.
-    Under **Members**, click **+Select members** and search for your
-    Azure subscription account, select it and then click
-    on **Select** button.
-
-![A screenshot of a computer Description automatically
-generated](./media/image12.jpeg)
-
-7.  Click on **Next**.
-
-![A screenshot of a computer Description automatically
-generated](./media/image13.jpeg)
-
-8.  Select **Allow user to assign all roles** radio button and then
-    click on **Review +assign** .
-
-![A screenshot of a computer screen Description automatically
-generated](./media/image14.jpeg)
-
-### Task 3: Install Dev Containers extension
-
-1.  In your Windows search box, type +++Visual Studio+++, then click
-    on **Visual Studio Code**.You can also open it form **Desktop**.
-
-![A screenshot of a computer Description automatically
-generated](./media/image15.jpeg)
-
-2.  Click on **Extensions** , search for **Dev container**, select it
-    and click on **Install**.
-
-![A computer screen shot of a computer Description automatically
-generated](./media/image16.jpeg)
-
-## Exercise 2: Deploy the application and test it from the browser
-
-### Task 1 : Run the Docker
+### Task 2 : Run the Docker
 
 1.  On the Desktop, double click on **Docker Desktop**.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image17.jpeg)
+generated](./media/image6.jpeg)
 
 2.  Run the Docker Desktop.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image18.jpeg)
+generated](./media/image7.jpeg)
 
-### Task 2 : Register Service provider
+### Task 3 : Register Service provider
 
-1.  Open a browser and go to +++https://portal.azure.com+++ and sign
-    in with your Azure subscription account.
+1.  Switch back to Azure portal tab, click on **Subscription** tile.
 
-2.  Click on the **Subscription** tile.
+![](./media/image8.png)
+
+2.  Click on subscription name.
+
+![](./media/image9.png)
+
+3.  Click on **Settings - \> Resource provider** from left navigation
+    menu.
+
+![](./media/image10.png)
+
+4.  Type +++Microsoft.AlertsManagement+++ and press enter. Select
+    it and then click on **Register**.
+
+![](./media/image11.png)
 
 ![A screenshot of a computer Description automatically
-generated](./media/image19.jpeg)
+generated](./media/image12.png)
 
-3.  Click on subscription name.
-
-![A screenshot of a computer Description automatically
-generated](./media/image20.jpeg)
-
-4.  Click on Resource provider from left navigation menu,
-    type +++Microsoft.AlertsManagement+++ and press enter. Select it
-    and then click on **Register**.
-
-![](./media/image21.jpeg)
-
-![A screenshot of a computer Description automatically
-generated](./media/image22.jpeg)
-
-### Task 3: Open development environment
+### Task 4 : Open development environment
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL: `https://github.com/technofocus-pte/rag-postgres-openai-python.git` tab
+    URL: +++https://github.com/technofocus-pte/rag-postgres-openai-python-CSTesting.git+++ tab
     opens and ask you to open in Visual studio code. Select **Open
     Visual Studio Code.**
 
-![](./media/image23.jpeg)
+![](./media/image13.jpeg)
 
 2.  Click on **fork** to fork the repo. Give unique name to the repo and
     click on **Create repo** button.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image24.jpeg)
+generated](./media/image14.jpeg)
 
 ![A screenshot of a computer Description automatically
-generated](./media/image25.jpeg)
+generated](./media/image15.jpeg)
 
-3.  Click on **Code -> Codespaces -> codespace+**
-
-![A screenshot of a computer Description automatically
-generated](./media/image26.jpeg)
-
-4.  Wait for the codespace environment to setup .It takes few minutes to
-    setup completely
+3.  Click on **Code -> Codespaces -> Codespaces+**
 
 ![A screenshot of a computer Description automatically
-generated](./media/image27.jpeg)
+generated](./media/image16.jpeg)
+
+4.  Wait for the Codespaces environment to setup .It takes few minutes
+    to setup completely
 
 ![A screenshot of a computer Description automatically
-generated](./media/image28.jpeg)
+generated](./media/image17.jpeg)
 
-### Task 4: Deploy chat app to Azure
+![A screenshot of a computer Description automatically
+generated](./media/image18.jpeg)
 
-1.  Sign in to Azure with the Azure Developer CLI. Run the following
-    command on the Terminal
+### Task 5: Provision Services and deploy application to Azure
+
+1.  Run the following command on the Terminal. It generates the code to
+    copy. Copy the code and press Enter.
 
 +++azd auth login+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image29.jpeg)
+![](./media/image19.png)
 
-2.  Default browser opens to sign in. Sign in with your Azure
-    subscription account.
+2.  Default browser opens to enter the generated code to verify. Enter
+    the code and click **Next**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image30.jpeg)
+![](./media/image20.png)
 
-![A screenshot of a sign in Description automatically
-generated](./media/image31.jpeg)
-
-![A screenshot of a login page Description automatically
-generated](./media/image32.jpeg)
+3.  Sign in with your Azure credentials.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image33.jpeg)
+generated](./media/image21.png)
 
-3.  To create an environment for Azure resources, run the following
+4.  To create an environment for Azure resources, run the following
     Azure Developer CLI command.It asks you to enter environment name
-    .Enter any name of your choice and press enter (eg : `ragpgpy`)
+    .Enter any name of your choice and press enter (eg :+++ragpgpy+++)
 
 **Note:** When creating an environment, ensure that the name consists of
 lowercase letters.
@@ -254,59 +163,112 @@ lowercase letters.
 +++azd env new+++
 
 ![A screenshot of a computer Description automatically
-generated](./media/image34.jpeg)
+generated](./media/image22.png)
 
-4.  Run the following Azure Developer CLI command to provision the Azure
+5.  Run the following Azure Developer CLI command to provision the Azure
     resources and deploy the code.
 
-+++azd up+++
++++azd provision+++
 
-![A screen shot of a computer Description automatically
-generated](./media/image35.jpeg)
+![A screenshot of a computer Description automatically
+generated](./media/image23.png)
 
-5.  When prompted, select a **subscription** to create the resources and
+6.  When prompted, select a **subscription** to create the resources and
     select the region closest to your location; in this lab, we have
     chosen the **East US2** region.
 
-![A screenshot of a computer Description automatically
-generated](./media/image36.jpeg)
+![](./media/image24.png)
 
-6.  When prompted, **enter a value for the 'openAILocation'
+7.  It will prompt you “**Enter a value for the
+    'existingResourceGroupName' infrastructure parameter:**” enter the
+    resource group copied in Task 1 (eg : **ResourceGroup1 used for the
+    development slice) .**You can copy the resource group name from
+    **Resources** section as shown in below image
+
+> ![](./media/image25.png)
+
+8.  When prompted, **enter a value for the 'openAILocation'
     infrastructure parameter** select the region closest to your
-    location; in this lab, we have chosen the **North central US** region
+    location; in this lab, we have chosen the **North Central
+    US** region
+
+![](./media/image26.png)
+
+9.  Provisioning resource will take around 5 - 10 min. Click **Yes** if
+    prompted.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image37.jpeg)
+generated](./media/image27.png)
 
-7.  Deployment will take around 19-20 min. While the deployment is going
-    on, You can go next Task 3 and verify deployed resources.
-
-![A screenshot of a computer Description automatically
-generated](./media/image38.jpeg)
+10. Wait for the template to provision all resource successfully.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image39.jpeg)
+generated](./media/image28.png)
 
-8.  Deployment completed and front end hosted successfully. Click on the
-    generated URL
+11. Run below command to set resource group
+
++++azd env set AZURE_RESOURCE_GROUP {your resource group name}+++
+
+![](./media/image29.png)
+
+12. Run below command to deploy the app to Azure.
+
++++azd deploy+++
+
+![](./media/image30.png)
+
+13. Wait for the deployment to complete. Deployment takes \<5
 
 ![A screenshot of a computer Description automatically
-generated](./media/image40.jpeg)
+generated](./media/image31.png)
+
+14. Click on the deployed web app endpoint link.
+
+![](./media/image32.png)
+
+15. Click on **Open**. It opens new tab with app
+
+![](./media/image33.png)
+
+16. The app opens.
 
 ![A screenshot of a chat Description automatically
-generated](./media/image41.jpeg)
+generated](./media/image34.png)
 
-### Task 5: Verify deployed resources in the Azure portal
+### Task 6: Use chat app to get answers from files
+
+1.  In the **RAG on database |OpenAI+PoastgreSQL** web app page, **click
+    on Best shoe for hiking?** button and observe the output
+
+![](./media/image35.png)
+
+![A screenshot of a computer Description automatically
+generated](./media/image36.png)
+
+2.  Click on the **clear chat.**
+
+![](./media/image37.png)
+
+3.  In the **RAG on database |OpenAI+PoastgreSQL** web app page, click
+    on **Climbing gear cheaper than \\$30** button and observe the
+    output
+
+![](./media/image38.png)
+
+![A screenshot of a computer Description automatically
+generated](./media/image39.png)
+
+4.  Click on the **clear chat.**
+
+### Task 7: Verify deployed resources in the Azure portal
 
 1.  On Home page of Azure portal, click on **Resource Groups**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image42.jpeg)
+![](./media/image40.png)
 
 2.  Click on your resource group name
 
-![A screenshot of a computer Description automatically
-generated](./media/image43.jpeg)
+![](./media/image41.png)
 
 3.  Make sure the below resource got deployed successfully
 
@@ -324,79 +286,62 @@ generated](./media/image43.jpeg)
 
     - Container registry
 
-![A screenshot of a computer Description automatically
-generated](./media/image44.jpeg)
+![](./media/image42.png)
 
 4.  Click on **Azure OpenAI** resource name.
 
-![A screenshot of a computer Description automatically
-generated](./media/image45.jpeg)
+![](./media/image43.png)
 
-5.  On **Overview** in the left navigation menu, right click **Go to
-    Azure OpenAI Studio** and select to open a new tab.
+5.  On **Overview** in the left navigation menu, click **Go to Azure AI
+    Foundry portal** and select to open a new tab.
 
-![A screenshot of a computer Description automatically
-generated](./media/image46.jpeg)
+![](./media/image44.png)
 
-6.  Click on **Deployments** from left navigation menu and make
+6.  Click on **Shared resources -\>** **Deployments** from left
+    navigation menu and make
     sure **gpt-35-turbo**, **text-embedding-ada-002** should be deployed
     successfully
 
-![A screenshot of a computer Description automatically
-generated](./media/image47.jpeg)
+![](./media/image45.png)
 
-### Task 6: Use chat app to get answers from files
-
-1.  In the **RAG on database |OpenAI+PoastgreSQL** web app page, **click
-    on Best shoe for hiking?** button and observe the output
-
-![A screenshot of a chat Description automatically
-generated](./media/image48.jpeg)
-
-![A screenshot of a chat Description automatically
-generated](./media/image49.jpeg)
-
-![A screenshot of a computer Description automatically
-generated](./media/image50.jpeg)
-
-2.  Click on the **clear chat.**
-
-![A screenshot of a computer Description automatically
-generated](./media/image51.jpeg)
-
-3.  In the **RAG on database |OpenAI+PoastgreSQL** web app page, click
-    on **Climbing gear cheaper than \\$30** button and observe the
-    output
-
-![A screenshot of a chat Description automatically
-generated](./media/image52.jpeg)
-
-![A screenshot of a computer Description automatically
-generated](./media/image53.jpeg)
-
-4.  Click on the **clear chat.**
-
-### Task 7: Clean up all the resources
+### Task 8 : Clean up all the resources
 
 To clean up all the resources created by this sample:
 
-1.  Go back Visual Studio terminal and run +++azd down –purge+++
-
-![A close-up of a computer code Description automatically
-generated](./media/image54.jpeg)
-
-2.  When asked if you are sure you want to continue, enter y
+1.  Switch back to **Azure portal -\> Resource group- \> Resource group
+    name.**
 
 ![A screenshot of a computer Description automatically
-generated](./media/image55.jpeg)
+generated](./media/image46.png)
 
-3.  When asked if you want to permanently delete the resources,
-    enter **y**
+2.  Select all the resource and then click on Delete as shown in below
+    image. (**DO NOT DELETE** resource group)
+
+![](./media/image47.png)
+
+3.  Type ``delete`` on the text box and then click on **Delete**.
+
+![](./media/image48.png)
+
+4.  Confirm the deletion by clicking on **Delete**.
+
+![](./media/image49.png)
+
+5.  Switch back to Github portal tab and refresh the page.
 
 ![A screenshot of a computer Description automatically
-generated](./media/image56.jpeg)
+generated](./media/image50.png)
 
-4.  Navigate back to your Github browser tab and delete the codespace used for this lab.
+6.  Click on Code , select the branch created for this lab and click on
+    **Delete**.
+
+![A screenshot of a computer Description automatically
+generated](./media/image51.png)
+
+7.  Confirm the branch deletion by clicking on **Delete** button.
+
+![A screenshot of a computer Description automatically
+generated](./media/image52.png)
 
 >**Summary:**:This use case walks you through deploying a chat application with PostgreSQL and OpenAI on Azure, focusing on cloud-based application
 deployment and management. you’ve set up the development environment,
