@@ -123,33 +123,27 @@ Let us call this Username and password as Azure login credentials. We will use t
 
     ![](./media/image9.jpeg)
 
-14. Execute the below command replacing **\< Subscription id \>** with
+13. Execute the below command replacing **\< Subscription id \>** with
     your subscription id.
 
     +++Set-AzContext -SubscriptionId < Subscription id >+++
 
-    >[!Note] **Note:** To get your subscription id, login to https://portal.azure.com and click on Subscriptions. Copy the
-Subscription id from the Subscription page.
+    >[!Note] **Note:** To get your subscription id, access it from the Resources tab in the below screenshot.
 
-    ![](./media/image11.jpeg)
+    ![](./media/Picture52.png)
     
     ![](./media/image12.jpeg)
 
-15. Create a new **Resource group** named **mongo-devguide-rg** in Azure
-    by executing the below command.
+14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **xxxxxxx** with  random 7 alphabets to ensure uniqueness.
 
-    +++New-AzResourceGroup -Name mongo-devguide-rg -Location 'francecentral'+++
+    ![](./media/Picture51.png)
+   	
+15.	Execute the below command to deploy the resources like Azure Cosmos DB workspace, Azure OpenAI in Azure. Replace the **< RG Name >** with the Resource group name from the **Resources** tab.
 
-    ![](./media/image13.jpeg)
-
-    >[!Note] **Note:** The location **francecentral** is used here. It can be changed
-to a **nearest location**
-
-16. Execute the below command to deploy the resources like Azure Cosmos
-    DB workspace, Azure OpenAI in Azure.
-
+    ![](./media/Picture22.png)
+   	
     ```
-    New-AzResourceGroupDeployment -ResourceGroupName mongo-devguide-rg  -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
+   New-AzResourceGroupDeployment -ResourceGroupName < RG Name > -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
     ```
 
     >[!Note] **Note:** The deployment will take around 10 to 15 minutes.
@@ -167,9 +161,9 @@ to a **nearest location**
 
     ![](./media/image16.jpeg)
 
-2.  From the Resource groups list, select **mongo-devguide-rg**.
+2.  From the Resource groups list, select **assigned Resource Group**.
 
-    ![](./media/image17.jpeg)
+    ![](./media/Picture23.png)
 
 3.  Notice that a set of resources including **Azure OpenAI
     resource**, **App Service**, **Azure Cosmos DB for MongoDB** are
@@ -510,21 +504,17 @@ Works JSON files into the database using the MongoDB API.
 
 ## Exercise 6: Delete the deployed resources
 
-1.  From the Azure portal(+++**https://portal.azure.com**+++), select
-    the resource group **mongo-devguide-rg** and then select **Delete
-    resource group**.
+1.	From the Azure portal(+++https://portal.azure.com+++), select the resource group assigned.
 
-    ![](./media/image88.jpeg)
+   ![](./media/Picture24.jpeg)
 
-2.  Type the resource group name **mongo-devguide-rg** in the **Enter
-    resource group name** to confirm deletion text box and click
-    on **Delete**.
+2.	Select all the resources under it, click on the **three dots** in the menu and select **Delete** to delete all the resources.
 
-    ![](./media/image89.jpeg)
+   ![](./media/Picture25.jpeg)
 
-3.  Click on **Delete** in the **Delete confirmation** dialog.
-
-    ![](./media/image90.jpeg)
+3.	Type +++delete+++ in the text box and click on the Delete button.
+ 
+   ![](./media/Picture26.jpeg)
 
 4.  Once the Resource group is deleted, from the Azure portal home page,
     search for +++**Azure AI Services**+++ and select it.
