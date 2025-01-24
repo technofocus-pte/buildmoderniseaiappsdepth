@@ -75,11 +75,11 @@ This usecase has a dev container configuration, which makes it easier to
 develop apps locally, deploy them to Azure, and monitor them. We use
 Azure development CLI templates to deploy apps
 
-1.  Open a browser and go to \`\`**https:\\\github.com\`\`** and sign in
+1.  Open a browser and go to ``https:\\\github.com`` and sign in
     with your Github account.
 
 2.  Fork this
-    repository `https://github.com/technofocus-pte/msdocs-flask-postgresql-sample-app` to
+    repository `https://github.com/technofocus-pte/flask-postgresql-CSTesting.git` to
     your account by clicking on **Fork** as shown in below image.
 
 ![A screenshot of a computer Description automatically
@@ -91,7 +91,7 @@ generated](./media/image10.jpeg)
 generated](./media/image11.jpeg)
 
 4.  From the repository root of your fork,
-    select **Code** \> **Codespaces** \> **+**.
+    select **Code** > **Codespaces** > **+**.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image12.jpeg)
@@ -108,7 +108,7 @@ generated](./media/image14.jpeg)
 
 > \# Install requirements
 
-`python3 -m pip install -r requirements.txt`
++++python3 -m pip install -r requirements.txt+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image15.jpeg)
@@ -117,7 +117,7 @@ generated](./media/image15.jpeg)
 
 > \# Create .env with environment variables
 
-`cp .env.sample.devcontainer .env`
++++cp .env.sample.devcontainer .env+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image16.jpeg)
@@ -126,7 +126,7 @@ generated](./media/image16.jpeg)
 
 > \# Run database migrations
 
-`python3 -m flask db upgrade`
++++python3 -m flask db upgrade+++
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image17.jpeg)
@@ -135,7 +135,7 @@ generated](./media/image17.jpeg)
 
 > \# Start the development server
 
-`python3 -m flask run`
++++python3 -m flask run+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image18.jpeg)
@@ -159,12 +159,11 @@ generated](./media/image21.jpeg)
 
 12. Enter the details below and click on **Submit** button.
 
-Name : ``Contoso Rica``
+Name : +++Contoso Rica+++
 
-Street Adress - ``3A ,8th cross, Ferns street , Singapore``
+Street Adress - +++3A ,8th cross, Ferns street , Singapore+++
 
-Description - `This is a medium to high priced restaurant in the
-city shopping center`
+Description - +++This is a medium to high priced restaurant in the city shopping center+++
 
 ![A screenshot of a restaurant Description automatically
 generated](./media/image22.jpeg)
@@ -208,7 +207,7 @@ monitor them.
 1.  Switch back to Github code space tab,Run below command to Initialize
     a new azd environment:
 
-``azd init``
++++azd init+++
 
 ![](./media/image27.jpeg)
 
@@ -218,7 +217,7 @@ monitor them.
 
 ![](./media/image28.jpeg)
 
-3.  Login if required ``**azd auth login``** .copy the code and
+3.  Login if required +++azd auth login+++ .copy the code and
     press enter.
 
 ![A screenshot of a computer Description automatically
@@ -242,7 +241,7 @@ generated](./media/image33.jpeg)
     subscription. Enter **1** to select your subscription and press
     Enter.
 
-``azd provision``
++++azd provision+++
 
 ![A computer screen shot of a computer code Description automatically
 generated](./media/image34.png)
@@ -280,9 +279,9 @@ generated](./media/image40.png)
 
 1.  Run below command to set resource group environment variable.
 
-``azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}``
++++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
 
-Note : Replace {Name of existing resource group} with your resource
+>Note : Replace {Name of existing resource group} with your resource
 group name available under Resources section in your VM.
 
 ![](./media/image41.png)
@@ -290,7 +289,7 @@ group name available under Resources section in your VM.
 2.  Run below command to deploy all resources and wait for the
     deployment to complete successfully.
 
-``azd deploy``
++++azd deploy+++
 
 ![](./media/image42.png)
 
@@ -323,13 +322,13 @@ restaurants = Restaurant.query.all()
 
 return render_template('index.html', restaurants=restaurants)
 
-1.  Switch back to **Azure portal- \> Resource group** and click on
+1.  Switch back to **Azure portal- > Resource group** and click on
     **App service**.
 
 ![](./media/image46.png)
 
 2.  In the App Service page. From the left menu, select **Monitoring
-    -\>** **App Service logs.**
+    ->** **App Service logs.**
 
 ![](./media/image47.png)
 
@@ -345,7 +344,7 @@ return render_template('index.html', restaurants=restaurants)
 
 ### Task 6 : Clean up resources in Github.
 
-1.  Switch back to Github, click on **repo -\> Code -\> Codespaces.**
+1.  Switch back to Github, click on **repo -> Code -> Codespaces.**
     Select the correct branch
 
 ![](./media/image50.png)
@@ -368,7 +367,7 @@ generated](./media/image53.png)
 
 ![](./media/image54.png)
 
-6.  Enter ``**Delete**`` and then click on **Delete**.
+6.  Enter ``Delete`` and then click on **Delete**.
 
 ![](./media/image55.png)
 
