@@ -47,7 +47,7 @@ Let us call this Username and password as Azure login credentials. We will use t
 
     ![](./media/image2.jpeg)
 
-    ![](./media/image3.jpeg)
+    ![](./media/Picture12.png)
 
 3.  Select **Start Visual Studio**.
 
@@ -136,34 +136,33 @@ correct account.
 
     |  **Property**  |  **Description**  |
     |:------|:-------|
-    |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Click on New -> **RGForWebAppSQL** and click on OK |
+    |  Name  | +++TodoAppXX+++ (Replace XX with the **Lab instance ID**,  since the Webapp name should be unique across Azure) |
+    | Resource group   |  Select the **assigned Resource group** |
 
-    ![](./media/image21.jpeg)
+    Click **New** on **Hosting Plan**.
+    
+    ![](./media/Picture13.png)
 
-7.  Click **New** on **Hosting Plan** option and enter the below details
+8.  Click **New** on **Hosting Plan** option and enter the below details
     and click **OK**.
 
     |  **Property**  |  **Description**  |
     |:------|:-------|
-    |  Hosting Plan  | +++myAppServicePlan+++   |
-    | Location   |  **East US**  |
+    |  Hosting Plan  | **myAppServicePlanXX**(Replace **XX** with your **Lab instance ID)**   |
+    | Location   |  Select **West US**  |
     |  Size  |   **Free** |
 
-    ![](./media/image77.png)
-    
-    **Note:** The location here is selected as East US. Please select a
-closest region if East US does not work for you.
+    ![](./media/Picture14.png)
 
 9.  Click **Create** on the App Service window and wait for Azure
     resources to get created.
 
-    ![](./media/image73.png)
+    ![](./media/Picture15.png)
 
 10. The **Publish** dialog shows the resources you have configured.
     Click **Finish**.
 
-    ![](./media/image23.jpeg)
+    ![](./media/Picture16.png)
 
 11. Click on **Close**.
 
@@ -187,30 +186,28 @@ closest region if East US does not work for you.
 15. In the **Azure SQL Database Create new** dialog box, click
     on **New** next to the Database server.
 
-    ![](./media/image28.jpeg)
+    ![](./media/Picture17.png)
 
 16. Fill in the below details and click on **OK**.
 
     | **Property**   |  **Description**  |
     |:-------|:--------|
-    |  Database server name  | +++dotnetappsqldbdbserver98+++   |
+    |  Database server name  | **dotnetappsqldbdbserverXX** (Replace **XX** with your **Lab instance ID**)   |
     |  Administrator username  |   +++sqladmin+++ |
     |  Administrator password  |  +++PassWord98+++  |
 
-    >[!Note] **Note:** The location here is selected as East US. Please select a closest region if East US does not work for you.
-
-    ![](./media/image29.jpeg)
+    ![](./media/Picture18.png)
 
 16. Click on **Create** in the Create new dialog.
 
-    ![](./media/image30.jpeg)
+    ![](./media/Picture19.png)
 
 ### Task 3: Configure database connection
 
 1.  When the wizard finishes creating the database resources,
     click **Next**.
 
-    ![](./media/image31.jpeg)
+    ![](./media/Picture20.png)
 
 2.  Fill in the below details in the **Connect to Azure SQL
     Database** dialog and click **Finish**.
@@ -235,7 +232,7 @@ closest region if East US does not work for you.
 
 5.  From the Publish page, click **Publish** on the top right corner.
 
-    ![](./media/image34.jpeg)
+    ![](./media/Picture21.png)
 
     **Note:** This will take around 5 minutes
 
@@ -493,17 +490,19 @@ not see them yet.
 
 ## Exercise 4: Clean up resources
 
-1.	From the Azure portal, open the Resourcegroup **RGForWebAppSQL**. Click on **Delete resource group**.
+1.	From the Azure portal, open your assigned Resourcegroup.
 
-    ![](./media/image69.jpeg)
+    ![](./media/Picture27.png) 
 
-2.	Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
+2.	Select all the resources and click on Delete.
 
-    ![](./media/image70.jpeg) 
+   ![](./media/Picture28.png) 
    	
-3.	Click **Delete** on the Delete confirmation dialog box.
+3.	Type +++delete+++ in the text box and select Delete. Select Delete in the confirmation dialog box.
+ 
+   ![](./media/Picture29.png) 
 
-    ![](./media/image71.jpeg)
+   ![](./media/Picture30.png) 
 
 **Summary**
 
