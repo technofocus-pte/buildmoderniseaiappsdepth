@@ -34,7 +34,7 @@ typical data-driven Flask application:
 
 ### Task 1 : Register Service provider
 
-1.  Open a browser and go to <https://portal.azure.com> and sign in with
+1.  Open a browser and go to ``https://portal.azure.com`` and sign in with
     your cloud slice account available in Resource tab of your VM.
 
 > ![](./media/image2.png)
@@ -61,7 +61,7 @@ typical data-driven Flask application:
 ![](./media/image7.png)
 
 7.  Expand Settings from left navigation menu. Click on **Resource
-    providers** ,enter Microsoft.AlertsManagement and select it and then
+    providers** ,enter `Microsoft.AlertsManagement` and select it and then
     click **Register**.
 
 > ![](./media/image8.png)
@@ -79,7 +79,7 @@ Azure development CLI templates to deploy apps
     with your Github account.
 
 2.  Fork this
-    repository https://github.com/technofocus-pte/msdocs-flask-postgresql-sample-app to
+    repository `https://github.com/technofocus-pte/msdocs-flask-postgresql-sample-app` to
     your account by clicking on **Fork** as shown in below image.
 
 ![A screenshot of a computer Description automatically
@@ -108,7 +108,7 @@ generated](./media/image14.jpeg)
 
 > \# Install requirements
 
-\`\`python3 -m pip install -r requirements.txt\`\`
+`python3 -m pip install -r requirements.txt`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image15.jpeg)
@@ -117,7 +117,7 @@ generated](./media/image15.jpeg)
 
 > \# Create .env with environment variables
 
-\`\`cp .env.sample.devcontainer .env\`\`
+`cp .env.sample.devcontainer .env`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image16.jpeg)
@@ -126,7 +126,7 @@ generated](./media/image16.jpeg)
 
 > \# Run database migrations
 
-\`\`python3 -m flask db upgrade\`\`
+`python3 -m flask db upgrade`
 
 ![A screenshot of a computer program Description automatically
 generated](./media/image17.jpeg)
@@ -135,7 +135,7 @@ generated](./media/image17.jpeg)
 
 > \# Start the development server
 
-\`\`python3 -m flask run\`\`
+`python3 -m flask run`
 
 ![A screenshot of a computer Description automatically
 generated](./media/image18.jpeg)
@@ -159,12 +159,12 @@ generated](./media/image21.jpeg)
 
 12. Enter the details below and click on **Submit** button.
 
-Name : \`\`**Contoso Rica\`\`**
+Name : ``Contoso Rica``
 
-Street Adress - \`\`**3A ,8th cross, Ferns street , Singapore\`\`**
+Street Adress - ``3A ,8th cross, Ferns street , Singapore``
 
-Description - \`\`**This is a medium to high priced restaurant in the
-city shopping center\`\`**
+Description - `This is a medium to high priced restaurant in the
+city shopping center`
 
 ![A screenshot of a restaurant Description automatically
 generated](./media/image22.jpeg)
@@ -180,13 +180,13 @@ generated](./media/image23.jpeg)
 
 **Rating : your rating**
 
-\`\`This is a medium to high priced restaurant in the city shopping
+``This is a medium to high priced restaurant in the city shopping
 center. Service was a little bit confusing as we had at least 6 waiters
 coming to ask us things. Food took some time to come. We had 2 menus:
 one indian and one thai. The thai is 30% cheaper so we went for some
 appetizers and thai red curry. Food took some time but it was worth it.
 It was delicious and very well prepared. Overall, this is a good
-eat.\`\`
+eat.``
 
 ![A screenshot of a computer Description automatically
 generated](./media/image24.jpeg)
@@ -208,7 +208,7 @@ monitor them.
 1.  Switch back to Github code space tab,Run below command to Initialize
     a new azd environment:
 
-\`\`azd init\`\`
+``azd init``
 
 ![](./media/image27.jpeg)
 
@@ -218,7 +218,7 @@ monitor them.
 
 ![](./media/image28.jpeg)
 
-3.  Login if required \`\`**azd auth login\`\`** .copy the code and
+3.  Login if required ``**azd auth login``** .copy the code and
     press enter.
 
 ![A screenshot of a computer Description automatically
@@ -242,7 +242,7 @@ generated](./media/image33.jpeg)
     subscription. Enter **1** to select your subscription and press
     Enter.
 
-**\`\`azd provision\`\`**
+``azd provision``
 
 ![A computer screen shot of a computer code Description automatically
 generated](./media/image34.png)
@@ -262,8 +262,8 @@ generated](./media/image35.png)
 ![](./media/image36.png)
 
 8.  Deployment takes **20 - 30 minutes**. You can also check the status
-    of deployment at the generated link or **Azure portal-\> Resource
-    group-\> Deployments**.
+    of deployment at the generated link or **Azure portal-> Resource
+    group-> Deployments**.
 
 ![](./media/image37.png)
 
@@ -280,8 +280,7 @@ generated](./media/image40.png)
 
 1.  Run below command to set resource group environment variable.
 
-\`\`azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}
-\`\`
+``azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}``
 
 Note : Replace {Name of existing resource group} with your resource
 group name available under Resources section in your VM.
@@ -291,7 +290,7 @@ group name available under Resources section in your VM.
 2.  Run below command to deploy all resources and wait for the
     deployment to complete successfully.
 
-\`\`azd deploy\`\`
+``azd deploy``
 
 ![](./media/image42.png)
 
@@ -314,7 +313,7 @@ Azure App Service captures all messages output to the console to help
 you diagnose issues with your application. The app includes print()
 statements to demonstrate this capability as shown below.
 
-@app.route('/', methods=\['GET'\])
+@app.route('/', methods=['GET'])
 
 def index():
 
@@ -359,7 +358,7 @@ return render_template('index.html', restaurants=restaurants)
 
 ![](./media/image52.png)
 
-4.  Switch back to **Azure portal -\> Resource group.**
+4.  Switch back to **Azure portal -> Resource group.**
 
 ![A screenshot of a computer Description automatically
 generated](./media/image53.png)
@@ -369,7 +368,7 @@ generated](./media/image53.png)
 
 ![](./media/image54.png)
 
-6.  Enter \`\`**Delete**\`\` and then click on **Delete**.
+6.  Enter ``**Delete**`` and then click on **Delete**.
 
 ![](./media/image55.png)
 
