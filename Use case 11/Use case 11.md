@@ -112,16 +112,9 @@ template to Azure with both of these accounts.
     name of the Azure resource group that you create
     (mslearn-cosmos-openai).
 
-    +++resourceGroupName="mslearn-cosmos-openai"+++
+    +++resourceGroupName="ResourceGroup1"+++(Get the Resource Group name from the Resources tab)
 
-    ![](./media/image11.jpeg)
-
-8.  Create a resource group using the **az group create** command. Then,
-    execute the following command
-
-    +++az group create --name $resourceGroupName --location "uksouth"+++
-    
-    ![](./media/image12.jpeg)
+    ![](./media/Picture31.png)
 
 9.  Deploy the **azuredeploy.json** template file to the resource group
     using az group deployment create. Then, execute the following
@@ -146,20 +139,20 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
 
     ![](./media/image15.jpeg)
 
-2.  Select the **mslearn-cosmos-openai** resource group.
+2.  Select your resource group.
 
-    ![](./media/image16.jpeg)
+    ![](./media/Picture32.png)
 
 3.  On the **Resource Groups** page, expand the **Essentials** panel and
     observe the **Deployments** header. The status for the deployment
     should be **Succeeded** at this point.
 
-    ![](./media/image17.jpeg)
+    ![](./media/Picture33.png)
 
 4.  Now, select the **Azure Cosmos DB** account to navigate to the
     resource's page.
 
-    ![](./media/image18.jpeg)
+    ![](./media/Picture34.png)
 
 5.  Select the **Keys** option in the **Settings** section of the
     resource navigation menu. Record the value of
@@ -170,7 +163,7 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
 6.  Return to the **Resource Groups** page. Select the **Azure
     OpenAI** account.
 
-    ![](./media/image20.jpeg)
+    ![](./media/Picture35.png)
 
 7.  In your **Azure Open AI** window, navigate to the **Resource
     Management** section, and click on **Keys and Endpoints**.
@@ -590,44 +583,42 @@ solution.
 
 ## Exercise 5: Clean up resource group
 
-1.  Open a new browser and enter the following URL in the address
-    bar: +++https://portal.azure.com/+++ to open the Azure Portal.
+1.	Open a new browser and enter the following URL in the address bar: +++https://portal.azure.com/+++ to open the Azure Portal.
 
-2.  Click on the **Portal Menu**, then select **Resource group.**
+2.	From the Resource group page, select you **assigned Resource group**.
 
-    ![](./media/image15.jpeg)
+    ![](./media/Picture36.png) 
 
-3.  Select the **mslearn-cosmos-openai** resource group.
+3.	Select all the **resources**, and then select **Delete**.
 
-    ![](./media/image16.jpeg)
+     ![](./media/Picure37.png)
 
-4.  In the Resource group page, navigate to command bar and click
-    on **Delete resource group**.
+     ![](./media/Picure38.png)
 
-    ![](./media/image44.jpeg)
+4.	Type in +++**delete**+++ in the text box and click on **Delete**.
+ 
+     ![](./media/Picure39.png)
 
-5.  In the **Delete Resource group** pane that appears on the right
-    side, enter the **resource group name** and click
-    on **Delete** button.
+     ![](./media/Picure40.png)
+  	
+6.	A success notification on the deleted resources confirms the deletion.
 
-    ![](./media/image45.jpeg)
-
-6.  Once the Resource group is deleted, from the Azure portal home page,
+7.  Once the resources are deleted, from the Azure portal home page,
     search for **Azure AI Services** and select it.
 
     ![](./media/image46.jpeg)
 
-7.  Select **Azure OpenAI** from the left pane and then select **Manage
+8.  Select **Azure OpenAI** from the left pane and then select **Manage
     deleted resources**.
 
     ![](./media/image47.jpeg)
 
-8.  Select the resource that gets listed there and then click
+9.  Select the resource that gets listed there and then click
     on **Purge**.
 
     ![](./media/image48.jpeg)
 
-9.  Click on **Yes**.
+10.  Click on **Yes**.
 
     ![](./media/image49.jpeg)
     
