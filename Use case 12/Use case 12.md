@@ -82,7 +82,7 @@ Let us call this Username and password as Azure login credentials. We will use t
     account** and select your azure subscription. Click on
     the **Apply** button.
 
-    ![](./media/image3.jpeg)
+    ![](./media/Picture41.png)
 
 5.  In **Mount storage account** dialog box, select **we will create a
     storage account for you** and click on the **Next** button.
@@ -96,40 +96,27 @@ Let us call this Username and password as Azure login credentials. We will use t
     to assign to your resource group and database and specify the Azure
     region into which resources should be deployed.
 
-7.  The resource group name specified is **rg-postgresql-labs**, but you
-    can provide any name you wish to use to host the resources
-    associated with this lab.
+7.	Replace the Resource group Name in the command below with the assigned Resource group and execute the command.
 
-    +++RG_NAME=rg-postgresql-labs+++
+  	+++RG_NAME=<Resource group Name>+++
+
     
-    ![](./media/image6.jpeg)
+    ![](./media/Picture42.png)
 
-8.  In the database name, replace the {SUFFIX} token with a unique
-    value, such as your initials, to ensure the database server name is
+8.  In the database name, replace the {SUFFIX} token with your **Lab instance ID**, such as your initials, to ensure the database server name is
     globally unique.
 
     +++DATABASE_NAME=pgsql-flex-{SUFFIX}+++
 
     ![](./media/image7.jpeg)
 
-9.  Replace the region with your nearest location. In this lab we are
-    using westus
+9.	Execute the below command to set the Region value.
 
-    +++REGION=westus+++
-
+  	+++REGION=westus+++
+  	
     ![](./media/image8.jpeg)
 
-10. Run the following Azure CLI command to create a resource group,
-    specifying the location. If you have more than one Azure
-    subscription, use the az account set --subscription \< subscription
-    id \> command first to select the subscription you want to use for
-    lab resources.
-
-    +++az group create --name $RG_NAME --location $REGION+++
-
-11. Provision an Azure Database for PostgreSQL database instance within
-    the resource group you created above by running the following Azure
-    CLI command(10 Min)
+10.	Provision an Azure Database for PostgreSQL database instance within assigned the resource group by running the following Azure CLI command( This command will take 10 mins to complete)
 
     ```
     az postgres flexible-server create --name $DATABASE_NAME --location $REGION --resource-group $RG_NAME \
@@ -152,14 +139,14 @@ Shell to connect to your database.
 
     ![](./media/image10.jpeg)
 
-3.  Click on **your resource group** name
+3.  Click on **your assigned resource group** name
 
-    ![](./media/image11.jpeg)
+    ![](./media/Picture43.png)
 
 4.  In the resource group, select **PostgreSQL Flexible
     Server** resource
 
-    ![](./media/image12.jpeg)
+    ![](./media/Picture44.png)
 
 5.  In the left-hand navigation menu,
     select **Connect** under **Settings**.
@@ -351,12 +338,12 @@ described in how to use PostgreSQL extensions.
 
 2.  Click on your resource group name
 
-    ![](./media/image28.jpeg)
+    ![](./media/Picture43.png)
 
 3.  In the resource group, select **PostgreSQL Flexible
     Server** resource
 
-    ![](./media/image29.jpeg)
+    ![](./media/Picture44.png)
 
 4.  From the database's left-hand navigation menu, select **Server
     parameters** under **Settings**, then
@@ -422,11 +409,11 @@ In this task, you create a new Azure OpenAI service.
     | **Subscription** | Select **Azure subscription** |
     |:-----|:----|
     | **Resource group** | Select resource group **rg-postgresql-labs**(which you have created in Ex1> Task 1) |
-    | **Region** | Select East US2 |
-    | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++ (XXXX can be a unique number) |
+    | **Region** | Select West US |
+    | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++(Replace **XXXX** with your **Lab instance ID**) |
     | **Pricing tier** | Select Standard S0 |    
 
-    ![](./media/image38.jpeg)
+    ![](./media/Picture45.png)
 
 7.  In the **Network** tab, leave all the radio buttons in the default
     state, and click on the **Next** button.
@@ -441,7 +428,7 @@ In this task, you create a new Azure OpenAI service.
 9.  In the **Review+submit** tab, once the Validation is Passed, click
     on the **Create** button.
 
-    ![](./media/image41.jpeg)
+    ![](./media/Picture46.png)
 
 10.  Wait for the deployment to complete. The deployment will take around
     2-3 minutes.
@@ -953,15 +940,15 @@ create an Azure AI Language service.
     | **Parameter** | **Value** | 
     |:---|:----|
     |**Project details** | |
-    | Subscription | Select the subscription you use for lab resources. | 
-    |Resource group  | Select the resource group you created in Exercise 1>Task 1. | 
+    | Subscription | Select your assigned subscription | 
+    |Resource group  | Select your assigned ResourceGroup | 
     | **Instance details** |  |
     | Region | Select the **region** you used for your **Azure Database for PostgreSQL Flexible Server resource**. |
-    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, where SUFFIX is a unique string, such as your initials. |
+    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, replacing SUF****FIX with your **Lab instance ID**. |
     | Pricing tier | Select the standard pricing tier, S (1K Calls per minute). |
     |Responsible AI Notice  | Check the box to certify you have reviewed and acknowledged the Responsible AI Notice. |
     
-    ![](./media/image79.jpeg)
+    ![](./media/Picture47.png)
     
     ![](./media/image80.jpeg)
 
@@ -972,7 +959,7 @@ create an Azure AI Language service.
 7.  Select the **Create** button on the **Review + create** tab to
     provision the Language service.
 
-    ![](./media/image81.jpeg)
+    ![](./media/Picture48.png)
 
 8.  Select **Go to resource group** on the deployment page when the
     language service deployment is complete.
@@ -1239,48 +1226,6 @@ CREATE EXTENSION command.
     ![](./media/image111.jpeg)
     
     ![](./media/image112.jpeg)
-
-### Task 5: Clean up resources
-
-It is crucial that you clean up any resources you created for these labs
-once you have completed them. You are charged for the configured
-capacity, not how much the database is used. To delete your resource
-group and all resources you created for this lab, follow the
-instructions below:
-
-To avoid incurring unnecessary Azure costs, you should delete the
-resources you created in this quick start if they're no longer needed.
-To manage resources, you can use the [Azure
-portal](https://portal.azure.com/?azure-portal=true).
-
-1.  To delete the storage account, navigate to **Azure portal
-    Home** page, click on **Resource groups**.
-
-    ![](./media/image113.jpeg)
-
-2.  Click on the resource group that you've created.
-
-    ![](./media/image114.jpeg)
-
-3.  In the **Resource group** home page, select the **delete resource
-    group** .
-
-    ![](./media/image115.jpeg)
-
-4.  In the **Delete Resources** pane that appears on the right side,
-    navigate to **Enter "resource group name" to confirm
-    deletion** field, then click on the **Delete** button.
-
-    ![](./media/image116.jpeg)
-
-5.  On **Delete confirmation** dialog box, click on **Delete** button.
-
-    ![](./media/image117.jpeg)
-
-6.  Click on the bell icon, you'll see the notification --**Deleted
-    resource group AOAI-RG89.**
-
-    ![](./media/image118.jpeg)
 
 **Summary**
 
