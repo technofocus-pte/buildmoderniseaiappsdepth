@@ -452,7 +452,7 @@ Make some changes in your code to use the Done property.
     select View Streaming Logs, your Azure app sets the trace level to
     Error, which only logs error events.
 
-**Note:** Restart the logging stream from the Visual Studio if you do
+    >[!Note] **Note:** Restart the logging stream from the Visual Studio if you do
 not see them yet.
 
 ### Task 1: Change trace levels
@@ -492,7 +492,7 @@ not see them yet.
 
 1.	From the Azure portal, open your assigned Resourcegroup.
 
-    ![](./media/Picture27.png) 
+   ![](./media/Picture27.png) 
 
 2.	Select all the resources and click on Delete.
 
