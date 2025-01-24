@@ -36,7 +36,7 @@ chat history across conversations.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
--\`\` **https://github.com/signup?user_email=&source=form-home-signupobjectives\`\`**
+-``https://github.com/signup?user_email=&source=form-home-signupobjectives``
 
 ### Task 1 : Run the Docker
 
@@ -47,7 +47,7 @@ credentials. If you do not have, please create one from here
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to <https://portal.azure.com> and sign in with
+1.  Open a browser and go to ``https://portal.azure.com`` and sign in with
     your Azure credentials available in **Resource** tab of your VM.
 
 > ![A screenshot of a computer Description automatically
@@ -74,12 +74,12 @@ generated](./media/image6.png)
 ![A screenshot of a computer Description automatically
 generated](./media/image7.png)
 
-6.  Click on **Settings - \> Resource provider** from left navigation
+6.  Click on **Settings -> Resource provider** from left navigation
     menu.
 
 ![](./media/image8.png)
 
-7.  Type \`\`**Microsoft.AlertsManagement**\`\` and press enter. Select
+7.  Type ``**Microsoft.AlertsManagement**`` and press enter. Select
     it and then click on **Register**.
 
 ![A screenshot of a computer Description automatically
@@ -90,14 +90,14 @@ generated](./media/image10.png)
 
 ### Task 3 : Provision Services and application to Azure
 
-1.  Open a browser and go to \`\`https:\\\github.com\`\` and sign in
+1.  Open a browser and go to ``https:\\github.com`` and sign in
     with your Github account. Search for the below repo
 
 ![](./media/image11.jpeg)
 
 2.  Search for the below repo and click on **Fork**.
 
-> \`\`https://github.com/technofocus-pte/chat-csharp-cosmos-db-nosql-openai\`\`
++++https://github.com/technofocus-pte/chat-csharp-cosmos-db-nosql-openai-CSTesting.git+++
 
 ![](./media/image12.jpeg)
 
@@ -105,7 +105,7 @@ generated](./media/image10.png)
 
 ![](./media/image13.jpeg)
 
-4.  Click on **Code -\> Code space -\> Open Code space.**
+4.  Click on **Code -> Code space -\ Open Code space.**
 
 ![](./media/image14.jpeg)
 
@@ -116,7 +116,7 @@ generated](./media/image10.png)
 6.  Run below command to log in to AZD. Copy the generated code and
     press Enter. 
 
-> \`\`**azd auth login\`\`**
++++azd auth login+++
 
 ![](./media/image16.jpeg)
 
@@ -126,11 +126,9 @@ generated](./media/image10.png)
 
 ![](./media/image18.jpeg)
 
-8.  Run below command to Initialize the project in the current
-    directory. Enter the Environment name
-    as \`\`**cosmoschatapp\`\`** and press Enter.
+8.  Run below command to Initialize the project in the current    directory. Enter the Environment name as ``cosmoschatapp`` and press Enter.
 
-\`\`azd init \`\`
++++azd init+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image19.png)
@@ -138,15 +136,12 @@ generated](./media/image19.png)
 9.  Run below command to deploy the services to Azure, build your
     container. Select below values.
 
-> \`\`azd provision\`\`
->
-> **Select an Azure Subscription to use** : select your subscription
->
-> **Select an Azure location to use** : **East us/west us** (Sometimes,
-> East US might not be available, choose different location and deploy.)
->
-> **Enter a value for the 'existingResourceGroupName' infrastructure
-> parameter:** **ResourceGroup1**
++++azd provision+++
+
+    - Select an Azure location to use : East us/west us (Sometimes, East US might not be available, choose different location and deploy.) 
+
+    - Enter a value for the 'existingResourceGroupName' infrastructure parameter: ResourceGroup1
+
 
 ![](./media/image20.png)
 
@@ -210,11 +205,11 @@ generated](./media/image25.png)
 
 10. Select below values
 
-> **Organization : your Github organization**
->
-> **Repository:** chat-csharp-cosmos-db-nosql-openai
->
-> **Branch :** main
+**Organization : your Github organization**
+
+**Repository:** chat-csharp-cosmos-db-nosql-openai
+
+**Branch :** main
 
 ![](./media/image31.png)
 
@@ -226,9 +221,9 @@ generated](./media/image25.png)
 - Login server URL : Your Login server copied form Container registry
   (step#5)
 
-- Username : your password from container registry (step \#5)
+- Username : your password from container registry (step #5)
 
-- Password : Your password from container registry (step \# 5)
+- Password : Your password from container registry (step # 5)
 
 ![](./media/image32.png)
 
@@ -260,13 +255,13 @@ generated](./media/image25.png)
 
 3.  Enter the below prompt.
 
-\`\`What is the seating capacity for Lumen in Seattle?\`\`
+``What is the seating capacity for Lumen in Seattle?``
 
 ![](./media/image38.jpeg)
 
 4.  Enter below prompt . Explore the app with different prompts.
 
-\`\`is that bigger than Dogger stadium??\`\`
+``is that bigger than Dogger stadium??``
 
 ![](./media/image39.jpeg)
 
@@ -289,7 +284,7 @@ generated](./media/image40.png)
 ![A screenshot of a computer Description automatically
 generated](./media/image42.png)
 
-5.  Switch back to **Azure portal -\> Resource group- \> Resource group
+5.  Switch back to **Azure portal -> Resource group-> Resource group
     name.**
 
 ![](./media/image43.png)
@@ -299,8 +294,7 @@ generated](./media/image42.png)
 
 ![](./media/image44.png)
 
-7.  Type \`\`**delete**\`\` on the text box and then click on
-    **Delete**.
+7.  Type ``delete`` on the text box and then click on **Delete**.
 
 > ![](./media/image45.png)
 
@@ -308,11 +302,7 @@ generated](./media/image42.png)
 
 ![](./media/image46.png)
 
-**Summary :**
-
-You have implemented service classes using the Microsoft.Azure.Cosmos
-and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure
-OpenAI conversational interface along with contextual prefixes and
+**Summary :** You have implemented service classes using the Microsoft.Azure.Cosmos and Azure.AI.OpenAI packages on NuGet. You sent prompts to the Azure OpenAI conversational interface along with contextual prefixes and
 parsed the usage and body properties of the response. You also used
 Azure Cosmos DB for NoSQL to store the conversation sessions and
 messages within a single container.

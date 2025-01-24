@@ -57,8 +57,7 @@ generated](./media/image2.jpeg)
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL: \`\`https://github.com/technofocus-pte/azure-search-openai-javascript\`\` and
-    sign in with your Github account.
+    URL: ``https://github.com/technofocus-pte/azure-search-openai-javascr-CSTestingipt.git`` and sign in with your Github account.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
@@ -88,7 +87,7 @@ generated](./media/image7.jpeg)
 1.  Run the following command on the Terminal. Copy the code and press
     enter.
 
-\`\`azd auth login\`\`
++++azd auth login+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image8.png)
@@ -108,11 +107,11 @@ generated](./media/image11.png)
 
 6.  Switch back to Github Codespace tab. Run below command to Initialize
     the project environment in the current directory. Enter the
-    Environment name as \`\`**ragpgpy \`\`** and press Enter.
+    Environment name as ``ragpgpy`` and press Enter.
 
 Note : env name should be unique
 
-\`\` azd env new\`\`
++++azd env new+++
 
 ![](./media/image12.png)
 
@@ -124,7 +123,7 @@ generated](./media/image13.png)
 
 8.  Select below values.
 
-> \`\`azd provision\`\`
++++azd provision+++
 
 - **Select an Azure Subscription to use** : select your subscription
 
@@ -140,18 +139,18 @@ generated](./media/image13.png)
 9.  Wait for the resource to provision completely. This process wil take
     5-10 min to create al the required resources.
 
-> ![A screenshot of a computer Description automatically
-> generated](./media/image15.png)
+![A screenshot of a computer Description automatically
+generated](./media/image15.png)
 
 ### Task 3 : Deploy the chat app and explore it
 
 10. Run the below command to deploy the app.
 
-\`\`azd deploy\`\`
++++azd deploy+++
 
 ![](./media/image16.png)
 
-11. Wait for the deployment .It takes \< 5 minutes.
+11. Wait for the deployment .It takes < 5 minutes.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image17.png)
@@ -176,7 +175,7 @@ generated](./media/image20.png)
 
 ### Task 4 : Clean up all the resources
 
-1.  Switch back to **Azure portal -\> Resource group- \> Resource group
+1.  Switch back to **Azure portal -> Resource group-> Resource group
     name.**
 
 ![A screenshot of a computer Description automatically
@@ -187,8 +186,7 @@ generated](./media/image22.png)
 
 ![](./media/image23.png)
 
-3.  Type \`\`**delete**\`\` on the text box and then click on
-    **Delete**.
+3.  Type ``delete`` on the text box and then click on **Delete**.
 
 ![](./media/image24.png)
 
@@ -210,9 +208,7 @@ generated](./media/image26.png)
 
 ![](./media/image28.png)
 
-### Summary:
-
-This use case thought you , deploying a chat application for the
+### Summary:This use case thought you , deploying a chat application for the
 Retrieval Augmented Generation pattern running on Azure, using Azure AI
 Search for retrieval and Azure OpenAI and LangChain large language
 models (LLMs) to power ChatGPT-style and Q&A experiences

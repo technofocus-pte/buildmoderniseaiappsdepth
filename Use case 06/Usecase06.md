@@ -32,15 +32,15 @@ Database for PostgreSQL and azure-container-apps,ai-azd-templates.
 
 GitHub account -- You are expected to have your own GitHub login
 credentials. If you do not have, please create one from here
-- **https://github.com/signup?user_email=&source=form-home-signupobjectives**
+- +++https://github.com/signup?user_email=&source=form-home-signupobjectives+++
 
 ## Exercise 1 : Provision , deploy the application and test it from the browser
 
 ### Task 1: Copy the existing resource group name
 
 1.  Open your browser, open Azure
-    portal \`\`https:\\\portal.azure.com\`\`.  Sign in with your Azure
-    slice account(Azure Credentials***)*** available under
+    portal +++https:\\portal.azure.com+++.  Sign in with your Azure
+    slice account(Azure Credentials) available under
     instructions/Resources section of your host environment.
 
 ![A screenshot of a computer Description automatically
@@ -93,7 +93,7 @@ generated](./media/image7.jpeg)
 
 ![](./media/image10.png)
 
-4.  Type \`\`**Microsoft.AlertsManagement**\`\` and press enter. Select
+4.  Type +++Microsoft.AlertsManagement+++ and press enter. Select
     it and then click on **Register**.
 
 ![](./media/image11.png)
@@ -105,7 +105,7 @@ generated](./media/image12.png)
 
 1.  Open your browser, navigate to the address bar, type or paste the
     following
-    URL: \`\`https://github.com/technofocus-pte/rag-postgres-openai-python.git\`\` tab
+    URL: +++https://github.com/technofocus-pte/rag-postgres-openai-python-CSTesting.git+++ tab
     opens and ask you to open in Visual studio code. Select **Open
     Visual Studio Code.**
 
@@ -120,7 +120,7 @@ generated](./media/image14.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image15.jpeg)
 
-3.  Click on **Code -\> Codespaces -\> Codespaces+**
+3.  Click on **Code -> Codespaces -> Codespaces+**
 
 ![A screenshot of a computer Description automatically
 generated](./media/image16.jpeg)
@@ -139,7 +139,7 @@ generated](./media/image18.jpeg)
 1.  Run the following command on the Terminal. It generates the code to
     copy. Copy the code and press Enter.
 
-\`\`azd auth login\`\`
++++azd auth login+++
 
 ![](./media/image19.png)
 
@@ -155,12 +155,12 @@ generated](./media/image21.png)
 
 4.  To create an environment for Azure resources, run the following
     Azure Developer CLI command.It asks you to enter environment name
-    .Enter any name of your choice and press enter (eg :**ragpgpy**)
+    .Enter any name of your choice and press enter (eg :+++ragpgpy+++)
 
 **Note:** When creating an environment, ensure that the name consists of
 lowercase letters.
 
-\`\`azd env new\`\`
++++azd env new+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image22.png)
@@ -168,7 +168,7 @@ generated](./media/image22.png)
 5.  Run the following Azure Developer CLI command to provision the Azure
     resources and deploy the code.
 
-\`\`azd provision \`\`
++++azd provision+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image23.png)
@@ -207,13 +207,13 @@ generated](./media/image28.png)
 
 11. Run below command to set resource group
 
-\`\`azd env set AZURE_RESOURCE_GROUP {your resource group name}\`\`
++++azd env set AZURE_RESOURCE_GROUP {your resource group name}+++
 
 ![](./media/image29.png)
 
 12. Run below command to deploy the app to Azure.
 
-\`\`azd deploy\`\`
++++azd deploy+++
 
 ![](./media/image30.png)
 
@@ -319,8 +319,7 @@ generated](./media/image46.png)
 
 ![](./media/image47.png)
 
-3.  Type \`\`**delete**\`\` on the text box and then click on
-    **Delete**.
+3.  Type ``delete`` on the text box and then click on **Delete**.
 
 ![](./media/image48.png)
 
@@ -333,13 +332,19 @@ generated](./media/image46.png)
 ![A screenshot of a computer Description automatically
 generated](./media/image50.png)
 
-1.  Click on Code , select the branch created for this lab and click on
+6.  Click on Code , select the branch created for this lab and click on
     **Delete**.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image51.png)
 
-2.  Confirm the branch deletion by clicking on **Delete** button.
+7.  Confirm the branch deletion by clicking on **Delete** button.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image52.png)
+
+>**Summary:**:This use case walks you through deploying a chat application with PostgreSQL and OpenAI on Azure, focusing on cloud-based application
+deployment and management. you’ve set up the development environment,
+installed necessary tools like Azure CLI, configured Azure resources
+using Azure Developer CLI, and deployed the application to Azure
+Container Apps.
