@@ -591,15 +591,15 @@ solution.
 
 3.	Select all the **resources**, and then select **Delete**.
 
-     ![](./media/Picure37.png)
+     ![](./media/Picture37.png)
 
-     ![](./media/Picure38.png)
+     ![](./media/Picture38.png)
 
 4.	Type in +++**delete**+++ in the text box and click on **Delete**.
  
-     ![](./media/Picure39.png)
+     ![](./media/Picture39.png)
 
-     ![](./media/Picure40.png)
+     ![](./media/Picture40.png)
   	
 6.	A success notification on the deleted resources confirms the deletion.
 
@@ -621,8 +621,6 @@ solution.
 10.  Click on **Yes**.
 
      ![](./media/image49.jpeg)
-    
-     ![](./media/image50.jpeg)
 
 **Summary**
 
