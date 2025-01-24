@@ -506,15 +506,15 @@ Works JSON files into the database using the MongoDB API.
 
 1.	From the Azure portal(+++https://portal.azure.com+++), select the resource group assigned.
 
-   ![](./media/Picture24.png)
+    ![](./media/Picture24.png)
 
 2.	Select all the resources under it, click on the **three dots** in the menu and select **Delete** to delete all the resources.
 
-   ![](./media/Picture25.png)
+    ![](./media/Picture25.png)
 
 3.	Type +++delete+++ in the text box and click on the Delete button.
  
-   ![](./media/Picture26.png)
+    ![](./media/Picture26.png)
 
 4.  Once the resources are deleted, from the Azure portal home page,
     search for +++**Azure AI Services**+++ and select it.
