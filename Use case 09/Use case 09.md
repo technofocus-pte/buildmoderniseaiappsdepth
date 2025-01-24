@@ -169,11 +169,11 @@ Let us call this Username and password as Azure login credentials. We will use t
     resource**, **App Service**, **Azure Cosmos DB for MongoDB** are
     created.
 
-    ![](./media/image18.jpeg)
+    ![](./media/Picture54.png)
 
 4.  Click on the **Azure OpenAI** resource.
 
-    ![](./media/image19.jpeg)
+    ![](./media/Picture55.png)
 
 5.  Select **Keys and Endpoint** under **Resource Management**.
 
@@ -187,7 +187,7 @@ Let us call this Username and password as Azure login credentials. We will use t
 7.  Back in the resource group page, select
     the **Azure Cosmos DB for Mongo DB** resource.
 
-    ![](./media/Picture.png)
+    ![](./media/Picture53.png)
 
 8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
 
