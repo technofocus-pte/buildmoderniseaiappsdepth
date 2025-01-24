@@ -19,6 +19,29 @@ Quarkus app running on Azure App Service on Linux.
 credentials. If you do not have, please create one from here
 - +++https://github.com/signup?user_email=&source=form-home-signup+++
 
+## Exercise 0: Understand the VM and the credentials
+
+In this task, we will identify and understand the credentials that we will be using throughout the lab.
+
+1.	**Instructions** tab hold the lab guide with the instructions to be followed throughout the lab.
+   
+2.	**Resources** tab has got the credentials that will be needed for executing the lab.
+    -	**URL** – URL to the Azure portal
+    -	**Subscription** – This is the ID of the subscription assigned to you
+    -	**Username** – The user id with which you need to login to the Azure services.
+    -	**Password** – Password to the Azure login.
+Let us call this Username and password as Azure login credentials. We will use these creds wherever we mention Azure login credentials.
+    
+    -	**Resource Group** – The **Resource group** assigned to you. 
+
+  	>[!Alert] **Important:** Make sure you create all your resources under this Resource group
+
+    ![](./media/Picture1.png)
+  	
+3.	**Help** tab holds the Support information. The **ID** value here is the **Lab instance ID** which will be used during the lab execution.
+ 
+    ![](./media/Picture2.png)
+  	
 ## Exercise 1: Run the sample
 
 First, you set up a sample data-driven app as a starting point. The
@@ -85,11 +108,9 @@ First, you create the Azure resources. The steps used in this lab create
 a set of secure-by-default resources that include App Service and Azure
 Database for PostgreSQL.
 
-1.  Login to Azure portal
-    at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
+1.    Open the Azure portal at +++https://portal.azure.com/+++ and **login** with the Azure login credentials from the **Resources** tab of the VM.
 
-    ![](./media/image11.jpeg)
+    ![](./media/Picture3.png)
 
 2.  Select **Cancel** or the close button in the Welcome page.
 
@@ -107,22 +128,22 @@ Database for PostgreSQL.
     | **Property**   |  **Value**  |
     |:-------|:-------|
     |  Subscription  |  Select your **assigned subscription**  |
-    | Resource group   |  Click **Create New** -> Enter +++**RGForAppService**+++  |
-    |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
+    | Resource group   |  Select your **assigned Resource group**  |
+    |  Region  |  Select your nearest region(**East US2** is selected here for this execution)  |
     | **Web App Details**   |    |
-    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
+    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX your **Labinstance ID** since the app name should be universally unique)  |
     | Runtime stack   |  **Java 17**  |
     |  **Database**  |    |
     |  Engine  |  Select **PostgreSQL – Flexible Server**  |
     |  Hosting Plan  |  Select **Basic**  |
     
-    ![](./media/image14.jpeg)
+    ![](./media/Picture4.png)
 
     ![](./media/image15.jpeg)
 
 6.  Once the validation passes, click on **Create**.
 
-    ![](./media/image16.jpeg)
+    ![](./media/Picture5.png)
 
     **Note:** The app creation takes around 15 minutes.
 
@@ -153,7 +174,7 @@ Database for PostgreSQL.
     
     - Private DNS zone
 
-   ![](./media/image20.jpeg)
+   ![](./media/Picture6.png)
 
 ## Exercise 3: Verify connection settings
 
@@ -296,10 +317,9 @@ GitHub workflow failing prematurely.
 
 ## Exercise 5: Browse to the app
 
-1.  From the Azure portal(+++https://portal.azure.com+++), open Resource
-    group **RGForAppService** and select the **App Service** resource.
+1.  From the Azure portal(+++https://portal.azure.com+++), open Resource group **ResourceGroup1** and select the **App Service** resource.
 
-    ![](./media/image41.jpeg)
+    ![](./media/Picture7.png)
 
 2.  From the left menu, select **Overview** and select the URL of your
     app under **Default domain**.
@@ -356,26 +376,22 @@ capability as shown below.
 
     ![](./media/image59.png)
   
-4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
+4.	Next, from the Resource group page, select you assigned Resource group.
 
-    ![](./media/image50.jpeg)
+    ![](./media/Picture8.png)
 
-5.	Click on **Delete resource group**.
+5.	Select all the **resources**, and then select **Delete**.
 
-    ![](./media/image51.jpeg)
+    ![](./media/Picture9.png)
 
-6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
- 
-    ![](./media/image52.jpeg)
+6.	Type in +++**delete**+++ in the text box and click on **Delete**.
 
-7.	Click on **Delete** in the confirmation dialog.
+    ![](./media/Picture10.png)
 
-    ![](./media/image53.jpeg)
+    ![](./media/Picture11.png)
 
-8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
+7.	A success notification on the deleted resources confirms the deletion.
 
-    ![](./media/image54.jpeg)
-  	
 8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
    
     ![](./media/image64.jpeg)
