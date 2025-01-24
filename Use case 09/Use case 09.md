@@ -150,9 +150,9 @@ Let us call this Username and password as Azure login credentials. We will use t
 
     >[!Note] **Note:** Type Y when prompted.
 
-    ![](./media/image14.jpeg)
+   ![](./media/image14.jpeg)
     
-    ![](./media/image15.jpeg)
+   ![](./media/image15.jpeg)
 
 ### Task 2: Check the created resources in Azure
 
