@@ -58,7 +58,7 @@ generated](./media/image4.jpeg)
 
 4.  Now we will enable our Azure subscription execute the below command
 
-+++az account set --subscription "\< YOUR_SUBSCRIPTION_ID"+++
++++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
 
 +++az account list --output table+++
 
@@ -131,7 +131,7 @@ that Azure CLI tab and move on to the next unit.
 
 ### Task 2 : Run Docker
 
-1.  On the Start menu, click on **DockerDesktop**
+1.  On the Start menu/ from Desktop, double click on **DockerDesktop**
 
 ![A screenshot of a phone Description automatically
 generated](./media/image11.jpeg)
@@ -265,7 +265,7 @@ container images and the associated compute costs with time spent
 building them.
 
 3.  Docker can also display the available images that are resident. This
-    is helpful for viewing what\\'s available to run. Run the following
+    is helpful for viewing what's available to run. Run the following
     command in your CLI
 
 +++docker image ls+++
@@ -344,19 +344,19 @@ generated](./media/image23.jpeg)
 
 3.  Run the following command in your CLI
 
-+++C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines+++
++++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"+++
 
 4.  We will be using the same Authenticate with Azure Resource Manager
     we have created earlier in the Exercise 1 Task 1.set below variables
 
-||
-|--|
-|Value|
-|export AZ_RESOURCE_GROUP="your resource group name”|
-|export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"|
-|export AZ_KUBERNETES_CLUSTER="javaaksclusterXXX"|
-|export AZ_LOCATION=“your resource location”|
-|export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"|
+|||
+|--|--|
+|Value||
+|export AZ_RESOURCE_GROUP="your resource group name”||
+|export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"||
+|export AZ_KUBERNETES_CLUSTER="javaaksclusterXXX"||
+|export AZ_LOCATION=“your resource location”||
+|export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"||
 
 > **Note:** If your session has idled out, your doing this step at
 > another point in time and/or from another CLI you may have to re
@@ -483,11 +483,9 @@ selector:
 ![A screenshot of a computer program Description automatically
 generated](./media/image31.jpeg)
 
-4.  Press Esc and: and then
-    type \`\`**[wq](urn:gd:lg%F0%9F%85%B0%EF%B8%8Fsend-vm-keys)\`\`** and
-    press enter to save the file.
+4.  Press Esc and: and then type +++wq+++ and press enter to save the file.
 
-**Note:** Optionally, the deployment_solution.yml in the root of your
+>**Note:** Optionally, the deployment_solution.yml in the root of your
 project contains the contents needed, you may find it easier to
 rename/update the contents of that file.
 
@@ -527,7 +525,7 @@ $AZ_KUBERNETES_CLUSTER+++
 
 +++kubectl apply -f deployment.yml+++
 
-- You will see something similar:
+You will see something similar:
 
 ![](./media/image34.jpeg)
 

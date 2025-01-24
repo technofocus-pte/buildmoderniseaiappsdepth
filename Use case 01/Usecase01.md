@@ -35,7 +35,7 @@ generated](./media/image3.jpeg)
 
 ![](./media/image4.jpeg)
 
-5.  Navigate to the folder +++C:\Software++ and right click
+5.  Navigate to the folder +++C:\Software+++ and right click
     on **apache-maven-3.9.4-bin.zip** folder and select **Extract All**.
 
 ![](./media/image5.jpeg)
@@ -52,7 +52,7 @@ generated](./media/image6.jpeg)
 generated](./media/image7.jpeg)
 
 8.  Enter the Variable value
-    as `C:\Software\apache-maven-3.9.4-bin\apache-maven-3.9.4` and
+    as +++C:\Software\apache-maven-3.9.4-bin\apache-maven-3.9.4+++ and
     then click on **OK**.
 
 ![A screenshot of a computer Description automatically
@@ -208,8 +208,8 @@ Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
 
 ![](./media/image22.jpeg)
 
-2.  Rename the generated ***MyEntity.java*** class
-    to `**Todo.java` (located in the same folder as
+2.  Rename the generated **MyEntity.java** class
+    to `Todo.java` (located in the same folder as
     the *TodoResource.java* file)
 
 ![](./media/image23.jpeg)
@@ -521,6 +521,7 @@ generated](./media/image39.png)
     variable. Copy the resource group name.
 
 +++export AZ_RESOURCE_GROUP="Your existing resource group"+++
+
 +++export AZ_LOCATION="Location near to you"+++
 
 ![A screenshot of a computer Description automatically
@@ -540,7 +541,7 @@ generated](./media/image42.png)
 1.  You'll now create a managed PostgreSQL server. Run the following
     command to create a small instance of Azure Database for PostgreSQL:
 
-++++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP"
++++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP"
 --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME"
 --database-name "$AZ_POSTGRES_DB_NAME" --admin-user
 "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD"
@@ -598,7 +599,7 @@ generated](./media/image47.jpeg)
 
 ```
 quarkus.hibernate-orm.database.generation=update
-quarkus.datasource.jdbc.url=\<the POSTGRES_CONNECTION_STRING_SSL value\>
+quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
 ```
 ![A screenshot of a computer Description automatically
 generated](./media/image48.jpeg)
