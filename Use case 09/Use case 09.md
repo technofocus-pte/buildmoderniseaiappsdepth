@@ -534,8 +534,6 @@ Works JSON files into the database using the MongoDB API.
 7.  Click on **Yes**.
 
     ![](./media/image94.jpeg)
-    
-    ![](./media/image95.jpeg)
 
 **Summary:**
 
