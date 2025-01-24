@@ -944,7 +944,7 @@ create an Azure AI Language service.
     |Resource group  | Select your assigned ResourceGroup | 
     | **Instance details** |  |
     | Region | Select the **region** you used for your **Azure Database for PostgreSQL Flexible Server resource**. |
-    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, replacing SUF****FIX with your **Lab instance ID**. |
+    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, replacing **SUFFIX** with your **Lab instance ID**. |
     | Pricing tier | Select the standard pricing tier, S (1K Calls per minute). |
     |Responsible AI Notice  | Check the box to certify you have reviewed and acknowledged the Responsible AI Notice. |
     
