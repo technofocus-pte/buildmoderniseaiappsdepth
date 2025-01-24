@@ -620,9 +620,9 @@ solution.
 
 10.  Click on **Yes**.
 
-    ![](./media/image49.jpeg)
+     ![](./media/image49.jpeg)
     
-    ![](./media/image50.jpeg)
+     ![](./media/image50.jpeg)
 
 **Summary**
 
