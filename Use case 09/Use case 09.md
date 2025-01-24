@@ -184,10 +184,10 @@ Let us call this Username and password as Azure login credentials. We will use t
 
     ![](./media/image21.jpeg)
 
-7.  Back in the **mongo-devguide-rg** resource group page, select
+7.  Back in the resource group page, select
     the **Azure Cosmos DB for Mongo DB** resource.
 
-    ![](./media/image22.jpeg)
+    ![](./media/Picture.png)
 
 8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
 
