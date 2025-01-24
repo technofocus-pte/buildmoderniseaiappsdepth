@@ -37,6 +37,30 @@ space of the notepad and then click on the T button of the command to be
 pasted. The contents will get copied to the notepad and then you can
 copy and paste from the notepad onto the CloudShell.
 
+## Exercise 0: Understand the VM and the credentials
+
+In this task, we will identify and understand the credentials that we will be using throughout the lab.
+
+1.	**Instructions** tab hold the lab guide with the instructions to be followed throughout the lab.
+   
+2.	**Resources** tab has got the credentials that will be needed for executing the lab.
+    -	**URL** – URL to the Azure portal
+    -	**Subscription** – This is the ID of the subscription assigned to you
+    -	**Username** – The user id with which you need to login to the Azure services.
+    -	**Password** – Password to the Azure login.
+Let us call this Username and password as Azure login credentials. We will use these creds wherever we mention Azure login credentials.
+    
+    -	**Resource Group** – The **Resource group** assigned to you. 
+
+  	>[!Alert] **Important:** Make sure you create all your resources under this Resource group
+
+    ![](./media/Picture1.png)
+  	
+3.	**Help** tab holds the Support information. The **ID** value here is the **Lab instance ID** which will be used during the lab execution.
+ 
+    ![](./media/Picture2.png)
+
+
 ## Exercise 1: Provision an Azure Database for PostgreSQL Flexible Server
 
 ### Task 1: Provision an Azure Database for PostgreSQL Flexible Server
