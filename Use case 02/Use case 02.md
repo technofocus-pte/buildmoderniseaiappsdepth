@@ -110,7 +110,7 @@ Database for PostgreSQL.
 
 1.    Open the Azure portal at +++https://portal.azure.com/+++ and **login** with the Azure login credentials from the **Resources** tab of the VM.
 
-    ![](./media/Picture3.png)
+  ![](./media/Picture3.png)
 
 2.  Select **Cancel** or the close button in the Welcome page.
 
