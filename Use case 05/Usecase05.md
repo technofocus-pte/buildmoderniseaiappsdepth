@@ -35,20 +35,20 @@ typical data-driven Flask application:
 ### Task 1 : Register Service provider
 
 1.  Open a browser and go to ``https://portal.azure.com`` and sign in with
-    your cloud slice account available in Resource tab of your VM.
+    your cloud slice account is available in the Resource tab of your VM.
 
 > ![](./media/image2.png)
 
-2.  On Home page of Azure portal, click on **Resource groups** tile.
+2.  On the Home page of the Azure portal, click on the **Resource groups** tile.
 
 ![](./media/image3.png)
 
-3.  Copy the resource group name and save it in notepad to use next task
+3.  Copy the resource group name and save it in Notepad to use next task
     to deploy required resources in this resource group.
 
 ![](./media/image4.png)
 
-4.  On top navigation , click on Home.
+4.  On the top navigation, click on Home.
 
 ![](./media/image5.png)
 
@@ -56,12 +56,12 @@ typical data-driven Flask application:
 
 ![](./media/image6.png)
 
-6.  Click on subscription name.
+6.  Click on the subscription name.
 
 ![](./media/image7.png)
 
-7.  Expand Settings from left navigation menu. Click on **Resource
-    providers** ,enter `Microsoft.AlertsManagement` and select it and then
+7.  Expand Settings from the left navigation menu. Click on **Resource
+    providers** , enter `Microsoft.AlertsManagement` and select i,t and then
     click **Register**.
 
 > ![](./media/image8.png)
@@ -69,18 +69,18 @@ typical data-driven Flask application:
 > ![A screenshot of a computer Description automatically
 > generated](./media/image9.png)
 
-### Task 2 : Create Github Codespace to initiate the Azure Developer CLI template
+### Task 2 : Create GitHub Codespace to initiate the Azure Developer CLI template
 
-This usecase has a dev container configuration, which makes it easier to
+This use case has a dev container configuration, which makes it easier to
 develop apps locally, deploy them to Azure, and monitor them. We use
 Azure development CLI templates to deploy apps
 
-1.  Open a browser and go to ``https:\\\github.com`` and sign in
-    with your Github account.
+1.  Open a browser and go to ``https://github.com`` and sign in
+    with your GitHub account.
 
 2.  Fork this
     repository `https://github.com/technofocus-pte/flask-postgresql-CSTesting.git` to
-    your account by clicking on **Fork** as shown in below image.
+    your account by clicking on **Fork** as shown in the below image.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image10.jpeg)
@@ -96,7 +96,7 @@ generated](./media/image11.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image12.jpeg)
 
-5.  Wait for the workspace to setup.
+5.  Wait for the workspace to set up.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image13.jpeg)
@@ -113,7 +113,7 @@ generated](./media/image14.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image15.jpeg)
 
-7.  Run below command to create environment variable
+7.  Run the below command to create an environment variable
 
 > \# Create .env with environment variables
 
@@ -131,7 +131,7 @@ generated](./media/image16.jpeg)
 ![A screenshot of a computer program Description automatically
 generated](./media/image17.jpeg)
 
-9.  Run below command to
+9.  Run the below command to
 
 > \# Start the development server
 
@@ -140,7 +140,7 @@ generated](./media/image17.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image18.jpeg)
 
-10. When you see the message Your application running on port is
+10. When you see the message Your application running on the port is
     available., click **Open in Browser**.
 
 ![A screenshot of a computer Description automatically
@@ -157,13 +157,13 @@ generated](./media/image20.jpeg)
 ![A white screen with black text Description automatically
 generated](./media/image21.jpeg)
 
-12. Enter the details below and click on **Submit** button.
+12. Enter the details below and click on the **Submit** button.
 
 Name : +++Contoso Rica+++
 
 Street Adress - +++3A ,8th cross, Ferns street , Singapore+++
 
-Description - +++This is a medium to high priced restaurant in the city shopping center+++
+Description - +++This is a medium to high-priced restaurant in the city shopping center+++
 
 ![A screenshot of a restaurant Description automatically
 generated](./media/image22.jpeg)
@@ -173,11 +173,11 @@ generated](./media/image22.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image23.jpeg)
 
-14. Enter your review and then click on button. **Save changes**
+14. Enter your review and then click on the button. **Save changes**
 
-**Your name : your name**
+**Your name: your name**
 
-**Rating : your rating**
+**Rating: your rating**
 
 ``This is a medium to high priced restaurant in the city shopping
 center. Service was a little bit confusing as we had at least 6 waiters
@@ -193,26 +193,26 @@ generated](./media/image24.jpeg)
 ![A white card with black text Description automatically
 generated](./media/image25.jpeg)
 
-15. Add some more reviews and new restaurant with comments.
+15. Add some more reviews and new restaurants with comments.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image26.jpeg)
 
-### Task 3: Provision required resource in Azure.
+### Task 3: Provision of required resources in Azure.
 
 This project is designed to work well with the Azure Developer CLI which
 makes it easier to develop apps locally, deploy them to Azure, and
 monitor them.
 
-1.  Switch back to Github code space tab,Run below command to Initialize
+1.  Switch back to the GitHub code space tab, Run below command to Initialize
     a new azd environment:
 
 +++azd init+++
 
 ![](./media/image27.jpeg)
 
-2.  It will prompt you to provide a environment name
-    (like **flask-app**XXXX (XXXX can be unique number)), which will
+2.  It will prompt you to provide an environment name
+    (like ``flask-appXXXX`` (XXXX can be a unique number)), which will
     later be used in the name of the deployed resources.
 
 ![](./media/image28.jpeg)
