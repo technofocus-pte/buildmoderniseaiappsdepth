@@ -214,9 +214,8 @@ generated](./media/image20.jpeg)
 
     +++cd+++
 
-```
-az deployment group create --resource-group $RG_NAME --template-file "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD
-```
++++az deployment group create --resource-group $RG_NAME --template-file "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD+++
+
 
 ![A screenshot of a computer Description automatically
 generated](./media/image21.jpeg)
