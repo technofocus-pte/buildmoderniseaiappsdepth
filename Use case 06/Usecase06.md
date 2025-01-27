@@ -301,7 +301,7 @@ generated](./media/image41.jpeg)
      +++azd deploy+++
    
 ![A screenshot of a chat Description automatically
-generated](./media/image57.jpeg)
+generated](./media/image57.jpg)
 
 
 ### Task 5: Verify deployed resources in the Azure portal
