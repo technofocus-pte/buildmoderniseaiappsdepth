@@ -288,13 +288,21 @@ generated](./media/image38.jpeg)
 generated](./media/image39.jpeg)
 
 8.  Deployment completed and front end hosted successfully. Click on the
-    generated URL
+    generated URL ( If you cannot access the application after your deployment is successful, re-deploy it using the command +++azd deploy+++ to access the app.)
 
 ![A screenshot of a computer Description automatically
 generated](./media/image40.jpeg)
 
 ![A screenshot of a chat Description automatically
 generated](./media/image41.jpeg)
+
+9. Run below command to re-deploy the app using below command
+
+     +++azd deploy+++
+   
+![A screenshot of a chat Description automatically
+generated](./media/image57.jpeg)
+
 
 ### Task 5: Verify deployed resources in the Azure portal
 
