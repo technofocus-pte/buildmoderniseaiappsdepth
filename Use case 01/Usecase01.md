@@ -337,10 +337,15 @@ creates the Todo table in the database.
 ![A computer screen with a white background Description automatically
 generated](./media/image27.jpeg)
 
-2.  Go back to Gitbash and run the to-do application by using this command:
+2. Go to Start and search for +++command prompt+++ and open it as Administrator. run below command and check if any process is running on port 8080.
 
->Note: if your error " port 8080 seems to be used by another process..." then open command prompt as administrator and run command - netstat -ano | findstr :8080 ( you will get the process running ) , run the command to kill the process - taskkill /PID XXXX /F (replace XXXX with your process ID. after you kill the process re-run mvnw command )
++++netstat -ano | findstr :8080+++
 
+3. Run below command with process id  running on port 8080
+
++++taskkill /PID XXXX /F++++ (replace XXXX with your process ID
+
+4.  Go back to Gitbash and run the to-do application by using this command:
 
 +++cd todo+++
 
@@ -348,7 +353,7 @@ generated](./media/image27.jpeg)
 
 ![](./media/image28.jpeg)
 
-3.  The Quarkus application should start and connect to your database.
+5.  The Quarkus application should start and connect to your database.
     You should see the following output:
 
 ![A screenshot of a computer program Description automatically
@@ -362,11 +367,11 @@ generated](./media/image30.jpeg)
 ![A screen shot of a computer program Description automatically
 generated](./media/image32.jpeg)
 
-4.  Click on **Allow access**.
+6.  Click on **Allow access**.
 
 ![](./media/image31.jpeg)
 
-5.  To test the application, you can use cURL.
+7.  To test the application, you can use cURL.
 
 In a separate new instance of Gitbash , create a new to-do item in the
 database with the following command. You should see the log in the
@@ -379,12 +384,12 @@ Quarkus console:
 ![A computer screen with white text Description automatically
 generated](./media/image33.jpeg)
 
-6.  This command should return the created item (with an identifier):
+8.  This command should return the created item (with an identifier):
 
 ![A computer screen with white text Description automatically
 generated](./media/image33.jpeg)
 
-7.  Create a second to-do by using the following cURL command:
+9.  Create a second to-do by using the following cURL command:
 
 
 
@@ -395,7 +400,7 @@ generated](./media/image33.jpeg)
 ![A screenshot of a computer program Description automatically
 generated](./media/image34.jpeg)
 
-8.  Next, retrieve the data by using a new cURL request:
+10.  Next, retrieve the data by using a new cURL request:
 
 +++curl http://127.0.0.1:8080/api/todos+++
 
