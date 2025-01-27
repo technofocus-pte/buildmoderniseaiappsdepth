@@ -337,8 +337,10 @@ creates the Todo table in the database.
 ![A computer screen with a white background Description automatically
 generated](./media/image27.jpeg)
 
-2.  Go back to Gitbash and run the to-do application by using this
-    command:
+2.  Go back to Gitbash and run the to-do application by using this command:
+
+>Note: if your error " port 8080 seems to be used by another process..." then open command prompt as administrator and run command - netstat -ano | findstr :8080 ( you will get the process running ) , run the command to kill the process - taskkill /PID XXXX /F (replace XXXX with your process ID. after you kill the process re-run mvnw command )
+
 
 +++cd todo+++
 
@@ -383,6 +385,7 @@ generated](./media/image33.jpeg)
 generated](./media/image33.jpeg)
 
 7.  Create a second to-do by using the following cURL command:
+
 
 
 +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
