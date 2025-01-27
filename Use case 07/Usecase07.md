@@ -364,8 +364,9 @@ information to work with as you review the extension's functionality.
 1.  Run the following commands to create the listings and reviews tables
     for storing rental property listing and customer review data:
 
+    +++DROP TABLE IF EXISTS listings;+++
+
     ```
-    DROP TABLE IF EXISTS listings;
     CREATE TABLE listings (
     id int,
     name varchar(100),
