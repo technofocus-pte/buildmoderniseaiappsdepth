@@ -479,7 +479,7 @@ generated](./media/image44.jpeg)
     text of the matching rows whose descriptions were semantically
     similar. For example, this query returns the best match:
 
-++++SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;+++
++++SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;+++
     
 
 Which prints something like:
@@ -493,7 +493,7 @@ highlight "summer" and "sunlight," "windows," and a "ceiling window."
 
 ### Task 9 : Check your work
 
-After performing the above steps, the listings table contains sample
+After performing the above steps, the listings table contains a sample
 data from [Seattle Airbnb Open
 Data](https://www.kaggle.com/datasets/airbnb/seattle/data?select=listings.csv) on
 Kaggle. The listings were augmented with embedding vectors to execute
@@ -570,9 +570,9 @@ listings.
 
 Deploy resources into your Azure subscription
 
-This step guides you through using Azure CLI commands from the Azure
+This step guides you through using Azure CLI commands from Azure
 Cloud Shell to create a resource group and run a Bicep script to deploy
-the Azure services necessary for completing this exercise into your
+the Azure services necessary for completing this exercise in your
 Azure subscription.
 
 >**Note:** If you are doing multiple modules in this learning path, you
