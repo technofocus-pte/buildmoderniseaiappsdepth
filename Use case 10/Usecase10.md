@@ -79,7 +79,7 @@ generated](./media/image7.png)
 
 ![](./media/image8.png)
 
-7.  Type ``**Microsoft.AlertsManagement**`` and press enter. Select
+7.  Type ``Microsoft.AlertsManagement`` and press enter. Select
     it and then click on **Register**.
 
 ![A screenshot of a computer Description automatically
