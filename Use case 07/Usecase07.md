@@ -691,9 +691,8 @@ generated](./media/image57.jpeg)
 
 2.  Make sure you can query it using the following query:
 
-select out_listingName, out_score from recommend_listing( (SELECT id
-from listings limit 1), 20); -- search for 20 listing recommendations
-closest to a listing
++++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations
+closest to a listing+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image58.jpeg)
