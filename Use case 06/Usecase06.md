@@ -134,19 +134,6 @@ generated](./media/image13.jpeg)
 ![A screenshot of a computer screen Description automatically
 generated](./media/image14.jpeg)
 
-### Task 3: Install Dev Containers extension
-
-1.  In your Windows search box, type +++Visual Studio+++, then click
-    on **Visual Studio Code**.You can also open it form **Desktop**.
-
-![A screenshot of a computer Description automatically
-generated](./media/image15.jpeg)
-
-2.  Click on **Extensions** , search for **Dev container**, select it
-    and click on **Install**.
-
-![A computer screen shot of a computer Description automatically
-generated](./media/image16.jpeg)
 
 ## Exercise 2: Deploy the application and test it from the browser
 
@@ -279,7 +266,7 @@ generated](./media/image36.jpeg)
 generated](./media/image37.jpeg)
 
 7.  Deployment will take around 19-20 min. While the deployment is going
-    on, You can go next Task 3 and verify deployed resources.
+    You can go to Task 5 and verify the deployed resources.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image38.jpeg)
@@ -340,8 +327,8 @@ generated](./media/image44.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image45.jpeg)
 
-5.  On **Overview** in the left navigation menu, right click **Go to
-    Azure OpenAI Studio** and select to open a new tab.
+5.  On **Overview** in the left navigation menu, right-click **Go to
+    Azure AI Foundry** and select to open a new tab.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image46.jpeg)
