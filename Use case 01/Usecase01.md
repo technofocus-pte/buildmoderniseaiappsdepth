@@ -15,7 +15,7 @@ running on Azure App Service on Linux.
 
 ### Task 0: Setup Environmental variables
 
-1.  Search Environmental variable from Windows start menu and select
+1.  Search Environmental variable from the Windows start menu and select
     Edit System Environment variable.
 
 ![](./media/image1.jpeg)
@@ -209,7 +209,7 @@ Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
 ![](./media/image22.jpeg)
 
 2.  Rename the generated **MyEntity.java** class
-    to `Todo.java` (located in the same folder as
+    to `Todo` (located in the same folder as
     the *TodoResource.java* file)
 
 ![](./media/image23.jpeg)
