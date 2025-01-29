@@ -93,7 +93,7 @@ to Azure Container Apps.
 
     +++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create -DplatformVersion=3.7.3 -DprojectGroupId=com.example.demo -DprojectArtifactId=todo -DclassName="com.example.demo.TodoResource" -Dpath="/api/todos" -DjavaVersion=17 -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
 
-![](./media/image11.jpeg)
+    ![](./media/image11.jpeg)
 
 2.  This command creates a new Quarkus project. It generates a Maven
     directory structure (src/main/java for source code and src/test/java
@@ -101,8 +101,7 @@ to Azure Container Apps.
     Dockerfiles. It also generates a *pom.xml* file with all the needed
     dependencies (Hibernate, RESTEasy, Jackson, PostgreSQL, and Docker):
 
-3.  Click on Search and type `IntelliJ IDE` and then
-    select **IntelliJ IDE**
+3.  Click on Search and type `IntelliJ IDE` and then select **IntelliJ IDE**
 
     ![](./media/image12.jpeg)
 
@@ -313,22 +312,22 @@ declared in the *pom.xml* file), downloads the PostgreSQL Docker Desktop
 image, and starts a container with the database. It then automatically
 creates the Todo table in the database.
 
-1.  Double-click on **Docker Desktop** and minimize the window. Make
-    sure it’s running.(no need to Sign in )
+1.  Double-click on **Docker Desktop** and minimize the window. Make sure it’s running. (no need to Sign in )
 
     ![](./media/image27.jpeg)
 
-2.  Go back to Gitbash and run the to-do application by using this command:
+2. Open the Command prompt as Administrator and run +++netstat -ano | findstr :8080+++ to know the process running on port 8080.
 
->Note: if your error " port 8080 seems to be used by another process..." then open command prompt as administrator and run command - netstat -ano | findstr :8080 ( you will get the process running ) , run the command to kill the process - taskkill /PID XXXX /F (replace XXXX with your process ID. after you kill the process re-run mvnw command )
+3. if any process running on port 8080 then kill it by running the command +++taskkill /PID XXXX /F+++ (replace XXXX with your process ID+
+
+4.  Go back to Gitbash and run the to-do application by using this command:
 
     +++cd todo+++
-
     +++./mvnw quarkus:dev+++
-    
+  
     ![](./media/image28.jpeg)
 
-3.  The Quarkus application should start and connect to your database.
+5.  The Quarkus application should start and connect to your database.
     You should see the following output:
 
     ![](./media/image29.jpeg)
@@ -339,31 +338,28 @@ creates the Todo table in the database.
 
     ![](./media/image32.jpeg)
 
-4.  Click on **Allow access**.
+6.  Click on **Allow access**.
 
     ![](./media/image31.jpeg)
 
-5.  To test the application, you can use cURL.
-
-In a separate new instance of Gitbash , create a new to-do item in the
-database with the following command. You should see the log in the
-Quarkus console:
+7.  To test the application, you can use cURL.In a separate new instance of Gitbash , create a new to-do item in the
+database with the following command. You should see the log in the Quarkus console:
 
     +++curl --header "Content-Type: application/json" --request POST  --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'   http://127.0.0.1:8080/api/todos+++
 
     ![](./media/image33.jpeg)
 
-6.  This command should return the created item (with an identifier):
+7.  This command should return the created item (with an identifier):
 
     ![](./media/image33.jpeg)
 
-7.  Create a second to-do by using the following cURL command:
+8.  Create a second to-do by using the following cURL command:
 
     +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
     ![](./media/image34.jpeg)
 
-8.  Next, retrieve the data by using a new cURL request:
+9.  Next, retrieve the data by using a new cURL request:
 
     +++curl http://127.0.0.1:8080/api/todos+++
 
