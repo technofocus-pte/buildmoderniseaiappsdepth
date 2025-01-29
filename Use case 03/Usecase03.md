@@ -246,13 +246,13 @@ container images (JDK/JRE) for the Linux architecture.
 
 4.  You can optionally sign in with any user from tomcat-users.xml for example
 
-Username:  +++someuser@azure.com+++
+    Username:  +++someuser@azure.com+++
 
-Password: +++password+++
+    Password: +++password+++
 
-![](./media/image23.jpeg)
+    ![](./media/image23.jpeg)
 
-5.  Leave this git bash instance as it is
+5.  Leave this Git bash instance without closing it.
 
 ## Exercise 4: Push the container image to Azure Container Registry
 
@@ -386,7 +386,7 @@ selector:
     app: flightbookingsystemsample
 ```
 
-![](./media/image31.jpeg)
+    ![](./media/image31.jpeg)
 
 4.  Press Esc and: and then type +++wq+++ and press enter to save the file.
 
@@ -412,23 +412,17 @@ selector:
 
     +++az aks get-credentials --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER+++
 
-    You will see something similar:
-
     ![](./media/image33.jpeg)
 
 9.  Now instruct Azure Kubernetes Service to apply deployment.yml changes to your cluster. Run the following command in your CLI
 
     +++kubectl apply -f deployment.yml+++
 
-    You will see something similar:
-
-    ![](./media/image34.jpeg)
+   ![](./media/image34.jpeg)
 
 10. Now use **kubectl** to monitor the status of the deployment. Run the following command in your CLI
 
     +++kubectl get all+++
-
-- You will see something similar:
 
     ![](./media/image35.jpeg)
 
