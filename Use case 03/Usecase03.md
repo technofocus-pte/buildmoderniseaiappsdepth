@@ -345,46 +345,46 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
     >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
     AZ_CONTAINER_REGISTRY= javaaksregist )
 
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-name: flightbookingsystemsample
-spec:
-replicas: 1
-selector:
-    matchLabels:
-    app: flightbookingsystemsample
-template:
+    ```
+    apiVersion: apps/v1
+    kind: Deployment
     metadata:
-    labels:
-        app: flightbookingsystemsample
+    name: flightbookingsystemsample
     spec:
-    containers:
-    - name: flightbookingsystemsample
-        image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
-        resources:
-        requests:
-            cpu: "1"
-            memory: "1Gi"
-        limits:
-            cpu: "2"
-            memory: "2Gi"
-        ports:
-        - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-name: flightbookingsystemsample
-spec:
-type: LoadBalancer
-ports:
-- port: 8080
-    targetPort: 8080
-selector:
-    app: flightbookingsystemsample
-```
+    replicas: 1
+    selector:
+        matchLabels:
+        app: flightbookingsystemsample
+    template:
+        metadata:
+        labels:
+            app: flightbookingsystemsample
+        spec:
+        containers:
+        - name: flightbookingsystemsample
+            image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
+            resources:
+            requests:
+                cpu: "1"
+                memory: "1Gi"
+            limits:
+                cpu: "2"
+                memory: "2Gi"
+            ports:
+            - containerPort: 8080
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+    name: flightbookingsystemsample
+    spec:
+    type: LoadBalancer
+    ports:
+    - port: 8080
+        targetPort: 8080
+    selector:
+        app: flightbookingsystemsample
+    ```
 
     ![](./media/image31.jpeg)
 
@@ -444,13 +444,9 @@ selector:
     >**Note:** You'll want to substitute the ip address in the following,20.81.13.151, with that of your EXTERNAL-IP from the command you
     previously executed.
 
-14. Open up a browser and visit the Flight Booking System Sample landing page at 
-    
-``http://YOUR IPCON:8080/FlightBookingSystemSample`` (update with your external IP address )
+14. Open up a browser and visit the Flight Booking System Sample landing page at   ``http://YOUR IPCON:8080/FlightBookingSystemSample`` (update with your external IP address )
 
-    - You'll see something similar:
-
-    ![](./media/image38.jpeg)
+   ![](./media/image38.jpeg)
 
     >**Note:** You can optionally sign in with any user from tomcat-users.xml for example someuser@azure.com: password
 
