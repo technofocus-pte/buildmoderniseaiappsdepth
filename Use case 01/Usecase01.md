@@ -465,15 +465,21 @@ the variables you'll create:
 location first and it you have any issues then try in location near to
 you
 
-   +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
-   +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
-   +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
-   +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
-   +++export AZ_POSTGRES_USERNAME="azuser123"+++
-   +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
-   +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
-
-   ![](./media/image39.png)
+ +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+   
+ +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
+   
+ +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
+   
+ +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
+   
+ +++export AZ_POSTGRES_USERNAME="azuser123"+++
+   
+ +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
+   
+ +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
+   
+  ![](./media/image39.png)
 
 2.  Switch back to Gitbash and run below command to set resource group
     variable. Copy the resource group name.
