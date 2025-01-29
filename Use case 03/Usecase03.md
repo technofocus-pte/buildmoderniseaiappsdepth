@@ -48,7 +48,7 @@ perform the following steps
 
     ![](./media/image4.jpeg)
 
-4.  Now we will enable our Azure subscription execute the below command
+4.  Now we will enable our Azure subscription to execute the below command
 
     +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
 
@@ -69,7 +69,7 @@ perform the following steps
 
     +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
-    +++export AZ_RESOURCE_GROUP= Your existing resource group name+++
+    +++export AZ_RESOURCE_GROUP=@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
     >**Note:** You'll want to replace with your region of choice, for example: eastus You'll want to replace with a unique value as this is
     used to generate a unique FQDN (fully qualified domain name) for your Azure Container Registry when it is created, for example:
@@ -102,7 +102,7 @@ perform the following steps
 
     ![](./media/image10.jpeg)
 
->**Note:** Azure Kubernetes Cluster creation can take up to 10 minutes,once you run the command above, you can optionally let it continue in
+>**Note:** Azure Kubernetes Cluster creation can take up to 10 minutes, once you run the command above, you can optionally let it continue in
 that Azure CLI tab and move on to the next unit.
 
 ### Task 2: Run Docker
@@ -119,7 +119,7 @@ In this exercise, you will containerize a Java application.
 
 ### Task 1: Build Java Application
 
-First , you will navigate the Flight Booking System for Airline Reservations repository and cd to the Airlines web application project
+First, you will navigate the Flight Booking System for Airline Reservations repository and cd to the Airlines web application project
 folder.
 
 Optionally, if you have Java & Maven installed, you can run the following command(s) in your CLI to get an sense of the experience in
@@ -180,13 +180,13 @@ CMD ["catalina.sh", "run"]
 ![](./media/image16.jpeg)
 
 >**Note:** Optionally, the Dockerfile_Solution in the root of your project contains the contents needed.As you can see, this Docker file
-Build stage has six instructions.
+The build stage has six instructions.
 
-## Exercise 3 : Build and run a container image for the Java app
+## Exercise 3: Build and run a container image for the Java app
 
 In this unit, you will build and run the container image. As mentioned earlier, a running instance of an image is a container.
 
-### Task 1 : Build a container image
+### Task 1: Build a container image
 
 Now that you've successfully constructed a Dockerfile, you can instruct Docker to build a container image for you.
 
@@ -272,7 +272,7 @@ container images (JDK/JRE) for the Linux architecture.
 
 4.  We will be using the same Authenticate with Azure Resource Manager we created earlier in Exercise 1 Task 1. Set below variables as per your variable values in Azure portal.
 
-+++export AZ_RESOURCE_GROUP="your resource group name”+++
++++export AZ_RESOURCE_GROUP=@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
 +++export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"+++
 
@@ -332,7 +332,7 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 ### Task 1: Deploy a container image
 
-1.  You will deploy this the **flightbookingsystemsample** container image to your Azure Kubernetes Cluster.
+1.  You will deploy the **flightbookingsystemsample** container image to your Azure Kubernetes Cluster.
 
 2.  Within the root of your project, **Flight-Booking-System-JavaServlets_App/Project/Airlines**,Create a file called deployment.yml. Run the following command in your CLI:
 
@@ -399,7 +399,7 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
     Registry. You'll also notice the service is configured to allow incoming HTTP pod traffic to port 8080, similarly to the way you ran
     the container image locally with the -p port argument.
 
-6.  By now your Azure Kubernetes Cluster creation should have successfully completed.
+6.  By now your Azure Kubernetes Cluster creation should have completed.
 
 7.  Now configure your Azure CLI to access your Azure Kubernetes Cluster via the kubectl command. Install kubectl locally using the az aks
     install-cli command. Run the following command in your CLI
