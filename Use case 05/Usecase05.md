@@ -2,18 +2,12 @@
 
 **Objective:**
 
-This usecase deploy a Python web app using the Flask framework and the
-Azure Database for PostgreSQL relational database service. The Flask app
-is hosted in a fully managed Azure App Service. This app is designed to
-be run locally and then deployed to Azure
+This usecase deploy a Python web app using the Flask framework and the Azure Database for PostgreSQL relational database service. The Flask app is hosted in a fully managed Azure App Service. This app is designed to be run locally and then deployed to Azure
 
-![A diagram of a service plan Description automatically
-generated](./media/image1.jpeg)
+![](./media/image1.jpeg)
 
-You 'll deploy a data-driven Python web app (**Django** or **Flask**)
-to **Azure App Service** with the **Azure Database for
-PostgreSQL** relational database service. Azure App Service supports
-Python in a Linux server environment.
+You 'll deploy a data-driven Python web app (**Django** or **Flask**) to **Azure App Service** with the **Azure Database for
+PostgreSQL** relational database service. Azure App Service supports Python in a Linux server environment.
 
 **Key technologies used** -- Java 17, Azure Database for PostgreSQL
 
@@ -23,28 +17,23 @@ Python in a Linux server environment.
 
 **Pre-requisites:**
 
-GitHub account -- You are expected to have your own GitHub login
-credentials. If you do not have, please create one from here
+GitHub account -- You are expected to have your own GitHub login credentials. If you do not have, please create one from here
 - **https://github.com/signup?user_email=&source=form-home-signupobjectives**
 
-The **requirements.txt** has the following packages, all used by a
-typical data-driven Flask application:
+The **requirements.txt** has the following packages, all used by a typical data-driven Flask application:
 
-[TABLE]
 
 ### Task 1 : Register Service provider
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with
-    your cloud slice account is available in the Resource tab of your VM.
+1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your cloud slice account is available in the Resource tab of your VM.
 
-> ![](./media/image2.png)
+![](./media/image2.png)
 
 2.  On the Home page of the Azure portal, click on the **Resource groups** tile.
 
 ![](./media/image3.png)
 
-3.  Copy the resource group name and save it in Notepad to use next task
-    to deploy required resources in this resource group.
+3.  Copy the resource group name and save it in Notepad to use next task to deploy required resources in this resource group.
 
 ![](./media/image4.png)
 
@@ -60,102 +49,80 @@ typical data-driven Flask application:
 
 ![](./media/image7.png)
 
-7.  Expand Settings from the left navigation menu. Click on **Resource
-    providers** , enter `Microsoft.AlertsManagement` and select i,t and then
-    click **Register**.
+7.  Expand Settings from the left navigation menu. Click on **Resource providers** , enter `Microsoft.AlertsManagement` and select i,t and then click **Register**.
 
-> ![](./media/image8.png)
->
-> ![A screenshot of a computer Description automatically
-> generated](./media/image9.png)
+ ![](./media/image8.png)
+
+ ![](./media/image9.png)
 
 ### Task 2 : Create GitHub Codespace to initiate the Azure Developer CLI template
 
-This use case has a dev container configuration, which makes it easier to
-develop apps locally, deploy them to Azure, and monitor them. We use
+This use case has a dev container configuration, which makes it easier to develop apps locally, deploy them to Azure, and monitor them. We use
 Azure development CLI templates to deploy apps
 
-1.  Open a browser and go to ``https://github.com`` and sign in
-    with your GitHub account.
+1.  Open a browser go to ``https://github.com`` and sign in with your GitHub account.
 
-2.  Fork this
-    repository `https://github.com/technofocus-pte/flask-postgresql-CSTesting.git` to
-    your account by clicking on **Fork** as shown in the below image.
+2.  Fork this repository `https://github.com/technofocus-pte/flask-postgresql-CSTesting.git` to your account by clicking on **Fork** as shown in the below image.
 
-![A screenshot of a computer Description automatically
-generated](./media/image10.jpeg)
+![](./media/image10.jpeg)
 
-3.  Enter unique name and then click on **Create repo**.
+3.  Enter a unique name and then click on **Create repo**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image11.jpeg)
+![](./media/image11.jpeg)
 
-4.  From the repository root of your fork,
-    select **Code** > **Codespaces** > **+**.
+4.  From the repository root of your fork, select **Code** > **Codespaces** > **+**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image12.jpeg)
+![](./media/image12.jpeg)
 
 5.  Wait for the workspace to set up.
 
-![A screenshot of a computer Description automatically
-generated](./media/image13.jpeg)
+![](./media/image13.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image14.jpeg)
+![](./media/image14.jpeg)
 
 6.  In the codespace terminal, run the following commands:
 
-> \# Install requirements
+# Install requirements
 
 +++python3 -m pip install -r requirements.txt+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image15.jpeg)
+![](./media/image15.jpeg)
 
 7.  Run the below command to create an environment variable
 
-> \# Create .env with environment variables
+# Create .env with environment variables
 
 +++cp .env.sample.devcontainer .env+++
 
-![A screenshot of a computer program Description automatically
-generated](./media/image16.jpeg)
+![](./media/image16.jpeg)
 
 8.  Run below command for data migration
 
-> \# Run database migrations
+ \# Run database migrations
 
 +++python3 -m flask db upgrade+++
 
-![A screenshot of a computer program Description automatically
-generated](./media/image17.jpeg)
+![](./media/image17.jpeg)
 
 9.  Run the below command to
 
-> \# Start the development server
+# Start the development server
 
 +++python3 -m flask run+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image18.jpeg)
+![](./media/image18.jpeg)
 
-10. When you see the message Your application running on the port is
-    available., click **Open in Browser**.
+10. When you see the message Your application running on the port is available., click **Open in Browser**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image18.jpeg)
+![](./media/image18.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image19.jpeg)
+![](./media/image19.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image20.jpeg)
+![](./media/image20.jpeg)
 
 11. Click on **Add new restaurant** button.
 
-![A white screen with black text Description automatically
-generated](./media/image21.jpeg)
+![](./media/image21.jpeg)
 
 12. Enter the details below and click on the **Submit** button.
 
@@ -165,13 +132,11 @@ Street Adress - +++3A ,8th cross, Ferns street , Singapore+++
 
 Description - +++This is a medium to high-priced restaurant in the city shopping center+++
 
-![A screenshot of a restaurant Description automatically
-generated](./media/image22.jpeg)
+![](./media/image22.jpeg)
 
 13. Click on **Add new review** button.
 
-![A screenshot of a computer Description automatically
-generated](./media/image23.jpeg)
+![](./media/image23.jpeg)
 
 14. Enter your review and then click on the button. **Save changes**
 
@@ -179,115 +144,90 @@ generated](./media/image23.jpeg)
 
 **Rating: your rating**
 
-``This is a medium to high priced restaurant in the city shopping
-center. Service was a little bit confusing as we had at least 6 waiters
-coming to ask us things. Food took some time to come. We had 2 menus:
-one indian and one thai. The thai is 30% cheaper so we went for some
-appetizers and thai red curry. Food took some time but it was worth it.
-It was delicious and very well prepared. Overall, this is a good
+``This is a medium to high priced restaurant in the city shopping center. Service was a little bit confusing as we had at least 6 waiters
+coming to ask us things. Food took some time to come. We had 2 menus: one indian and one thai. The thai is 30% cheaper so we went for some
+appetizers and thai red curry. Food took some time but it was worth it. It was delicious and very well prepared. Overall, this is a good
 eat.``
 
-![A screenshot of a computer Description automatically
-generated](./media/image24.jpeg)
+![](./media/image24.jpeg)
 
-![A white card with black text Description automatically
-generated](./media/image25.jpeg)
+![](./media/image25.jpeg)
 
 15. Add some more reviews and new restaurants with comments.
 
-![A screenshot of a computer Description automatically
-generated](./media/image26.jpeg)
+![](./media/image26.jpeg)
 
 ### Task 3: Provision of required resources in Azure.
 
-This project is designed to work well with the Azure Developer CLI which
-makes it easier to develop apps locally, deploy them to Azure, and
+This project is designed to work well with the Azure Developer CLI which makes it easier to develop apps locally, deploy them to Azure, and
 monitor them.
 
-1.  Switch back to the GitHub code space tab, Run below command to Initialize
-    a new azd environment:
+1.  Switch back to the GitHub code space tab, Run below command to Initialize a new azd environment:
 
 +++azd init+++
 
 ![](./media/image27.jpeg)
 
-2.  It will prompt you to provide an environment name
-    (like ``flask-appXXXX`` (XXXX can be a unique number)), which will
+2.  It will prompt you to provide an environment name (like ``flask-appXXXX`` (XXXX can be a unique number)), which will
     later be used in the name of the deployed resources.
 
 ![](./media/image28.jpeg)
 
-3.  Login if required +++azd auth login+++ .copy the code and
-    press enter.
+3.  Login if required +++azd auth login+++ .copy the code and press enter.
 
-![A screenshot of a computer Description automatically
-generated](./media/image29.jpeg)
+![](./media/image29.jpeg)
 
 4.  Enter the code and then sign in with your Azure credentials.
 
-![A screenshot of a computer error Description automatically
-generated](./media/image30.jpeg)
+![](./media/image30.jpeg)
 
 ![](./media/image31.jpeg)
 
-![A screenshot of a computer error Description automatically
-generated](./media/image32.jpeg)
+![](./media/image32.jpeg)
 
-![A screenshot of a computer program Description automatically
-generated](./media/image33.jpeg)
+![](./media/image33.jpeg)
 
-5.  Switch back Gtihub codespace tab and run below command to provision
-    and deploy all the resources. It will prompt to select your Azure
-    subscription. Enter **1** to select your subscription and press
-    Enter.
+5.  Switch back Gtihub codespace tab and run below command to provision and deploy all the resources. It will prompt to select your Azure
+    subscription. Enter **1** to select your subscription and press Enter.
 
 +++azd provision+++
 
-![A computer screen shot of a computer code Description automatically
-generated](./media/image34.png)
+![](./media/image34.png)
 
-6.  Select location as **WestUS/eastus**. Then it will provision the
-    resources in your account and deploy the latest code. If you get an
-    error with deployment, changing the location (like to "westus") can
-    help, as there may be availability constraints for some of the
+6.  Select location as **WestUS/eastus**. Then it will provision the resources in your account and deploy the latest code. If you get an
+    error with deployment, changing the location (like to "westus") can help, as there may be availability constraints for some of the
     resources.
 
-![A screenshot of a computer program Description automatically
-generated](./media/image35.png)
+![](./media/image35.png)
 
-7.  Enter the resource group name from your Azure portal (copied in
-    previous task) and press enter.
+7.  Enter the below resource group name  and press enter.
+
+   +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
 ![](./media/image36.png)
 
-8.  Deployment takes **20 - 30 minutes**. You can also check the status
-    of deployment at the generated link or **Azure portal-> Resource
+8.  Deployment takes **20 - 30 minutes**. You can also check the status of deployment at the generated link or **Azure portal-> Resource
     group-> Deployments**.
 
 ![](./media/image37.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image38.png)
+![](./media/image38.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image39.png)
+![](./media/image39.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image40.png)
+![](./media/image40.png)
 
 ### Task 4 : Deploy the application from Github
 
-1.  Run below command to set resource group environment variable.
+1.  Run the below command to set the resource group environment variable.
 
 +++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
 
->Note : Replace {Name of existing resource group} with your resource
-group name available under Resources section in your VM.
+>Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
 
 ![](./media/image41.png)
 
-2.  Run below command to deploy all resources and wait for the
-    deployment to complete successfully.
+2.  Run below command to deploy all resources and wait for the deployment to complete successfully.
 
 +++azd deploy+++
 
@@ -301,15 +241,13 @@ group name available under Resources section in your VM.
 
 ![](./media/image44.png)
 
-5.  App opens in new tab.
+5.  The app opens in a new tab.
 
-![A screenshot of a computer Description automatically
-generated](./media/image45.png)
+![](./media/image45.png)
 
 ### Task 5 : Stream diagnostic logs
 
-Azure App Service captures all messages output to the console to help
-you diagnose issues with your application. The app includes print()
+Azure App Service captures all messages output to the console to help you diagnose issues with your application. The app includes print()
 statements to demonstrate this capability as shown below.
 
 @app.route('/', methods=['GET'])
@@ -322,30 +260,25 @@ restaurants = Restaurant.query.all()
 
 return render_template('index.html', restaurants=restaurants)
 
-1.  Switch back to **Azure portal- > Resource group** and click on
-    **App service**.
+1.  Switch back to **Azure portal- > Resource group** and click on **App service**.
 
 ![](./media/image46.png)
 
-2.  In the App Service page. From the left menu, select **Monitoring
-    ->** **App Service logs.**
+2.  In the App Service page. From the left menu, select **Monitoring ->** **App Service logs.**
 
 ![](./media/image47.png)
 
-3.  Under **Application logging**, make sure **File System** selected.
-    Select it if required.In the top menu, select **Save**.
+3.  Under **Application logging**, make sure **File System** selected.Select it if required.I n the top menu, select **Save**.
 
 ![](./media/image48.png)
 
-4.  From the left menu, select **Log stream**. You see the logs for your
-    app, including platform logs and logs from inside the container.
+4.  From the left menu, select **Log stream**. You see the logs for your app, including platform logs and logs from inside the container.
 
 ![](./media/image49.png)
 
 ### Task 6 : Clean up resources in Github.
 
-1.  Switch back to Github, click on **repo -> Code -> Codespaces.**
-    Select the correct branch
+1.  Switch back to Github, click on **repo -> Code -> Codespaces.** Select the correct branch
 
 ![](./media/image50.png)
 
@@ -359,11 +292,9 @@ return render_template('index.html', restaurants=restaurants)
 
 4.  Switch back to **Azure portal -> Resource group.**
 
-![A screenshot of a computer Description automatically
-generated](./media/image53.png)
+![](./media/image53.png)
 
-5.  Select all the resources and then click on **Delete** ( DO NOT
-    delete resource group)
+5.  Select all the resources and then click on **Delete** ( DO NOT delete resource group)
 
 ![](./media/image54.png)
 
