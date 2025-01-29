@@ -334,19 +334,16 @@ To test the endpoint, it uses \[RESTAssured\]{.underline}.
     import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
     import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
     import org.junit.jupiter.api.Test;
-    
     @QuarkusTest
     class TodoResourceTest {
-    
-        @Test
+      @Test
         void shouldGetAllTodos() {
             given()
                     .when().get("/api/todos")
                     .then()
                     .statusCode(200);
         }
-    
-        @Test
+       @Test
         void shouldCreateATodo() {
             Todo todo = new Todo();
             todo.description = "Take Quarkus MS Learn";
@@ -367,8 +364,7 @@ To test the endpoint, it uses \[RESTAssured\]{.underline}.
     because Quarkus detects that it needs the PostgreSQL database for
     testing.
 
-3.  Switch back to **Gitbash** and Ctrl + C. Run below commands to test
-    the application by using this command:
+3.  Switch back to the 1st instance of **Gitbash** and Ctrl + C. Run the below commands to test the application by using this command:
 
     +++./mvnw clean test+++
     ![](./media/image37.jpeg)
@@ -429,7 +425,8 @@ the variables you'll create:
 
 2.  Switch back to Gitbash and run the below command to set the resource group variable. Copy the resource group name under the Resource tab of your VM as shown in 1st image.
 
-    +++export AZ_RESOURCE_GROUP="Your existing resource group"+++
+    @lab.CloudResourceGroup(ResourceGroup1).Name
+    +++export AZ_RESOURCE_GROUP=@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
     +++export AZ_LOCATION="Location near to you"+++
 
