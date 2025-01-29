@@ -136,7 +136,7 @@ correct account.
 
     |  **Property**  |  **Description**  |
     |:------|:-------|
-    |  Name  | +++TodoAppXX+++ (Replace XX with the **Lab instance ID**,  since the Webapp name should be unique across Azure) |
+    |  Name  | **+++TodoApp@lab.LabInstance.Id+++**  |
     | Resource group   |  Select the **assigned Resource group** |
 
     Click **New** on **Hosting Plan**.
@@ -148,7 +148,7 @@ correct account.
 
     |  **Property**  |  **Description**  |
     |:------|:-------|
-    |  Hosting Plan  | **myAppServicePlanXX**(Replace **XX** with your **Lab instance ID)**   |
+    |  Hosting Plan  | **+++myAppServicePlan@lab.LabInstance.Id+++**   |
     | Location   |  Select **West US**  |
     |  Size  |   **Free** |
 
