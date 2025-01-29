@@ -40,58 +40,39 @@ credentials. If you do not have, please create one from here
 
 ### Task 1 : Run the Docker
 
-1.  In your Windows search box, type **Docker** , then click on **Docker
-    Desktop**.
+1.  In your Windows search box, type **Docker** , then click on **Docker Desktop**.
 
 ![](./media/image2.jpeg)
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with
-    your Azure credentials available in **Resource** tab of your VM.
+1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your Azure credentials available in **Resource** tab of your VM.
 
-> ![A screenshot of a computer Description automatically
-> generated](./media/image3.png)
+![](./media/image3.png)
 
-2.  On Home page of Azure portal, click on **Resource groups** tile.
+2.  On the Home page, click on the **Subscription** tile.
 
-![A screenshot of a computer Description automatically
-generated](./media/image4.png)
+![](./media/image6.png)
 
-3.  Copy the resource group name and save it in notepad to use next task
-    to deploy required resources in this resource group.
+3.  Click on the subscription name.
 
-![A screenshot of a computer Description automatically
-generated](./media/image5.png)
+![](./media/image7.png)
 
-4.  Navigate back to Home page ,click on **Subscription** tile.
-
-![A screenshot of a computer Description automatically
-generated](./media/image6.png)
-
-5.  Click on subscription name.
-
-![A screenshot of a computer Description automatically
-generated](./media/image7.png)
-
-6.  Click on **Settings -> Resource provider** from left navigation
+4.  Click on **Settings -> Resource provider** from left navigation
     menu.
 
 ![](./media/image8.png)
 
-7.  Type ``Microsoft.AlertsManagement`` and press enter. Select
+5.  Type ``Microsoft.AlertsManagement`` and press enter. Select
     it and then click on **Register**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image9.png)
+![](./media/image9.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image10.png)
+![](./media/image10.png)
 
-### Task 3 : Provision Services and application to Azure
+### Task 3: Provision Services and application to Azure
 
-1.  Open a browser and go to ``https:\\github.com`` and sign in
-    with your Github account. Search for the below repo
+1.  Open a browser and go to ``https://github.com`` and sign in with your Github account. Search for the below repo
 
 ![](./media/image11.jpeg)
 
@@ -109,12 +90,11 @@ generated](./media/image10.png)
 
 ![](./media/image14.jpeg)
 
-5.  Wait for the Dev container to setup . it takes 3-5 min
+5.  Wait for the Dev container to set up. it takes 3-5 min
 
 ![](./media/image15.jpeg)
 
-6.  Run below command to log in to AZD. Copy the generated code and
-    press Enter. 
+6.  Run the below command to log in to AZD. Copy the generated code and press Enter. 
 
 +++azd auth login+++
 
@@ -130,37 +110,32 @@ generated](./media/image10.png)
 
 +++azd init+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image19.png)
+![](./media/image19.png)
 
-9.  Run below command to deploy the services to Azure, build your
-    container. Select below values.
+9.  Run the below command to deploy the services to Azure, and build your container. Select the below values.
 
 +++azd provision+++
 
 - Select an Azure location to use : East us/west us (Sometimes, East US might not be available, choose different location and deploy.) 
 
-- Enter a value for the existingResourceGroupName infrastructure parameter: should be your resource group name (ResourceGroup1)
+- Enter a value for the existingResourceGroupName infrastructure parameter: +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
 
 ![](./media/image20.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image21.png)
+![](./media/image21.png)
 
-10. Wait for the resource to provision completely. This process wil take
-    5-10 min to create al the required resources.
+10. Wait for the resource to be provisioned completely. This process will take 5-10 min to create all the required resources.
 
 ![](./media/image22.png)
 
 ### Task 4 : Deploy the application to Azure
 
-1.  Switch back to Azure portal and click on Resource groups tile on
-    Home page.
+1.  Switch back to the Azure portal and click on the Resource Groups tile on the Home page.
 
 ![](./media/image23.png)
 
-2.  Click on resource group name .
+2.  Click on the resource group name.
 
 ![](./media/image24.png)
 
@@ -174,38 +149,34 @@ generated](./media/image21.png)
 
 - **AureOpenAI**
 
-![A screenshot of a computer Description automatically
-generated](./media/image25.png)
+![](./media/image25.png)
 
 4.  Click on **Container registry** name.
 
 ![](./media/image26.png)
 
-5.  Expand **Setting** from left navigation menu, click on **Access
-    keys.** Select **Admin user check box.** Copy the **Login server**,
-    **user name** and **password** to a notepad to use it to deploy the
-    app.
+5.  Expand **Setting** from left navigation menu, click on **Access keys.** Select **Admin user check box.** Copy the **Login server**,
+    **user name** and **password** to a notepad to use to deploy the app.
 
 ![](./media/image27.png)
 
-6.  Duplicate the tab to open the Azrue portal in new tab.
+6.  Duplicate the tab to open the Azure portal in a new tab.
 
 ![](./media/image28.png)
 
-7.  Click on the resource group name form top navigation menu.
+7.  Click on the resource group name from the top navigation menu.
 
 ![](./media/image29.png)
 
-8.  Click on Container App name .
+8.  Click on the Container App name.
 
 ![](./media/image30.png)
 
-9.  Click on **Authorize** button under Github-Sign in to authenticate
-    with your GitHub account. Authorize your Github account.
+9.  Click on the **Authorize** button under Github-Sign in to authenticate with your GitHub account. Authorize your Github account.
 
 10. Select below values
 
-**Organization : your Github organization**
+**Organization: your Github organization**
 
 **Repository:** chat-csharp-cosmos-db-nosql-openai
 
@@ -213,21 +184,19 @@ generated](./media/image25.png)
 
 ![](./media/image31.png)
 
-11. Scroll down to **Registry settings** and enter below values and then
-    click on **Start continuous deployment** button.
+11. Scroll down to **Registry settings** and enter below values and then click on **Start continuous deployment** button.
 
-- Repository source : **Docker Hub or other registries.**
+- Repository source: **Docker Hub or other registries.**
 
-- Login server URL : Your Login server copied form Container registry
-  (step#5)
+- Login server URL : Your Login server is copied from the Container registry (step#5)
 
-- Username : your password from container registry (step #5)
+- Username : your password from the container registry (step #5)
 
-- Password : Your password from container registry (step # 5)
+- Password : Your password from the container registry (step # 5)
 
 ![](./media/image32.png)
 
-12. Click on Workflow file link. It opens new tab with Github.
+12. Click on the Workflow file link. It opens a new tab with Github.
 
 ![](./media/image33.png)
 
@@ -241,11 +210,9 @@ generated](./media/image25.png)
 
 15. Do not close any tabs.
 
-### Task 5 : Access the chat app
+### Task 5: Access the chat app
 
-1.  Switch back to Azure portal and click on **Overview** from left
-    navigation and then click on **Application Url**. It opens a new to
-    load app.
+1.  Switch back to the Azure portal and click on **Overview** from lthe eft navigation and then click on **Application Url**. It opens a new to  load app.
 
 ![](./media/image36.png)
 
@@ -259,7 +226,7 @@ generated](./media/image25.png)
 
 ![](./media/image38.jpeg)
 
-4.  Enter below prompt . Explore the app with different prompts.
+4.  Enter the below prompt. Explore the app with different prompts.
 
 ``is that bigger than Dogger stadium??``
 
@@ -271,26 +238,21 @@ To clean up all the resources created by this sample:
 
 1.  Switch back to Github portal tab and refresh the page.
 
-![A screenshot of a computer Description automatically
-generated](./media/image40.png)
+![](./media/image40.png)
 
-2.  Click on Code , select the branch created for this lab and click on
-    **Delete**.
+2.  Click on Code, select the branch created for this lab and click on **Delete**.
 
 ![](./media/image41.png)
 
 3.  Confirm the branch deletion by clicking on **Delete** button.
 
-![A screenshot of a computer Description automatically
-generated](./media/image42.png)
+![](./media/image42.png)
 
-5.  Switch back to **Azure portal -> Resource group-> Resource group
-    name.**
+5.  Switch back to **Azure portal -> Resource group-> Resource group name.**
 
 ![](./media/image43.png)
 
-6.  Select all the resource and then click on Delete as shown in below
-    image. (**DO NOT DELETE** resource group)
+6.  Select all the resources and then click on Delete as shown in the  below image. (**DO NOT DELETE** resource group)
 
 ![](./media/image44.png)
 
