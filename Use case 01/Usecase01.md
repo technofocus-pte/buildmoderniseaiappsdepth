@@ -2,10 +2,8 @@
 
 **Objective:**
 
-This usecase shows how to develop, configure, and deploy a secure
-Quarkus To-d- application in Container Apps that's connected to a Azure
-Database for PostgreSQL. When you're finished, you'll have a Quarkus app
-running on Azure App Service on Linux.
+This usecase shows how to develop, configure, and deploy a secure Quarkus To-d- application in Container Apps that's connected to a Azure
+Database for PostgreSQL. When you're finished, you'll have a Quarkus app running on Azure App Service on Linux.
 
 **Key technologies used** -- Java 17, Azure Database for PostgreSQL
 
