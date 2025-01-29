@@ -213,7 +213,8 @@ public class Todo extends PanacheEntity {
     }
 }
 ```
-    ![](./media/image25.jpeg)
+
+![](./media/image25.jpeg)
 
 8.  To manage that class, update the **TodoResource** so that it can
     publish REST interfaces to store and retrieve data by using HTTP.
@@ -259,7 +260,7 @@ public class TodoResource {
     }
 }
 ```
-    ![](./media/image26.jpeg)
+![](./media/image26.jpeg)
 
 ### **Task 3 : Run the application**
 
@@ -437,7 +438,7 @@ you
     
 +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
     
-    ![](./media/image39.png)
+![](./media/image39.png)
 
 2.  Switch back to Gitbash and run the below command to set the resource group variable. Copy the resource group name under the Resource tab of your VM as shown in 1st image.
 
@@ -459,7 +460,7 @@ you
 1.  You'll now create a managed PostgreSQL server. Run the following
     command to create a small instance of Azure Database for PostgreSQL:
 
-+++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
+    +++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
 
     ![](./media/image43.jpeg)
 
