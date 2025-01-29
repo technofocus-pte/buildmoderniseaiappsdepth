@@ -323,11 +323,12 @@ creates the Todo table in the database.
 4.  Go back to Gitbash and run the to-do application by using this command:
 
     +++cd todo+++
+
     +++./mvnw quarkus:dev+++
   
     ![](./media/image28.jpeg)
 
-5.  The Quarkus application should start and connect to your database.
+6.  The Quarkus application should start and connect to your database.
     You should see the following output:
 
     ![](./media/image29.jpeg)
@@ -338,11 +339,11 @@ creates the Todo table in the database.
 
     ![](./media/image32.jpeg)
 
-6.  Click on **Allow access**.
+7.  Click on **Allow access**.
 
     ![](./media/image31.jpeg)
 
-7.  To test the application, you can use cURL.In a separate new instance of Gitbash , create a new to-do item in the
+8.  To test the application, you can use cURL.In a separate new instance of Gitbash , create a new to-do item in the
 database with the following command. You should see the log in the Quarkus console:
 
     +++curl --header "Content-Type: application/json" --request POST  --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'   http://127.0.0.1:8080/api/todos+++
@@ -464,21 +465,15 @@ the variables you'll create:
 location first and it you have any issues then try in location near to
 you
 
-    +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+   +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+   +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
+   +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
+   +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
+   +++export AZ_POSTGRES_USERNAME="azuser123"+++
+   +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
+   +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
 
-    +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
-
-    +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
-
-    +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
-
-    +++export AZ_POSTGRES_USERNAME="azuser123"+++
-
-    +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
-
-    +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
-
-    ![](./media/image39.png)
+   ![](./media/image39.png)
 
 2.  Switch back to Gitbash and run below command to set resource group
     variable. Copy the resource group name.
@@ -578,7 +573,7 @@ you
 
     +++curl http://127.0.0.1:8080/api/todos+++
 
-You should see the following output:
+    You should see the following output:
 
     ![](./media/image54.jpeg) 
 
@@ -678,8 +673,7 @@ using the Azure CLI.
 
     - Deploy the Docker image to the Container Apps environment
 
-The az containerapp up command takes some time to run. You should see
-output that's similar to the following:
+    The az containerapp up command takes some time to run. You should see output that's similar to the following:
 
     ![](./media/image64.jpeg)
 
@@ -705,10 +699,9 @@ You should see resources similar to the following:
     It lists all the resources created by the az container app up
     command.
 
-    +++az resource list --location "$AZ_LOCATION" --resource-group 
-"$AZ_RESOURCE_GROUP" --output table+++
+    +++az resource list --location "$AZ_LOCATION" --resource-group "$AZ_RESOURCE_GROUP" --output table+++
 
-You should see output that's similar to this:
+    You should see output that's similar to this:
 
     ![](./media/image68.png)
 
