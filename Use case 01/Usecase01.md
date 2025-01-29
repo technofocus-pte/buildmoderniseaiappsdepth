@@ -93,7 +93,7 @@ to Azure Container Apps.
 
 +++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create -DplatformVersion=3.7.3 -DprojectGroupId=com.example.demo -DprojectArtifactId=todo -DclassName="com.example.demo.TodoResource" -Dpath="/api/todos" -DjavaVersion=17 -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
 
-    ![](./media/image11.jpeg)
+![](./media/image11.jpeg)
 
 2.  This command creates a new Quarkus project. It generates a Maven
     directory structure (src/main/java for source code and src/test/java
@@ -259,7 +259,7 @@ public class Todo extends PanacheEntity {
     }
 }
 ```
-    ![](./media/image25.jpeg)
+![](./media/image25.jpeg)
 
 8.  To manage that class, update the **TodoResource** so that it can
     publish REST interfaces to store and retrieve data by using HTTP.
@@ -305,7 +305,7 @@ public class TodoResource {
     }
 }
 ```
-    ![](./media/image26.jpeg)
+![](./media/image26.jpeg)
 
 ### **Task 3 : Run the application**
 
@@ -329,7 +329,7 @@ creates the Todo table in the database.
 
 +++./mvnw quarkus:dev+++
     
-    ![](./media/image28.jpeg)
+![](./media/image28.jpeg)
 
 3.  The Quarkus application should start and connect to your database.
     You should see the following output:
@@ -354,7 +354,7 @@ Quarkus console:
 
 +++curl --header "Content-Type: application/json" --request POST  --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'   http://127.0.0.1:8080/api/todos+++
 
-    ![](./media/image33.jpeg)
+![](./media/image33.jpeg)
 
 6.  This command should return the created item (with an identifier):
 
@@ -364,7 +364,7 @@ Quarkus console:
 
 +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
-    ![](./media/image34.jpeg)
+![](./media/image34.jpeg)
 
 8.  Next, retrieve the data by using a new cURL request:
 
@@ -373,7 +373,7 @@ Quarkus console:
 This command returns the list of to-do items, including the items you
 created:
 
-    ![](./media/image35.jpeg)
+![](./media/image35.jpeg)
 
 ### Task 4 : Test the application
 
@@ -420,7 +420,7 @@ class TodoResourceTest {
     }
 }
 ```
-    ![](./media/image36.jpeg)
+![](./media/image36.jpeg)
 
 2.  When you test the application, Docker Desktop needs to be running
     because Quarkus detects that it needs the PostgreSQL database for
@@ -487,7 +487,7 @@ you
 
 +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
 
-    ![](./media/image39.png)
+![](./media/image39.png)
 
 2.  Switch back to Gitbash and run below command to set resource group
     variable. Copy the resource group name.
@@ -517,8 +517,7 @@ you
 --public-access "All" --tier "Burstable" --sku-name "Standard_B1ms"
 --storage-size 32 --version "16"+++
 
-![A screen shot of a computer code Description automatically
-generated](./media/image43.jpeg)
+    ![](./media/image43.jpeg)
 
 2.  This command creates a small PostgreSQL server that uses the
     variables that you set up earlier.
@@ -533,9 +532,7 @@ generated](./media/image43.jpeg)
 
 2.  Run the below command to obtain the connection string for the database.
 
-3.  export POSTGRES_CONNECTION_STRING=$(
-
-+++az postgres flexible-server show-connection-string --server-name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --query "connectionStrings.jdbc" --output tsv)+++
+   +++export POSTGRES_CONNECTION_STRING=$(az postgres flexible-server show-connection-string --server-name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --query "connectionStrings.jdbc" --output tsv)+++
 
 +++export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"+++
 
@@ -545,7 +542,7 @@ generated](./media/image43.jpeg)
 
 4.  Note the connection string that's returned.
 
-    ![](./media/image46.jpeg)
+![](./media/image46.jpeg)
 
 ### Task 4 :Configure the Quarkus application to connect to the PostgreSQL database
 
@@ -575,16 +572,16 @@ quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
 
 +++./mvnw clean quarkus:dev+++
 
-![](./media/image49.jpeg)
-![](./media/image50.jpeg)
-![](./media/image51.jpeg)
+    ![](./media/image49.jpeg)
+    ![](./media/image50.jpeg)
+    ![](./media/image51.jpeg)
 
 2.  When Quarkus is running, create a few to-dos by using the following
     cURL commands in a separate terminal window:
 
 +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' http://127.0.0.1:8080/api/todos+++
 
-![](./media/image52.jpeg)
+    ![](./media/image52.jpeg)
 
 +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
@@ -619,11 +616,11 @@ using the Azure CLI.
     these **Dockerfiles, *Dockerfile.jvm*,** to ***Dockerfile*** and
     move it to the root folder:
 
-+++mv src/main/docker/Dockerfile.jvm ./Dockerfile+++
+    +++mv src/main/docker/Dockerfile.jvm ./Dockerfile+++
 
-![](./media/image56.jpeg)
+    ![](./media/image56.jpeg)
 
-![](./media/image55.jpeg)
+    ![](./media/image55.jpeg)
 
 3.  Replace the content after the long comment in
     the **Dockerfile** with the following i.e at Line \# 80
@@ -647,7 +644,7 @@ ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
 ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
 ```
-![](./media/image57.jpeg)
+    ![](./media/image57.jpeg)
 
 4.  This Dockerfile expects the Quarkus application to be packaged as
     a ***quarkus-run.jar* file**. This name is the default name for the
@@ -655,7 +652,7 @@ ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
     make sure that the Quarkus application is packaged as a JAR file. To
     do so, run the following Maven command:
 
-+++./mvnw package+++
+    +++./mvnw package+++
 
     ![](./media/image58.jpeg)
 
@@ -665,7 +662,7 @@ ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
     generates a ***quarkus-run.jar*** file in
     the ***target/quarkus-app*** folder.
 
-![](./media/image60.jpeg)
+    ![](./media/image60.jpeg)
 
 ### Task 2 : Create the Container Apps environment and deploy the container
 
@@ -674,12 +671,12 @@ ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
     single Azure CLI command. Run the following command at the root of
     the project:
 
-+++az containerapp up --name "$AZ_CONTAINERAPP" --environment "$AZ_CONTAINERAPP_ENV" --location "$AZ_LOCATION" --resource-group "$AZ_RESOURCE_GROUP" --ingress external --target-port 8080 --source .+++
+    +++az containerapp up --name "$AZ_CONTAINERAPP" --environment "$AZ_CONTAINERAPP_ENV" --location "$AZ_LOCATION" --resource-group "$AZ_RESOURCE_GROUP" --ingress external --target-port 8080 --source .+++
 
-![](./media/image61.jpeg)
-![](./media/image61.jpeg)
-![](./media/image62.jpeg)
-![](./media/image63.jpeg)
+    ![](./media/image61.jpeg)
+    ![](./media/image61.jpeg)
+    ![](./media/image62.jpeg)
+    ![](./media/image63.jpeg)
 
 2.  This command does several things:
 
@@ -696,7 +693,7 @@ ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
 The az containerapp up command takes some time to run. You should see
 output that's similar to the following:
 
-![](./media/image64.jpeg)
+    ![](./media/image64.jpeg)
 
 ### Task 3: Validate the deployment
 
@@ -708,24 +705,24 @@ You should see resources similar to the following:
     in with your Azure subscription account. Click on the Resource Group
     tile.
 
-![](./media/image65.jpeg)
+    ![](./media/image65.jpeg)
 
 2.  Click on the resource group name.
 
-![](./media/image66.png)
+    ![](./media/image66.png)
 
-![](./media/image67.png)
+    ![](./media/image67.png)
 
 3.  You can also check the deployment by running the following command.
     It lists all the resources created by the az container app up
     command.
 
-+++az resource list --location "$AZ_LOCATION" --resource-group 
+    +++az resource list --location "$AZ_LOCATION" --resource-group 
 "$AZ_RESOURCE_GROUP" --output table+++
 
 You should see output that's similar to this:
 
-![](./media/image68.png)
+    ![](./media/image68.png)
 
 ### Task 4: Run the deployed Quarkus application
 
@@ -735,52 +732,52 @@ You should see output that's similar to this:
 2.  Switch back to Gitbash and run the below command to get the URL of the
     application.
 
-+++export AZ_APP_URL=$(az containerapp show  --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --query "properties.configuration.ingress.fqdn"  --output tsv  )+++
+    +++export AZ_APP_URL=$(az containerapp show  --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --query "properties.configuration.ingress.fqdn"  --output tsv  )+++
 
-![](./media/image69.jpeg)
+    ![](./media/image69.jpeg)
 
 3.  Your application is ready at
     https://\\\<app-name\>.azurecontainerapps.io/. Notice the https
     protocol. That protocol is used because the application is deployed
     with a TLS certificate. To test the application, you can use cURL:
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Configuration","details":"Congratulations, you have set up your Quarkus application correctly!","done": "true"}' https://$AZ_APP_URL/api/todos+++
+    +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Configuration","details":"Congratulations, you have set up your Quarkus application correctly!","done": "true"}' https://$AZ_APP_URL/api/todos+++
 
-![](./media/image70.jpeg)
+    ![](./media/image70.jpeg)
 
 4.  Retrieve the data by using a new cURL request:
 
-+++curl https://$AZ_APP_URL/api/todos+++
+    +++curl https://$AZ_APP_URL/api/todos+++
 
 5.  This command returns the list of all to-do items from the database:
 
-![](./media/image71.jpeg)
+    ![](./media/image71.jpeg)
 
 6.  Switch back to the Azure portal and click on your container app
     name.
 
-![](./media/image72.png)
+    ![](./media/image72.png)
 
 7.  Click on the application URL link. It opens the app in the browser tab.
 
-![](./media/image73.png)
+    ![](./media/image73.png)
 
-![](./media/image74.png)
+    ![](./media/image74.png)
 
 8.  Run this command, you can stream the logs for your container when
     you create new to-dos:
 
-+++az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group
+    +++az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group
 "$AZ_RESOURCE_GROUP" -–follow+++
 
-![](./media/image75.png)
+    ![](./media/image75.png)
 
 9.  Run more cURL commands. You should see the logs scrolling in the
     terminal.
 
-+++curl https://$AZ_APP_URL/api/todos+++
+    +++curl https://$AZ_APP_URL/api/todos+++
 
-![](./media/image76.png)
+    ![](./media/image76.png)
 
 ## Exercise 4: Delete resources in the resource group
 
@@ -788,24 +785,24 @@ You should see output that's similar to this:
 
 1.  Switch back to the Azure portal. Click on **Resource groups**.
 
-![](./media/image77.png)
+    ![](./media/image77.png)
 
 2.  Click on the resource group name.
 
-![](./media/image78.png)
+    ![](./media/image78.png)
 
 3.  Select all resources and then click on **Delete** (Do NOT DELETE –
     Resource group)
 
-![](./media/image79.png)
+    ![](./media/image79.png)
 
 4.  Enter ``delete`` and then click on **Delete**.
 
-![](./media/image80.png)
+    ![](./media/image80.png)
 
 5.  Confirm deletion of resources.
 
-![](./media/image81.png)
+    ![](./media/image81.png)
 
 **Summary**
 
