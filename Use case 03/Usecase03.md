@@ -206,11 +206,8 @@ container images (JDK/JRE) for the Linux architecture.
 
     ![](./media/image18.jpeg)
 
->**Note:** As you saw previously, Docker has executed the instructions from the lines that you've previously written in the prior unit. Each
-instruction is a step in sequential order. Rerun the docker build command again, notice the differences in the steps, you'll notice ---\>
-Using cache for layers that haven't changed. If your not making app changes (before rerunning the docker build command), then you'll notice
-all cached layers as the binaries are untouched and can be sourced from Docker cache). This is an important takeaway when optimizing your
-container images and the associated compute costs with time spent building them.
+    >**Note:** As you saw previously, Docker has executed the instructions from the lines that you've previously written in the prior unit.       Each instruction is a step in sequential order. Rerun the docker build command again, notice the differences in the steps, you'll notice 
+    Using cache for layers that haven't changed. If your not making app changes (before rerunning the docker build command), then you'll          notice all cached layers as the binaries are untouched and can be sourced from Docker cache). This is an important takeaway when              optimizing your container images and the associated compute costs with time spent building them.
 
 3.  Docker can also display the available images that are resident. This is helpful for viewing what's available to run. Run the following
     command in your CLI
@@ -225,28 +222,22 @@ container images and the associated compute costs with time spent building them.
 
 1.  Now that you have successfully built a container image, you can run it.
 
-2.  Docker run is the command used to run a container image. The -p
-
-:#### argument will be used to forward localhost HTTP (the first
-
-port before the colon) traffic to the container at runtime (the second port after the colon). Remember from the Dockerfile that the Tomcat app
-server is listening for HTTP traffic on port 8080 hence that is the container port that needs to be exposed. Lastly the image tag
-flightbookingsystemsample is needed to instruct Docker of what image to run. Run the following command in your CLI:
+2.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the firstport before the colon) traffic to the container at runtime (the second port after the colon). Remember from the Dockerfile that the Tomcat appserver is listening for HTTP traffic on port 8080 hence that is the container port that needs to be exposed. Lastly the image tag flightbookingsystemsample is needed to instruct Docker of what image to run. Run the following command in your CLI:
 
     +++docker run -p 8080:8080 flightbookingsystemsample+++
 
-    You'll see something similar:
+   You'll see something similar:
 
     ![](./media/image20.jpeg)
 
     ![](./media/image21.jpeg)
 
->**Note:** if the command "docker run -p 8080:8080 flightbookingsystemsample" comes up with an error, then use the below
-mentioned port
+    >**Note:** if the command "docker run -p 8080:8080 flightbookingsystemsample" comes up with an error, then use the below
+    mentioned port
 
     +++docker run -p 8081:8080 flightbookingsystemsample+++
 
-3.  Open up a browser and visit the Flight Booking System for Airline Reservations landing page 
+3.  Open up a browser and visit the Flight Booking System for Airline Reservations landing page  
     at  +++http://localhost:8080/FlightBookingSystemSample+++
 
    You should see the following:
@@ -351,8 +342,8 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 3.  Add the following contents to deployment.yml and then save and exit:
 
->**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
-AZ_CONTAINER_REGISTRY= javaaksregist )
+    >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
+    AZ_CONTAINER_REGISTRY= javaaksregist )
 
 ```
 apiVersion: apps/v1
@@ -395,7 +386,7 @@ selector:
     app: flightbookingsystemsample
 ```
 
-    ![](./media/image31.jpeg)
+![](./media/image31.jpeg)
 
 4.  Press Esc and: and then type +++wq+++ and press enter to save the file.
 
@@ -441,8 +432,7 @@ selector:
 
     ![](./media/image35.jpeg)
 
->**Note:** You'll want to substitute the ip address in the following,20.81.13.151, with that of your EXTERNAL-IP and note down the POD name,
-we will be using that in the next steps.
+    >**Note:** You'll want to substitute the ip address in the following,20.81.13.151, with that of your EXTERNAL-IP and note down the POD         name,we will be using that in the next steps.
 
 11. If your **POD** status is **Running** then the app should be accessible.
 
@@ -457,8 +447,8 @@ we will be using that in the next steps.
 13. Now use the **EXTERNAL-IP** from your kubectl get services flightbookingsystemsample output to access the running app within
     Azure Kubernetes Service.
 
->**Note:** You'll want to substitute the ip address in the following,20.81.13.151, with that of your EXTERNAL-IP from the command you
-previously executed.
+    >**Note:** You'll want to substitute the ip address in the following,20.81.13.151, with that of your EXTERNAL-IP from the command you
+    previously executed.
 
 14. Open up a browser and visit the Flight Booking System Sample landing page at 
     
