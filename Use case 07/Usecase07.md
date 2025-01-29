@@ -202,60 +202,45 @@ In this task, you connect to the rentals database on your Azure Database
 for PostgreSQL server using the psql command-line utility from the Azure
 Cloud Shell.
 
-1.  In the Azure portal ``https://portal.azure.com``, navigate to your
-    newly created Azure Database for PostgreSQL - Flexible Server.
+1.  In the Azure portal ``https://portal.azure.com``, navigate to your newly created Azure Database for PostgreSQL - Flexible Server.
 
 ![](./media/image20.png)
 
-1.  On the sidebar, select **Server Parameters**.Search for the **azure.extensions** parameter.
+2.  On the sidebar, select **Server Parameters**.Search for the **azure.extensions** parameter.
 
-![A screenshot of a computer Description automatically
-generated](./media/image21.png)
+![](./media/image21.png)
 
-2.  Select extensions **Vector** and **AZURE_AI** if already not selected.
+3.  Select extensions **Vector** and **AZURE_AI** if already not selected.
 
-![A screenshot of a computer Description automatically
-generated](./media/image22.png)
+![](./media/image22.png)
 
-2.  In the resource menu, under **Settings**,
-    select **Databases** select **Connect** for the rentals database.
+4.  In the resource menu, under **Settings**,select **Databases** select **Connect** for the rentals database.
 
 ![](./media/image23.png)
 
-3.  At the "Password for user pgAdmin" prompt in the Cloud Shell, enter
-    the randomly generated password for the **pgAdmin** login.
+5.  At the "Password for user pgAdmin" prompt in the Cloud Shell, enter the randomly generated password for the **pgAdmin** login.Once logged in, the psql prompt for the rentals database is displayed.
 
-Once logged in, the psql prompt for the rentals database is displayed.
+![](./media/image24.jpeg)
 
-![A screenshot of a computer Description automatically
-generated](./media/image24.jpeg)
+6.  Throughout the remainder of this exercise, you continue working in the Cloud Shell, so it may be helpful to expand the pane within your
+    browser window by selecting the **Maximize** button at the top right of the pane.
 
-4.  Throughout the remainder of this exercise, you continue working in
-    the Cloud Shell, so it may be helpful to expand the pane within your
-    browser window by selecting the **Maximize** button at the top right
-    of the pane.
-
-![A screenshot of a computer Description automatically
-generated](./media/image25.jpeg)
+![](./media/image25.jpeg)
 
 ### Task 4 : Configure extensions
 
-To store and query vectors, and to generate embeddings, you need to
-allow-list and enable two extensions for Azure Database for PostgreSQL
+To store and query vectors, and to generate embeddings, you need to allow-list and enable two extensions for Azure Database for PostgreSQL
 Flexible Server: vector and azure_ai.
 
-1.  Switch back the Azure portal tab with Azure cli and run the
-    following SQL command to enable the vector extension. For detailed
+1.  Switch back the Azure portal tab with Azure cli and run the following SQL command to enable the vector extension. For detailed
     instructions
 
 +++CREATE EXTENSION vector;+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image26.jpeg)
+![](./media/image26.jpeg)
 
-3.  To enable the azure_ai extension, **update and run** the following
-    SQL command. You’ll need the endpoint and API key for the Azure
-    OpenAI resource.
+3.  To enable the azure_ai extension, **update and run** the following SQL command. You’ll need the endpoint and API key for the Azure
+    OpenAI resource.Update below select statements with Azure OpenAI end point and key and then run them.
 
 +++CREATE EXTENSION azure_ai;+++
 
@@ -263,17 +248,14 @@ generated](./media/image26.jpeg)
 
 +++SELECT azure_ai.set_setting('azure_openai.subscription_key', '<API Key>');+++
 
-![A screenshot of a computer program Description automatically
-generated](./media/image27.jpeg)
+![](./media/image27.jpeg)
 
 ### Task 5 : Populate the database with sample data
 
-Before you explore the azure_ai extension, add a couple of tables to the
-rentals database and populate them with sample data so you have
+Before you explore the azure_ai extension, add a couple of tables to the rentals database and populate them with sample data so you have
 information to work with as you review the extension's functionality.
 
-1.  Run the following commands to create the listings and reviews tables
-    for storing rental property listing and customer review data:
+1.  Run the following commands to create the listings and review tables for storing rental property listing and customer review data:
 
 ```
 DROP TABLE IF EXISTS listings;
@@ -288,8 +270,7 @@ CREATE TABLE listings (
 );
 ```
 
-![A screenshot of a computer Description automatically
-generated](./media/image28.jpeg)
+![](./media/image28.jpeg)
 
 ```
 DROP TABLE IF EXISTS reviews;
@@ -302,108 +283,74 @@ CREATE TABLE reviews (
 );
 ```
 
-![A screenshot of a computer Description automatically
-generated](./media/image29.jpeg)
+![](./media/image29.jpeg)
 
-2.  Next, use the COPY command to load data from CSV files into each
-    table you created above. Start by running the following command to
-    populate the listings table:
+2.  Next, use the COPY command to load data from CSV files into each table you created above. Start by running the following command to
+    populate the listings table.The command output should be COPY 50, indicating that 50 rows were written into the table from the CSV file.
 
 +++\COPY listings FROM 'postgresql-case/Allfiles/Labs/Shared/listings.csv' CSV HEADER+++
 
-The command output should be COPY 50, indicating that 50 rows were
-written into the table from the CSV file.
+![](./media/image30.jpeg)
 
-![A screenshot of a computer program Description automatically
-generated](./media/image30.jpeg)
-
-3.  Finally, run the command below to load customer reviews into the
-    reviews table:
+3.  Finally, run the command below to load customer reviews into the reviews table:The command output should be COPY 354, indicating that 354 rows were written into the table from the CSV file.
 
 +++\COPY reviews FROM 'postgresql-case/Allfiles/Labs/Shared/reviews.csv' CSV HEADER+++
 
-The command output should be COPY 354, indicating that 354 rows were
-written into the table from the CSV file.
-
 ![](./media/image31.jpeg)
 
-4.  To reset your sample data, you can execute DROP TABLE listings, and
-    repeat these steps.
+4.  To reset your sample data, you can execute DROP TABLE listings, and repeat these steps.
 
 ### Task 6 : Create and store embedding vectors
 
-Now that we have some sample data, it's time to generate and store the
-embedding vectors. The azure_ai extension makes calling the Azure OpenAI
-embedding API easy.
+Now that we have some sample data, it's time to generate and store the embedding vectors. The azure_ai extension makes calling the Azure OpenAI embedding API easy.
 
-1.  Add the embedding vector column.
-
-The text-embedding-ada-002 model is configured to return 1,536
-dimensions, so use that for the vector column size.
+1.  Add the embedding vector column.The text-embedding-ada-002 model is configured to return 1,536 dimensions, so use that for the vector column size.
 
 +++ALTER TABLE listings ADD COLUMN listing_vector vector(1536);+++
 
-![A computer screen shot of a black screen Description automatically
-generated](./media/image32.jpeg)
+![](./media/image32.jpeg)
 
-2.  Generate an embedding vector for the description of each listing by
-    calling Azure OpenAI through the create_embeddings user-defined
-    function, which is implemented by the azure_ai extension:
+2.  Generate an embedding vector for the description of each listing by calling Azure OpenAI through the create_embeddings user-defined
+    function, which is implemented by the azure_ai extension.Note that this may take several minutes, depending on the available quota.
 
 +++UPDATE listings SET listing_vector = azure_openai.create_embeddings('embedding', description, max_attempts => 5, retry_delay_ms => 500) WHERE listing_vector IS NULL;+++
 
-Note that this may take several minutes, depending on the available
-quota.
-
-![A screenshot of a computer screen Description automatically
-generated](./media/image33.png)
+![](./media/image33.png)
 
 ### Task 7 : Perform a semantic search query
 
-Now that you have listing data augmented with embedding vectors, it's
-time to run a semantic search query. To do so, get the query string
-embedding vector, then perform a cosine search to find the listings
-whose descriptions are most semantically similar to the query.
+Now that you have listing data augmented with embedding vectors, it's time to run a semantic search query. To do so, get the query string
+embedding vector, then perform a cosine search to find the listings whose descriptions are most semantically similar to the query.
 
-1.  Use the embedding in a cosine search (\\\<=\> represents cosine
-    distance operation), fetching the top 10 most similar listings to
+1.  Use the embedding in a cosine search (\\\<=\> represents cosine distance operation), fetching the top 10 most similar listings to
     the query.
 
 +++SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;+++
 
-You’ll get a result similar to this. Results may vary, as embedding
-vectors are not guaranteed to be deterministic:
+You’ll get a result similar to this. Results may vary, as embedding vectors are not guaranteed to be deterministic:
 
 ![A screenshot of a computer Description automatically
 generated](./media/image34.jpeg)
 
-2.  You may also project the description column to be able to read the
-    text of the matching rows whose descriptions were semantically
+2.  You may also project the description column to be able to read the text of the matching rows whose descriptions were semantically
     similar. For example, this query returns the best match:
 
 +++SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;+++
 
-Which prints something like:
-
 ![A screenshot of a computer Description automatically
 generated](./media/image35.jpeg)
 
-To intuitively understand semantic search, observe that the description
-doesn't actually contain the terms "bright" or "natural." But it does
+To intuitively understand semantic search, observe that the description doesn't actually contain the terms "bright" or "natural." But it does
 highlight "summer" and "sunlight," "windows," and a "ceiling window."
 
 ### Task 8 : Check your work
 
-After performing the above steps, the listings table contains sample
-data from Seattle Airbnb Open Data on Kaggle. The listings were
+After performing the above steps, the listings table contains sample data from Seattle Airbnb Open Data on Kaggle. The listings were
 augmented with embedding vectors to execute semantic searches.
 
-1.  Confirm the listings table has four columns: id, name, description,
-    and listing_vector.
+1.  Confirm the listings table has four columns: id, name, description,and listing_vector.
 
 +++\d listings+++
-
-It should print something like:
 
 ![A screenshot of a computer Description automatically
 generated](./media/image36.jpeg)
@@ -412,73 +359,50 @@ generated](./media/image36.jpeg)
 
 +++SELECT COUNT(*) > 0 FROM listings WHERE listing_vector IS NOT NULL;+++
 
-The result must show a t, meaning true. An indication that there’s at
-least one row with embeddings of its corresponding description column:
-
-![A screen shot of a computer Description automatically
-generated](./media/image37.jpeg)
+![](./media/image37.jpeg)
 
 3.  Confirm the embedding vector has 1536 dimensions:
 
 +++SELECT vector_dims(listing_vector) FROM listings WHERE listing_vector IS NOT NULL LIMIT 1;+++
 
-Yielding:
+![](./media/image38.jpeg)
 
-![A screen shot of a computer Description automatically
-generated](./media/image38.jpeg)
-
-4.  Confirm that semantic searches return results.
-
-Use the embedding in a cosine search, fetching the top 10 most similar
+4.  Confirm that semantic searches return results.Use the embedding in a cosine search, fetching the top 10 most similar
 listings to the query.
 
 +++SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;+++
 
-![A screenshot of a computer program Description automatically
-generated](./media/image39.jpeg)
+![](./media/image39.jpeg)
 
 5.  Stay back in the same page to proceed with next task.
 
 ## Exercise 2 - Create a search function for a recommendation system
 
-Let's wrap the vector embedding logic and API calls in a function. In
-this exercise, you install the vector and azure_ai extensions in an
-Azure Database for PostgreSQL flexible server and explore the
-extension's capabilities for integrating [Azure
-OpenAI](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) into
-your database.
+Let's wrap the vector embedding logic and API calls in a function. In this exercise, you install the vector and azure_ai extensions in an
+Azure Database for PostgreSQL flexible server and explore the extension's capabilities for integrating into your database.
 
 ### Task 1 : Create a search function for a recommendation system
 
-Let's build a recommendation system using semantic search. The system
-will recommend several listings based on a provided sample listing. The
-sample could be from the listing the user is viewing or their
-preferences. We'll implement the system as a PostgreSQL function
+Let's build a recommendation system using semantic search. The system will recommend several listings based on a provided sample listing. The
+sample could be from the listing the user is viewing or their preferences. We'll implement the system as a PostgreSQL function
 leveraging the azure_openai extension.
 
-By the end of this exercise, you'll have defined a function
-recommend_listing that provides at most numResults listings most similar
-to the supplied sampleListingId. You can use this data to drive new
-opportunities, such as joining recommended listings against discounted
+By the end of this exercise, you'll have defined a function recommend_listing that provides at most numResults listings most similar
+to the supplied sampleListingId. You can use this data to drive new opportunities, such as joining recommended listings against discounted
 listings.
 
 Deploy resources into your Azure subscription
 
-This step guides you through using Azure CLI commands from the Azure
-Cloud Shell to create a resource group and run a Bicep script to deploy
-the Azure services necessary for completing this exercise into your
-Azure subscription.
+This step guides you through using Azure CLI commands from the Azure Cloud Shell to create a resource group and run a Bicep script to deploy
+the Azure services necessary for completing this exercise into your Azure subscription.
 
->**Note:** If you are doing multiple modules in this learning path, you
-can share the Azure environment between them. In that case, you only
+>**Note:** If you are doing multiple modules in this learning path, you can share the Azure environment between them. In that case, you only
 need to complete this resource deployment step once.
 
 ### Task 2 : Create the recommendation function
 
-1.  The recommendation function takes a sampleListingId and returns the
-    numResults most similar other listings. To do so, it creates an
-    embedding of the sample listing's name and description and runs a
-    semantic search of that query vector against the listing embeddings.
+1.  The recommendation function takes a sampleListingId and returns the numResults most similar other listings. To do so, it creates an
+    embedding of the sample listing's name and description and runs a semantic search of that query vector against the listing embeddings.
 
 ```
 CREATE FUNCTION
@@ -516,30 +440,24 @@ END $$
 LANGUAGE plpgsql; 
 ```
 
-![A screenshot of a computer Description automatically
-generated](./media/image40.jpeg)
+![](./media/image40.jpeg)
 
 ### Task 3 : Query the recommendation function
 
-1.  To query the recommendation function, pass it a listing ID and the
-    number of recommendations it should make.
+1.  To query the recommendation function, pass it a listing ID and the     number of recommendations it should make.
 
 +++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations
 closest to a listing+++
 
-The result will be something like:
-
 ![A screenshot of a computer Description automatically
 generated](./media/image41.jpeg)
 
-2.  To see the function runtime, make sure **track_functions** is
-    enabled in the **Server Parameters** section on the Azure Portal
+2.  To see the function runtime, make sure **track_functions** is enabled in the **Server Parameters** section on the Azure Portal
     (you can use PL or ALL):
 
 ![](./media/image42.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image43.png)
+![](./media/image43.png)
 
 ### Task 4 : Check your work
 
@@ -547,27 +465,21 @@ generated](./media/image43.png)
 
 +++\df recommend_listing+++
 
-You should see the following:
-
-![A screenshot of a computer Description automatically
-generated](./media/image44.jpeg)
+![](./media/image44.jpeg)
 
 2.  Make sure you can query it using the following query:
 
 +++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations
 closest to a listing+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image45.jpeg)
+![](./media/image45.jpeg)
 
 ### Task 5 : Clean up
 
-Once you have completed this exercise, delete the Azure resources you
-created. You are charged for the configured capacity, not how much the
-database is used. Follow these instructions to delete your resource
-group and all resources you created for this lab.
+Once you have completed this exercise, delete the Azure resources you created. You are charged for the configured capacity, not how much the
+database is used. Follow these instructions to delete your resource group and all resources you created for this lab.
 
-1.  On Home page, Search for **Azure Open AI** and select it.
+1.  On the Home page, Search for **Azure Open AI** and select it.
 
 ![](./media/image46.png)
 
@@ -575,16 +487,13 @@ group and all resources you created for this lab.
 
 ![](./media/image47.png)
 
-3.  Type **delete **in the text box and then click on
-    +++Delete+++. Confirm deletion.
+3.  Type **delete **in the text box and then click on +++Delete+++. Confirm deletion.
 
 ![](./media/image48.png)
 
-![A screenshot of a computer Description automatically
-generated](./media/image49.png)
+![](./media/image49.png)
 
-4.  Click on **Manage deleted resources**, select the resource and then
-    click on **Purge** button as shown in the below image.
+4.  Click on **Manage deleted resources**, select the resource and then click on **Purge** button as shown in the below image.
 
 ![](./media/image50.png)
 
@@ -594,21 +503,18 @@ generated](./media/image49.png)
 
 6.  On the home page, select **Resource groups** under Azure services.
 
-![A screenshot of a computer Description automatically
-generated](./media/image52.jpeg)
+![](./media/image52.jpeg)
 
 7.  Click on the Resource group name.
 
 ![](./media/image53.png)
 
-8.  On the **Overview** page of your resource group, select **all the
-    resource** and then click on **Delete . DO NOT delete RESOURCE
+8.  On the **Overview** page of your resource group, select **all the resource** and then click on **Delete . DO NOT delete RESOURCE
     Group.**
 
 > ![](./media/image54.png)
 
-9.  Type +++Delete+++  and click on Delete. Confirm deleting resources by
-    clicking on **Delete** button.
+9.  Type +++Delete+++  and click on Delete. Confirm deleting resources by clicking on **Delete** button.
 
 ![](./media/image55.png)
 
