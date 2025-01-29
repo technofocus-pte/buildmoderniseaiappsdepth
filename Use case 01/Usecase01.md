@@ -212,7 +212,7 @@ public class Todo extends PanacheEntity {
 }
 ```
 
-![](./media/image25.jpeg)
+    ![](./media/image25.jpeg)
 
 8.  To manage that class, update the **TodoResource** so that it can
     publish REST interfaces to store and retrieve data by using HTTP.
@@ -420,19 +420,19 @@ the variables you'll create:
 
     **Note:** PostgreSQL is supported only in **Westus** . Try in westus location first and it you have any issues then try in location near     to you
 
-+++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+    +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
     
-+++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
     
-+++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
     
-+++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
     
-+++export AZ_POSTGRES_USERNAME="azuser123"+++
+    +++export AZ_POSTGRES_USERNAME="azuser123"+++
     
-+++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
+    +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
     
-+++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
     
     ![](./media/image39.png)
 
