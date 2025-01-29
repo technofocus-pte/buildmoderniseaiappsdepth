@@ -418,9 +418,7 @@ the variables you'll create:
     modify the values as described in the preceding table. These
     environment variables are used throughout the rest of this module.
 
-**Note:** PostgreSQL is supported only in **Westus** . Try in westus
-location first and it you have any issues then try in location near to
-you
+    **Note:** PostgreSQL is supported only in **Westus** . Try in westus location first and it you have any issues then try in location near     to you
 
 +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
     
@@ -436,7 +434,7 @@ you
     
 +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
     
-![](./media/image39.png)
+    ![](./media/image39.png)
 
 2.  Switch back to Gitbash and run the below command to set the resource group variable. Copy the resource group name under the Resource tab of your VM as shown in 1st image.
 
