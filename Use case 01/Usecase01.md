@@ -150,67 +150,58 @@ to Azure Container Apps.
 
     ![](./media/image22.jpeg)
 
-2.  Rename the generated **MyEntity.java** class
-    to `Todo` (located in the same folder as
-    the *TodoResource.java* file)
+2.  Rename the generated **MyEntity.java** class to `Todo` (located in the same folder as the *TodoResource.java* file)
 
     ![](./media/image23.jpeg)
 
-3.  Replace the existing code with the following Java code. It uses Java
-    Persistence API (jakarta.persistence.\* package) to store and
-    retrieve data from your PostgreSQL server. It also uses [Hibernate
-    ORM with Panache]{.underline} (inheriting from
-    io.quarkus.hibernate.orm.panache.PanacheEntity) to simplify the
-    persistence layer.
+3.  Replace the existing code with the following Java code. It uses Java Persistence API (jakarta.persistence.\* package) to store and
+    retrieve data from your PostgreSQL server. It also uses [Hibernate ORM with Panache]{.underline} (inheriting from
+    io.quarkus.hibernate.orm.panache.PanacheEntity) to simplify the persistence layer.
 
-4.  You use a JPA entity (@Entity) to map the Java Todo object directly
-    to the PostgreSQL Todo table. The TodoResource REST endpoint then
-    creates and persists a new Todo entity class. This class is a
-    domain model that\\'s mapped on the Todo table. JPA automatically creates the table.
+4.  You use a JPA entity (@Entity) to map the Java Todo object directly to the PostgreSQL Todo table. The TodoResource REST endpoint then
+    creates and persists a new Todo entity class. This class is a domain model that\\'s mapped on the Todo table. JPA automatically creates 
+    the table.
 
-5.  Extending PanacheEntity gets you several generic create, read,
-    update, and delete (CRUD) methods for your type. So you can do
-    things like saving and deleting Todo objects in just one line of
-    Java code.
+5.  Extending PanacheEntity gets you several generic create, read,update, and delete (CRUD) methods for your type. So you can do
+    things like saving and deleting Todo objects in just one line of Java code.
 
 6.  Set up JDK in IntelliJ if it was not already set.
 
     ![](./media/image24.jpeg)
 
-7.  Replace the existing code with the following Java code to the Todo
-    entity:
+7.  Replace the existing code with the following Java code to the Todo entity:
 
-```
-package com.example.demo;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
-import jakarta.persistence.Entity;
-import java.time.Instant;
-
-@Entity
-public class Todo extends PanacheEntity {
-
-    public String description;
-
-    public String details;
-
-    public boolean done;
-
-    public Instant createdAt = Instant.now();
-
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", details='" + details + '\'' +
-                ", done=" + done +
-                ", createdAt=" + createdAt +
-                '}';
+    ```
+    package com.example.demo;
+    
+    import io.quarkus.hibernate.orm.panache.PanacheEntity;
+    
+    import jakarta.persistence.Entity;
+    import java.time.Instant;
+    
+    @Entity
+    public class Todo extends PanacheEntity {
+    
+        public String description;
+    
+        public String details;
+    
+        public boolean done;
+    
+        public Instant createdAt = Instant.now();
+    
+        @Override
+        public String toString() {
+            return "Todo{" +
+                    "id=" + id + '\'' +
+                    ", description='" + description + '\'' +
+                    ", details='" + details + '\'' +
+                    ", done=" + done +
+                    ", createdAt=" + createdAt +
+                    '}';
+        }
     }
-}
-```
+    ```
 
     ![](./media/image25.jpeg)
 
