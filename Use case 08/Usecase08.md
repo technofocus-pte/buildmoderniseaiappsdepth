@@ -105,7 +105,7 @@ generated](./media/image10.png)
 ![A screenshot of a computer error Description automatically
 generated](./media/image11.png)
 
-6.  Switch back to Github Codespace tab. Run below command to Initialize
+4.  Switch back to Github Codespace tab. Run below command to Initialize
     the project environment in the current directory. Enter the
     Environment name as ``ragpgpy`` and press Enter.
 
@@ -115,13 +115,13 @@ Note : env name should be unique
 
 ![](./media/image12.png)
 
-7.  Run below command to provision the services to Azure, build your
+5.  Run below command to provision the services to Azure, build your
     container.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image13.png)
 
-8.  Select below values.
+6.  Select below values.
 
 +++azd provision+++
 
@@ -136,7 +136,7 @@ generated](./media/image13.png)
 
 ![](./media/image14.png)
 
-9.  Wait for the resource to provision completely. This process wil take
+7.  Wait for the resource to provision completely. This process wil take
     5-10 min to create al the required resources.
 
 ![A screenshot of a computer Description automatically
@@ -144,32 +144,31 @@ generated](./media/image15.png)
 
 ### Task 3 : Deploy the chat app and explore it
 
-10. Run the below command to deploy the app.
+1. Run the below command to deploy the app.
 
 +++azd deploy+++
 
 ![](./media/image16.png)
 
-11. Wait for the deployment .It takes < 5 minutes.
+2. Wait for the deployment .It takes < 5 minutes.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image17.png)
 
-12. Click on the endpoint url generated.
+3. Click on the endpoint url generated.
 
 ![](./media/image18.png)
 
-13. Click on **Open**.
+4. Click on **Open**.
 
 ![](./media/image19.png)
 
-14. It opens app in new tab.
+5. It opens app in new tab.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image20.png)
 
-15. Select **How to search and book rental?** Container and then click
-    on enter button next to the text box.
+6. Select **How to search and book rental?** Container and then click on the enter button next to the text box.
 
 ![](./media/image21.png)
 
@@ -181,8 +180,7 @@ generated](./media/image20.png)
 ![A screenshot of a computer Description automatically
 generated](./media/image22.png)
 
-2.  Select all the resource and then click on Delete as shown in below
-    image. (**DO NOT DELETE** resource group)
+2.  Select all the resources and then click on Delete as shown in the below image. (**DO NOT DELETE** resource group)
 
 ![](./media/image23.png)
 
@@ -196,11 +194,9 @@ generated](./media/image22.png)
 
 5.  Switch back to Github portal tab and refresh the page.
 
-![A screenshot of a computer Description automatically
-generated](./media/image26.png)
+![](./media/image26.png)
 
-6.  Click on Code , select the branch created for this lab and click on
-    **Delete**.
+6.  Click on Code , select the branch created for this lab, and click on **Delete**.
 
 ![](./media/image27.png)
 
@@ -208,7 +204,5 @@ generated](./media/image26.png)
 
 ![](./media/image28.png)
 
-### Summary:This use case thought you , deploying a chat application for the
-Retrieval Augmented Generation pattern running on Azure, using Azure AI
-Search for retrieval and Azure OpenAI and LangChain large language
-models (LLMs) to power ChatGPT-style and Q&A experiences
+### Summary:
+This use case thought you , deploying a chat application for the Retrieval Augmented Generation pattern running on Azure, using Azure AI Search for retrieval and Azure OpenAI and LangChain large language models (LLMs) to power ChatGPT-style and Q&A experiences
