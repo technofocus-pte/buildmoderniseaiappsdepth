@@ -131,7 +131,7 @@ Database for PostgreSQL.
     | Resource group   |  Select your **assigned Resource group**  |
     |  Region  |  Select your nearest region(**East US2** is selected here for this execution)  |
     | **Web App Details**   |    |
-    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX your **Labinstance ID** since the app name should be universally unique)  |
+    | Name   |  Enter +++quarkuwebapp@lab.LabInstance.Id+++  |
     | Runtime stack   |  **Java 17**  |
     |  **Database**  |    |
     |  Engine  |  Select **PostgreSQL – Flexible Server**  |
