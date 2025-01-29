@@ -189,7 +189,6 @@ to Azure Container Apps.
         public boolean done;
     
         public Instant createdAt = Instant.now();
-    
         @Override
         public String toString() {
             return "Todo{" +
@@ -349,7 +348,6 @@ To test the endpoint, it uses \[RESTAssured\]{.underline}.
             todo.description = "Take Quarkus MS Learn";
             todo.details = "Take the MS Learn on deploying Quarkus to Azure Container Apps";
             todo.done = true;
-    
             given().body(todo)
                     .header(CONTENT_TYPE, APPLICATION_JSON)
                     .when().post("/api/todos")
