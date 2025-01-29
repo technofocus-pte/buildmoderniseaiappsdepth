@@ -142,48 +142,6 @@ to Azure Container Apps.
 
 12. Open **pom.xml** and you should see below xml format.
 
->>
-<dependencies>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-hibernate-orm-panache</artifactId>
-</dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-resteasy-jackson</artifactId>
-</dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-jdbc-postgresql</artifactId>
-</dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-container-image-docker</artifactId>
-</dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-arc</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-hibernate-orm</artifactId>
-</dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-resteasy</artifactId>
-</dependency>
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-junit5</artifactId>
-  <scope>test</scope>
-</dependency>
-<dependency>
-  <groupId>io.rest-assured</groupId>
-  <artifactId>rest-assured</artifactId>
-  <scope>test</scope>
-</dependency>
-</dependencies>
-
 **Note** All the dependencies in the *pom.xml* file are defined in the Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
 
 ![](./media/image21.jpeg)
@@ -224,37 +182,37 @@ to Azure Container Apps.
 7.  Replace the existing code with the following Java code to the Todo
     entity:
 
-    ```
-    package com.example.demo;
-    
-    import io.quarkus.hibernate.orm.panache.PanacheEntity;
-    
-    import jakarta.persistence.Entity;
-    import java.time.Instant;
-    
-    @Entity
-    public class Todo extends PanacheEntity {
-    
-        public String description;
-    
-        public String details;
-    
-        public boolean done;
-    
-        public Instant createdAt = Instant.now();
-    
-        @Override
-        public String toString() {
-            return "Todo{" +
-                    "id=" + id + '\'' +
-                    ", description='" + description + '\'' +
-                    ", details='" + details + '\'' +
-                    ", done=" + done +
-                    ", createdAt=" + createdAt +
-                    '}';
-        }
+```
+package com.example.demo;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+import jakarta.persistence.Entity;
+import java.time.Instant;
+
+@Entity
+public class Todo extends PanacheEntity {
+
+    public String description;
+
+    public String details;
+
+    public boolean done;
+
+    public Instant createdAt = Instant.now();
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", details='" + details + '\'' +
+                ", done=" + done +
+                ", createdAt=" + createdAt +
+                '}';
     }
-    ```
+}
+```
     ![](./media/image25.jpeg)
 
 8.  To manage that class, update the **TodoResource** so that it can
@@ -262,45 +220,45 @@ to Azure Container Apps.
     Open the **TodoResource** class and replace the code with the
     following:
 
-    ```
-    package com.example.demo;
-    import jakarta.inject.Inject;
-    import jakarta.transaction.Transactional;
-    import jakarta.ws.rs.Consumes;
-    import jakarta.ws.rs.GET;
-    import jakarta.ws.rs.POST;
-    import jakarta.ws.rs.Path;
-    import jakarta.ws.rs.Produces;
-    import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-    import jakarta.ws.rs.core.Response;
-    import jakarta.ws.rs.core.UriBuilder;
-    import jakarta.ws.rs.core.UriInfo;
-    import org.jboss.logging.Logger;
-    import java.util.List;
-    @Path("/api/todos")
-    @Consumes(APPLICATION_JSON)
-    @Produces(APPLICATION_JSON)
-    public class TodoResource {
-        @Inject
-        Logger logger;
-    
-        @Inject
-        UriInfo uriInfo;
-        @POST
-        @Transactional
-        public Response createTodo(Todo todo) {
-            logger.info("Creating todo: " + todo);
-            Todo.persist(todo);
-            UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(todo.id.toString());
-            return Response.created(uriBuilder.build()).entity(todo).build();
-        }
-        @GET
-        public List<Todo> getTodos() {
-            logger.info("Getting all todos");
-            return Todo.listAll();
-        }
+```
+package com.example.demo;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
+import org.jboss.logging.Logger;
+import java.util.List;
+@Path("/api/todos")
+@Consumes(APPLICATION_JSON)
+@Produces(APPLICATION_JSON)
+public class TodoResource {
+    @Inject
+    Logger logger;
+
+    @Inject
+    UriInfo uriInfo;
+    @POST
+    @Transactional
+    public Response createTodo(Todo todo) {
+        logger.info("Creating todo: " + todo);
+        Todo.persist(todo);
+        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(todo.id.toString());
+        return Response.created(uriBuilder.build()).entity(todo).build();
     }
-    ```
+    @GET
+    public List<Todo> getTodos() {
+        logger.info("Getting all todos");
+        return Todo.listAll();
+    }
+}
+```
     ![](./media/image26.jpeg)
 
 ### **Task 3 : Run the application**
@@ -465,24 +423,23 @@ the variables you'll create:
 location first and it you have any issues then try in location near to
 you
 
-    +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
++++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
     
-    +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
++++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
     
-    +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
++++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
     
-    +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
++++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
     
-    +++export AZ_POSTGRES_USERNAME="azuser123"+++
++++export AZ_POSTGRES_USERNAME="azuser123"+++
     
-    +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
++++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
     
-    +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
++++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
     
     ![](./media/image39.png)
 
-2.  Switch back to Gitbash and run below command to set resource group
-    variable. Copy the resource group name.
+2.  Switch back to Gitbash and run the below command to set the resource group variable. Copy the resource group name under the Resource tab of your VM as shown in 1st image.
 
     +++export AZ_RESOURCE_GROUP="Your existing resource group"+++
 
@@ -502,9 +459,7 @@ you
 1.  You'll now create a managed PostgreSQL server. Run the following
     command to create a small instance of Azure Database for PostgreSQL:
 
-    +++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME"
---database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD"
---public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
++++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
 
     ![](./media/image43.jpeg)
 
@@ -689,7 +644,7 @@ You can validate that the deployment has succeeded in several ways. The
 easiest way is to search for your resource group on the Azure portal.
 You should see resources similar to the following:
 
-1.  Open a browser and go to ``https:\\portal.azure.com\`` and sign
+1.  Open a browser and go to ``https://portal.azure.com`` and sign
     in with your Azure subscription account. Click on the Resource Group
     tile.
 
@@ -754,8 +709,7 @@ You should see resources similar to the following:
 8.  Run this command, you can stream the logs for your container when
     you create new to-dos:
 
-    +++az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group
-"$AZ_RESOURCE_GROUP" -–follow+++
+    +++az containerapp logs show --name "$AZ_CONTAINERAPP" --resource-group "$AZ_RESOURCE_GROUP" --follow+++
 
     ![](./media/image75.png)
 
