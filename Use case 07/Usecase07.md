@@ -239,7 +239,7 @@ Flexible Server: vector and azure_ai.
 
 ![](./media/image26.jpeg)
 
-3.  To enable the azure_ai extension, **update and run** the following SQL command. You’ll need the endpoint and API key for the Azure
+2.  To enable the azure_ai extension, **update and run** the following SQL command. You’ll need the endpoint and API key for the Azure
     OpenAI resource.Update below select statements with Azure OpenAI end point and key and then run them.
 
 +++CREATE EXTENSION azure_ai;+++
