@@ -91,7 +91,7 @@ to Azure Container Apps.
 1.  Open **Git Bash** from the Windows start menu and runthe  below command
 
 
-+++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create -DplatformVersion=3.7.3 -DprojectGroupId=com.example.demo -DprojectArtifactId=todo -DclassName="com.example.demo.TodoResource" -Dpath="/api/todos" -DjavaVersion=17 -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
+    +++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create -DplatformVersion=3.7.3 -DprojectGroupId=com.example.demo -DprojectArtifactId=todo -DclassName="com.example.demo.TodoResource" -Dpath="/api/todos" -DjavaVersion=17 -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
 
 ![](./media/image11.jpeg)
 
@@ -185,16 +185,13 @@ to Azure Container Apps.
 </dependency>
 </dependencies>
 
-
-**Note** All the dependencies in the *pom.xml* file are defined in the
-Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
+**Note** All the dependencies in the *pom.xml* file are defined in the Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
 
 ![](./media/image21.jpeg)
 
 ### Task 2 : Code the application
 
-1.  Go to **src/main/java/com.example.demo** and right click
-    on **MyEntity.Java -> Refactor -> Rename**.
+1.  Go to **src/main/java/com.example.demo** and right-click on **MyEntity.Java -> Refactor -> Rename**.
 
     ![](./media/image22.jpeg)
 
@@ -228,84 +225,84 @@ Quarkus BOM (bill of materials) io.quarkus.platform:quarkus-bom.
 7.  Replace the existing code with the following Java code to the Todo
     entity:
 
-```
-package com.example.demo;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
-import jakarta.persistence.Entity;
-import java.time.Instant;
-
-@Entity
-public class Todo extends PanacheEntity {
-
-    public String description;
-
-    public String details;
-
-    public boolean done;
-
-    public Instant createdAt = Instant.now();
-
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id + '\'' +
-                ", description='" + description + '\'' +
-                ", details='" + details + '\'' +
-                ", done=" + done +
-                ", createdAt=" + createdAt +
-                '}';
+    ```
+    package com.example.demo;
+    
+    import io.quarkus.hibernate.orm.panache.PanacheEntity;
+    
+    import jakarta.persistence.Entity;
+    import java.time.Instant;
+    
+    @Entity
+    public class Todo extends PanacheEntity {
+    
+        public String description;
+    
+        public String details;
+    
+        public boolean done;
+    
+        public Instant createdAt = Instant.now();
+    
+        @Override
+        public String toString() {
+            return "Todo{" +
+                    "id=" + id + '\'' +
+                    ", description='" + description + '\'' +
+                    ", details='" + details + '\'' +
+                    ", done=" + done +
+                    ", createdAt=" + createdAt +
+                    '}';
+        }
     }
-}
-```
-![](./media/image25.jpeg)
+    ```
+    ![](./media/image25.jpeg)
 
 8.  To manage that class, update the **TodoResource** so that it can
     publish REST interfaces to store and retrieve data by using HTTP.
     Open the **TodoResource** class and replace the code with the
     following:
 
-```
-package com.example.demo;
-import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
-import org.jboss.logging.Logger;
-import java.util.List;
-@Path("/api/todos")
-@Consumes(APPLICATION_JSON)
-@Produces(APPLICATION_JSON)
-public class TodoResource {
-    @Inject
-    Logger logger;
-
-    @Inject
-    UriInfo uriInfo;
-    @POST
-    @Transactional
-    public Response createTodo(Todo todo) {
-        logger.info("Creating todo: " + todo);
-        Todo.persist(todo);
-        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(todo.id.toString());
-        return Response.created(uriBuilder.build()).entity(todo).build();
+    ```
+    package com.example.demo;
+    import jakarta.inject.Inject;
+    import jakarta.transaction.Transactional;
+    import jakarta.ws.rs.Consumes;
+    import jakarta.ws.rs.GET;
+    import jakarta.ws.rs.POST;
+    import jakarta.ws.rs.Path;
+    import jakarta.ws.rs.Produces;
+    import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+    import jakarta.ws.rs.core.Response;
+    import jakarta.ws.rs.core.UriBuilder;
+    import jakarta.ws.rs.core.UriInfo;
+    import org.jboss.logging.Logger;
+    import java.util.List;
+    @Path("/api/todos")
+    @Consumes(APPLICATION_JSON)
+    @Produces(APPLICATION_JSON)
+    public class TodoResource {
+        @Inject
+        Logger logger;
+    
+        @Inject
+        UriInfo uriInfo;
+        @POST
+        @Transactional
+        public Response createTodo(Todo todo) {
+            logger.info("Creating todo: " + todo);
+            Todo.persist(todo);
+            UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder().path(todo.id.toString());
+            return Response.created(uriBuilder.build()).entity(todo).build();
+        }
+        @GET
+        public List<Todo> getTodos() {
+            logger.info("Getting all todos");
+            return Todo.listAll();
+        }
     }
-    @GET
-    public List<Todo> getTodos() {
-        logger.info("Getting all todos");
-        return Todo.listAll();
-    }
-}
-```
-![](./media/image26.jpeg)
+    ```
+    ![](./media/image26.jpeg)
 
 ### **Task 3 : Run the application**
 
@@ -325,11 +322,11 @@ creates the Todo table in the database.
 
 >Note: if your error " port 8080 seems to be used by another process..." then open command prompt as administrator and run command - netstat -ano | findstr :8080 ( you will get the process running ) , run the command to kill the process - taskkill /PID XXXX /F (replace XXXX with your process ID. after you kill the process re-run mvnw command )
 
-+++cd todo+++
+    +++cd todo+++
 
-+++./mvnw quarkus:dev+++
+    +++./mvnw quarkus:dev+++
     
-![](./media/image28.jpeg)
+    ![](./media/image28.jpeg)
 
 3.  The Quarkus application should start and connect to your database.
     You should see the following output:
@@ -352,9 +349,9 @@ In a separate new instance of Gitbash , create a new to-do item in the
 database with the following command. You should see the log in the
 Quarkus console:
 
-+++curl --header "Content-Type: application/json" --request POST  --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'   http://127.0.0.1:8080/api/todos+++
+    +++curl --header "Content-Type: application/json" --request POST  --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}'   http://127.0.0.1:8080/api/todos+++
 
-![](./media/image33.jpeg)
+    ![](./media/image33.jpeg)
 
 6.  This command should return the created item (with an identifier):
 
@@ -362,16 +359,15 @@ Quarkus console:
 
 7.  Create a second to-do by using the following cURL command:
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
+    +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
-![](./media/image34.jpeg)
+    ![](./media/image34.jpeg)
 
 8.  Next, retrieve the data by using a new cURL request:
 
-+++curl http://127.0.0.1:8080/api/todos+++
+    +++curl http://127.0.0.1:8080/api/todos+++
 
-This command returns the list of to-do items, including the items you
-created:
+This command returns the list of to-do items, including the items you created:
 
 ![](./media/image35.jpeg)
 
@@ -385,42 +381,42 @@ To test the endpoint, it uses \[RESTAssured\]{.underline}.
     from **src/test/java/com.example.demo**. Replace code in
     the **TodoResourceTest** class with the following code:
 
-```
-package com.example.demo;
-
-import io.quarkus.test.junit.QuarkusTest;
-import static io.restassured.RestAssured.given;
-import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
-import org.junit.jupiter.api.Test;
-
-@QuarkusTest
-class TodoResourceTest {
-
-    @Test
-    void shouldGetAllTodos() {
-        given()
-                .when().get("/api/todos")
-                .then()
-                .statusCode(200);
+    ```
+    package com.example.demo;
+    
+    import io.quarkus.test.junit.QuarkusTest;
+    import static io.restassured.RestAssured.given;
+    import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+    import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
+    import org.junit.jupiter.api.Test;
+    
+    @QuarkusTest
+    class TodoResourceTest {
+    
+        @Test
+        void shouldGetAllTodos() {
+            given()
+                    .when().get("/api/todos")
+                    .then()
+                    .statusCode(200);
+        }
+    
+        @Test
+        void shouldCreateATodo() {
+            Todo todo = new Todo();
+            todo.description = "Take Quarkus MS Learn";
+            todo.details = "Take the MS Learn on deploying Quarkus to Azure Container Apps";
+            todo.done = true;
+    
+            given().body(todo)
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
+                    .when().post("/api/todos")
+                    .then()
+                    .statusCode(201);
+        }
     }
-
-    @Test
-    void shouldCreateATodo() {
-        Todo todo = new Todo();
-        todo.description = "Take Quarkus MS Learn";
-        todo.details = "Take the MS Learn on deploying Quarkus to Azure Container Apps";
-        todo.done = true;
-
-        given().body(todo)
-                .header(CONTENT_TYPE, APPLICATION_JSON)
-                .when().post("/api/todos")
-                .then()
-                .statusCode(201);
-    }
-}
-```
-![](./media/image36.jpeg)
+    ```
+    ![](./media/image36.jpeg)
 
 2.  When you test the application, Docker Desktop needs to be running
     because Quarkus detects that it needs the PostgreSQL database for
@@ -429,7 +425,7 @@ class TodoResourceTest {
 3.  Switch back to **Gitbash** and Ctrl + C. Run below commands to test
     the application by using this command:
 
-+++./mvnw clean test+++
+    +++./mvnw clean test+++
     ![](./media/image37.jpeg)
 
 You should see output that looks similar to this:
@@ -461,8 +457,7 @@ the variables you'll create:
 |AZ_POSTGRES_USERNAME|The default admin user name for your PostgreSQL database server.|
 |AZ_POSTGRES_PASSWORD|The default password for your PostgreSQL database server. Use a secure password.|
 
-**Note:** You can name your Azure resources in any way that you want.
-This article provides example abbreviations for many Azure resources
+**Note:** You can name your Azure resources in any way that you want.This article provides example abbreviations for many Azure resources
 (for example, rg for resource groups and ca for container apps).
 
 1.  Use the following commands to set up the variables. Be sure to
@@ -473,32 +468,32 @@ This article provides example abbreviations for many Azure resources
 location first and it you have any issues then try in location near to
 you
 
-+++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+    +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
 
-+++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
 
-+++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_CONTAINERAPP_ENV="cae${AZ_PROJECT_Quarkus}"+++
 
-+++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_POSTGRES_DB_NAME="postgres${AZ_PROJECT_Quarkus}"+++
 
-+++export AZ_POSTGRES_USERNAME="azuser123"+++
+    +++export AZ_POSTGRES_USERNAME="azuser123"+++
 
-+++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
+    +++export AZ_POSTGRES_PASSWORD="P@55w.rd12345"+++
 
-+++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
+    +++export AZ_POSTGRES_SERVER_NAME="psql${AZ_PROJECT_Quarkus}"+++
 
-![](./media/image39.png)
+    ![](./media/image39.png)
 
 2.  Switch back to Gitbash and run below command to set resource group
     variable. Copy the resource group name.
 
-+++export AZ_RESOURCE_GROUP="Your existing resource group"+++
+    +++export AZ_RESOURCE_GROUP="Your existing resource group"+++
 
-+++export AZ_LOCATION="Location near to you"+++
+    +++export AZ_LOCATION="Location near to you"+++
 
-![](./media/image40.png)
+    ![](./media/image40.png)
 
-![](./media/image41.png)
+    ![](./media/image41.png)
 
 3.  Run +++az login+++ It opens the default browser to sign in. Sign
     in with your Azure subscription account.
@@ -510,12 +505,9 @@ you
 1.  You'll now create a managed PostgreSQL server. Run the following
     command to create a small instance of Azure Database for PostgreSQL:
 
-+++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP"
---location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME"
---database-name "$AZ_POSTGRES_DB_NAME" --admin-user
-"$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD"
---public-access "All" --tier "Burstable" --sku-name "Standard_B1ms"
---storage-size 32 --version "16"+++
+    +++az postgres flexible-server create --resource-group "$AZ_RESOURCE_GROUP" --location "$AZ_LOCATION" --name "$AZ_POSTGRES_SERVER_NAME"
+--database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD"
+--public-access "All" --tier "Burstable" --sku-name "Standard_B1ms" --storage-size 32 --version "16"+++
 
     ![](./media/image43.jpeg)
 
@@ -534,15 +526,15 @@ you
 
    +++export POSTGRES_CONNECTION_STRING=$(az postgres flexible-server show-connection-string --server-name "$AZ_POSTGRES_SERVER_NAME" --database-name "$AZ_POSTGRES_DB_NAME" --admin-user "$AZ_POSTGRES_USERNAME" --admin-password "$AZ_POSTGRES_PASSWORD" --query "connectionStrings.jdbc" --output tsv)+++
 
-+++export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"+++
+    +++export POSTGRES_CONNECTION_STRING_SSL="$POSTGRES_CONNECTION_STRING&ssl=true&sslmode=require"+++
 
-+++echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"+++
+    +++echo "POSTGRES_CONNECTION_STRING_SSL=$POSTGRES_CONNECTION_STRING_SSL"+++
 
-![](./media/image45.jpeg)
-
+    ![](./media/image45.jpeg)
+    
 4.  Note the connection string that's returned.
 
-![](./media/image46.jpeg)
+    ![](./media/image46.jpeg)
 
 ### Task 4 :Configure the Quarkus application to connect to the PostgreSQL database
 
@@ -559,10 +551,10 @@ you
     forces the driver to use SSL, a requirement for Azure Database for
     PostgreSQL.
 
-```
-quarkus.hibernate-orm.database.generation=update
-quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
-```
+    ```
+    quarkus.hibernate-orm.database.generation=update
+    quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
+    ```
     ![](./media/image48.jpeg)
 
 ### Task 5 : Run the Quarkus application locally to test the remote database connection
@@ -570,7 +562,7 @@ quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
 1.  Switch back to Gitbash and run below command to run the application
     locally:
 
-+++./mvnw clean quarkus:dev+++
+    +++./mvnw clean quarkus:dev+++
 
     ![](./media/image49.jpeg)
     ![](./media/image50.jpeg)
@@ -579,20 +571,20 @@ quarkus.datasource.jdbc.url=<the POSTGRES_CONNECTION_STRING_SSL value>
 2.  When Quarkus is running, create a few to-dos by using the following
     cURL commands in a separate terminal window:
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' http://127.0.0.1:8080/api/todos+++
+    +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Quarkus MS Learn","details":"Take the MS Learn on deploying Quarkus to Azure Container Apps","done": "true"}' http://127.0.0.1:8080/api/todos+++
 
     ![](./media/image52.jpeg)
 
-+++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
+    +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
 3.  Next, check that the to-dos are in the database by accessing the GET
     endpoint that\\'s defined in the to-do app:
 
-+++curl http://127.0.0.1:8080/api/todos+++
+    +++curl http://127.0.0.1:8080/api/todos+++
 
 You should see the following output:
 
-![](./media/image54.jpeg) 
+    ![](./media/image54.jpeg) 
 
 If you see this output, you have successfully run the Quarkus application and connected to the remote
 PostgreSQL database.
@@ -625,25 +617,25 @@ using the Azure CLI.
 3.  Replace the content after the long comment in
     the **Dockerfile** with the following i.e at Line \# 80
 
-```
-FROM registry.access.redhat.com/ubi8/openjdk-17:1.18
-
-ENV LANGUAGE='en_US:en'
-
-
-# We make four distinct layers so if there are application changes the library layers can be re-used
-COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
-COPY --chown=185 target/quarkus-app/*.jar /deployments/
-COPY --chown=185 target/quarkus-app/app/ /deployments/app/
-COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
-
-EXPOSE 8080
-USER 185
-ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
-
-ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
-```
+    ```
+    FROM registry.access.redhat.com/ubi8/openjdk-17:1.18
+    
+    ENV LANGUAGE='en_US:en'
+    
+    
+    # We make four distinct layers so if there are application changes the library layers can be re-used
+    COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
+    COPY --chown=185 target/quarkus-app/*.jar /deployments/
+    COPY --chown=185 target/quarkus-app/app/ /deployments/app/
+    COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
+    
+    EXPOSE 8080
+    USER 185
+    ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+    ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
+    
+    ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
+    ```
     ![](./media/image57.jpeg)
 
 4.  This Dockerfile expects the Quarkus application to be packaged as
