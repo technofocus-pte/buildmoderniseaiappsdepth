@@ -22,8 +22,7 @@ Deploy the container image to Azure Kubernetes Service
 
 ## Exercise 1 : Set up your Azure environment
 
-In this exercise, you will use the Azure CLI to create the Azure
-resources that will be needed in later units. Using the Azure CLI,
+In this exercise, you will use the Azure CLI to create the Azure resources that will be needed in later units. Using the Azure CLI,
 perform the following steps
 
 ### Task 1: Authenticate with Azure Resource Manager
@@ -33,14 +32,13 @@ perform the following steps
 
     +++az login+++
 
-**Note**: If see WARNING: A web browser has been opened at https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.
-Please continue the login in the web browser. If no web browser is available or if the web browser fails to open, use device code flow
-with az login --use-device-code
+    **Note**: If see WARNING: A web browser has been opened at https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.
+    Please continue the log in to the web browser. If no web browser is available or if the web browser fails to open, use device code flow
+    with az login --use-device-code
 
     ![](./media/image1.jpeg)
 
-2.  This command will take you to the default browser to login. Login
-    with your Azure subscription account.
+2.  This command will take you to the default browser to log in. Log in with your Azure subscription account.
 
     ![](./media/image2.jpeg)
 
@@ -61,21 +59,21 @@ with az login --use-device-code
 5.  Define local variables To simplify the commands that will be
     executed further down, set up the following environment variables
 
->Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group. You can it in your Azure portal or you can find it under the Resources tab on your VM
+    >Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group.     You can it in your Azure portal or you can find it under the Resources tab on your VM
 
-+++export AZ_CONTAINER_REGISTRY="javaaksregist"$RANDOM+++
+    +++export AZ_CONTAINER_REGISTRY="javaaksregist"$RANDOM+++
 
-+++export AZ_KUBERNETES_CLUSTER="javaakscluster"$RANDOM+++
+    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"$RANDOM+++
 
-+++export AZ_LOCATION="westus"+++
+    +++export AZ_LOCATION="westus"+++
 
-+++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
+    +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
-+++export AZ_RESOURCE_GROUP= Your existing resource group name+++
+    +++export AZ_RESOURCE_GROUP= Your existing resource group name+++
 
->**Note:** You'll want to replace with your region of choice, for example: eastus You'll want to replace with a unique value as this is
-used to generate a unique FQDN (fully qualified domain name) for your Azure Container Registry when it is created, for example:
-someuniquevaluejavacontainerregistry.
+    >**Note:** You'll want to replace with your region of choice, for example: eastus You'll want to replace with a unique value as this is
+    used to generate a unique FQDN (fully qualified domain name) for your Azure Container Registry when it is created, for example:
+    someuniquevaluejavacontainerregistry.
 
     ![](./media/image6.png)
 
@@ -121,15 +119,12 @@ In this exercise, you will containerize a Java application.
 
 ### Task 1: Build Java Application
 
-First ,you will navigate the Flight Booking System for Airline Reservations repository and cd to the Airlines web application project
+First , you will navigate the Flight Booking System for Airline Reservations repository and cd to the Airlines web application project
 folder.
 
-Optionally, if you have Java & Maven installed, you can run the
-following command(s) in your CLI to get an sense of the experience in
-building the application without Docker. If you do not have Java & Maven
-installed, you can safely jump ahead to the next section titled
-"Construct a Docker file", In that section you'll use Docker to pull
-down Java and Maven to execute the builds on your behalf.
+Optionally, if you have Java & Maven installed, you can run the following command(s) in your CLI to get an sense of the experience in
+building the application without Docker. If you do not have Java & Maven installed, you can safely jump ahead to the next section titled
+"Construct a Docker file", In that section you'll use Docker to pull down Java and Maven to execute the builds on your behalf.
 
 1.  Run the following command in your CLI to navigate to the project.
 
@@ -143,8 +138,8 @@ down Java and Maven to execute the builds on your behalf.
 
     ![](./media/image13.jpeg)
 
->**Note:** The mvn clean install command was used to illustrate the operational challenges of not using Docker multi-stage builds, that we
-will cover next. Again this step is optional, either way, you can safely move along without executing the Maven command.
+    >**Note:** The mvn clean install command was used to illustrate the operational challenges of not using Docker multi-stage builds, that we
+    will cover next. Again this step is optional, either way, you can safely move along without executing the Maven command.
 
 3.  Maven should have successfully built the Flight Booking System for Airline Reservations Web Application Archive artifact
     FlightBookingSystemSample-0.0.-SNAPSHOT.war, as seen in the following image
@@ -159,7 +154,7 @@ will cover next. Again this step is optional, either way, you can safely move al
 
     ![](./media/image15.jpeg)
 
-Add the following contents to Dockerfile and then save and exit
+    Add the following contents to Dockerfile and then save and exit
 
 ```
 #
@@ -182,7 +177,7 @@ EXPOSE 8080
 CMD ["catalina.sh", "run"]
 ```
 
-    ![](./media/image16.jpeg)
+![](./media/image16.jpeg)
 
 >**Note:** Optionally, the Dockerfile_Solution in the root of your project contains the contents needed.As you can see, this Docker file
 Build stage has six instructions.
@@ -201,7 +196,7 @@ container images (JDK/JRE) for the Linux architecture.
 1.  **Docker build** is the command used to build container images.The **-t** argument will be used to specify a container label and
     the **.** is the location for Docker to find the Dockerfile. Run the following command in your CLI.
 
-**IMPORTANT**: This lab requires jdk 11 . set java_home to jdk 11
+    **IMPORTANT**: This lab requires jdk 11 . set java_home to jdk 11
 
     +++docker build -t flightbookingsystemsample .+++
 
@@ -222,7 +217,7 @@ container images and the associated compute costs with time spent building them.
 
     +++docker image ls+++
 
-You will see something similar:
+    You will see something similar:
 
     ![](./media/image19.jpeg)
 
@@ -240,7 +235,7 @@ flightbookingsystemsample is needed to instruct Docker of what image to run. Run
 
     +++docker run -p 8080:8080 flightbookingsystemsample+++
 
-You'll see something similar:
+    You'll see something similar:
 
     ![](./media/image20.jpeg)
 
@@ -251,10 +246,10 @@ mentioned port
 
     +++docker run -p 8081:8080 flightbookingsystemsample+++
 
-3.  Open up a browser and visit the Flight Booking System for Airline Reservations landing page
+3.  Open up a browser and visit the Flight Booking System for Airline Reservations landing page 
     at  +++http://localhost:8080/FlightBookingSystemSample+++
 
-    - You should see the following:
+   You should see the following:
 
     ![](./media/image22.jpeg)
 
@@ -264,7 +259,7 @@ Username:  +++someuser@azure.com+++
 
 Password: +++password+++
 
-    ![](./media/image23.jpeg)
+![](./media/image23.jpeg)
 
 5.  Leave this git bash instance as it is
 
@@ -284,21 +279,22 @@ Password: +++password+++
 
     +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"+++
 
-4.  We will be using the same Authenticate with Azure Resource Manager we have created earlier in Exercise 1 Task 1. Set below variables
+4.  We will be using the same Authenticate with Azure Resource Manager we created earlier in Exercise 1 Task 1. Set below variables as per your variable values in Azure portal.
 
-|||
-|--|--|
-|Value||
-|export AZ_RESOURCE_GROUP="your resource group name”||
-|export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"||
-|export AZ_KUBERNETES_CLUSTER="javaaksclusterXXX"||
-|export AZ_LOCATION=“your resource location”||
-|export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"||
++++export AZ_RESOURCE_GROUP="your resource group name”+++
 
-> **Note:** If your session has idled out, your doing this step at another point in time and/or from another CLI you may have to re
-> initialize your environment variables and re authenticate with the following CLI commands.
++++export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"+++
 
-    ![](./media/image24.png)
++++export AZ_KUBERNETES_CLUSTER="javaaksclusterXXX"+++
+
++++export AZ_LOCATION=“your resource location”+++
+
++++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
+
+> **Note:** If your session has idled out, you are doing this step at another point in time and/or from another CLI you may have to re
+> Initialize your environment variables and re-authenticate with the following CLI commands.
+
+![](./media/image24.png)
 
 ### Task 2: Push a container image
 
@@ -403,8 +399,8 @@ selector:
 
 4.  Press Esc and: and then type +++wq+++ and press enter to save the file.
 
->**Note:** Optionally, the deployment_solution.yml in the root of your project contains the contents needed, you may find it easier to
-rename/update the contents of that file.
+    >**Note:** Optionally, the deployment_solution.yml in the root of your project contains the contents needed, you may find it easier to
+    rename/update the contents of that file.
 
 5.  In the deployment.yml above you'll notice this deployment.yml contains a Deployment and a Service. The deployment is used to
     administer a set of pods while the service is used to allow network access to the pods. You'll notice the pods are configured to pull a
@@ -472,7 +468,7 @@ previously executed.
 
     ![](./media/image38.jpeg)
 
->**Note:** You can optionally sign in with any user from tomcat-users.xml for example someuser@azure.com: password
+    >**Note:** You can optionally sign in with any user from tomcat-users.xml for example someuser@azure.com: password
 
 ### Task 2 : Clean Up Resources
 
