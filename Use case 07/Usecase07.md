@@ -38,12 +38,12 @@ performing a vector cosine distance search.
 ![A screenshot of a computer Description automatically
 generated](./media/image1.jpeg)
 
-3.  Select **No storage account required** radio button, select your
+3.  Select **No storage account required** radio button, and select your
     subscription and then click on **Apply**.
 
 ![](./media/image2.png)
 
-4.  At the Cloud Shell prompt, run below command to clone the project
+4.  At the Cloud Shell prompt, run the below command to clone the project
 
 ``git clone https://github.com/technofocus-pte/postgresql-case``
 
@@ -54,39 +54,30 @@ generated](./media/image3.jpeg)
 
 ``cd postgresql-case``
 
-![A screenshot of a computer Description automatically
-generated](./media/image4.jpeg)
+![](./media/image4.jpeg)
 
-6.  Next, you run three commands to define variables to reduce redundant
-    typing when using Azure CLI commands to create Azure resources. The
-    variables represent the name to assign to your resource group
-    (RG_NAME), the Azure region (REGION) into which resources will be
-    deployed, and a randomly generated password for the PostgreSQL
-    administrator login (ADMIN_PASSWORD).
+6.  Next, you run three commands to define variables to reduce redundant typing when using Azure CLI commands to create Azure resources. The
+    variables represent the name to assign to your resource group (RG_NAME), the Azure region (REGION) into which resources will be
+    deployed, and a randomly generated password for the PostgreSQL administrator login (ADMIN_PASSWORD).
 
-7.  In the first command, the region assigned to the corresponding
-    variable is eastus or westus, **[but you can replace it with a
-    location of your preference.]{.mark}** However, if replacing the
-    default, you must select another [Azure region that supports
-    abstractive summarization]{.underline} to ensure you can complete
-    all of the tasks in the modules in this learning path.
+7.  In the first command, the region assigned to the corresponding variable is eastus or westus, **[but you can replace it with a
+    location of your preference.]{.mark}** However, if replacing the  default, you must select another [Azure region that supports
+    abstractive summarization]{.underline} to ensure you can complete all of the tasks in the modules in this learning path.
 
 +++REGION=westus+++
 
-8.  The following command assigns the existing resource group name to be
-    used for the resource group that will house all the resources used
+8.  The following command assigns the existing resource group name to be used for the resource group that will house all the resources used
     in this exercise.
 
-+++RG_NAME=Your existing resource group name+++
++++RG_NAME=@lab.CloudResourceGroup(ResourceGroup1).Namee+++
 
 ![](./media/image5.png)
 
-9.  The final command randomly generates a password for the PostgreSQL
-    admin login. **Make sure you copy it** to a safe place to use later
+9.  The final command randomly generates a password for the PostgreSQL admin login. **Make sure you copy it** to a safe place to use later
     to connect to your PostgreSQL flexible server.
 
 ```
-    a=()
+a=()
 for i in {a..z} {A..Z} {0..9}; 
     do
     a[$RANDOM]=$i
@@ -98,35 +89,28 @@ echo "Your randomly generated PostgreSQL admin user's password is:"
 +++echo $ADMIN_PASSWORD+++
 
 
-![A screenshot of a computer Description automatically
-generated](./media/image6.jpeg)
+![](./media/image6.jpeg)
 
-### Task 1 : Assign Cognitive Services Contributor
+### Task 1: Assign Cognitive Services Contributor
 
-1.  Open a new tab and go to ``https://portal.azure.com``.Sign
-    in with your Azure credentails and then click
+1.  Open a new tab and go to ``https://portal.azure.com``.Sign in with your Azure credentials and then click
     on **Subscription** tile.
 
-![A screenshot of a computer Description automatically
-generated](./media/image7.jpeg)
+!](./media/image7.jpeg)
 
-2.  Click on subscription name .
+2.  Click on the subscription name.
 
 ![](./media/image8.png)
 
-3.  Click on Access control (IAM) from left navigation menu.
-    Click **Add** and select **Add role assignment.**
+3.  Click on Access Control (IAM) from the left navigation menu.Click **Add** and select **Add role assignment.**
 
 ![](./media/image9.png)
 
-4.  Search for ``Cognitive Services Contributor`` and select it and
-    then click on **Next** button.
+4.  Search for ``Cognitive Services Contributor`` and select it and  then click on **Next** button.
 
-![A screenshot of a service assignment Description automatically
-generated](./media/image10.jpeg)
+![](./media/image10.jpeg)
 
-5.  Select **User, group or service principal** and click on
-    the **select member** link. Search for your Azure subscription
+5.  Select **User, group or service principal** and click on the **select member** link. Search for your Azure subscription
     account and select it. Finally, click on **Select** button.
 
 ![](./media/image11.png)
@@ -137,30 +121,24 @@ generated](./media/image10.jpeg)
 
 7.  Click on the **Review + assign** button again.
 
-> ![](./media/image13.png)
+![](./media/image13.png)
 
 ### Task 2 : Run Bicep deployment script to provision Azure resources
 
-1.  Switch back to the 1st tab of Azure portal with Azure CLI to execute
-    a Bicep deployment script to provision Azure resources in your
+1.  Switch back to the 1st tab of Azure portal with Azure CLI to execute a Bicep deployment script to provision Azure resources in your
     resource group: Deployment takes 3 - 5min
 
 +++cd+++
 
-+++az deployment group create --resource-group $RG_NAME --template-file
-"postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
++++az deployment group create --resource-group $RG_NAME --template-file "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
 restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image14.jpeg)
+![](./media/image14.jpeg)
 
-![A computer screen shot of a black screen Description automatically
-generated](./media/image15.jpeg)
+![](./media/image15.jpeg)
 
-2.  The Bicep deployment script provisions the Azure services required
-    to complete this exercise into your resource group. The resources
-    deployed include an Azure Database for PostgreSQL - Flexible Server.
-    You can check resources in your resource group.
+2.  The Bicep deployment script provisions the Azure services required to complete this exercise into your resource group. The resources
+    deployed include an Azure Database for PostgreSQL - Flexible Server.You can check resources in your resource group.
 
 - **Azure OpenAI,**
 
@@ -172,41 +150,32 @@ generated](./media/image15.jpeg)
 
 ![](./media/image17.png)
 
-4.  Click on **Keys and Endpoint** under **Resource Management** from
-    left navigation menu. Make a note of Key 1 and endpoint to use them
+4.  Click on **Keys and Endpoint** under **Resource Management** from left navigation menu. Make a note of Key 1 and endpoint to use them
     in Task 5
 
 ![](./media/image18.png)
 
-5.  The Bicep script also performs some configuration steps, such as
-    adding the azure_ai and vector extensions to the PostgreSQL
-    server's *allowlist* (via the azure.extensions server parameter),
-    creating a database named rentals on the server, and adding a
+5.  The Bicep script also performs some configuration steps, such as adding the azure_ai and vector extensions to the PostgreSQL
+    server's *allowlist* (via the azure.extensions server parameter), creating a database named rentals on the server, and adding a
     deployment named embedding using the **text-embedding-ada-002**
     model to your Azure OpenAI service.
 
-![A screenshot of a computer Description automatically
-generated](./media/image19.jpeg)
+![](./media/image19.jpeg)
 
-6.  The deployment typically takes several minutes to complete. You can
-    monitor it from the Cloud Shell or navigate to
-    the **Deployments** page for the resource group you created above
-    and observe the deployment progress there.
+6.  The deployment typically takes several minutes to complete. You can monitor it from the Cloud Shell or navigate to
+    the **Deployments** page for the resource group you created above   and observe the deployment progress there.
 
-7.  Close the Cloud Shell pane once your resource deployment is
-    complete.
+7.  Close the Cloud Shell pane once your resource deployment is complete.
 
 ### Task 3 : Connect to your database using psql in the Azure Cloud Shell
 
-In this task, you connect to the rentals database on your Azure Database
-for PostgreSQL server using the psql command-line utility from the Azure
-Cloud Shell.
+In this task, you connect to the rentals database on your Azure Database for PostgreSQL server using the psql command-line utility from the Azure Cloud Shell.
 
 1.  In the Azure portal ``https://portal.azure.com``, navigate to your newly created Azure Database for PostgreSQL - Flexible Server.
 
 ![](./media/image20.png)
 
-2.  On the sidebar, select **Server Parameters**.Search for the **azure.extensions** parameter.
+2.  On the sidebar, select **Server Parameters**. Search for the **azure.extensions** parameter.
 
 ![](./media/image21.png)
 
@@ -250,7 +219,7 @@ Flexible Server: vector and azure_ai.
 
 ![](./media/image27.jpeg)
 
-### Task 5 : Populate the database with sample data
+### Task 5: Populate the database with sample data
 
 Before you explore the azure_ai extension, add a couple of tables to the rentals database and populate them with sample data so you have
 information to work with as you review the extension's functionality.
@@ -304,7 +273,7 @@ CREATE TABLE reviews (
 
 Now that we have some sample data, it's time to generate and store the embedding vectors. The azure_ai extension makes calling the Azure OpenAI embedding API easy.
 
-1.  Add the embedding vector column.The text-embedding-ada-002 model is configured to return 1,536 dimensions, so use that for the vector column size.
+1.  Add the embedding vector column. The text-embedding-ada-002 model is configured to return 1,536 dimensions, so use that for the vector column size.
 
 +++ALTER TABLE listings ADD COLUMN listing_vector vector(1536);+++
 
@@ -317,28 +286,26 @@ Now that we have some sample data, it's time to generate and store the embedding
 
 ![](./media/image33.png)
 
-### Task 7 : Perform a semantic search query
+### Task 7: Perform a semantic search query
 
 Now that you have listing data augmented with embedding vectors, it's time to run a semantic search query. To do so, get the query string
 embedding vector, then perform a cosine search to find the listings whose descriptions are most semantically similar to the query.
 
-1.  Use the embedding in a cosine search (\\\<=\> represents cosine distance operation), fetching the top 10 most similar listings to
+1.  Use the embedding in a cosine search (<=> represents cosine distance operation), fetching the top 10 most similar listings to
     the query.
 
 +++SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;+++
 
 You’ll get a result similar to this. Results may vary, as embedding vectors are not guaranteed to be deterministic:
 
-![A screenshot of a computer Description automatically
-generated](./media/image34.jpeg)
+![](./media/image34.jpeg)
 
 2.  You may also project the description column to be able to read the text of the matching rows whose descriptions were semantically
     similar. For example, this query returns the best match:
 
 +++SELECT id, description FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 1;+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image35.jpeg)
+![](./media/image35.jpeg)
 
 To intuitively understand semantic search, observe that the description doesn't actually contain the terms "bright" or "natural." But it does
 highlight "summer" and "sunlight," "windows," and a "ceiling window."
@@ -352,8 +319,7 @@ augmented with embedding vectors to execute semantic searches.
 
 +++\d listings+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image36.jpeg)
+![](./media/image36.jpeg)
 
 2.  Confirm that at least one row has a populated listing_vector column.
 
@@ -367,7 +333,7 @@ generated](./media/image36.jpeg)
 
 ![](./media/image38.jpeg)
 
-4.  Confirm that semantic searches return results.Use the embedding in a cosine search, fetching the top 10 most similar
+4.  Confirm that semantic searches return results. Use the embedding in a cosine search, fetching the top 10 most similar
 listings to the query.
 
 +++SELECT id, name FROM listings ORDER BY listing_vector <=> azure_openai.create_embeddings('embedding', 'bright natural light')::vector LIMIT 10;+++
@@ -444,13 +410,12 @@ LANGUAGE plpgsql;
 
 ### Task 3 : Query the recommendation function
 
-1.  To query the recommendation function, pass it a listing ID and the     number of recommendations it should make.
+1.  To query the recommendation function, pass it a listing ID and the  number of recommendations it should make.
 
 +++select out_listingName, out_score from recommend_listing( (SELECT id from listings limit 1), 20); -- search for 20 listing recommendations
 closest to a listing+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image41.jpeg)
+![](./media/image41.jpeg)
 
 2.  To see the function runtime, make sure **track_functions** is enabled in the **Server Parameters** section on the Azure Portal
     (you can use PL or ALL):
