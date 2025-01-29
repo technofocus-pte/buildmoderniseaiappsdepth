@@ -2,20 +2,14 @@
 
 **Objective**
 
-This usecase demonstrates a few approaches for creating ChatGPT-like
-experiences over your own data using the Retrieval Augmented Generation
-pattern. It uses Azure OpenAI Service to access the ChatGPT model
-(gpt-35-turbo), and Azure AI Search for data indexing and retrieval.
+This usecase demonstrates a few approaches for creating ChatGPT-like experiences over your own data using the Retrieval Augmented Generation
+pattern. It uses Azure OpenAI Service to access the ChatGPT model (gpt-35-turbo), and Azure AI Search for data indexing and retrieval.
 
-![A diagram of a software process Description automatically
-generated](./media/image1.jpeg)
+![](./media/image1.jpeg)
 
-The usecase includes sample data so it's ready to try end to end. In
-this sample application we use a fictitious company called Contoso Real
-Estate, and the experience allows its customers to ask support questions
-about the usage of its products. The sample data includes a set of
-documents that describe its terms of service, privacy policy and a
-support guide.
+The usecase includes sample data so it's ready to try end to end. In this sample application we use a fictitious company called Contoso Real
+Estate, and the experience allows its customers to ask support questions about the usage of its products. The sample data includes a set of
+documents that describe its terms of service, privacy policy and a support guide.
 
 The application is made from multiple components, including:
 
@@ -29,8 +23,7 @@ The application is made from multiple components, including:
   interface and orchestrates the interaction between the user and the
   backend services.
 
-![A diagram of a software system Description automatically
-generated](./media/image2.jpeg)
+![](./media/image2.jpeg)
 
 - Chat and Q&A interfaces
 
@@ -46,8 +39,7 @@ generated](./media/image2.jpeg)
 
 - Optional performance tracing and monitoring with Application Insights
 
-**Key technologies used** -- Azure OpenAI Service, ChatGPT model
-(gpt-35-turbo), and Azure AI Search
+**Key technologies used** -- Azure OpenAI Service, ChatGPT model (gpt-35-turbo), and Azure AI Search
 
 **Estimated duration --** 40 minutes
 
@@ -55,94 +47,77 @@ generated](./media/image2.jpeg)
 
 ### Task 1: Open development environment
 
-1.  Open your browser, navigate to the address bar, type or paste the
-    following
+1.  Open your browser, navigate to the address bar, type or paste the following
     URL: ``https://github.com/technofocus-pte/azure-search-openai-javascr-CSTestingipt.git`` and sign in with your Github account.
 
-![A screenshot of a computer Description automatically
-generated](./media/image3.jpeg)
+![d](./media/image3.jpeg)
 
 2.  Click on **Fork**.
 
-![A screenshot of a web page Description automatically
-generated](./media/image4.jpeg)
+![](./media/image4.jpeg)
 
 3.  Enter the repository name and then click on **Create fork**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image5.jpeg)
+![](./media/image5.jpeg)
 
-4.  Click on **Code -\> Codespaces -\> +**
+4.  Click on **Code -> Codespaces -> +**
 
 ![A screenshot of a computer Description automatically
 generated](./media/image6.jpeg)
 
-5.  Wait for the environment to setup. It takes 5-10 minutes.
+5.  Wait for the environment to set up. It takes 5-10 minutes.
 
-![A screenshot of a computer Description automatically
-generated](./media/image7.jpeg)
+![](./media/image7.jpeg)
 
 ### Task 2: Provision required services to build and deploy chat app to Azure
 
-1.  Run the following command on the Terminal. Copy the code and press
-    enter.
+1.  Run the following command on the Terminal. Copy the code and press enter.
 
 +++azd auth login+++
 
-![A screenshot of a computer Description automatically
-generated](./media/image8.png)
+![](./media/image8.png)
 
-2.  Default browser opens to enter a code.Enter the copied code and
-    click **Next**.
+2.  The default browser opens to enter a code. Enter the copied code and click **Next**.
 
 ![](./media/image9.png)
 
 3.  Sign in with your Azure credentials.
 
-![A screenshot of a computer Description automatically
-generated](./media/image10.png)
+![](./media/image10.png)
 
-![A screenshot of a computer error Description automatically
-generated](./media/image11.png)
+![](./media/image11.png)
 
-4.  Switch back to Github Codespace tab. Run below command to Initialize
-    the project environment in the current directory. Enter the
+4.  Switch back to Github Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the
     Environment name as ``ragpgpy`` and press Enter.
 
-Note : env name should be unique
+Note : The env name should be unique
 
 +++azd env new+++
 
 ![](./media/image12.png)
 
-5.  Run below command to provision the services to Azure, build your
-    container.
+5.  Run the below command to provision the services to Azure, build your container.
 
-![A screenshot of a computer Description automatically
-generated](./media/image13.png)
+![](./media/image13.png)
 
-6.  Select below values.
+6.  Select the below values.
 
 +++azd provision+++
 
 - **Select an Azure Subscription to use** : select your subscription
 
-- **Select an Azure location to use** : **East us2/west us2**
-  (Sometimes, East US might not be available, choose location from the
-  list mentioned below.)
+- **Select an Azure location to use** : **East us2/west us2**(Sometimes, East US might not be available, choose a location from the
+  near to you.)
 
-- Select existing resource group : Your existing resource group (eg
-  :**ResourceGroup1 )**
+- Select existing resource group: Your existing resource group (eg **ResourceGroup1 )**
 
 ![](./media/image14.png)
 
-7.  Wait for the resource to provision completely. This process wil take
-    5-10 min to create al the required resources.
+7.  Wait for the resource to be provisioned completely. This process will take 5-10 min to create all the required resources.
 
-![A screenshot of a computer Description automatically
-generated](./media/image15.png)
+![](./media/image15.png)
 
-### Task 3 : Deploy the chat app and explore it
+### Task 3: Deploy the chat app and explore it
 
 1. Run the below command to deploy the app.
 
@@ -150,10 +125,9 @@ generated](./media/image15.png)
 
 ![](./media/image16.png)
 
-2. Wait for the deployment .It takes < 5 minutes.
+2. Wait for the deployment.It takes < 5 minutes.
 
-![A screenshot of a computer Description automatically
-generated](./media/image17.png)
+![](./media/image17.png)
 
 3. Click on the endpoint url generated.
 
@@ -163,22 +137,19 @@ generated](./media/image17.png)
 
 ![](./media/image19.png)
 
-5. It opens app in new tab.
+5. It opens the app in a new tab.
 
-![A screenshot of a computer Description automatically
-generated](./media/image20.png)
+![](./media/image20.png)
 
 6. Select **How to search and book rental?** Container and then click on the enter button next to the text box.
 
 ![](./media/image21.png)
 
-### Task 4 : Clean up all the resources
+### Task 4: Clean up all the resources
 
-1.  Switch back to **Azure portal -> Resource group-> Resource group
-    name.**
+1.  Switch back to **Azure portal -> Resource group-> Resource group name.**
 
-![A screenshot of a computer Description automatically
-generated](./media/image22.png)
+![](./media/image22.png)
 
 2.  Select all the resources and then click on Delete as shown in the below image. (**DO NOT DELETE** resource group)
 
@@ -192,7 +163,7 @@ generated](./media/image22.png)
 
 ![](./media/image25.png)
 
-5.  Switch back to Github portal tab and refresh the page.
+5.  Switch back to the Github portal tab and refresh the page.
 
 ![](./media/image26.png)
 
