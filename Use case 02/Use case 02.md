@@ -34,9 +34,9 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     -	**Resource Group** – The **Resource group** assigned to you. 
 
->[!Alert] **Important:** Make sure you create all your resources under this Resource group
+   >[!Alert] **Important:** Make sure you create all your resources under this Resource group
 
-![](./media/Picture1.png)
+   ![](./media/Picture1.png)
   	
 3.	**Help** tab holds the Support information. The **ID** value here is the **Lab instance ID** which will be used during the lab execution.
  
@@ -257,8 +257,9 @@ build and deploy action.
     into the chosen GitHub repository, in the .github/workflows
     directory.
 
-7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into
-    your codespace.
+7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into your codespace.
+
+   >[!NOte] **Note:** If you find test cases still running in the terminal, you can press Ctrl+C and then execute the above command.
 
     ![](./media/image32.jpeg)
 
@@ -300,7 +301,7 @@ GitHub workflow failing prematurely.
     ![](./media/image38.jpeg)
 
 15. Back in the Deployment Center page in the Azure portal,
-    Select **Logs**. A new deployment run is already started from your
+    Select **Logs**. A new deployment run would have already started from your
     committed changes.
 
 16. In the log item for the deployment run, select the **Build/Deploy
