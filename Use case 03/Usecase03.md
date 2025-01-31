@@ -53,10 +53,12 @@ perform the following steps
     +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
 
     +++az account list --output table+++
+    
+    +++az provider register --namespace Microsoft.Compute+++
 
     ![](./media/image5.jpeg)
 
-5.  Define local variables To simplify the commands that will be
+6.  Define local variables To simplify the commands that will be
     executed further down, set up the following environment variables
 
     >Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group.     You can it in your Azure portal or you can find it under the Resources tab on your VM
