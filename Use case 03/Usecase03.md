@@ -373,7 +373,7 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
         spec:
         containers:
         - name: flightbookingsystemsample
-            image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
+          image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
             resources:
             requests:
                 cpu: "1"
