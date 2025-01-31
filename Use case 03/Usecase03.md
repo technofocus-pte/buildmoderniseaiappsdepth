@@ -70,11 +70,11 @@ generated](./media/image5.jpeg)
 5.  Define local variables To simplify the commands that will be
     executed further down, set up the following environment variables
 
-    +++export AZ_RESOURCE_GROUP="aztes001_rg_"$RANDOM+++
+    +++export AZ_RESOURCE_GROUP="aztes001_rg_@lab.Lab.InsanceId
 
-    +++export AZ_CONTAINER_REGISTRY="javaaksregist"$RANDOM+++
+    +++export AZ_CONTAINER_REGISTRY="javaaksregist@lab.Lab.InsanceId
 
-    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"$RANDOM+++
+    +++export AZ_KUBERNETES_CLUSTER="javaakscluster@lab.Lab.InsanceId
 
     +++export AZ_LOCATION="westus"+++
 
@@ -135,7 +135,7 @@ generated](./media/image10.jpeg)
 ![A computer screen with white text Description automatically
 generated](./media/image11.jpeg)
 
->**Note:** Azure Kubernetes Cluster creation can take up to 10 minutes,once you run the command above, you can optionally let it continue in
+>**Note:** Azure Kubernetes Cluster creation can take up to 10 minutes, once you run the command above, you can optionally let it continue in
 that Azure CLI tab and move on to the next unit.
 
 ### Task 2 : Run Docker
@@ -261,10 +261,10 @@ generated](./media/image18.jpeg)
 ![A screen shot of a computer screen Description automatically
 generated](./media/image19.jpeg)
 
->**Note:** As you saw previously, Docker has executed the instructionsnfrom the lines that you've previously written in the prior unit. Each
+>**Note:** As you saw previously, Docker has executed the instructions on the lines that you've previously written in the prior unit. Each
 instruction is a step in sequential order. Rerun the docker build command again, notice the differences in the steps, you'll notice ---\>
-Using cache for layers that haven't changed. If your not making app changes (before rerunning the docker build command), then you'll notice
-all cached layers as the binaries are untouched and can be sourced from Docker cache). This is an important takeaway when optimizing your
+Using cache for layers that haven't changed. If you are not making app changes (before rerunning the docker build command), then you'll notice
+all cached layers as the binaries are untouched and can be sourced from the Docker cache). This is an important takeaway when optimizing your
 container images and the associated compute costs with time spent
 building them.
 
@@ -285,7 +285,7 @@ You will see something similar:
 
 2.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the first port before the colon) traffic to the container at runtime (the second
 port after the colon). Remember from the Dockerfile that the Tomcat app server is listening for HTTP traffic on port 8080 hence that is the
-container port that needs to be exposed. Lastly the image tag flightbookingsystemsample is needed to instruct Docker of what image to
+container port that needs to be exposed. Lastly, the image tag flightbookingsystemsample is needed to instruct Docker of what image to
 run. Run the following command in your CLI:
 
     +++docker run -p 8080:8080 flightbookingsystemsample+++
@@ -340,17 +340,16 @@ generated](./media/image24.jpeg)
 
     +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"+++
 
-4.  We will be using the same Authenticate with Azure Resource Manager
-    we have created earlier in the Exercise 1 Task 1.set below variables
+4.  We will be using the same Authenticate with Azure Resource Manager we have created earlier in Exercise 1 Task 1. Set below variables
 
-    - +++export AZ_RESOURCE_GROUP="aztest001_rg_XXX"+++ ( echo this varaible in 1st instance Gitbash)
-    - +++export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"+++
-    - +++export AZ_KUBERNETES_CLUSTER="javaaksclusterXXX"+++
-    - +++export AZ_LOCATION=“your resource location”+++
+    - +++export AZ_RESOURCE_GROUP="aztest001_rg_"@lab.Lab.InsanceId+++ 
+    - +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.Lab.InsanceId+++
+    - +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.Lab.InsanceId+++
+    - +++export AZ_LOCATION=“westus”+++
     - +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
 
->**Note:** If your session has idled out, your doing this step at another point in time and/or from another CLI you may have to re
+>**Note:** If your session has idled out, you are doing this step at another point in time and/or from another CLI you may have to re
     initialize your environment variables and re authenticate with the following CLI commands.
 
 ### Task 2: Push a container image
