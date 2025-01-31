@@ -86,7 +86,7 @@ to Azure Container Apps.
 
 ### Task 1 : Generate the Quarkus application
 
-1.  Open **Git Bash** from the Windows start menu and runthe  below command
+1.  Open **Git Bash** from the Windows start menu and run the  below command
 
 
     +++mvn -U io.quarkus:quarkus-maven-plugin:3.7.3:create -DplatformVersion=3.7.3 -DprojectGroupId=com.example.demo -DprojectArtifactId=todo -DclassName="com.example.demo.TodoResource" -Dpath="/api/todos" -DjavaVersion=17 -Dextensions="resteasy-jackson, hibernate-orm-panache, jdbc-postgresql, docker"+++
@@ -103,7 +103,7 @@ to Azure Container Apps.
 
     ![](./media/image12.jpeg)
 
-4.  Select the confirmation check box and then click on **Continue** button.
+4.  Select the confirmation check box and then click on the **Continue** button.
 
     ![](./media/image13.jpeg)
 
@@ -120,7 +120,7 @@ to Azure Container Apps.
 
     ![](./media/image16.jpeg)
 
-8.  Close the browser, switch back to IntelliJ license window and click
+8.  Close the browser, switch back to the IntelliJ license window, and click
     on the **Continue** button.
 
     ![](./media/image17.jpeg)
@@ -402,7 +402,7 @@ You need to set up some environment variables. Here are some notes about the var
     **Note:** PostgreSQL is supported only in **Westus** . Try in westus location first and if you have any issues then try in a location 
      near to you
 
-    +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
+    +++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"@lab.LabInstance.Id+++
     
     +++export AZ_CONTAINERAPP="ca${AZ_PROJECT_Quarkus}"+++
     
