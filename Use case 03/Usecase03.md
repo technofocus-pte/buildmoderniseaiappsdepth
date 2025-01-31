@@ -70,11 +70,11 @@ generated](./media/image5.jpeg)
 5.  Define local variables To simplify the commands that will be
     executed further down, set up the following environment variables
 
-    +++export AZ_RESOURCE_GROUP="aztes001_rg_"@lab.Lab.InsanceId
+    +++export AZ_RESOURCE_GROUP="aztes001_rg_"@lab.LabInstance.Id
 
-    +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.Lab.InsanceId
+    +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.LabInstance.Id
 
-    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.Lab.InsanceId
+    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.LabInstance.Id
 
     +++export AZ_LOCATION="westus"+++
 
@@ -342,9 +342,9 @@ generated](./media/image24.jpeg)
 
 4.  We will be using the same Authenticate with Azure Resource Manager we have created earlier in Exercise 1 Task 1. Set below variables
 
-    - +++export AZ_RESOURCE_GROUP="aztest001_rg_"@lab.Lab.InsanceId+++ 
-    - +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.Lab.InsanceId+++
-    - +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.Lab.InsanceId+++
+    - +++export AZ_RESOURCE_GROUP="aztest001_rg_"@lab.LabInstance.Id+++ 
+    - +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.LabInstance.Id+++
+    - +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.LabInstance.Id+++
     - +++export AZ_LOCATION=“westus”+++
     - +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
