@@ -70,11 +70,11 @@ generated](./media/image5.jpeg)
 5.  Define local variables To simplify the commands that will be
     executed further down, set up the following environment variables
 
-    +++export AZ_RESOURCE_GROUP="aztes001_rg_@lab.Lab.InsanceId
+    +++export AZ_RESOURCE_GROUP="aztes001_rg_"@lab.Lab.InsanceId
 
-    +++export AZ_CONTAINER_REGISTRY="javaaksregist@lab.Lab.InsanceId
+    +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.Lab.InsanceId
 
-    +++export AZ_KUBERNETES_CLUSTER="javaakscluster@lab.Lab.InsanceId
+    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.Lab.InsanceId
 
     +++export AZ_LOCATION="westus"+++
 
@@ -479,8 +479,7 @@ rename/update the contents of that file.
 6.  By now your Azure Kubernetes Cluster creation should have
     successfully completed.
 
-7.  Now configure your Azure CLI to access your Azure Kubernetes Cluster
-    via the kubectl command. Install kubectl locally using the az aks
+7.  Now configure your Azure CLI to access your Azure Kubernetes Cluster via the kubectl command. Install kubectl locally using the az aks
     install-cli command. Run the following command in your CLI
 
     +++az aks install-cli+++
@@ -552,12 +551,12 @@ generated](./media/image38.jpeg)
 
 ### Task 2 : Clean Up Resources
 
-1.  Navigate back to Azure portal tab and click on Resources.
+1.  Navigate back to the Azure portal tab and click on Resources.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image39.jpeg)
 
-2.  Click on the resource group which was created above
+2.  Click on the resource group that was created above
 
 ![A screenshot of a computer Description automatically
 generated](./media/image40.jpeg)
