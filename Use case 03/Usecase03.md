@@ -345,11 +345,13 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 2.  Within the root of your project, **Flight-Booking-System-JavaServlets_App/Project/Airlines**,Create a file called deployment.yml. Run the following command in your CLI:
 
+   +++echo $AZ_CONTAINER_REGISTRY+++
+
     +++vi deployment.yml+++
 
     ![](./media/image30.jpeg)
 
-3.  Add the following contents to deployment.yml and then save and exit:
+4.  Add the following contents to deployment.yml and then save and exit:
 
     >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
     AZ_CONTAINER_REGISTRY= javaaksregist )
@@ -397,33 +399,33 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
     ![](./media/image31.jpeg)
 
-4.  Press Esc and: and then type +++wq+++ and press enter to save the file.
+5.  Press Esc and: and then type +++wq+++ and press enter to save the file.
 
     >**Note:** Optionally, the deployment_solution.yml in the root of your project contains the contents needed, you may find it easier to
     rename/update the contents of that file.
 
-5.  In the deployment.yml above you'll notice this deployment.yml contains a Deployment and a Service. The deployment is used to
+6.  In the deployment.yml above you'll notice this deployment.yml contains a Deployment and a Service. The deployment is used to
     administer a set of pods while the service is used to allow network access to the pods. You'll notice the pods are configured to pull a
     single image, the \< AZ_CONTAINER_REGISTRY \>.azurecr.io/flightbookingsystemsample:latest from Azure Container
     Registry. You'll also notice the service is configured to allow incoming HTTP pod traffic to port 8080, similarly to the way you ran
     the container image locally with the -p port argument.
 
-6.  By now your Azure Kubernetes Cluster creation should have completed.
+7.  By now your Azure Kubernetes Cluster creation should have completed.
 
-7.  Now configure your Azure CLI to access your Azure Kubernetes Cluster via the kubectl command. Install kubectl locally using the az aks
+8.  Now configure your Azure CLI to access your Azure Kubernetes Cluster via the kubectl command. Install kubectl locally using the az aks
     install-cli command. Run the following command in your CLI
 
     +++az aks install-cli+++
 
     ![](./media/image32.jpeg)
 
-8.  Configure kubectl to connect to your Kubernetes cluster using the az aks get-credentials command. Run the following command in your CLI
+9.  Configure kubectl to connect to your Kubernetes cluster using the az aks get-credentials command. Run the following command in your CLI
 
     +++az aks get-credentials --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER+++
 
     ![](./media/image33.jpeg)
 
-9.  Now instruct Azure Kubernetes Service to apply deployment.yml changes to your cluster. Run the following command in your CLI
+10.  Now instruct Azure Kubernetes Service to apply deployment.yml changes to your cluster. Run the following command in your CLI
 
     +++kubectl apply -f deployment.yml+++
 
