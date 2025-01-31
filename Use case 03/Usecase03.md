@@ -61,9 +61,9 @@ perform the following steps
 
     >Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group.     You can it in your Azure portal or you can find it under the Resources tab on your VM
 
-    +++export AZ_CONTAINER_REGISTRY="javaaksregist"$RANDOM+++
+    +++export AZ_CONTAINER_REGISTRY="javaaksregist@lab.Lab.InsanceId+++
 
-    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"$RANDOM+++
+    +++export AZ_KUBERNETES_CLUSTER="javaakscluster@lab.Lab.InsanceId+++
 
     +++export AZ_LOCATION="westus"+++
 
@@ -179,7 +179,7 @@ CMD ["catalina.sh", "run"]
 
 ![](./media/image16.jpeg)
 
->**Note:** Optionally, the Dockerfile_Solution in the root of your project contains the contents needed.As you can see, this Docker file
+>**Note:** Optionally, the Dockerfile_Solution at the root of your project contains the needed content.As you can see, this Docker file
 The build stage has six instructions.
 
 ## Exercise 3: Build and run a container image for the Java app
@@ -222,7 +222,7 @@ container images (JDK/JRE) for the Linux architecture.
 
 1.  Now that you have successfully built a container image, you can run it.
 
-2.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the firstport before the colon) traffic to the container at runtime (the second port after the colon). Remember from the Dockerfile that the Tomcat appserver is listening for HTTP traffic on port 8080 hence that is the container port that needs to be exposed. Lastly the image tag flightbookingsystemsample is needed to instruct Docker of what image to run. Run the following command in your CLI:
+2.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the first port before the colon) traffic to the container at runtime (the second port after the colon). Remember from the Dockerfile that the Tomcat appserver is listening for HTTP traffic on port 8080 hence that is the container port that needs to be exposed. Lastly the image tag flightbookingsystemsample is needed to instruct Docker of what image to run. Run the following command in your CLI:
 
     +++docker run -p 8080:8080 flightbookingsystemsample+++
 
@@ -270,15 +270,15 @@ container images (JDK/JRE) for the Linux architecture.
 
     +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"+++
 
-4.  We will be using the same Authenticate with Azure Resource Manager we created earlier in Exercise 1 Task 1. Set below variables as per your variable values in Azure portal.
+4.  We will be using the same Authenticate with Azure Resource Manager we created earlier in Exercise 1 Task 1. Set the below variables as per your variable values in the Azure portal.
 
 +++export AZ_RESOURCE_GROUP=@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-+++export AZ_CONTAINER_REGISTRY="javaaksregistXXXX"+++
++++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.Lab.InsanceId+++
 
-+++export AZ_KUBERNETES_CLUSTER="javaaksclusterXXX"+++
++++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.Lab.InsanceId+++
 
-+++export AZ_LOCATION=“your resource location”+++
++++export AZ_LOCATION=“westus”+++
 
 +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
