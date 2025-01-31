@@ -15,7 +15,7 @@ running on Azure App Service on Linux.
 
 ### Task 0: Setup Environmental variables
 
-1.  Search Environmental variable from Windows start menu and select
+1.  Search Environmental variable from the Windows start menu and select
     Edit System Environment variable.
 
 ![](./media/image1.jpeg)
@@ -508,7 +508,7 @@ This article provides example abbreviations for many Azure resources
 
 
 
-+++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"$RANDOM+++
++++export AZ_PROJECT_Quarkus="azure-deploy-quarkus-"@lab.LabInstance.Id+++
 
 +++export AZ_RESOURCE_GROUP="rg${AZ_PROJECT_Quarkus}"+++
 
