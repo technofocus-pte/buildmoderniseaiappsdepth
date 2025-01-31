@@ -137,7 +137,7 @@ building the application without Docker. If you do not have Java & Maven install
 
 1.  Run the following command in your CLI to navigate to the project.
 
-    +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines+++
+    +++cd "C:\Labfiles\containerize-and-deploy-Java-app-to-Azure-master\Project\Airlines"+++
 
     ![](./media/image12.jpeg)
 
