@@ -61,9 +61,9 @@ perform the following steps
 
     >Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group.     You can it in your Azure portal or you can find it under the Resources tab on your VM
 
-    +++export AZ_CONTAINER_REGISTRY="javaaksregist@lab.Lab.InsanceId+++
+    +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.Lab.InsanceId+++
 
-    +++export AZ_KUBERNETES_CLUSTER="javaakscluster@lab.Lab.InsanceId+++
+    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.Lab.InsanceId+++
 
     +++export AZ_LOCATION="westus"+++
 
