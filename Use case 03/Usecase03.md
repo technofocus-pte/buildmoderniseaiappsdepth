@@ -25,7 +25,15 @@ Deploy the container image to Azure Kubernetes Service
 In this exercise, you will use the Azure CLI to create the Azure resources that will be needed in later units. Using the Azure CLI,
 perform the following steps
 
-### Task 1: Authenticate with Azure Resource Manager
+### Task 1: Run Docker
+
+1.  On the Start menu/ from Desktop, double click on **DockerDesktop**
+
+    ![](./media/image11.jpeg)
+
+2.  Make sure it is running.
+
+### Task 2: Authenticate with Azure Resource Manager
 
 1.  Open Gitbash from the Desktop and run the below command login to the Azure
     portal
@@ -65,7 +73,7 @@ perform the following steps
 6.  Define local variables To simplify the commands that will be
     executed further down, set up the following environment variables
 
-    >Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group.     You can it in your Azure portal or you can find it under the Resources tab on your VM
+    >Note: We have already created ra esource group for me in the cloud. You have to deploy all resources within the existing resource group.     You can find it in your Azure portal or you can find it under the Resources tab on your VM
 
     +++export AZ_CONTAINER_REGISTRY=javaaksregist@lab.LabInstance.Id+++
 
@@ -111,13 +119,6 @@ perform the following steps
 >**Note:** Azure Kubernetes Cluster creation can take up to 10 minutes, once you run the command above, you can optionally let it continue in
 that Azure CLI tab and move on to the next unit.
 
-### Task 2: Run Docker
-
-1.  On the Start menu/ from Desktop, double click on **DockerDesktop**
-
-    ![](./media/image11.jpeg)
-
-2.  Make sure it is running.
 
 ## Exercise 2: Containerize a Java app
 
