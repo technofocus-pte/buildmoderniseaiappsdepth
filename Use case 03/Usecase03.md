@@ -67,6 +67,8 @@ perform the following steps
     +++az provider register --namespace Microsoft.Compute+++
     
     +++az provider register --namespace Microsoft.CloudShell+++
+    
+    +++az provider register --namespace Microsoft.ContainerService+++
 
     ![](./media/image5.jpeg)
 
