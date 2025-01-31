@@ -55,6 +55,8 @@ perform the following steps
     +++az account list --output table+++
     
     +++az provider register --namespace Microsoft.Compute+++
+    
+    +++az provider register --namespace Microsoft.CloudShell+++
 
     ![](./media/image5.jpeg)
 
