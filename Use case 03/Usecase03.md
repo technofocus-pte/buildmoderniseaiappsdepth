@@ -52,8 +52,10 @@ perform the following steps
 
     +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
 
-    +++az account list --output table+++
-    
+    +++az account list --output table+++   
+
+    +++az provider register --namespace Microsoft.ContainerRegistry+++
+     
     +++az provider register --namespace Microsoft.Compute+++
     
     +++az provider register --namespace Microsoft.CloudShell+++
