@@ -72,9 +72,9 @@ generated](./media/image5.jpeg)
 
     +++export AZ_RESOURCE_GROUP="aztes001_rg_"@lab.LabInstance.Id
 
-    +++export AZ_CONTAINER_REGISTRY="javaaksregist"@lab.LabInstance.Id
+    +++export AZ_CONTAINER_REGISTRY=javaaksregist@lab.LabInstance.Id
 
-    +++export AZ_KUBERNETES_CLUSTER="javaakscluster"@lab.LabInstance.Id
+    +++export AZ_KUBERNETES_CLUSTER=javaakscluster@lab.LabInstance.Id
 
     +++export AZ_LOCATION="westus"+++
 
