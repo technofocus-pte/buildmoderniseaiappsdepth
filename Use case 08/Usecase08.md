@@ -83,14 +83,18 @@ generated](./media/image6.jpeg)
 
 3.  Sign in with your Azure credentials.
 
+  Username: +++@lab.CloudPortalCredential(User1).Username+++  
+
+  Password: +++@lab.CloudPortalCredential(User1).Password+++
+
 ![](./media/image10.png)
 
 ![](./media/image11.png)
 
-4.  Switch back to Github Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the
+4.  Switch back to GitHub Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the
     Environment name as ``ragpgpy`` and press Enter.
 
-Note : The env name should be unique
+Note: The env name should be unique
 
 +++azd env new+++
 
