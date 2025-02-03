@@ -25,15 +25,19 @@ The **requirements.txt** has the following packages, all used by a typical dat
 
 ### Task 1 : Register Service provider
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your cloud slice account is available in the Resource tab of your VM.
+1.  Open a browser go to ``https://portal.azure.com`` and sign in with your cloud slice account below.
+
+ Username: +++@lab.CloudPortalCredential(User1).Username+++  
+
+ Password: +++@lab.CloudPortalCredential(User1).Password+++
 
 ![](./media/image2.png)
 
-2.  On the Home page of the Azure portal, click on the **Resource groups** tile.
+3.  On the Home page of the Azure portal, click on the **Resource groups** tile.
 
 ![](./media/image3.png)
 
-3.  Copy the resource group name and save it in Notepad to use next task to deploy required resources in this resource group.
+3.  Copy the resource group name and save it in Notepad to use the next task to deploy the required resources in this resource group.
 
 ![](./media/image4.png)
 
@@ -49,7 +53,7 @@ The **requirements.txt** has the following packages, all used by a typical dat
 
 ![](./media/image7.png)
 
-7.  Expand Settings from the left navigation menu. Click on **Resource providers** , enter `Microsoft.AlertsManagement` and select i,t and then click **Register**.
+7.  Expand Settings from the left navigation menu. Click on **Resource providers**, enter `Microsoft.AlertsManagement` and select i,t, and then click **Register**.
 
  ![](./media/image8.png)
 
