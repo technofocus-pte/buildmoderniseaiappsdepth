@@ -33,14 +33,13 @@ perform the following steps
 
     +++az login+++
 
->**Note**: If see WARNING: A web browser has been opened at `https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.`Please continue the login in the web browser. If no web browser is
+>**Note**: If see WARNING: A web browser has been opened at `https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.`Please continue to login in to the web browser. If no web browser is
 available or if the web browser fails to open, use device code flow with +++az login --use-device-code+++
 
 ![A black background with yellow text Description automatically
 generated](./media/image1.jpeg)
 
-2.  This command will take you to the default browser to login. Login
-    with your Azure subscription account.
+2.  This command will take you to the default browser to log in. Login with your Azure subscription account.
 
 ![A screenshot of a computer Description automatically
 generated](./media/image2.jpeg)
@@ -48,14 +47,14 @@ generated](./media/image2.jpeg)
 ![A screenshot of a computer Description automatically
 generated](./media/image3.jpeg)
 
-3.  Once authenticated switch back to the Gitbash and copy the subscirption id to use it in the next step
+3.  Once authenticated switch back to Gitbash and copy the subscription id to use it in the next step
 
 ![A computer screen with white text Description automatically
 generated](./media/image4.jpeg)
 
-4.  Now we will enable our Azure subscription execute the below command
+4.  Now we will enable our Azure subscription to execute the below command
 
-    +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
+    +++az account set --subscription @lab.CloudSubscription.Id+++
 
     +++az account list --output table+++
 
