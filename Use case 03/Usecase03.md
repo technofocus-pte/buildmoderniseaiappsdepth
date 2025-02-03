@@ -28,18 +28,20 @@ perform the following steps
 
 ### Task 1: Authenticate with Azure Resource Manager
 
-1.  Open Gitbash from Desktop and run below command login to the Azure
-    portal
+1.  Open Gitbash from Desktop and run below command login to the Azure portal
 
     +++az login+++
 
->**Note**: If see WARNING: A web browser has been opened at `https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.`Please continue to login in to the web browser. If no web browser is
-available or if the web browser fails to open, use device code flow with +++az login --use-device-code+++
+>**Note**: If see WARNING: A web browser has been opened at `https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.`Please continue to log in to the web browser. If no web browser is available or if the web browser fails to open, use device code flow with +++az login --use-device-code+++
 
 ![A black background with yellow text Description automatically
 generated](./media/image1.jpeg)
 
-2.  This command will take you to the default browser to log in. Login with your Azure subscription account.
+2.  This command will take you to the default browser to log in. Log in with your Azure subscription account.
+
+    Username: +++@lab.CloudPortalCredential(User1).Username+++  
+
+    Password: +++@lab.CloudPortalCredential(User1).Password+++
 
 ![A screenshot of a computer Description automatically
 generated](./media/image2.jpeg)
@@ -90,7 +92,7 @@ generated](./media/image6.jpeg)
 
 >**Note:** This module uses the **jq** tool, which is installed by
 default on [***Azure Cloud Shell***](https://shell.azure.com/) to
-display JSON data and make it more readable. If you don\\'t want to use
+display JSON data and make it more readable. If you don't want to use
 the **jq** tool, you can safely remove the **| jq** part of all commands
 in this module.
 
@@ -126,8 +128,7 @@ generated](./media/image9.jpeg)
 ![A computer screen with white text Description automatically
 generated](./media/image10.jpeg)
 
-12. Create an Azure Kubernetes Cluster, You'll need an Azure Kubernetes
-    Cluster to deploy the Java app (container image) to.
+12. Create an Azure Kubernetes Cluster, You'll need an Azure Kubernetes Cluster to deploy the Java app (container image).
 
     +++az aks create --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER --attach-acr $AZ_CONTAINER_REGISTRY --dns-name-prefix=$AZ_KUBERNETES_CLUSTER_DNS_PREFIX --generate-ssh-keys | jq+++
 
@@ -137,14 +138,14 @@ generated](./media/image11.jpeg)
 >**Note:** Azure Kubernetes Cluster creation can take up to 10 minutes, once you run the command above, you can optionally let it continue in
 that Azure CLI tab and move on to the next unit.
 
-### Task 2 : Run Docker
+### Task 2: Run Docker
 
 1.  On the Start menu, click on **DockerDesktop**
 
 ![A screenshot of a phone Description automatically
 generated](./media/image12.jpeg)
 
-2.  Make sure its running.
+2.  Make sure it is running.
 
 ## Exercise 2: Containerize a Java app
 
@@ -424,6 +425,8 @@ Service.
 >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
 AZ_CONTAINER_REGISTRY= `javaaksregist` )
 
+    AZ_CONTAINER_REGISTRY=+++javaaksregist"@lab.LabInstance.Id+++
+
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -441,7 +444,7 @@ spec:
     spec:
       containers:
       - name: flightbookingsystemsample
-        image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
+        image: javaaksregist47938383.azurecr.io/flightbookingsystemsample:latest
         resources:
           requests:
             cpu: "1"
@@ -463,12 +466,11 @@ spec:
     targetPort: 8080
   selector:
     app: flightbookingsystemsample
-```
+ ```
 ![A screenshot of a computer program Description automatically
 generated](./media/image31.jpeg)
 
-4.  Press Esc and: and then type `wq` and press enter to save
-    the file.
+4.  Press Esc and: and then type `wq` and press enter to save the file.
 
 >**Note:** Optionally, the deployment_solution.yml in the root of your project contains the contents needed, you may find it easier to
 rename/update the contents of that file.
@@ -520,13 +522,11 @@ generated](./media/image35.jpeg)
 >**Note:** You'll want to substitute the ip address in the following, 20.81.13.151, with that of your EXTERNAL-IP and note down the POD name,
 we will be using that in the next steps.
 
-11. If your **POD** status is **Running** then the app should be
-    accessible.
+11. If your **POD** status is **Running** then the app should be accessible.
 
-12. You can view the app logs within each pod as well. Run the following
-    command in your CLI
+12. You can view the app logs within each pod as well. Replace XXXX with your POD at the end of the command and run it in CLI as shown in the below image.  (eg - **kubectl logs pod/flightbookingsystemsample-6688c9d4b-4z2nk**)
 
-    +++kubectl logs pod/flightbookingsystemsample-+++
+    +++kubectl logs pod/flightbookingsystemsample-XXXXXX+++
 
 ![A screen shot of a computer Description automatically
 generated](./media/image36.jpeg)
