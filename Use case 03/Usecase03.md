@@ -353,7 +353,7 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 2.  Within the root of your project, **Flight-Booking-System-JavaServlets_App/Project/Airlines**,Create a file called deployment.yml. Run the following command in your CLI:
 
-   AZ_CONTAINER_REGISTRY=+++javaaksregist"@lab.LabInstance.Id+++
+   AZ_CONTAINER_REGISTRY=+++javaaksregist@lab.LabInstance.Id+++
 
     +++vi deployment.yml+++
 
