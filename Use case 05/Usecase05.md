@@ -116,7 +116,7 @@ Azure development CLI templates to deploy apps
 
 ![](./media/image18.jpeg)
 
-10. When you see the message Your application running on the port is available., click **Open in Browser**.
+10. When you see the message your application running on the port is available, click **Open in Browser**.
 
 ![](./media/image18.jpeg)
 
@@ -166,7 +166,7 @@ eat.``
 This project is designed to work well with the Azure Developer CLI which makes it easier to develop apps locally, deploy them to Azure, and
 monitor them.
 
-1.  Switch back to the GitHub code space tab, Run below command to Initialize a new azd environment:
+1.  Switch back to the GitHub code space tab, Run the below command to Initialize a new azd environment:
 
 +++azd init+++
 
@@ -177,11 +177,15 @@ monitor them.
 
 ![](./media/image28.jpeg)
 
-3.  Login if required +++azd auth login+++ .copy the code and press enter.
+3.  Login if required +++azd auth login+++ Copy the code and press enter.
 
 ![](./media/image29.jpeg)
 
 4.  Enter the code and then sign in with your Azure credentials.
+
+  Username: +++@lab.CloudPortalCredential(User1).Username+++  
+ 
+  Password: +++@lab.CloudPortalCredential(User1).Password+++
 
 ![](./media/image30.jpeg)
 
