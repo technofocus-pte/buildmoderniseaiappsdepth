@@ -28,8 +28,7 @@ Open Data dataset's listings table. You'll also run semantic searches
 against these listings by generating a query's embedding vector and
 performing a vector cosine distance search.
 
-1.  Open a web browser and navigate to
-    the ``https:\\portal.azure.com``and sign in with your Azure     credentails.
+1.  Open a web browser and navigate to  the ``https:\\portal.azure.com``and sign in with your Azure     credentails.
 
 2.  Select the **Cloud Shell** icon in the Azure portal toolbar to open
     a new Cloud Shell pane at the bottom of your browser window.
