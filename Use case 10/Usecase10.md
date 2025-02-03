@@ -63,8 +63,7 @@ credentials. If you do not have, please create one from here
 
 ![](./media/image8.png)
 
-5.  Type ``Microsoft.AlertsManagement`` and press enter. Select
-    it and then click on **Register**.
+5.  Type ``Microsoft.AlertsManagement`` and press enter. Select it and then click on **Register**.
 
 ![](./media/image9.png)
 
@@ -86,7 +85,7 @@ credentials. If you do not have, please create one from here
 
 ![](./media/image13.jpeg)
 
-4.  Click on **Code -> Code space -\ Open Code space.**
+4.  Click on **Code -> Code space ->Open Code space.**
 
 ![](./media/image14.jpeg)
 
@@ -102,6 +101,10 @@ credentials. If you do not have, please create one from here
 
 7.  Paste the generated code and sign in with your Azure credentials.
 
+  Username: +++@lab.CloudPortalCredential(User1).Username+++  
+
+  Password: +++@lab.CloudPortalCredential(User1).Password+++
+
 ![](./media/image17.jpeg)
 
 ![](./media/image18.jpeg)
@@ -116,7 +119,7 @@ credentials. If you do not have, please create one from here
 
 +++azd provision+++
 
-- Select an Azure location to use : East us/west us (Sometimes, East US might not be available, choose different location and deploy.) 
+- Select an Azure location to use: East us/WestUS (Sometimes, East US might not be available, choose a different location and deploy.) 
 
 - Enter a value for the existingResourceGroupName infrastructure parameter: +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
