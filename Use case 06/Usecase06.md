@@ -37,7 +37,11 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 
 ### Task 2: Register Service provider
 
-1.  Open your browser, open Azure   portal +++https://portal.azure.com+++.  Sign in with your Azure slice account(Azure Credentials) available under the instructions/Resources section of your host environment.
+1.  Open your browser, open Azure   portal +++https://portal.azure.com+++.  Sign in with your Azure slice account(Azure Credentials).
+
+  Username: +++@lab.CloudPortalCredential(User1).Username+++  
+
+  Password: +++@lab.CloudPortalCredential(User1).Password+++
 
 ![](./media/image2.jpeg)
 
@@ -95,6 +99,10 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 ![](./media/image20.png)
 
 3.  Sign in with your Azure credentials.
+
+  Username: +++@lab.CloudPortalCredential(User1).Username+++  
+
+  Password: +++@lab.CloudPortalCredential(User1).Password+++
 
 ![](./media/image21.png)
 
