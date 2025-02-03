@@ -35,8 +35,7 @@ perform the following steps
 
 ### Task 2: Authenticate with Azure Resource Manager
 
-1.  Open Gitbash from the Desktop and run the below command login to the Azure
-    portal
+1.  Open Gitbash from the Desktop and run the below command login to the Azure     portal
 
     +++az login+++
 
@@ -48,17 +47,21 @@ perform the following steps
 
 2.  This command will take you to the default browser to log in. Log in with your Azure subscription account.
 
+    Username: +++@lab.CloudPortalCredential(User1).Username+++
+
+    Password: +++@lab.CloudPortalCredential(User1).Password+++
+
     ![](./media/image2.jpeg)
 
     ![](./media/image3.jpeg)
 
-3.  Once authenticated switch back to the Gitbash
+4.  Once authenticated switch back to the Gitbash
 
     ![](./media/image4.jpeg)
 
-4.  Now we will enable our Azure subscription to execute the below command
+5.  Now we will enable our Azure subscription to execute the below command
 
-    +++az account set --subscription "YOUR_SUBSCRIPTION_ID"+++
+    +++az account set --subscription @lab.CloudSubscription.Id+++
 
     +++az account list --output table+++   
 
@@ -229,9 +232,16 @@ container images (JDK/JRE) for the Linux architecture.
 
 ### Task 2: Run a container image
 
-1.  Now that you have successfully built a container image, you can run it.
+1.  Go to Start and search for +++command prompt+++ and open it as Administrator. run below command and check if any process is running on port 8080.
+ +++netstat -ano | findstr :8080+++
 
-2.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the first port before the colon) traffic to the container at runtime (the second port after the colon). Remember from the Dockerfile that the Tomcat appserver is listening for HTTP traffic on port 8080 hence that is the container port that needs to be exposed. Lastly the image tag flightbookingsystemsample is needed to instruct Docker of what image to run. Run the following command in your CLI:
+2.  Run the below command with process id running on port 8080
+   
+    +++taskkill /PID XXXX /F++++ (replace XXXX with your process ID
+
+3.  You can run a container image now that you have successfully built it.
+
+4.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the first port before the colon) traffic to the container at runtime (the second port after the colon). Remember from the Dockerfile that the Tomcat appserver is listening for HTTP traffic on port 8080 hence that is the container port that needs to be exposed. Lastly the image tag flightbookingsystemsample is needed to instruct Docker of what image to run. Run the following command in your CLI:
 
     +++docker run -p 8080:8080 flightbookingsystemsample+++
 
@@ -246,14 +256,14 @@ container images (JDK/JRE) for the Linux architecture.
 
     +++docker run -p 8081:8080 flightbookingsystemsample+++
 
-3.  Open up a browser and visit the Flight Booking System for Airline Reservations landing page  
+5.  Open up a browser and visit the Flight Booking System for Airline Reservations landing page  
     at  +++http://localhost:8080/FlightBookingSystemSample+++
 
    You should see the following:
 
     ![](./media/image22.jpeg)
 
-4.  You can optionally sign in with any user from tomcat-users.xml for example
+6.  You can optionally sign in with any user from tomcat-users.xml for example
 
     Username:  +++someuser@azure.com+++
 
@@ -261,7 +271,7 @@ container images (JDK/JRE) for the Linux architecture.
 
     ![](./media/image23.jpeg)
 
-5.  Leave this Git bash instance without closing it.
+7.  Leave this Git bash instance without closing it.
 
 ## Exercise 4: Push the container image to Azure Container Registry
 
@@ -328,8 +338,6 @@ flightbookingsystemsample image from Azure Container Registry.
 
     +++az acr repository show -n $AZ_CONTAINER_REGISTRY --image flightbookingsystemsample:latest+++
 
-    You'll see something similar:
-
     ![](./media/image29.jpeg)
 
 6.  Container image is now resident within Azure Container Registry and ready for deployments by Azure Services such as Azure Kubernetes
@@ -345,7 +353,7 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 2.  Within the root of your project, **Flight-Booking-System-JavaServlets_App/Project/Airlines**,Create a file called deployment.yml. Run the following command in your CLI:
 
-   +++echo $AZ_CONTAINER_REGISTRY+++
+   AZ_CONTAINER_REGISTRY=+++javaaksregist"@lab.LabInstance.Id+++
 
     +++vi deployment.yml+++
 
@@ -356,47 +364,46 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
     >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
     AZ_CONTAINER_REGISTRY= javaaksregist )
 
-    ```
-    apiVersion: apps/v1
-    kind: Deployment
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flightbookingsystemsample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flightbookingsystemsample
+  template:
     metadata:
-    name: flightbookingsystemsample
-    spec:
-    replicas: 1
-    selector:
-        matchLabels:
+      labels:
         app: flightbookingsystemsample
-    template:
-        metadata:
-        labels:
-            app: flightbookingsystemsample
-        spec:
-        containers:
-        - name: flightbookingsystemsample
-          image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
-            resources:
-            requests:
-                cpu: "1"
-                memory: "1Gi"
-            limits:
-                cpu: "2"
-                memory: "2Gi"
-            ports:
-            - containerPort: 8080
-    ---
-    apiVersion: v1
-    kind: Service
-    metadata:
-    name: flightbookingsystemsample
     spec:
-    type: LoadBalancer
-    ports:
-    - port: 8080
-        targetPort: 8080
-    selector:
-        app: flightbookingsystemsample
-    ```
-
+      containers:
+      - name: flightbookingsystemsample
+        image: javaaksregist47938383.azurecr.io/flightbookingsystemsample:latest
+        resources:
+          requests:
+            cpu: "1"
+            memory: "1Gi"
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flightbookingsystemsample
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: flightbookingsystemsample
+ ```
     ![](./media/image31.jpeg)
 
 5.  Press Esc and: and then type +++wq+++ and press enter to save the file.
@@ -441,7 +448,7 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 11. If your **POD** status is **Running** then the app should be accessible.
 
-12. You can view the app logs within each pod as well. Run the following command in your CLI
+12. You can view the app logs within each pod as well.Replace XXXX with your POD at the end of the command and run it in CLI as shown in the below image.  (eg - **kubectl logs pod/flightbookingsystemsample-6688c9d4b-4z2nk**)
 
     +++kubectl logs pod/flightbookingsystemsample-+++
 
