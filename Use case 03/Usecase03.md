@@ -14,7 +14,7 @@ By the end of this module, you'll be able to:
 
 Deploy the container image to Azure Kubernetes Service
 
-**Key technologies used** -- Java 11, Docker ,Maven
+**Key technologies used** -- Java 11, Docker,Maven
 
 **Estimated duration**: 30 min
 
@@ -279,17 +279,21 @@ You will see something similar:
 
 ### Task 2 : Run a container image
 
-1.  Now that you have successfully built a container image, you can run
-    it.
+1.  Go to Start and search for +++command prompt+++ and open it as Administrator. run below command and check if any process is running on port 8080.
+ +++netstat -ano | findstr :8080+++
 
-2.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the first port before the colon) traffic to the container at runtime (the second
+2.  Run the below command with process id running on port 8080
+   
+    +++taskkill /PID XXXX /F++++ (replace XXXX with your process ID
+   
+3.  You can run a container image now that you have successfully built it.
+
+4.  Docker run is the command used to run a container image. The -p :#### argument will be used to forward localhost HTTP (the first port before the colon) traffic to the container at runtime (the second
 port after the colon). Remember from the Dockerfile that the Tomcat app server is listening for HTTP traffic on port 8080 hence that is the
 container port that needs to be exposed. Lastly, the image tag flightbookingsystemsample is needed to instruct Docker of what image to
 run. Run the following command in your CLI:
 
     +++docker run -p 8080:8080 flightbookingsystemsample+++
-
-You'll see something similar:
 
 ![A screen shot of a computer Description automatically
 generated](./media/image21.jpeg)
@@ -300,7 +304,7 @@ generated](./media/image22.jpeg)
 >**Note:** if the command "docker run -p 8080:8080 flightbookingsystemsample" comes up with an error, then use the below
 mentioned port - +++docker run -p 8081:8080 flightbookingsystemsample+++
 
-3.  Open up a browser and visit the Flight Booking System for Airline
+5.  Open up a browser and visit the Flight Booking System for Airline
     Reservations landing page     at +++http://localhost:8080/FlightBookingSystemSample+++
 
     - You should see the following:
@@ -308,7 +312,7 @@ mentioned port - +++docker run -p 8081:8080 flightbookingsystemsample+++
 ![A plane flying in the sky Description automatically
 generated](./media/image23.jpeg)
 
-4.  You can optionally sign in with any user from tomcat-users.xml for
+6.  You can optionally sign in with any user from tomcat-users.xml for
     example
 
 Username :  `someuser@azure.com`
@@ -318,7 +322,7 @@ Password : `password`
 ![A screenshot of a computer Description automatically
 generated](./media/image24.jpeg)
 
-5.  Leave this git bash instance as it is
+7.  Leave this git bash instance as it is
 
 ## Exercise 4: Push the container image to Azure Container Registry
 
