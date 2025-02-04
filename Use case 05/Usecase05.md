@@ -223,13 +223,13 @@ monitor them.
 
   +++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
 
-  >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
+   >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
 
    ![](./media/image41.png)
 
 2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
-   +++azd deploy+++
+    +++azd deploy+++
 
     ![](./media/image42.png)
 
