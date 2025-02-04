@@ -222,10 +222,11 @@ monitor them.
 1.  Run the below command to set the resource group environment variable.
 
   +++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
+  +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup1).Name+++
 
    >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
 
-   ![](./media/image41.png)
+    ![](./media/image41.png)
 
 2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
