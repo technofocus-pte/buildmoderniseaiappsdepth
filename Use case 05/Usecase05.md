@@ -31,33 +31,33 @@ The **requirements.txt** has the following packages, all used by a typical dat
 
  Password: +++@lab.CloudPortalCredential(User1).Password+++
 
-![](./media/image2.png)
+ ![](./media/image2.png)
 
-3.  On the Home page of the Azure portal, click on the **Resource groups** tile.
+2.  On the Home page of the Azure portal, click on the **Resource groups** tile.
 
-![](./media/image3.png)
+ ![](./media/image3.png)
 
 3.  Copy the resource group name and save it in Notepad to use the next task to deploy the required resources in this resource group.
 
-![](./media/image4.png)
+ ![](./media/image4.png)
 
 4.  On the top navigation, click on Home.
 
-![](./media/image5.png)
+ ![](./media/image5.png)
 
 5.  Click on **Subscriptions** tile.
 
-![](./media/image6.png)
+ ![](./media/image6.png)
 
 6.  Click on the subscription name.
 
-![](./media/image7.png)
+ ![](./media/image7.png)
 
 7.  Expand Settings from the left navigation menu. Click on **Resource providers**, enter `Microsoft.AlertsManagement` and select i,t, and then click **Register**.
 
- ![](./media/image8.png)
+  ![](./media/image8.png)
 
- ![](./media/image9.png)
+  ![](./media/image9.png)
 
 ### Task 2 : Create GitHub Codespace to initiate the Azure Developer CLI template
 
@@ -68,21 +68,21 @@ Azure development CLI templates to deploy apps
 
 2.  Fork this repository `https://github.com/technofocus-pte/flask-postgresql-CSTesting.git` to your account by clicking on **Fork** as shown in the below image.
 
-![](./media/image10.jpeg)
+  ![](./media/image10.jpeg)
 
 3.  Enter a unique name and then click on **Create repo**.
 
-![](./media/image11.jpeg)
+  ![](./media/image11.jpeg)
 
 4.  From the repository root of your fork, select **Code** > **Codespaces** > **+**.
 
-![](./media/image12.jpeg)
+  ![](./media/image12.jpeg)
 
 5.  Wait for the workspace to set up.
 
-![](./media/image13.jpeg)
+  ![](./media/image13.jpeg)
 
-![](./media/image14.jpeg)
+  ![](./media/image14.jpeg)
 
 6.  In the codespace terminal, run the following commands:
 
@@ -90,35 +90,35 @@ Azure development CLI templates to deploy apps
 
 +++python3 -m pip install -r requirements.txt+++
 
-![](./media/image15.jpeg)
+ ![](./media/image15.jpeg)
 
 7.  Run the below command to create an environment variable
 
 # Create .env with environment variables
 
-+++cp .env.sample.devcontainer .env+++
+ +++cp .env.sample.devcontainer .env+++
 
-![](./media/image16.jpeg)
+ ![](./media/image16.jpeg)
 
 8.  Run below command for data migration
 
- \# Run database migrations
+  \# Run database migrations
 
-+++python3 -m flask db upgrade+++
+ +++python3 -m flask db upgrade+++
 
-![](./media/image17.jpeg)
+ ![](./media/image17.jpeg)
 
 9.  Run the below command to
 
-# Start the development server
+ # Start the development server
 
-+++python3 -m flask run+++
+ +++python3 -m flask run+++
 
-![](./media/image18.jpeg)
+ ![](./media/image18.jpeg)
 
 10. When you see the message your application running on the port is available, click **Open in Browser**.
 
-![](./media/image18.jpeg)
+ ![](./media/image18.jpeg)
 
 ![](./media/image19.jpeg)
 
@@ -126,40 +126,40 @@ Azure development CLI templates to deploy apps
 
 11. Click on **Add new restaurant** button.
 
-![](./media/image21.jpeg)
+ ![](./media/image21.jpeg)
 
 12. Enter the details below and click on the **Submit** button.
 
-Name : +++Contoso Rica+++
+ Name : +++Contoso Rica+++
 
-Street Adress - +++3A ,8th cross, Ferns street , Singapore+++
+ Street Adress - +++3A ,8th cross, Ferns street , Singapore+++
 
-Description - +++This is a medium to high-priced restaurant in the city shopping center+++
+ Description - +++This is a medium to high-priced restaurant in the city shopping center+++
 
-![](./media/image22.jpeg)
+ ![](./media/image22.jpeg)
 
 13. Click on **Add new review** button.
 
-![](./media/image23.jpeg)
+ ![](./media/image23.jpeg)
 
 14. Enter your review and then click on the button. **Save changes**
 
-**Your name: your name**
+ **Your name: your name**
 
-**Rating: your rating**
+ **Rating: your rating**
 
-``This is a medium to high priced restaurant in the city shopping center. Service was a little bit confusing as we had at least 6 waiters
-coming to ask us things. Food took some time to come. We had 2 menus: one indian and one thai. The thai is 30% cheaper so we went for some
-appetizers and thai red curry. Food took some time but it was worth it. It was delicious and very well prepared. Overall, this is a good
-eat.``
+ ``This is a medium to high priced restaurant in the city shopping center. Service was a little bit confusing as we had at least 6 waiters
+ coming to ask us things. Food took some time to come. We had 2 menus: one indian and one thai. The thai is 30% cheaper so we went for some
+ appetizers and thai red curry. Food took some time but it was worth it. It was delicious and very well prepared. Overall, this is a good
+ eat.``
 
-![](./media/image24.jpeg)
+ ![](./media/image24.jpeg)
 
-![](./media/image25.jpeg)
+ ![](./media/image25.jpeg)
 
 15. Add some more reviews and new restaurants with comments.
 
-![](./media/image26.jpeg)
+ ![](./media/image26.jpeg)
 
 ### Task 3: Provision of required resources in Azure.
 
@@ -168,18 +168,18 @@ monitor them.
 
 1.  Switch back to the GitHub code space tab, Run the below command to Initialize a new azd environment:
 
-+++azd init+++
+ +++azd init+++
 
-![](./media/image27.jpeg)
+ ![](./media/image27.jpeg)
 
 2.  It will prompt you to provide an environment name (like ``flask-appXXXX`` (XXXX can be a unique number)), which will
     later be used in the name of the deployed resources.
 
-![](./media/image28.jpeg)
+ ![](./media/image28.jpeg)
 
 3.  Login if required +++azd auth login+++ Copy the code and press enter.
 
-![](./media/image29.jpeg)
+ ![](./media/image29.jpeg)
 
 4.  Enter the code and then sign in with your Azure credentials.
 
@@ -187,71 +187,71 @@ monitor them.
  
   Password: +++@lab.CloudPortalCredential(User1).Password+++
 
-![](./media/image30.jpeg)
+ ![](./media/image30.jpeg)
 
-![](./media/image31.jpeg)
+ ![](./media/image31.jpeg)
 
-![](./media/image32.jpeg)
+ ![](./media/image32.jpeg)
 
-![](./media/image33.jpeg)
+ ![](./media/image33.jpeg)
 
 5.  Switch back Gtihub codespace tab and run below command to provision and deploy all the resources. It will prompt to select your Azure
     subscription. Enter **1** to select your subscription and press Enter.
 
-+++azd provision+++
+ +++azd provision+++
 
-![](./media/image34.png)
+ ![](./media/image34.png)
 
 6.  Select location as **WestUS/eastus**. Then it will provision the resources in your account and deploy the latest code. If you get an
     error with deployment, changing the location (like to "westus") can help, as there may be availability constraints for some of the
     resources.
 
-![](./media/image35.png)
+ ![](./media/image35.png)
 
-7.  Enter the below resource group name  and press enter.
+7.  Enter the resource group name below  and press enter.
 
    +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-![](./media/image36.png)
+ ![](./media/image36.png)
 
 8.  Deployment takes **20 - 30 minutes**. You can also check the status of deployment at the generated link or **Azure portal-> Resource
     group-> Deployments**.
 
-![](./media/image37.png)
+ ![](./media/image37.png)
 
-![](./media/image38.png)
+ ![](./media/image38.png)
 
-![](./media/image39.png)
+ ![](./media/image39.png)
 
-![](./media/image40.png)
+ ![](./media/image40.png)
 
 ### Task 4 : Deploy the application from Github
 
 1.  Run the below command to set the resource group environment variable.
 
-+++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
+ +++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
 
->Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
+ >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
 
-![](./media/image41.png)
+ ![](./media/image41.png)
 
-2.  Run below command to deploy all resources and wait for the deployment to complete successfully.
+2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
-+++azd deploy+++
+ +++azd deploy+++
 
-![](./media/image42.png)
+ ![](./media/image42.png)
 
 3.  Click on the generated Endpoint URL
 
-![](./media/image43.png)
+ ![](./media/image43.png)
 
 4.  Click on **Open** to open the external website.
 
-![](./media/image44.png)
+ ![](./media/image44.png)
 
 5.  The app opens in a new tab.
 
-![](./media/image45.png)
+ ![](./media/image45.png)
 
 ### Task 5 : Stream diagnostic logs
 
@@ -270,46 +270,46 @@ return render_template('index.html', restaurants=restaurants)
 
 1.  Switch back to **Azure portal- > Resource group** and click on **App service**.
 
-![](./media/image46.png)
+ ![](./media/image46.png)
 
-2.  In the App Service page. From the left menu, select **Monitoring ->** **App Service logs.**
+2.  On the App Service page. From the left menu, select **Monitoring ->** **App Service logs.**
 
-![](./media/image47.png)
+ ![](./media/image47.png)
 
 3.  Under **Application logging**, make sure **File System** selected.Select it if required.I n the top menu, select **Save**.
 
-![](./media/image48.png)
+ ![](./media/image48.png)
 
 4.  From the left menu, select **Log stream**. You see the logs for your app, including platform logs and logs from inside the container.
 
-![](./media/image49.png)
+ ![](./media/image49.png)
 
 ### Task 6 : Clean up resources in Github.
 
-1.  Switch back to Github, click on **repo -> Code -> Codespaces.** Select the correct branch
+1.  Switch back to Github, and click on **repo -> Code -> Codespaces.** Select the correct branch
 
-![](./media/image50.png)
+ ![](./media/image50.png)
 
 2.  Select the branch and click on **Delete**.
 
-![](./media/image51.png)
+ ![](./media/image51.png)
 
 3.  Click on **Delete**.
 
-![](./media/image52.png)
+ ![](./media/image52.png)
 
 4.  Switch back to **Azure portal -> Resource group.**
 
-![](./media/image53.png)
+ ![](./media/image53.png)
 
 5.  Select all the resources and then click on **Delete** ( DO NOT delete resource group)
 
-![](./media/image54.png)
+ ![](./media/image54.png)
 
 6.  Enter ``Delete`` and then click on **Delete**.
 
-![](./media/image55.png)
+ ![](./media/image55.png)
 
 7.  Click on **Delete** to confirm deletion.
 
-![](./media/image56.png)
+ ![](./media/image56.png)
