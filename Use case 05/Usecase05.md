@@ -221,29 +221,29 @@ monitor them.
 
 1.  Run the below command to set the resource group environment variable.
 
- +++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
+  +++azd env set AZURE_RESOURCE_GROUP {Name of existing resource group}+++
 
- >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
+  >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
 
-  ![](./media/image41.png)
+   ![](./media/image41.png)
 
 2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
-  +++azd deploy+++
+   +++azd deploy+++
 
-  ![](./media/image42.png)
+    ![](./media/image42.png)
 
 3.  Click on the generated Endpoint URL
 
-  ![](./media/image43.png)
+    ![](./media/image43.png)
 
 4.  Click on **Open** to open the external website.
 
-  ![](./media/image44.png)
+    ![](./media/image44.png)
 
 5.  The app opens in a new tab.
 
-  ![](./media/image45.png)
+    ![](./media/image45.png)
 
 ### Task 5 : Stream diagnostic logs
 
@@ -262,46 +262,46 @@ return render_template('index.html', restaurants=restaurants)
 
 1.  Switch back to **Azure portal- > Resource group** and click on **App service**.
 
- ![](./media/image46.png)
+    ![](./media/image46.png)
 
 2.  On the App Service page. From the left menu, select **Monitoring ->** **App Service logs.**
 
- ![](./media/image47.png)
+    ![](./media/image47.png)
 
 3.  Under **Application logging**, make sure **File System** selected.Select it if required.I n the top menu, select **Save**.
 
- ![](./media/image48.png)
+    ![](./media/image48.png)
 
 4.  From the left menu, select **Log stream**. You see the logs for your app, including platform logs and logs from inside the container.
 
- ![](./media/image49.png)
+    ![](./media/image49.png)
 
 ### Task 6 : Clean up resources in Github.
 
 1.  Switch back to Github, and click on **repo -> Code -> Codespaces.** Select the correct branch
 
- ![](./media/image50.png)
+   ![](./media/image50.png)
 
 2.  Select the branch and click on **Delete**.
 
- ![](./media/image51.png)
+   ![](./media/image51.png)
 
 3.  Click on **Delete**.
 
- ![](./media/image52.png)
+   ![](./media/image52.png)
 
 4.  Switch back to **Azure portal -> Resource group.**
 
- ![](./media/image53.png)
+   ![](./media/image53.png)
 
 5.  Select all the resources and then click on **Delete** ( DO NOT delete resource group)
 
- ![](./media/image54.png)
+   ![](./media/image54.png)
 
 6.  Enter ``Delete`` and then click on **Delete**.
 
- ![](./media/image55.png)
+   ![](./media/image55.png)
 
 7.  Click on **Delete** to confirm deletion.
 
- ![](./media/image56.png)
+   ![](./media/image56.png)
