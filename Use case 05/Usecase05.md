@@ -86,31 +86,23 @@ Azure development CLI templates to deploy apps
 
 6.  In the codespace terminal, run the following commands:
 
-# Install requirements
+ +++python3 -m pip install -r requirements.txt+++
 
-+++python3 -m pip install -r requirements.txt+++
-
- ![](./media/image15.jpeg)
+  ![](./media/image15.jpeg)
 
 7.  Run the below command to create an environment variable
 
-# Create .env with environment variables
-
  +++cp .env.sample.devcontainer .env+++
 
- ![](./media/image16.jpeg)
+  ![](./media/image16.jpeg)
 
 8.  Run below command for data migration
 
-  \# Run database migrations
+  +++python3 -m flask db upgrade+++
 
- +++python3 -m flask db upgrade+++
+  ![](./media/image17.jpeg)
 
- ![](./media/image17.jpeg)
-
-9.  Run the below command to
-
- # Start the development server
+9.  Run the below command to Start the development server
 
  +++python3 -m flask run+++
 
@@ -120,9 +112,9 @@ Azure development CLI templates to deploy apps
 
  ![](./media/image18.jpeg)
 
-![](./media/image19.jpeg)
+ ![](./media/image19.jpeg)
 
-![](./media/image20.jpeg)
+ ![](./media/image20.jpeg)
 
 11. Click on **Add new restaurant** button.
 
@@ -175,11 +167,11 @@ monitor them.
 2.  It will prompt you to provide an environment name (like ``flask-appXXXX`` (XXXX can be a unique number)), which will
     later be used in the name of the deployed resources.
 
- ![](./media/image28.jpeg)
+  ![](./media/image28.jpeg)
 
 3.  Login if required +++azd auth login+++ Copy the code and press enter.
 
- ![](./media/image29.jpeg)
+  ![](./media/image29.jpeg)
 
 4.  Enter the code and then sign in with your Azure credentials.
 
@@ -187,43 +179,43 @@ monitor them.
  
   Password: +++@lab.CloudPortalCredential(User1).Password+++
 
- ![](./media/image30.jpeg)
+  ![](./media/image30.jpeg)
 
- ![](./media/image31.jpeg)
+  ![](./media/image31.jpeg)
 
- ![](./media/image32.jpeg)
+  ![](./media/image32.jpeg)
 
- ![](./media/image33.jpeg)
+  ![](./media/image33.jpeg)
 
 5.  Switch back Gtihub codespace tab and run below command to provision and deploy all the resources. It will prompt to select your Azure
     subscription. Enter **1** to select your subscription and press Enter.
 
- +++azd provision+++
+  +++azd provision+++
 
- ![](./media/image34.png)
+  ![](./media/image34.png)
 
 6.  Select location as **WestUS/eastus**. Then it will provision the resources in your account and deploy the latest code. If you get an
     error with deployment, changing the location (like to "westus") can help, as there may be availability constraints for some of the
     resources.
 
- ![](./media/image35.png)
+  ![](./media/image35.png)
 
 7.  Enter the resource group name below  and press enter.
 
    +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
- ![](./media/image36.png)
+  ![](./media/image36.png)
 
 8.  Deployment takes **20 - 30 minutes**. You can also check the status of deployment at the generated link or **Azure portal-> Resource
     group-> Deployments**.
 
- ![](./media/image37.png)
+  ![](./media/image37.png)
 
- ![](./media/image38.png)
+  ![](./media/image38.png)
 
- ![](./media/image39.png)
+  ![](./media/image39.png)
 
- ![](./media/image40.png)
+  ![](./media/image40.png)
 
 ### Task 4 : Deploy the application from Github
 
@@ -233,25 +225,25 @@ monitor them.
 
  >Note : Replace {Name of existing resource group} with your resource group name available under the Resources section in your VM.
 
- ![](./media/image41.png)
+  ![](./media/image41.png)
 
 2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
- +++azd deploy+++
+  +++azd deploy+++
 
- ![](./media/image42.png)
+  ![](./media/image42.png)
 
 3.  Click on the generated Endpoint URL
 
- ![](./media/image43.png)
+  ![](./media/image43.png)
 
 4.  Click on **Open** to open the external website.
 
- ![](./media/image44.png)
+  ![](./media/image44.png)
 
 5.  The app opens in a new tab.
 
- ![](./media/image45.png)
+  ![](./media/image45.png)
 
 ### Task 5 : Stream diagnostic logs
 
