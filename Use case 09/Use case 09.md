@@ -36,9 +36,9 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     -	**Resource Group** – The **Resource group** assigned to you. 
 
-  	>[!Alert] **Important:** Make sure you create all your resources under this Resource group
+  >[!Alert] **Important:** Make sure you create all your resources under this Resource group
 
-    ![](./media/Picture1.png)
+   ![](./media/Picture1.png)
   	
 3.	**Help** tab holds the Support information. The **ID** value here is the **Lab instance ID** which will be used during the lab execution.
  
@@ -134,11 +134,11 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     ![](./media/image12.jpeg)
 
-14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **xxxxxxx** with  random 7 alphabets to ensure uniqueness.
+14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **dgxxxxxxx** with  random 5 alphabets to ensure uniqueness.
 
-    ![](./media/Picture51.png)
+    ![](./media/pic1.png)
    	
-15.	Execute the below command to deploy the resources like Azure Cosmos DB workspace, Azure OpenAI in Azure. Replace the **< RG Name >** with the Resource group name from the **Resources** tab.
+16.	Execute the below command to deploy the resources like Azure Cosmos DB workspace, Azure OpenAI in Azure. Replace the **< RG Name >** with the Resource group name from the **Resources** tab.
 
     ![](./media/Picture22.png)
    	
@@ -153,6 +153,8 @@ Let us call this Username and password as Azure login credentials. We will use t
    ![](./media/image14.jpeg)
     
    ![](./media/image15.jpeg)
+
+   >[!Note] **Note:** If there is no update in the PowerShell after 15 to 20 minutes, check under Resource Group -> Deployments in the Azure portal or hit **Enter** in the **PowerShell** window.
 
 ### Task 2: Check the created resources in Azure
 
