@@ -154,7 +154,7 @@ Let us call this Username and password as Azure login credentials. We will use t
     
    ![](./media/image15.jpeg)
 
-   >[!Note] **Note:** If there is no update in the PowerShell after 15 to 20 minutes, check under Resource Group -> Deployments in the Azure portal or hit **Enter** in the **PowerShell** window.
+    >[!Note] **Note:** If there is no update in the PowerShell after 15 to 20 minutes, check under Resource Group -> Deployments in the Azure portal or hit **Enter** in the **PowerShell** window.
 
 ### Task 2: Check the created resources in Azure
 
