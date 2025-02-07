@@ -36,7 +36,7 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     -	**Resource Group** – The **Resource group** assigned to you. 
 
-  >[!Alert] **Important:** Make sure you create all your resources under this Resource group
+>[!Alert] **Important:** Make sure you create all your resources under this Resource group
 
    ![](./media/Picture1.png)
   	
