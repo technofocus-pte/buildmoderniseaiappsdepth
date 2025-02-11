@@ -126,7 +126,7 @@ Let us call this Username and password as Azure login credentials. We will use t
 13. Execute the below command replacing **\< Subscription id \>** with
     your subscription id.
 
-    +++Set-AzContext -SubscriptionId < Subscription id >+++
+    +++Set-AzContext -SubscriptionId @lab.CloudSubscription.Id+++
 
     >[!Note] **Note:** To get your subscription id, access it from the Resources tab in the below screenshot.
 
