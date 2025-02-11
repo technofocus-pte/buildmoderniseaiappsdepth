@@ -138,12 +138,12 @@ Let us call this Username and password as Azure login credentials. We will use t
 
     ![](./media/pic1.png)
    	
-16.	Execute the below command to deploy the resources like Azure Cosmos DB workspace, Azure OpenAI in Azure. Replace the **< RG Name >** with the Resource group name from the **Resources** tab.
+16.	Execute the below command to deploy the resources like Azure Cosmos DB workspace, Azure OpenAI in Azure. 
 
     ![](./media/Picture22.png)
    	
     ```
-   New-AzResourceGroupDeployment -ResourceGroupName < RG Name > -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
+   New-AzResourceGroupDeployment -ResourceGroupName @lab.CloudResourceGroup(ResourceGroup1).Name -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
     ```
 
     >[!Note] **Note:** The deployment will take around 10 to 15 minutes. 
