@@ -134,7 +134,7 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     ![](./media/image12.jpeg)
 
-14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **dgxxxxxxx** (line 34) with  random 5 alphabets to ensure uniqueness.
+14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **dgxxxxxxx** at line 34 with +++dg@lab.LabInstance.Id+++.
 
     ![](./media/pic1.png)
    	
