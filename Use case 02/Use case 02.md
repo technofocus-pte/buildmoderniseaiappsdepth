@@ -30,7 +30,8 @@ In this task, we will identify and understand the credentials that we will be us
     -	**Subscription** – This is the ID of the subscription assigned to you
     -	**Username** – The user id with which you need to login to the Azure services.
     -	**Password** – Password to the Azure login.
-Let us call this Username and password as Azure login credentials. We will use these creds wherever we mention Azure login credentials.
+
+  	Let us call this Username and password as Azure login credentials. We will use these creds wherever we mention Azure login credentials.
     
     -	**Resource Group** – The **Resource group** assigned to you. 
 
@@ -253,27 +254,27 @@ build and deploy action.
     
     ![](./media/image31.jpeg)
 
-6.  Once **Save** is clicked on, App Service commits a workflow file
+5.  Once **Save** is clicked on, App Service commits a workflow file
     into the chosen GitHub repository, in the .github/workflows
     directory.
 
-7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into your codespace.
+6.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into your codespace.
 
-   >[!NOte] **Note:** If you find test cases still running in the terminal, you can press Ctrl+C and then execute the above command.
+   >[!Note] **Note:** If you find test cases still running in the terminal, you can press Ctrl+C and then execute the above command.
 
-    ![](./media/image32.jpeg)
+   ![](./media/image32.jpeg)
 
-8.  Open **src/main/resources/application.properties** in the explorer.
+7.  Open **src/main/resources/application.properties** in the explorer.
     Quarkus uses this file to load Java properties.
 
-9.  Find the code (lines 10-11). This code sets the production variable
+8.  Find the code (lines 10-11). This code sets the production variable
     **%prod.quarkus.datasource.jdbc.url** to the app setting that the
     creation wizard for you. The **quarkus.package.type** is set to build an
     Uber-Jar, which you need to run in App Service.
 
     ![](./media/image33.jpeg)
 
-10.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
+9.  Open **.github/workflows/main_quarkuwebapp[lab instance id].yml** in
     the explorer. This file was created by the App Service create
     wizard.
 
