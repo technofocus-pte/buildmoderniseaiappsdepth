@@ -117,7 +117,7 @@ credentials. If you do not have, please create one from here
 
 9.  Run the below command to deploy the services to Azure, and build your container. Select the below values.
 
-+++azd provision+++
+  +++azd provision+++
 
 - Select an Azure location to use: East us/West US/France Central (Sometimes, East US might not be available, choose a different location and deploy. The ACP currently only allows whatever the Resource Group location is, France Central, East US and West US.) 
 
@@ -224,13 +224,13 @@ credentials. If you do not have, please create one from here
 
 3.  Enter the below prompt.
 
-``What is the seating capacity for Lumen in Seattle?``
+  ``What is the seating capacity for Lumen in Seattle?``
 
   ![](./media/image38.jpeg)
 
 4.  Enter the below prompt. Explore the app with different prompts.
 
-``is that bigger than Dogger stadium??``
+  ``is that bigger than Dogger stadium??``
 
   ![](./media/image39.jpeg)
 
