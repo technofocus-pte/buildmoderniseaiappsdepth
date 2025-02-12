@@ -46,7 +46,7 @@ credentials. If you do not have, please create one from here
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your Azure credentials available 
+1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your Azure credentials.
 
    - Username: +++@lab.CloudPortalCredential(User1).Username+++
      
