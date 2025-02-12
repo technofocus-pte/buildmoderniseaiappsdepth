@@ -425,7 +425,7 @@ In this task, you create a new Azure OpenAI service.
 8.  In the **Tags** tab, leave all the fields in the default state, and
     click on the **Next** button.
 
-    ![](./media/Picture2.jpeg)
+    ![](./media/Picture2.png)
 
 9.  In the **Review+submit** tab, once the Validation is Passed, click
     on the **Create** button.
