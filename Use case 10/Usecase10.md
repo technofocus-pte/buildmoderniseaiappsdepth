@@ -119,9 +119,9 @@ credentials. If you do not have, please create one from here
 
   +++azd provision+++
 
-- Select an Azure location to use: East us/West US/France Central (Sometimes, East US might not be available, choose a different location and deploy. The ACP currently only allows whatever the Resource Group location is, France Central, East US and West US.) 
+  - Select an Azure location to use: East us/West US/France Central (Sometimes, East US might not be available, choose a different location and deploy. The ACP currently only allows whatever the Resource Group location is, France Central, East US or West US.) 
 
-- Enter a value for the existingResourceGroupName infrastructure parameter: +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
+  - Enter a value for the existingResourceGroupName infrastructure parameter: +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
   ![](./media/image20.png)
 
