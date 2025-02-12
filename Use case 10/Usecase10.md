@@ -109,7 +109,7 @@ credentials. If you do not have, please create one from here
 
   ![](./media/image18.jpeg)
 
-8.  Run below command to Initialize the project in the current    directory. Enter the Environment name as ``cosmoschatapp`` and press Enter.
+8.  Run the command below to initialize the project in the current    directory. Enter the Environment name as ``cosmoschatapp`` and press Enter.
 
   +++azd init+++
 
@@ -117,18 +117,17 @@ credentials. If you do not have, please create one from here
 
 9.  Run the below command to deploy the services to Azure, and build your container. Select the below values.
 
-  +++azd provision+++
++++azd provision+++
 
 - Select an Azure location to use: East us/West US/France Central (Sometimes, East US might not be available, choose a different location and deploy. The ACP currently only allows whatever the Resource Group location is, France Central, East US and West US.) 
 
 - Enter a value for the existingResourceGroupName infrastructure parameter: +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-
   ![](./media/image20.png)
 
   ![](./media/image21.png)
 
-10. Wait for the resource to be provisioned completely. This process will take 5-10 min to create all the required resources.
+10. Wait for the resource to be provisioned completely. Creating all the required resources will take 5-10 min.
 
   ![](./media/image22.png)
 
@@ -144,13 +143,13 @@ credentials. If you do not have, please create one from here
 
 3.  You should see below resources
 
-- **Container**
+  - **Container**
 
-- **Container Registry**
+  - **Container Registry**
 
-- **Azure Cosmos Db account**
+  - **Azure Cosmos Db account**
 
-- **AureOpenAI**
+  - **AureOpenAI**
 
   ![](./media/image25.png)
 
@@ -175,29 +174,29 @@ credentials. If you do not have, please create one from here
 
   ![](./media/image30.png)
 
-9.  Click on the **Authorize** button under Github-Sign in to authenticate with your GitHub account. Authorize your Github account.
+9.  Click on the **Settings --> Deployment pane--> Authorize** button under Github-Sign in to authenticate with your GitHub account. Authorize your Github account.
 
 10. Select below values
 
-**Organization: your Github organization**
+  **Organization: your Github organization**
 
-**Repository:** chat-csharp-cosmos-db-nosql-openai
+  **Repository:** **chat-csharp-cosmos-db-nosql-openai-CSTesting**
 
-**Branch :** main
+  **Branch :** main
 
   ![](./media/image31.png)
 
-11. Scroll down to **Registry settings** and enter below values and then click on **Start continuous deployment** button.
+11. Scroll down to **Registry settings** enter the below values and then click on **Start continuous deployment** button.
 
-- Repository source: **Docker Hub or other registries.**
+  - Repository source: **Docker Hub or other registries.**
 
-- Login server URL : Your Login server is copied from the Container registry (step#5)
+  - Login server URL : Your Login server is copied from the Container registry (step#5)
 
-- Username : your password from the container registry (step #5)
+  - Username : your password from the container registry (step #5)
 
-- Password : Your password from the container registry (step # 5)
+  - Password : Your password from the container registry (step # 5)
 
-  ![](./media/image32.png)
+    ![](./media/image32.png)
 
 12. Click on the Workflow file link. It opens a new tab with Github.
 
