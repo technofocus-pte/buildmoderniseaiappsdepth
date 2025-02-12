@@ -129,10 +129,6 @@ Let us call this Username and password as Azure login credentials. We will use t
 13. Execute the below command to set the Subscription ID.
 
     +++Set-AzContext -SubscriptionId @lab.CloudSubscription.Id+++
-
-    >[!Note] **Note:** To get your subscription id, access it from the Resources tab in the below screenshot.
-
-    ![](./media/Picture52.png)
     
     ![](./media/image12.jpeg)
 
