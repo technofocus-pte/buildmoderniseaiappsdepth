@@ -246,20 +246,24 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
 2.  This code block creates a new string variable named
     \_systemPromptText with a static block of text to send to the AI
     assistant before each prompt.
-
+    
+    ```nocopy
     private readonly string _systemPrompt = @"
     You are an AI assistant that helps people find information.
     Provide concise answers that are polite and professional." + Environment.NewLine;
+    ```
 
-3.  This code block creates another new string variable named
+4.  This code block creates another new string variable named
     \_summarizePrompt with a static block of text to send to the AI
     assistant with instructions on how to summarize a conversation.
 
+    ```nocopy
     private readonly string _summarizePrompt = @"
     Summarize this prompt in one or two words to use as a label in a button on a web page.
     Do not use any punctuation." + Environment.NewLine;
-
-4.  This code block creates a new instance of the OpenAIClient class
+    ```
+    
+5.  This code block creates a new instance of the OpenAIClient class
     using the endpoint to build a Uri and the key to build an
     AzureKeyCredential.
 
@@ -306,9 +310,11 @@ completion in this context).
     variable (\_client) is invoked Asynchronously. The result is stored
     in a variable named completions of type ChatCompletions.
 
+    ```nocopy
     Response<ChatCompletions> completionsResponse = await_client.GetChatCompletionsAsync(options);
     ChatCompletions completions = completionsResponse.Value;
-
+    ```
+    
 3.  Finally, the below block of code, returns a tuple as the result of
     the GetChatCompletionAsync method with the content of the completion
     as a string, the number of tokens associated with the prompt, and
