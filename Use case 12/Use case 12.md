@@ -63,6 +63,16 @@ Let us call this Username and password as Azure login credentials. We will use t
 
 ## Exercise 1: Provision an Azure Database for PostgreSQL Flexible Server
 
+### Task 0: Register Resource Providers
+
+1.	Login to the **Azure portal** - +++https://portal.azure.com+++ using your Azure login credentials.
+   
+2.	Click on the **Subscriptions** and select **Resource Providers** under **Settings** from the left pane.
+   
+3.	Search for +++**Microsoft.DBforPostgreSQL**+++ and click on **Register** to Register this Resource Provider.
+   
+    ![](./media/pic8.jpeg)
+
 ### Task 1: Provision an Azure Database for PostgreSQL Flexible Server
 
 1.  Open a web browser and navigate to the +++https://portal.azure.com+++
