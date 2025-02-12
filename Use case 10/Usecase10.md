@@ -46,9 +46,12 @@ credentials. If you do not have, please create one from here
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your Azure credentials available in **Resource** tab of your VM.
+1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your Azure credentials available 
 
-  ![](./media/image3.png)
+   - Username: +++@lab.CloudPortalCredential(User1).Username+++
+     
+   - Password: +++@lab.CloudPortalCredential(User1).Password+++
+
 
 2.  On the Home page, click on the **Subscription** tile.
 
