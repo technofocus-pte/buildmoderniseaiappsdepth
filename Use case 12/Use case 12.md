@@ -478,21 +478,26 @@ model deployment that you can employ.
     navigation menu, scroll down and click on **Go to Azure OpenAI
     Studio** button as shown in the below image.
 
-    ![](./media/Picture3.png)
+    ![](./media/image51.png)
+ 
+    ![](./media/image52.png)
 
-    >[!Alert] **Important:** If you’re in the new Azure OpenAI Studio, switch to the
-    old look of Azure OpenAI Studio.
+2.  On the **Azure AI Foundry | Azure Open AI Service** homepage,
+    navigate to **Components** section and click on **Deployments**.
 
-2.  In Azure OpenAI Studio, select the **Create new deployment**, and
-    select **+ Create new deployment** from the toolbar.
+3.  In the **Deployments** window, drop down the **+Deploy model** and
+    select **Deploy base model**
 
-    ![](./media/image47.jpeg)
+    ![](./media/image53.png)
 
-    ![](./media/image48.jpeg)
+4.  In the **Select a model** dialog box, navigate and carefully select
+    **text-embedding-ada-002** , then click on **Confirm** button.
 
-3.  In the **Deploy model** dialog, set the following and
-    select **Create** to deploy the model.
+     ![](./media/image54.png)
 
+5.  In the **Deploy model** dialog, set the following and
+    select **Create** to deploy the model.
+    
     - **Select a model**: Choose **text-embedding-ada-002** from the
       list.
 
@@ -500,15 +505,15 @@ model deployment that you can employ.
 
     - **Deployment name**: Enter +++**embeddings**+++
 
-    ![](./media/image49.jpeg)
-    
-    ![](./media/image50.jpeg)
+     ![](./media/image55.png)
+ 
+     ![](./media/image56.png)
 
-4.  In the **Deployments** window, copy **Deployment name** and paste
+7.  In the **Deployments** window, copy **Deployment name** and paste
     them in a notepad (as shown in the image), and then **save** the
     notepad to use the information in the upcoming task.
 
-    ![](./media/image51.jpeg)
+    ![](./media/image57.png)
 
 ## Exercise 4: Install and configure the azure_ai extension
 
