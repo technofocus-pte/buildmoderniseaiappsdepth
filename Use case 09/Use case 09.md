@@ -113,7 +113,10 @@ Let us call this Username and password as Azure login credentials. We will use t
 
 10.  **Close** the PowerShell and **open** it again.
 
-11.  Redo the **login to Azure** step of executing Connect-AzAccount.
+11.  Execute the below command and select your Azure login if prompted,
+    to login to Azure.
+
+    +++Connect-AzAccount+++
 
 12. Execute the below commands to navigate to the **LabFiles** folder.
 
