@@ -98,7 +98,7 @@ Let us call this Username and password as Azure login credentials. We will use t
 
 7.	Replace the Resource group Name in the command below with the assigned Resource group and execute the command.
 
-  	+++RG_NAME=<Resource group Name>+++
+  	+++RG_NAME= < Resource group Name >+++
 
     
     ![](./media/Picture42.png)
@@ -106,7 +106,7 @@ Let us call this Username and password as Azure login credentials. We will use t
 8.  In the database name, replace the {SUFFIX} token with your **Lab instance ID**, such as your initials, to ensure the database server name is
     globally unique.
 
-    +++DATABASE_NAME=pgsql-flex-{SUFFIX}+++
+    +++DATABASE_NAME=pgsql-flex-@lab.LabInstance.Id+++
 
     ![](./media/image7.jpeg)
 
@@ -222,14 +222,16 @@ with data for use in the lab.
     JSON files in a public storage account.
 
     +++\COPY temp_calendar (data) FROM PROGRAM 'curl https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/calendar.json'+++
+    
     +++\COPY temp_listings (data) FROM PROGRAM 'curl https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/listings.json'+++
+    
     +++\COPY temp_reviews (data) FROM PROGRAM 'curl https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/reviews.json'+++
 
     ![](./media/image22.jpeg)
     
     ![](./media/image23.jpeg)
 
-3.  Run the following command to create the tables for storing data in
+4.  Run the following command to create the tables for storing data in
     the shape used by this lab:
 
     ```
@@ -277,7 +279,7 @@ with data for use in the lab.
 
     ![](./media/image25.jpeg)
 
-4.  Finally, run the following **INSERT INTO** statements to load data
+5.  Finally, run the following **INSERT INTO** statements to load data
     from the temporary tables to the main tables, extracting data from
     the JSON data field into individual columns:
 
@@ -408,7 +410,7 @@ In this task, you create a new Azure OpenAI service.
 
     | **Subscription** | Select **Azure subscription** |
     |:-----|:----|
-    | **Resource group** | Select resource group **rg-postgresql-labs**(which you have created in Ex1> Task 1) |
+    | **Resource group** | Select your assigned resource group|
     | **Region** | Select West US |
     | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++(Replace **XXXX** with your **Lab instance ID**) |
     | **Pricing tier** | Select Standard S0 |    
