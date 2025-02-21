@@ -45,9 +45,9 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     -	**Resource Group** – The **Resource group** assigned to you. 
 
-  	>[!Alert] **Important:** Make sure you create all your resources under this Resource group
+>[!Alert] **Important:** Make sure you create all your resources under this Resource group
 
-    ![](./media/Picture1.png)
+![](./media/Picture1.png)
   	
 3.	**Help** tab holds the Support information. The **ID** value here is the **Lab instance ID** which will be used during the lab execution.
  
