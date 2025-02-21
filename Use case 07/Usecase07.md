@@ -34,26 +34,24 @@ performing a vector cosine distance search.
     a new Cloud Shell pane at the bottom of your browser window.
     Select **Bash**.
 
-![A screenshot of a computer Description automatically
-generated](./media/image1.jpeg)
+    ![](./media/image1.jpeg)
 
 3.  Select **No storage account required** radio button, and select your
     subscription and then click on **Apply**.
 
-![](./media/image2.png)
+    ![](./media/image2.png)
 
 4.  At the Cloud Shell prompt, run the below command to clone the project
 
 ``git clone https://github.com/technofocus-pte/postgresql-case``
 
-![A screenshot of a computer Description automatically
-generated](./media/image3.jpeg)
+    ![](./media/image3.jpeg)
 
 5.  Navigate to the project folder.
 
-``cd postgresql-case``
+    ``cd postgresql-case``
 
-![](./media/image4.jpeg)
+    ![](./media/image4.jpeg)
 
 6.  Next, you run three commands to define variables to reduce redundant typing when using Azure CLI commands to create Azure resources. The
     variables represent the name to assign to your resource group (RG_NAME), the Azure region (REGION) into which resources will be
@@ -61,80 +59,80 @@ generated](./media/image3.jpeg)
 
 7.  In the first command, the region assigned to the corresponding variable is eastus or westus, **[but you can replace it with a
     location of your preference.]{.mark}** However, if replacing the  default, you must select another [Azure region that supports
-    abstractive summarization]{.underline} to ensure you can complete all of the tasks in the modules in this learning path.
+    abstractive summarization] to ensure you can complete all of the tasks in the modules in this learning path.
 
-+++REGION=westus+++
+    +++REGION=westus+++
 
 8.  The following command assigns the existing resource group name to be used for the resource group that will house all the resources used
     in this exercise.
 
-+++RG_NAME=@lab.CloudResourceGroup(ResourceGroup1).Namee+++
+    +++RG_NAME=@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-![](./media/image5.png)
+    ![](./media/image5.png)
 
 9.  The final command randomly generates a password for the PostgreSQL admin login. **Make sure you copy it** to a safe place to use later
     to connect to your PostgreSQL flexible server.
 
-```
-a=()
-for i in {a..z} {A..Z} {0..9}; 
-    do
-    a[$RANDOM]=$i
-done
-ADMIN_PASSWORD=$(IFS=; echo "${a[*]::18}")
-echo "Your randomly generated PostgreSQL admin user's password is:"
-```
+    ```
+    a=()
+    for i in {a..z} {A..Z} {0..9}; 
+        do
+        a[$RANDOM]=$i
+    done
+    ADMIN_PASSWORD=$(IFS=; echo "${a[*]::18}")
+    echo "Your randomly generated PostgreSQL admin user's password is:"
+    ```
 
-+++echo $ADMIN_PASSWORD+++
+    +++echo $ADMIN_PASSWORD+++
 
 
-![](./media/image6.jpeg)
+    ![](./media/image6.jpeg)
 
 ### Task 1: Assign Cognitive Services Contributor
 
 1.  Open a new tab and go to ``https://portal.azure.com``.Sign in with your Azure credentials and then click
     on **Subscription** tile.
 
-!](./media/image7.jpeg)
+    ![](./media/image7.jpeg)
 
 2.  Click on the subscription name.
 
-![](./media/image8.png)
+    ![](./media/image8.png)
 
 3.  Click on Access Control (IAM) from the left navigation menu.Click **Add** and select **Add role assignment.**
 
-![](./media/image9.png)
+    ![](./media/image9.png)
 
 4.  Search for ``Cognitive Services Contributor`` and select it and  then click on **Next** button.
 
-![](./media/image10.jpeg)
+    ![](./media/image10.jpeg)
 
 5.  Select **User, group or service principal** and click on the **select member** link. Search for your Azure subscription
     account and select it. Finally, click on **Select** button.
 
-![](./media/image11.png)
+    ![](./media/image11.png)
 
 6.  Click on the **Review + assign** button.
 
-![](./media/image12.png)
+    ![](./media/image12.png)
 
 7.  Click on the **Review + assign** button again.
 
-![](./media/image13.png)
+    ![](./media/image13.png)
 
 ### Task 2 : Run Bicep deployment script to provision Azure resources
 
 1.  Switch back to the 1st tab of Azure portal with Azure CLI to execute a Bicep deployment script to provision Azure resources in your
     resource group: Deployment takes 3 - 5min
 
-+++cd+++
+    +++cd+++
 
-+++az deployment group create --resource-group $RG_NAME --template-file "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
+    +++az deployment group create --resource-group $RG_NAME --template-file "postgresql-case/Allfiles/Labs/Shared/deploy.bicep" --parameters
 restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD+++
 
-![](./media/image14.jpeg)
+    ![](./media/image14.jpeg)
 
-![](./media/image15.jpeg)
+    ![](./media/image15.jpeg)
 
 2.  The Bicep deployment script provisions the Azure services required to complete this exercise into your resource group. The resources
     deployed include an Azure Database for PostgreSQL - Flexible Server.You can check resources in your resource group.
@@ -143,23 +141,23 @@ restore=false adminLogin=pgAdmin adminLoginPassword=$ADMIN_PASSWORD+++
 
 - **Azure AI Language service.**
 
-![](./media/image16.png)
+    ![](./media/image16.png)
 
 3.  Click on Open AI resource
 
-![](./media/image17.png)
+    ![](./media/image17.png)
 
 4.  Click on **Keys and Endpoint** under **Resource Management** from left navigation menu. Make a note of Key 1 and endpoint to use them
     in Task 5
 
-![](./media/image18.png)
+    ![](./media/image18.png)
 
 5.  The Bicep script also performs some configuration steps, such as adding the azure_ai and vector extensions to the PostgreSQL
     server's *allowlist* (via the azure.extensions server parameter), creating a database named rentals on the server, and adding a
     deployment named embedding using the **text-embedding-ada-002**
     model to your Azure OpenAI service.
 
-![](./media/image19.jpeg)
+    ![](./media/image19.jpeg)
 
 6.  The deployment typically takes several minutes to complete. You can monitor it from the Cloud Shell or navigate to
     the **Deployments** page for the resource group you created above   and observe the deployment progress there.
@@ -172,7 +170,7 @@ In this task, you connect to the rentals database on your Azure Database for Pos
 
 1.  In the Azure portal ``https://portal.azure.com``, navigate to your newly created Azure Database for PostgreSQL - Flexible Server.
 
-![](./media/image20.png)
+    ![](./media/image20.png)
 
 2.  On the sidebar, select **Server Parameters**. Search for the **azure.extensions** parameter.
 
