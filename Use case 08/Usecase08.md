@@ -92,7 +92,7 @@ generated](./media/image6.jpeg)
 ![](./media/image11.png)
 
 4.  Switch back to GitHub Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the
-    Environment name as +++ucragpgpy@lab.LabInsanceId+++ and press Enter.
+    Environment name as +++ucragpgpy@lab.LabInstance.Id+++ and press Enter.
 
 Note: The env name should be unique
 
