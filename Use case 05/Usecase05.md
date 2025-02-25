@@ -150,7 +150,7 @@ monitor them.
 
  ![](./media/image27.jpeg)
 
-2.  It will prompt you to provide an environment name - +++flask-app@lab.LabInsanceId()+++ , which will
+2.  It will prompt you to provide an environment name - +++flask-app@lab.LabInstance.Id+++ , which will
     later be used in the name of the deployed resources.
 
   ![](./media/image28.jpeg)
