@@ -181,6 +181,8 @@ credentials. If you do not have, please create one from here
 
   ![](./media/image46.png)
 
+  ![](./media/image47.png)
+
 11. Select below values
 
   **Organization: your Github organization**
