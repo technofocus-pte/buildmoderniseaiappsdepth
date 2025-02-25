@@ -84,13 +84,13 @@ Azure development CLI templates to deploy apps
 
 8.  Run below command for data migration
 
-  +++python3 -m k db upgrade+++
+  +++python3 -m flask db upgrade+++
 
   ![](./media/image17.jpeg)
 
 9.  Run the below command to Start the development server
 
- +++python3 -m  flask run+++
+ +++python3 -m flask run+++
 
  ![](./media/image18.jpeg)
 
