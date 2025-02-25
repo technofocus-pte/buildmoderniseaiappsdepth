@@ -46,7 +46,7 @@ credentials. If you do not have, please create one from here
 
 ### Task 2 : Register Service provider
 
-1.  Open a browser and go to ``https://portal.azure.com`` and sign in with your Azure credentials.
+1.  Open a browser and go to +++https://portal.azure.com+++ and sign in with your Azure credentials.
 
    - Username: +++@lab.CloudPortalCredential(User1).Username+++
      
@@ -74,7 +74,7 @@ credentials. If you do not have, please create one from here
 
 ### Task 3: Provision Services and application to Azure
 
-1.  Open a browser and go to ``https://github.com`` and sign in with your Github account. Search for the below repo
+1.  Open a browser and go to +++https://github.com+++ and sign in with your Github account. Search for the below repo
 
   ![](./media/image11.jpeg)
 
@@ -112,7 +112,7 @@ credentials. If you do not have, please create one from here
 
   ![](./media/image18.jpeg)
 
-8.  Run the command below to initialize the project in the current    directory. Enter the Environment name as +++cosmoschatapp@lab.LabInsanceId+++ and press Enter.
+8.  Run the command below to initialize the project in the current    directory. Enter the Environment name as +++cosmoschatapp@lab.LabInstance.Id+++ and press Enter.
 
   +++azd init+++
 
