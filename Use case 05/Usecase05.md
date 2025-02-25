@@ -98,13 +98,13 @@ Azure development CLI templates to deploy apps
 
 8.  Run below command for data migration
 
-  +++python3 -m flask db upgrade+++
+  +++python3 -m k db upgrade+++
 
   ![](./media/image17.jpeg)
 
 9.  Run the below command to Start the development server
 
- +++python3 -m flask run+++
+ +++python3 -m k run+++
 
  ![](./media/image18.jpeg)
 
@@ -164,7 +164,7 @@ monitor them.
 
  ![](./media/image27.jpeg)
 
-2.  It will prompt you to provide an environment name (like ``flask-appXXXX`` (XXXX can be a unique number)), which will
+2.  It will prompt you to provide an environment name (like ``flask-app@lab.LabInsanceId`` ), which will
     later be used in the name of the deployed resources.
 
   ![](./media/image28.jpeg)
