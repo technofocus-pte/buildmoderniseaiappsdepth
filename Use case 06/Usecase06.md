@@ -107,7 +107,7 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 ![](./media/image21.png)
 
 4.  To create an environment for Azure resources, run the following Azure Developer CLI command.It asks you to enter the environment name
-    .Enter any name of your choice and press enter (eg :+++ragpgpy+++)
+    .Enter any name of your choice and press enter (eg :+++ragpgpy@lab.LabInsanceId+++)
 
 **Note:** When creating an environment, ensure that the name consists of lowercase letters.
 
@@ -184,7 +184,7 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 
 ![](./media/image37.png)
 
-3.  In the **RAG on database |OpenAI+PoastgreSQL** web app page, click on **Climbing gear cheaper than \\$30** button and observe the
+3.  In the **RAG on database |OpenAI+PoastgreSQL** web app page, click on **Climbing gear cheaper than $30** button and observe the
     output
 
 ![](./media/image38.png)
