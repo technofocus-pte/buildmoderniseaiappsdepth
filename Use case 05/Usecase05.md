@@ -90,7 +90,7 @@ Azure development CLI templates to deploy apps
 
 9.  Run the below command to Start the development server
 
- +++python3 -m k run+++
+ +++python3 -m  flask run+++
 
  ![](./media/image18.jpeg)
 
