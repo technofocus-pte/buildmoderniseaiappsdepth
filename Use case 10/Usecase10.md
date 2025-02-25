@@ -177,9 +177,11 @@ credentials. If you do not have, please create one from here
 
   ![](./media/image30.png)
 
-9.  Click on the **Settings --> Deployment pane--> Authorize** button under Github-Sign in to authenticate with your GitHub account. Authorize your Github account.
+9.  Click on the **Settings --> Deployment pane--> Sign in with Github** button under Github-Sign in to authenticate with your GitHub account. Authorize your Github account.
 
-10. Select below values
+  ![](./media/image46.png)
+
+11. Select below values
 
   **Organization: your Github organization**
 
