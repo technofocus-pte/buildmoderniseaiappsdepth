@@ -31,27 +31,15 @@ The **requirements.txt** has the following packages, all used by a typical dat
 
  Password: +++@lab.CloudPortalCredential(User1).Password+++
 
-2.  On the Home page of the Azure portal, click on the **Resource groups** tile.
-
- ![](./media/image3.png)
-
-3.  Copy the resource group name and save it in Notepad to use the next task to deploy the required resources in this resource group.
-
- ![](./media/image4.png)
-
-4.  On the top navigation, click on Home.
-
- ![](./media/image5.png)
-
-5.  Click on **Subscriptions** tile.
+2.  Click on **Subscriptions** tile.
 
  ![](./media/image6.png)
 
-6.  Click on the subscription name.
+3.  Click on the subscription name.
 
  ![](./media/image7.png)
 
-7.  Expand Settings from the left navigation menu. Click on **Resource providers**, enter `Microsoft.AlertsManagement` and select i,t, and then click **Register**.
+4.  Expand Settings from the left navigation menu. Click on **Resource providers**, enter `Microsoft.AlertsManagement` and select i,t, and then click **Register**.
 
   ![](./media/image8.png)
 
