@@ -112,7 +112,7 @@ credentials. If you do not have, please create one from here
 
   ![](./media/image18.jpeg)
 
-8.  Run the command below to initialize the project in the current    directory. Enter the Environment name as ``cosmoschatapp`` and press Enter.
+8.  Run the command below to initialize the project in the current    directory. Enter the Environment name as +++cosmoschatapp@lab.LabInsanceId+++ and press Enter.
 
   +++azd init+++
 
