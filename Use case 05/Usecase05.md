@@ -31,8 +31,6 @@ The **requirements.txt** has the following packages, all used by a typical dat
 
  Password: +++@lab.CloudPortalCredential(User1).Password+++
 
- ![](./media/image2.png)
-
 2.  On the Home page of the Azure portal, click on the **Resource groups** tile.
 
  ![](./media/image3.png)
