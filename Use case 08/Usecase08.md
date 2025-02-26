@@ -50,36 +50,35 @@ The application is made from multiple components, including:
 1.  Open your browser, navigate to the address bar, type or paste the following
     URL: ``https://github.com/technofocus-pte/azure-search-openai-javascr-CSTestingipt.git`` and sign in with your Github account.
 
-![d](./media/image3.jpeg)
+  ![](./media/image3.jpeg)
 
 2.  Click on **Fork**.
 
-![](./media/image4.jpeg)
+  ![](./media/image4.jpeg)
 
 3.  Enter the repository name and then click on **Create fork**.
 
-![](./media/image5.jpeg)
+  ![](./media/image5.jpeg)
 
 4.  Click on **Code -> Codespaces -> +**
 
-![A screenshot of a computer Description automatically
-generated](./media/image6.jpeg)
+  ![](./media/image6.jpeg)
 
 5.  Wait for the environment to set up. It takes 5-10 minutes.
 
-![](./media/image7.jpeg)
+  ![](./media/image7.jpeg)
 
 ### Task 2: Provision required services to build and deploy chat app to Azure
 
 1.  Run the following command on the Terminal. Copy the code and press enter.
 
-+++azd auth login+++
+  +++azd auth login+++
 
-![](./media/image8.png)
+  ![](./media/image8.png)
 
 2.  The default browser opens to enter a code. Enter the copied code and click **Next**.
 
-![](./media/image9.png)
+  ![](./media/image9.png)
 
 3.  Sign in with your Azure credentials.
 
@@ -87,26 +86,26 @@ generated](./media/image6.jpeg)
 
   Password: +++@lab.CloudPortalCredential(User1).Password+++
 
-![](./media/image10.png)
+  ![](./media/image10.png)
 
-![](./media/image11.png)
+  ![](./media/image11.png)
 
 4.  Switch back to GitHub Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the
     Environment name as +++ucragpgpy@lab.LabInstance.Id+++ and press Enter.
 
 Note: The env name should be unique
 
-+++azd env new+++
+  +++azd env new+++
 
-![](./media/image12.png)
+  ![](./media/image12.png)
 
 5.  Run the below command to provision the services to Azure, build your container.
 
-![](./media/image13.png)
+  ![](./media/image13.png)
 
 6.  Select the below values.
 
-+++azd provision+++
+  +++azd provision+++
 
 - **Select an Azure Subscription to use** : select your subscription
 
@@ -115,69 +114,69 @@ Note: The env name should be unique
 
 - Select existing resource group: Your existing resource group (eg **ResourceGroup1 )**
 
-![](./media/image14.png)
+  ![](./media/image14.png)
 
 7.  Wait for the resource to be provisioned completely. This process will take 5-10 min to create all the required resources.
 
-![](./media/image15.png)
+  ![](./media/image15.png)
 
 ### Task 3: Deploy the chat app and explore it
 
 1. Run the below command to deploy the app.
 
-+++azd deploy+++
+  +++azd deploy+++
 
-![](./media/image16.png)
+  ![](./media/image16.png)
 
 2. Wait for the deployment.It takes < 5 minutes.
 
-![](./media/image17.png)
+  ![](./media/image17.png)
 
 3. Click on the endpoint url generated.
 
-![](./media/image18.png)
+  ![](./media/image18.png)
 
 4. Click on **Open**.
 
-![](./media/image19.png)
+  ![](./media/image19.png)
 
 5. It opens the app in a new tab.
 
-![](./media/image20.png)
+  ![](./media/image20.png)
 
 6. Select **How to search and book rental?** Container and then click on the enter button next to the text box.
 
-![](./media/image21.png)
+  ![](./media/image21.png)
 
 ### Task 4: Clean up all the resources
 
 1.  Switch back to **Azure portal -> Resource group-> Resource group name.**
 
-![](./media/image22.png)
+  ![](./media/image22.png)
 
 2.  Select all the resources and then click on Delete as shown in the below image. (**DO NOT DELETE** resource group)
 
-![](./media/image23.png)
+  ![](./media/image23.png)
 
 3.  Type ``delete`` on the text box and then click on **Delete**.
 
-![](./media/image24.png)
+  ![](./media/image24.png)
 
 4.  Confirm the deletion by clicking on **Delete**.
 
-![](./media/image25.png)
+  ![](./media/image25.png)
 
 5.  Switch back to the Github portal tab and refresh the page.
 
-![](./media/image26.png)
+  ![](./media/image26.png)
 
 6.  Click on Code , select the branch created for this lab, and click on **Delete**.
 
-![](./media/image27.png)
+  ![](./media/image27.png)
 
 7.  Confirm the branch deletion by clicking on **Delete** button.
 
-![](./media/image28.png)
+  ![](./media/image28.png)
 
 ### Summary:
 This use case thought you , deploying a chat application for the Retrieval Augmented Generation pattern running on Azure, using Azure AI Search for retrieval and Azure OpenAI and LangChain large language models (LLMs) to power ChatGPT-style and Q&A experiences
