@@ -112,7 +112,9 @@ Note: The env name should be unique
 - **Select an Azure location to use** : **East us2/west us2**(Sometimes, East US might not be available, choose a location from the
   near to you.)
 
-- Select existing resource group: Your existing resource group (eg **ResourceGroup1 )**
+- Select existing resource group: Your existing resource group
+  
+    +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
   ![](./media/image14.png)
 
