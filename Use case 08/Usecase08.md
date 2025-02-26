@@ -124,7 +124,11 @@ Note: The env name should be unique
 
 ### Task 3: Deploy the chat app and explore it
 
-1. Run the below command to deploy the app.
+1. Run the below command to set the resource group environment variable.
+
+   +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup1).Name+++
+   
+3. Run the below command to deploy the app.
 
   +++azd deploy+++
 
