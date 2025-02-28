@@ -163,7 +163,7 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 
   ![](./media/image32.png)
 
-15. Click on **Open**. It opens a new tab with the app. Refresh page if you see **"This page isn’t working" **error.If still problem persist then re-run +++azd deploy++ command open Endpoint link.
+15. Click on **Open**. It opens a new tab with the app. Refresh page if you see **"This page isn’t working"** error.If still problem persist then re-run +++azd deploy++ command open Endpoint link.
 
   ![](./media/image33.png)
 
