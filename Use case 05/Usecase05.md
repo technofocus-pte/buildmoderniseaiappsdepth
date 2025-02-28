@@ -205,7 +205,7 @@ monitor them.
 
 ### Task 4 : Deploy the application from Github
 
-1.  Run the below command to set the resource group environment variable.
+1.  Press Ctrl + C  and run the below command to set the resource group environment variable.
 
    +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup1).Name+++
 
@@ -252,7 +252,7 @@ return render_template('index.html', restaurants=restaurants)
 
     ![](./media/image47.png)
 
-3.  Under **Application logging**, make sure **File System** selected.Select it if required.I n the top menu, select **Save**.
+3.  Under **Application logging**, make that that the toggle is set to **File System**. If it is not then select it and then select **Save**.
 
     ![](./media/image48.png)
 
