@@ -180,7 +180,7 @@ monitor them.
 
   ![](./media/image34.png)
 
-6.  Select location as **WestUS/eastus**. Then it will provision the resources in your account and deploy the latest code. If you get an
+6.  Select location as **WestUS**. Then it will provision the resources in your account and deploy the latest code. If you get an
     error with deployment, changing the location (like to "westus") can help, as there may be availability constraints for some of the
     resources.
 
