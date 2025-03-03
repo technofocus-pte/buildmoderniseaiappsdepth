@@ -61,7 +61,7 @@ performing a vector cosine distance search.
     location of your preference.]{.mark}** However, if replacing the  default, you must select another [Azure region that supports
     abstractive summarization] to ensure you can complete all of the tasks in the modules in this learning path.
 
-    +++REGION=westus+++
+    +++REGION=@lab.CloudResourceGroup(ResourceGroup1).Location+++
 
 8.  The following command assigns the existing resource group name to be used for the resource group that will house all the resources used
     in this exercise.
