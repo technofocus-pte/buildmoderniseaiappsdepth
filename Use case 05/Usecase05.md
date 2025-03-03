@@ -180,9 +180,7 @@ monitor them.
 
   ![](./media/image34.png)
 
-6.  Select location as **WestUS**. Then it will provision the resources in your account and deploy the latest code. If you get an
-    error with deployment, changing the location (like to "westus") can help, as there may be availability constraints for some of the
-    resources.
+6.  Select location as **@lab.CloudResourceGroup(ResourceGroup1).Location**. Then it will provision the resources in your account and deploy the latest code. 
 
   ![](./media/image35.png)
 
