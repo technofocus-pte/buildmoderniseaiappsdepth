@@ -109,8 +109,7 @@ Note: The env name should be unique
 
 - **Select an Azure Subscription to use** : select your subscription
 
-- **Select an Azure location to use** : **East us2/west us2**(Sometimes, East US might not be available, choose a location from the
-  near to you.)
+- **Select an Azure location to use** : @lab.CloudResourceGroup(ResourceGroup1).Location
 
 - Select existing resource group: Your existing resource group
   
