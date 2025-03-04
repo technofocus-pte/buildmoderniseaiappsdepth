@@ -121,7 +121,7 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 
   ![](./media/image23.png)
 
-6.  When prompted, select a **subscription** to create the resources and select the region of your resource group. We can use @lab.CloudResourceGroup(ResourceGroup1).Location.
+6.  When prompted, select a **subscription** to create the resources and select the region of your resource group. Select  **@lab.CloudResourceGroup(ResourceGroup1).Location**.
 
   ![](./media/image24.png)
 
