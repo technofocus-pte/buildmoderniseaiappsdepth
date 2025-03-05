@@ -192,7 +192,7 @@ correct account.
 
     | **Property**   |  **Description**  |
     |:-------|:--------|
-    |  Database server name  | **dotnetappsqldbdbserverXX** (Replace **XX** with your **Lab instance ID**)   |
+    |  Database server name  | **dotnetappsqldbdbserver@lab.LabInstance.Id**   |
     |  Administrator username  |   +++sqladmin+++ |
     |  Administrator password  |  +++PassWord98+++  |
 
