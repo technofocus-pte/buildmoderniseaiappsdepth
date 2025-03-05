@@ -302,7 +302,7 @@ The dialog is already filled with your computer's public IP address.
 
     ![](./media/image41.jpeg)
 
-5.  View the contents of the table.
+5.  View the contents of the table. The data added from the app UI should get listed here.
 
     ![](./media/image42.jpeg)
 
