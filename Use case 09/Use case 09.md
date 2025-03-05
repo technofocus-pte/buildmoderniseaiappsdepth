@@ -132,13 +132,13 @@ Let us call this Username and password as Azure login credentials. We will use t
     
     ![](./media/image12.jpeg)
 
-14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **dgxxxxxxx** at line 34 with +++dg@lab.LabInstance.Id+++.
+14.	Open the file **azuredeploy.bicep** in the path **C:\LabFiles\Build a Chat bot\Labs\deploy**, and replace the letters **dgxxxxxxx** at line 34 with +++dg@lab.LabInstance.Id+++. At line **73**, update the version as +++**0125**+++.
 
     ![](./media/pic1.png)
+
+    ![](./media/img41.png)
    	
 16.	Execute the below command to deploy the resources like Azure Cosmos DB workspace, Azure OpenAI in Azure. 
-
-    ![](./media/Picture22.png)
    	
     ```
    New-AzResourceGroupDeployment -ResourceGroupName @lab.CloudResourceGroup(ResourceGroup1).Name -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
