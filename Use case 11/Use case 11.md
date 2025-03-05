@@ -62,6 +62,10 @@ template to Azure with both of these accounts.
 
 ### Task 1: Deploy infrastructure from template
 
+1.  Open the file from the path **C:\Labfiles\Build and Test a custom chat application Using Azure Cosmos DB and AzureOpenAI** and update the Azure OpenAI version at line 96 to be +++0125+++. **Save** the file.
+
+    ![](./media/img42.png)
+    
 1.  Open a new browser and enter the following URL in the address
     bar: +++https://portal.azure.com/+++ to open the Azure Portal.
 
@@ -178,7 +182,7 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
 
 ### Task 3: Run the Docker
 
-1.  In your Windows search box, type Docker , then click on **Docker
+1.  In your Windows search box, type +++Docker+++ , then click on **Docker
     Desktop**.
 
     ![](./media/image23.jpeg)
@@ -206,10 +210,6 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
 
     ![](./media/image27.jpeg)
 
-5.  If there is an already open terminal, delete it.
-
-    ![](./media/image28.jpeg)
-
 6.  In the **Visual Studio Code** editor, click on **Terminal**, open
     a **New Terminal**.
 
@@ -221,8 +221,7 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
     provide the most current values for the Azure OpenAI endpoint and
     key.
 
-8.  Open the **appsettings.Development.JSON** file. Replace the already
-    existing values for uri and key values of **Azure Cosmos
+8.  Open the **appsettings.Development.JSON** file. Replace the placeholders for uri and key values of **Azure Cosmos
     DB** and **Azure OpenAI** resources in the file with the values that
     we saved earlier.
 
