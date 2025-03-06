@@ -111,7 +111,7 @@ Database for PostgreSQL.
 
 1.    Open the Azure portal at +++https://portal.azure.com/+++ and **login** with the Azure login credentials from the **Resources** tab of the VM.
 
-  ![](./media/Picture3.png)
+    ![](./media/Picture3.png)
 
 2.  Select **Cancel** or the close button in the Welcome page.
 
@@ -130,7 +130,7 @@ Database for PostgreSQL.
     |:-------|:-------|
     |  Subscription  |  Select your **assigned subscription**  |
     | Resource group   |  Select your **assigned Resource group**  |
-    |  Region  |  Select your nearest region(**East US2** is selected here for this execution)  |
+    |  Region  |  Select @lab.CloudResourceGroup(ResourceGroup1).Location  |
     | **Web App Details**   |    |
     | Name   |  Enter +++quarkuwebapp@lab.LabInstance.Id+++  |
     | Runtime stack   |  **Java 17**  |
