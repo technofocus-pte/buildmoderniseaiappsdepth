@@ -13,8 +13,7 @@ Database for PostgreSQL. When you're finished, you'll have a Quarkus app running
 
 ### Task 0: Setup Environmental variables
 
-1.  Search Environmental variable from the Windows start menu and select
-    Edit System Environment variable.
+1.  Search +++Environmental variable+++ from the Windows start menu and select **Edit System Environment variable**.
 
     ![](./media/image1.jpeg)
 
@@ -53,8 +52,7 @@ generated](./media/image3.jpeg)
 
     ![](./media/image8.jpeg)
 
-9.  On **Environmental Variable**s window, click on **Ok** and
-    again **OK**.
+9.  On **Environmental Variables** window, click on **Ok** and again **OK**.
 
     ![](./media/image9.jpeg)
 
@@ -422,7 +420,7 @@ You need to set up some environment variables. Here are some notes about the var
     
     +++export AZ_RESOURCE_GROUP=@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-    +++export AZ_LOCATION="Location near to you"+++
+    +++export AZ_LOCATION="@lab.CloudResourceGroup(ResourceGroup1).Location"+++
 
     ![](./media/image40.png)
 
