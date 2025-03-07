@@ -381,7 +381,7 @@ spec:
     spec:
       containers:
       - name: flightbookingsystemsample
-        image: javaaksregist47938383.azurecr.io/flightbookingsystemsample:latest
+        image: $AZ_CONTAINER_REGISTRY.azurecr.io/flightbookingsystemsample:latest
         resources:
           requests:
             cpu: "1"
