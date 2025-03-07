@@ -1,4 +1,4 @@
-# Usecase 03 - Containerizing a flight booking app and deploying to Azure Kubernetes Service
+![image](https://github.com/user-attachments/assets/1d710ea7-5b2a-4dab-92eb-91f6d6c40f17)# Usecase 03 - Containerizing a flight booking app and deploying to Azure Kubernetes Service
 
 **Objective**:
 
@@ -361,8 +361,8 @@ In this exercise, you will deploy a container image to Azure Kubernetes Service.
 
 4.  Add the following contents to deployment.yml and then save and exit:
 
-    >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1(
-    AZ_CONTAINER_REGISTRY= javaaksregist )
+    >**Note:** You'll want to update with your AZ_CONTAINER_REGISTRY environment variable value that was set earlier, Exercise 1 Task1( AZ_CONTAINER_REGISTRY= javaaksregist )-   AZ_CONTAINER_REGISTRY=+++javaaksregist@lab.LabInstance.Id+++
+   
 
 ```
 apiVersion: apps/v1
@@ -381,7 +381,7 @@ spec:
     spec:
       containers:
       - name: flightbookingsystemsample
-        image: $AZ_CONTAINER_REGISTRY.azurecr.io/flightbookingsystemsample:latest
+        image: <AZ_CONTAINER_REGISTRY>.azurecr.io/flightbookingsystemsample:latest
         resources:
           requests:
             cpu: "1"
