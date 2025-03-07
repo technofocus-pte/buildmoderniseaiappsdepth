@@ -122,7 +122,7 @@ Let us call this Username and password as Azure login credentials. We will use t
 
 9.	Execute the below command to set the Region value.
 
-  	+++REGION=westus+++
+  	+++REGION=@lab.CloudResourceGroup(ResourceGroup1).Location+++
   	
     ![](./media/image8.jpeg)
 
@@ -421,7 +421,7 @@ In this task, you create a new Azure OpenAI service.
     | **Subscription** | Select **Azure subscription** |
     |:-----|:----|
     | **Resource group** | Select your assigned resource group|
-    | **Region** | Select West US |
+    | **Region** | Select @lab.CloudResourceGroup(ResourceGroup1).Location |
     | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++(Replace **XXXX** with your **Lab instance ID**) |
     | **Pricing tier** | Select Standard S0 |    
 
@@ -960,7 +960,7 @@ create an Azure AI Language service.
     | Subscription | Select your assigned subscription | 
     |Resource group  | Select your assigned ResourceGroup | 
     | **Instance details** |  |
-    | Region | Select the **region** you used for your **Azure Database for PostgreSQL Flexible Server resource**. |
+    | Region | Select @lab.CloudResourceGroup(ResourceGroup1).Location |
     | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, replacing **SUFFIX** with your **Lab instance ID**. |
     | Pricing tier | Select the standard pricing tier, S (1K Calls per minute). |
     |Responsible AI Notice  | Check the box to certify you have reviewed and acknowledged the Responsible AI Notice. |
