@@ -124,7 +124,7 @@ credentials. If you do not have, please create one from here
 
   - Enter 1 to select subscription.
     
-  - Select an Azure location to use: @lab.CloudResourceGroup(ResourceGroup1).Location
+  - Select an Azure location to use: **@lab.CloudResourceGroup(ResourceGroup1).Location**
     
   - Enter a value for the existingResourceGroupName infrastructure parameter: +++@lab.CloudResourceGroup(ResourceGroup1).Name+++
 
