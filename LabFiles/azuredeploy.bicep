@@ -12,14 +12,15 @@ This Azure resource deployment template uses some of the following practices:
 /* *************************************************************** */
 
 @description('Location where all resources will be deployed. This value defaults to the **francecentral** region.')
-@allowed([  
+/*@allowed([  
   'eastus'  
   'francecentral'
   'southcentralus'
   'uksouth'
   'westeurope'
 ])
-param location string = 'francecentral'
+*/
+param location string = resourceGroup().location
 
 @description('''
 Unique name for the deployed services below. Max length 17 characters, alphanumeric only:
@@ -70,7 +71,7 @@ var openAiSettings = {
   maxCompletionTokens: '500'
   completionsModel: {
     name: 'gpt-35-turbo'
-    version: '0613'
+    version: '0125'
     deployment: {
       name: 'completions'
     }
