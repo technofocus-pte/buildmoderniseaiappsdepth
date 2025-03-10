@@ -11,8 +11,8 @@ This Azure resource deployment template uses some of the following practices:
 /* Parameters */
 /* *************************************************************** */
 
-@description('Location where all resources will be deployed. This value defaults to the **francecentral** region.')
-/*@allowed([  
+/*@description('Location where all resources will be deployed. This value defaults to the **francecentral** region.')
+@allowed([  
   'eastus'  
   'francecentral'
   'southcentralus'
