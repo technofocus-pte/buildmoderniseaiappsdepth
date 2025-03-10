@@ -188,7 +188,7 @@ and how you can create your own.
 
     ![](./media/image21.jpeg)
 
-2.  In the App Service page, in the left menu, select **Environment
+2.  In the App Service page, from the left menu, select **Environment
     variables** under **Settings**.
 
 3.  In the **App settings** tab of the **Environment variables** page,
@@ -228,7 +228,7 @@ way to have continuous integration in your deployment process. By
 default, every git push to your GitHub repository will kick off the
 build and deploy action.
 
-1.  From the App Service page, in the left menu, select **Deployment
+1.  In the App Service page, from the left menu, select **Deployment
     Center** under **Deployment**.
 
     ![](./media/image28.jpeg)
@@ -260,7 +260,7 @@ build and deploy action.
 
 6.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into your codespace.
 
-   >[!Note] **Note:** If you find test cases still running in the terminal, you can press Ctrl+C and then execute the above command.
+    >[!Note] **Note:** If you find test cases still running in the terminal, you can press Ctrl+C and then execute the above command.
 
    ![](./media/image32.jpeg)
 
