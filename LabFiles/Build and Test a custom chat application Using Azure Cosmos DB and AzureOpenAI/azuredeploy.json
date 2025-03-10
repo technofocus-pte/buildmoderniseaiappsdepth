@@ -11,21 +11,9 @@
   "parameters": {
     "location": {
       "type": "string",
-      "defaultValue": "UK South",
-      "allowedValues": [
-        "Australia East",
-        "Canada East",
-        "East US",
-        "East US 2",
-        "France Central",
-        "Japan East",
-        "North Central US",
-        "Switzerland North",
-        "UK South",
-        "West Europe"
-      ],
+      "defaultValue": "[resourceGroup().location]",
       "metadata": {
-        "description": "Location where all resources will be deployed. This value defaults to the **East US** region."
+        "description": "Location where all resources will be deployed. This value defaults to the Resource group's region."
       }
     },
     "name": {
@@ -93,7 +81,7 @@
       "maxConversationTokens": "2000",
       "model": {
         "name": "gpt-35-turbo",
-        "version": "0301",
+        "version": "0125",
         "deployment": {
           "name": "chatmodel"
         }
