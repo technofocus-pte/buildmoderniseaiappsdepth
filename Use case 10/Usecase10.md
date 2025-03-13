@@ -138,88 +138,29 @@ credentials. If you do not have, please create one from here
 
 ### Task 4 : Deploy the application to Azure
 
-1.  Switch back to the Azure portal and click on the Resource Groups tile on the Home page.
+1.  Press Ctrl + C  and run the below command to set the resource group environment variable.
 
-  ![](./media/image23.png)
+   +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-2.  Click on the resource group name.
+   ![](./media/image23.png)
 
-  ![](./media/image24.png)
+2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
-3.  You should see below resources
+    +++azd deploy+++
 
-  - **Container**
+    ![](./media/image42.png)
 
-  - **Container Registry**
+3.  Click on the generated Endpoint URL
 
-  - **Azure Cosmos Db account**
+    ![](./media/image43.png)
 
-  - **AureOpenAI**
+4.  Click on **Open** to open the external website.
 
-  ![](./media/image25.png)
+    ![](./media/image44.png)
 
-4.  Click on **Container registry** name.
+5.  The app opens in a new tab.
 
-  ![](./media/image26.png)
-
-5.  Expand **Setting** from left navigation menu, click on **Access keys.** Select **Admin user check box.** Copy the **Login server**,
-    **user name** and **password** to a notepad to use to deploy the app.
-
-  ![](./media/image27.png)
-
-6.  Duplicate the tab to open the Azure portal in a new tab.
-
-  ![](./media/image28.png)
-
-7.  Click on the resource group name from the top navigation menu.
-
-  ![](./media/image29.png)
-
-8.  Click on the Container App name.
-
-  ![](./media/image30.png)
-
-9.  Click on the **Settings --> Deployment pane--> Sign in with Github** button under Github-Sign in to authenticate with your GitHub account. Authorize your Github account.
-
-  ![](./media/image46.png)
-
-  ![](./media/image47.png)
-
-11. Select below values
-
-  **Organization: your Github organization**
-
-  **Repository:** **chat-csharp-cosmos-db-nosql-openai-CSTesting**
-
-  **Branch :** main
-
-  ![](./media/image31.png)
-
-11. Scroll down to **Registry settings** enter the below values and then click on **Start continuous deployment** button.
-
-  - Repository source: **Docker Hub or other registries.**
-
-  - Login server URL : Your Login server is copied from the Container registry (step#5)
-
-  - Username : your password from the container registry (step #5)
-
-  - Password : Your password from the container registry (step # 5)
-
-    ![](./media/image32.png)
-
-12. Click on the Workflow file link. It opens a new tab with Github.
-
-  ![](./media/image33.png)
-
-13. Click on **Actions** tab.
-
-  ![](./media/image34.png)
-
-14. Wait for the deployment to complete.
-
-  ![](./media/image35.png)
-
-15. Do not close any tabs.
+      ![](./media/image37.png)
 
 ### Task 5: Access the chat app
 
