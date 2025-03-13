@@ -208,7 +208,7 @@ To clean up all the resources created by this sample:
 
   ![](./media/image44.png)
 
-7.  Type ``delete`` on the text box and then click on **Delete**.
+7.  Type ``delete`` on the text box and then click on **Delete**
 
   ![](./media/image45.png)
 
