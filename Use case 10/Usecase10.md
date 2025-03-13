@@ -142,7 +142,7 @@ credentials. If you do not have, please create one from here
 
    +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-    ![](./media/image23.png)
+  ![](./media/image23.png)
     
 2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
