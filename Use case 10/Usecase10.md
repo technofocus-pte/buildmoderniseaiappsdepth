@@ -142,20 +142,21 @@ credentials. If you do not have, please create one from here
 
    +++azd env set AZURE_RESOURCE_GROUP @lab.CloudResourceGroup(ResourceGroup1).Name+++
 
-   
+    ![](./media/image23.png)
+    
 2.  Run the below command to deploy all resources and wait for the deployment to complete successfully.
 
     +++azd deploy+++
 
-    ![](./media/image42.png)
+   
 
 3.  Click on the generated Endpoint URL
 
-    ![](./media/image43.png)
+   
 
 4.  Click on **Open** to open the external website.
 
-    ![](./media/image44.png)
+   
 
 5.  The app opens in a new tab.
 
