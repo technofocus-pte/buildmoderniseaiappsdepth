@@ -106,11 +106,9 @@ GitHub account -- You are expected to have your own GitHub login credentials. If
 
   ![](./media/image21.png)
 
-4.  Switch back to Codespace tab and press Ctrl + C .To create an environment for Azure resources, run the following Azure Developer CLI command.It asks you to enter the environment name
-    .Enter any name of your choice and press enter (eg :+++ragpgpy@lab.LabInstance.Id+++)
-
-  **Note:** When creating an environment, ensure that the name consists of lowercase letters.
-
+4.  Switch back to Codespace tab and press Ctrl + C .To create an environment for Azure resources, run the following Azure Developer CLI command.It asks you to enter the environment name.Enter  this name as we generared unique as per your loginid - +++ragpgpy@lab.LabInstance.Id+++
+   Note: ragpgpy can be of your choice but Id should be same as your cloudid
+    
   +++azd env new+++
 
   ![](./media/image22.png)
