@@ -90,10 +90,7 @@ The application is made from multiple components, including:
 
   ![](./media/image11.png)
 
-4.  Switch back to GitHub Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the
-    Environment name as +++ucragpgpy@lab.LabInstance.Id+++ and press Enter.
-
-Note: The env name should be unique
+4.  Switch back to GitHub Codespace tab. Run below command to Initialize the project environment in the current directory. Enter the  Environment name as +++ucragpgpy@lab.LabInstance.Id+++ and press Enter.this env is unique and generated as per your  loginid. please use same env name.
 
   +++azd env new+++
 
@@ -109,7 +106,7 @@ Note: The env name should be unique
 
 - **Select an Azure Subscription to use** : select your subscription
 
-- **Select an Azure location to use** : @lab.CloudResourceGroup(ResourceGroup1).Location
+- **Select an Azure location to use** : **@lab.CloudResourceGroup(ResourceGroup1).Location** (Please use this region only as this is your resource group region)
 
 - Select existing resource group: Your existing resource group
   
