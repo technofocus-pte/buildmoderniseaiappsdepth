@@ -43,13 +43,13 @@ performing a vector cosine distance search.
 
 4.  At the Cloud Shell prompt, run the below command to clone the project
 
-``git clone https://github.com/technofocus-pte/postgresql-case``
+    +++git clone https://github.com/technofocus-pte/postgresql-case+++
 
     ![](./media/image3.jpeg)
 
 5.  Navigate to the project folder.
 
-    ``cd postgresql-case``
+    +++cd postgresql-case+++
 
     ![](./media/image4.jpeg)
 
