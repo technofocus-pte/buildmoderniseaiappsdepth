@@ -134,7 +134,7 @@ The application is made from multiple components, including:
 
   ![](./media/image17.png)
 
-3. Click on the endpoint url generated.
+3. Click on the endpoint url generated.(redeploy by running +++azd deploy+++ if your app is not working)
 
   ![](./media/image18.png)
 
