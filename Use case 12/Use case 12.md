@@ -422,7 +422,7 @@ In this task, you create a new Azure OpenAI service.
     |:-----|:----|
     | **Resource group** | Select your assigned resource group|
     | **Region** | Select @lab.CloudResourceGroup(ResourceGroup1).Location |
-    | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++(Replace **XXXX** with your **Lab instance ID**) |
+    | Name | Enter a globally unique name, such as +++aoai-postgres-labs-@lab.LabInstance.Id+++ |
     | **Pricing tier** | Select Standard S0 |    
 
     ![](./media/Picture45.png)
@@ -961,7 +961,7 @@ create an Azure AI Language service.
     |Resource group  | Select your assigned ResourceGroup | 
     | **Instance details** |  |
     | Region | Select @lab.CloudResourceGroup(ResourceGroup1).Location |
-    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, replacing **SUFFIX** with your **Lab instance ID**. |
+    | Name | Enter a globally unique name, such as +++lang-postgres-labs-@lab.LabInstance.Id |
     | Pricing tier | Select the standard pricing tier, S (1K Calls per minute). |
     |Responsible AI Notice  | Check the box to certify you have reviewed and acknowledged the Responsible AI Notice. |
     
