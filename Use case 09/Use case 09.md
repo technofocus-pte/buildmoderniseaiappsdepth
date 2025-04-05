@@ -145,7 +145,7 @@ Let us call this Username and password as Azure login credentials. We will use t
     ```
 
     >[!Note] **Note:** The deployment will take around 10 to 15 minutes. 
-    If there is an issue with the deployment and it fails, try updating the name in Step 14 to a different one and try again.
+    If there is an issue with the deployment and it fails, execute the same deployment command again.
 
     >[!Note] **Note:** Type Y when prompted.
 
