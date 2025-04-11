@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/1d710ea7-5b2a-4dab-92eb-91f6d6c40f17)# Usecase 03 - Containerizing a flight booking app and deploying to Azure Kubernetes Service
+# Usecase 03 - Containerizing a flight booking app and deploying to Azure Kubernetes Service
 
 **Objective**:
 
@@ -19,6 +19,8 @@ Deploy the container image to Azure Kubernetes Service
 **Estimated duration**: 30 min
 
 **Lab Type:** Instructor led
+
+
 
 ## Exercise 1 : Set up your Azure environment
 
