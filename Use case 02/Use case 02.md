@@ -1,388 +1,437 @@
-# Usecase 02 - Build a Fruits List Quarkus web app with Azure App Service on Linux and PostgreSQL
+# 用例 02 - 在 Linux 和 PostgreSQL 上使用 Azure 应用服务构建水果列表 Quarkus Web 应用程序
 
-**Estimated duration:** 40 minutes
+**预计持续时间：**40 分钟
 
-**Lab Type:** Instructor Led
+**实验类型：** 讲师指导
 
-**Objective:**
+**目的：**
 
-This usecase shows how to build, configure, and deploy a secure Quarkus
-application in Azure App Service that's connected to a PostgreSQL
-database (using Azure Database for PostgreSQL). Azure App Service is a
-highly scalable, self-patching, web-hosting service that can easily
-deploy apps on Windows or Linux. When you're finished, you'll have a
-Quarkus app running on Azure App Service on Linux.
+此用例演示如何在连接到 PostgreSQL 数据库的 Azure
+应用服务中构建、配置和部署安全的 Quarkus 应用程序（使用 Azure Database
+for PostgreSQL）。Azure 应用服务是一种高度可缩放的自修补 Web
+托管服务，可以轻松地在 Windows 或 Linux 上部署应用。完成后，你将在 Linux
+上的 Azure 应用服务上运行一个 Quarkus 应用。
 
-**Pre-requisites:**
+**先决条件：**
 
-**GitHub account** -- You are expected to have your own GitHub login
-credentials. If you do not have, please create one from here
-- +++https://github.com/signup?user_email=&source=form-home-signup+++
+**GitHub 帐户** -- 您应该拥有自己的 GitHub
+登录凭证。如果您没有，请从此处创建一个
+- +++<https://github.com/signup?user_email=&source=form-home-signup+++>
 
-## Exercise 1: Run the sample
+## 练习 0：了解 VM 和凭据
 
-First, you set up a sample data-driven app as a starting point. The
-sample repository we are using here includes a dev container
-configuration. The dev container has everything you need to develop an
-application, including the database, cache, and all environment
-variables needed by the sample application. The dev container can run in
-a GitHub codespace, which means you can run the sample on any computer
-with a web browser.
+在此任务中，我们将识别并了解我们将在整个实验室中使用的凭证。
 
-1.  From a browser, sign in to your GitHub
-    account +++**https://github.com/login**+++.
+> **1.Instructions**选项卡包含实验室指南，其中包含在整个实验室中要遵循的说明。
+>
+> **2. Resources** 选项卡已获取执行实验室所需的凭证**。**
 
-2.  Open this url from a new
-    tab, +++**https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++.
+- **URL** – Azure portal的 URL
 
-3.  Select **Fork -\> Create a new fork**.
+- **Subscription** – 这是分配给你的订阅的 ID
 
-    ![](./media/image1.jpeg)
+- **Username** – 登录 Azure 服务时需要使用的用户 ID。
 
-4.  Click on **Create fork** in the Create a new fork page.
+- **Password** – Azure 登录名的密码。
 
-    ![](./media/image2.jpeg)
+让我们将此用户名和密码称为 Azure 登录凭据。我们将在提及 Azure
+登录凭据的任何地方使用这些凭据。
 
-5.  In the forked page of the repo, select **Code** \> **Create
-    codespace on main**.
+- **Resource Group** – 分配给您的**Resource Group** 。
 
-    ![](./media/image3.jpeg)
+\[！Alert\] **重要提示：**请确保在此资源组下创建所有资源
 
-    **Note:** If Create Codespace on main option does not show up, click on
-the + symbol next to Codespaces.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-    ![](./media/image4.jpeg)
+3.  **Help**选项卡包含 Support 信息。此处的 **ID** 值是
+    将在实验室执行期间使用的实 **Lab instance** ID。
 
-    **Note:** The codespace creation takes around 10 minutes to set up.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-    ![](./media/image5.jpeg)
+## 练习 1：运行示例
 
-6.  Execute +++mvn quarkus:dev+++ in the Terminal. Click on **Allow** in the
-    pop up.
+首先，您将设置一个示例数据驱动应用程序作为起点。我们在此处使用的示例存储库包括开发容器配置。开发容器包含开发应用程序所需的一切，包括数据库、缓存和示例应用程序所需的所有环境变量。开发容器可以在
+GitHub codespace 中运行，这意味着您可以在任何具有 Web
+浏览器的计算机上运行该示例。
 
-    ![](./media/image6.jpeg)
+1.  在浏览器中，登录到您的 GitHub
+    帐户+++\*\*<https://github.com/login**+++> .
 
-    ![](./media/image7.jpeg)
+2.  从新选项卡打开此
+    URL，+++\*\*<https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++>.
 
-7.  When you see the notification, **Your application running on port
-    8080** is available., select **Open in Browser**. You should see the
-    sample application in a new browser tab.
+3.  选择 **Fork -\> Create a new fork**。
 
-    If you see a **notification** with port **5005**, **skip** it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.jpeg)
 
-    ![](./media/image8.jpeg)
+4.  单击 Create a new fork 页面中的 **Create fork**。
 
-    ![](./media/image9.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-8.  To stop the Quarkus development server, type **Ctrl+C** in the
-    Codespace terminal.
+5.  在存储库的分叉页中，选择 **Code** \> **Create codespace on main**。
 
-    ![](./media/image10.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.jpeg)
 
-## Exercise 2: Create App Service and PostgreSQL
+**注意：**如果未显示“在主 Create Codespace”选项上，请单击 “Codespaces”
+旁边的 +symbol 。
 
-First, you create the Azure resources. The steps used in this lab create
-a set of secure-by-default resources that include App Service and Azure
-Database for PostgreSQL.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-1.  Login to Azure portal
-    at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
+**注意：**codespace 创建大约需要 10 分钟才能完成设置。
 
-    ![](./media/image11.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-2.  Select **Cancel** or the close button in the Welcome page.
+6.  在终端中执行 +++mvn quarkus:dev+++。点击 **Allow ** 在弹出窗口中。
 
-    ![](./media/image12.jpeg)
+![A screenshot of a browser AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-3.  Enter +++**web app database**+++ in the search bar at the top of the Azure
-    portal. Select the item labelled **Web App + Database** under
-    the **Marketplace** heading.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    ![](./media/image13.jpeg)
+7.  当您看到通知 **Your application running on port 8080** is
+    available时，请选择 **Open in
+    Browser**。您应该会在新的浏览器选项卡中看到示例应用程序。
 
-4.  On **Create Web App + Database**, fill in the below details and
-    select **Review + create**
+如果您看到 端口 **5005** 的**notification**，请**skip**它。
 
-    | **Property**   |  **Value**  |
-    |:-------|:-------|
-    |  Subscription  |  Select your **assigned subscription**  |
-    | Resource group   |  Click **Create New** -> Enter +++**RGForAppService**+++  |
-    |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
-    | **Web App Details**   |    |
-    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
-    | Runtime stack   |  **Java 17**  |
-    |  **Database**  |    |
-    |  Engine  |  Select **PostgreSQL – Flexible Server**  |
-    |  Hosting Plan  |  Select **Basic**  |
-    
-    ![](./media/image14.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-    ![](./media/image15.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-6.  Once the validation passes, click on **Create**.
+8.  要停止 Quarkus 开发服务器， 请在 Codespace 终端中键入 **Ctrl+C**。
 
-    ![](./media/image16.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-    **Note:** The app creation takes around 15 minutes.
+## 练习 2：创建应用服务和 PostgreSQL
 
-7.  Once the deployment is complete, click on **Go to resource**.
+首先，创建 Azure
+资源。本实验中使用的步骤创建一组默认安全资源，其中包括应用服务和 Azure
+Database for PostgreSQL。
 
-    ![](./media/image17.jpeg)
+1.  在 +++[https://portal.azure.com/+++ 打开 Azure
+    门户](https://portal.azure.com/+++%20%20打开%20%20Azure%20门户)，然后从
+    VM 的**Resources**选项卡中使用 Azure **login** 凭据登录。
 
-8.  You're taken directly to the **App Service page.** Click
-    on **Home** at the top left corner.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image13.png)
 
-    ![](./media/image18.jpeg)
+2.  选择 **Cancel** 或 Welcome 页面中的 close 按钮。
 
-9.  Click on the Portal menu and select **Resource Groups** from it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-    ![](./media/image19.jpeg)
+3.  在 Azure 门户顶部的搜索栏中输入 +++**web app database**+++。在
+    **Marketplace** 标题下选择标记为 **Web App + Database** **的项目**。
 
-10.  Select the Resource group assigned to you and see that the
-    following resources are created from the deployment that we just
-    performed.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-    - App Service plan
-    
-    - App Service
-    
-    - Virtual network
-    
-    - Azure Database for PostgreSQL flexible server
-    
-    - Private DNS zone
+4.  在**Create Web App +
+    Database**中，填写以下详细信息，然后选择**Review + create** 
 
-   ![](./media/image20.jpeg)
+[TABLE]
 
-## Exercise 3: Verify connection settings
+5.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image16.png)
 
-The creation wizard generated the connectivity variables for you already
-as app settings. In this step, you learn where to find the app settings,
-and how you can create your own.
+6.  ![A screenshot of a web application AI-generated content may be
+    incorrect.](./media/image17.jpeg)
 
-1.  Click on the **App Service** from the list of resources in the
-    Resource group.
+7.  验证通过后，单击 **Create**。
 
-    ![](./media/image21.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.png)
 
-2.  In the App Service page, in the left menu, select **Environment
-    variables** under **Settings**.
+**注意：**应用程序创建大约需要 15 分钟。
 
-3.  In the **App settings** tab of the **Environment variables** page,
-    verify that **AZURE_POSTGRESQL_CONNECTIONSTRING** is present. It's
-    injected at runtime as an environment variable.
+8.  部署完成后，单击 **Go to resource**。
 
-    ![](./media/image22.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-4.  Select **+ Add**.
+9.  您将直接转到 **App ServicePage。** 点击 左上角的Home 。
 
-    ![](./media/image23.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.jpeg)
 
-5.  Name the setting +++**PORT**+++ and set its value to +++**8080**+++,
-    which is the default port of the Quarkus application.
-    Select **Apply**.
+10. 单击 Portal 菜单，然后从中选择 **Resource Groups**。
 
-    ![](./media/image24.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-6.  Select **Apply**.
+11. 选择分配给您的 Resource
+    group（资源组），并查看以下资源是从我们刚刚执行的部署中创建的。
 
-    ![](./media/image25.jpeg)
+> \- App Service plan
+>
+> \- App Service
+>
+> \- Virtual network
+>
+> \- Azure Database for PostgreSQL flexible server
+>
+> \- Private DNS zone
 
-7.  Select **Confirm**.
+![A screenshot of a group AI-generated content may be
+incorrect.](./media/image22.png)
 
-    ![](./media/image26.jpeg)
+## 练习 3：验证连接设置
 
-8.  You will get a notification stating that the app settings has been
-    updated.
+创建向导已为您生成连接变量作为应用程序设置。在此步骤中，您将了解在何处查找应用程序设置，以及如何创建自己的应用程序设置。
 
-    ![](./media/image27.jpeg)
+1.  从 **Resource group** 中的资源列表中单击 App Service。
 
-## Exercise 4: Deploy sample code
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image23.jpeg)
 
-In this step, you'll configure GitHub deployment using GitHub Actions.
-It's just one of many ways to deploy to App Service, but also a great
-way to have continuous integration in your deployment process. By
-default, every git push to your GitHub repository will kick off the
-build and deploy action.
+2.  在“应用服务”页的左侧菜单中，选择Settings下的Environment variables 。
 
-1.  From the App Service page, in the left menu, select **Deployment
-    Center** under **Deployment**.
+3.  在 **Environment variables**页面的 **App
+    settings**选项卡中，验证是否存在**AZURE_POSTGRESQL_CONNECTIONSTRING**。它在运行时作为环境变量注入。
 
-    ![](./media/image28.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image24.jpeg)
 
-2.  In Source, select **GitHub**. By default, GitHub Actions is selected
-    as the build provider.
+4.  选择 **+ Add**。
 
-    ![](./media/image29.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image25.jpeg)
 
-3.  Click on **Authorize** and sign in to your GitHub account and follow
-    the prompt to authorize Azure.
+5.  将设置命名为 +++**PORT**+++，并将其值设置为 +++**8080**+++，这是
+    Quarkus 应用程序的默认端口。选择 **Apply**。
 
-    ![](./media/image30.jpeg)
+![A screenshot of a login AI-generated content may be
+incorrect.](./media/image26.jpeg)
 
-4.  Fill in the details as below, leave the remaining to the default and
-    click on **Save**.
+6.  选择 **Apply**。
 
-    |  **Property**  | **Value**   |
-    |:--------|:---------|
-    |  Organization  |  Your GitHub account  |
-    |  Repository  |  Select **msdocs-quarkus-postgresql-sample-app**  |
-    |  Branch  |   **main** |
-    
-    ![](./media/image31.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-6.  Once **Save** is clicked on, App Service commits a workflow file
-    into the chosen GitHub repository, in the .github/workflows
-    directory.
+7.  选择 **Confirm**。
 
-7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into
-    your codespace.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-    ![](./media/image32.jpeg)
+8.  您将收到一条通知，指出应用程序设置已更新。
 
-8.  Open **src/main/resources/application.properties** in the explorer.
-    Quarkus uses this file to load Java properties.
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-9.  Find the code (lines 10-11). This code sets the production variable
-    **%prod.quarkus.datasource.jdbc.url** to the app setting that the
-    creation wizard for you. The **quarkus.package.type** is set to build an
-    Uber-Jar, which you need to run in App Service.
+## 练习 4：部署示例代码
 
-    ![](./media/image33.jpeg)
+在此步骤中，您将使用 GitHub Actions 配置 GitHub
+部署。这只是部署到应用服务的众多方法之一，也是在部署过程中进行持续集成的好方法。默认情况下，每次
+git 推送到 GitHub 存储库都会启动 build 和 deploy作。
 
-10.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
-    the explorer. This file was created by the App Service create
-    wizard.
+1.  在 App Service 页面的左侧菜单中，选择 **Deployment** 下的
+    **Deployment Center**。
 
-11. Under the Build with Maven step, change the Maven command to +++**mvn clean install -DskipTests**+++.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-    **-DskipTests** skips the tests in your Quarkus project, to avoid the
-GitHub workflow failing prematurely.
+2.  在 Source中，选择 **GitHub** 。默认情况下，GitHub Actions
+    被选为构建提供商。
 
-    ![](./media/image34.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.jpeg)
 
-12. Select the **Source Control** extension.
+3.  单击 **Authorize** 并登录到您的 GitHub 帐户，然后按照提示授权
+    Azure。
 
-    ![](./media/image35.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image32.jpeg)
 
-13. In the textbox, type a commit message like +++**Configure DB and
-    deployment workflow**+++. Select **Commit**, then confirm
-    with **Yes**.
+4.  按如下方式填写详细信息，将其余部分保留为默认值，然后单击 **Save** 。
 
-    ![](./media/image36.jpeg)
+[TABLE]
 
-14. Select **Sync changes 1**, then confirm with **OK**.
+5.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image33.jpeg)
 
-    ![](./media/image37.jpeg)
+6.  单击**Save**后 ，应用服务会将工作流文件提交到所选 GitHub 存储库的
+    .github/workflows 目录中。
 
-    ![](./media/image38.jpeg)
+7.  返回示例分叉的 GitHub codespace，运行 +++**git pull origin
+    main**+++。这会将新提交的工作流程文件提取到您的代码空间中。
 
-15. Back in the Deployment Center page in the Azure portal,
-    Select **Logs**. A new deployment run is already started from your
-    committed changes.
+\[！注意\] **注意：**如果发现测试用例仍在终端中运行，可以按
+Ctrl+C，然后执行上述命令。
 
-16. In the log item for the deployment run, select the **Build/Deploy
-    Logs** entry with the latest timestamp.
+![A screenshot of a computer code AI-generated content may be
+incorrect.](./media/image34.jpeg)
 
-    ![](./media/image39.jpeg)
+7\. 在资源管理器中打开
+**src/main/resources/application.properties**。Quarkus 使用此文件加载
+Java 属性。
 
-17. You're taken to your GitHub repository and see that the GitHub
-    action is running. The workflow file defines two separate stages,
-    build and deploy. Wait for the GitHub run to show a status of
-    Complete. It takes about 5 minutes.
+8\. 找到代码（第 10-11 行）。此代码将 生产变量
+**%prod.quarkus.datasource.jdbc.url** 设置为您的创建向导的 app
+设置。**quarkus.package.type** 被设置为构建一个 Uber-Jar，你需要在 App
+Service 中运行它。
 
-    ![](./media/image40.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image35.jpeg)
 
-## Exercise 5: Browse to the app
+9.  在资源管理器中打开 **.github/workflows/main_quarkuwebapp\[lab
+    instance id\].yml**。此文件由应用服务创建向导创建。
 
-1.  From the Azure portal(+++https://portal.azure.com+++), open Resource
-    group **RGForAppService** and select the **App Service** resource.
+10. 在“使用 Maven 构建”步骤下，将 Maven 命令更改为 +++**mvn clean
+    install -DskipTests**+++。
 
-    ![](./media/image41.jpeg)
+**-DskipTests** 跳过 Quarkus 项目中的测试，以避免 GitHub
+工作流过早失败。
 
-2.  From the left menu, select **Overview** and select the URL of your
-    app under **Default domain**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image36.jpeg)
 
-    ![](./media/image42.jpeg)
+11. 选择 **Source Control** 扩展。
 
-3.  Paste the copied url in a new browser to open the app.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-    ![](./media/image43.jpeg)
+12. 在文本框中，键入提交消息，例如 +++**Configure DB and deployment
+    workflow**+++。选择 **Commit**，然后单击 **Yes**进行确认。
 
-4.  Add a few fruits to the list. Now, you're running a web app in Azure
-    App Service, with secure connectivity to Azure Database for
-    PostgreSQL.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.jpeg)
 
-    ![](./media/image44.jpeg)
+13. 选择 **Sync changes 1**，然后单击 **OK**进行确认。
 
-    ![](./media/image45.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-## Exercise 6: Stream diagnostic logs
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-Azure App Service captures all messages output to the console to help
-you diagnose issues with your application. The sample application
-includes standard JBoss logging statements to demonstrate this
-capability as shown below.
+14. 返回到 Azure
+    门户的“部署中心”页，选择**Logs**。新的部署运行已从您提交的更改开始。
 
-1.  From the Azure portal App Service page, from the left menu,
-    select **App Service logs** under **Monitoring**.
+15. 在部署运行的日志项中，选择 具有最新时间戳的 **Build/Deploy Logs**
+    条目。
 
-    ![](./media/image46.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-2.  Under **Application logging**, select **File System**. In the top
-    menu, select **Save**.
+16. 您将转到 GitHub 存储库，并看到
+    GitHub作正在运行。工作流程文件定义了两个单独的阶段：build 和
+    deploy。等待 GitHub 运行显示 Complete状态。大约需要 5 分钟。
 
-    ![](./media/image47.jpeg)
+![A screenshot of a web page AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-3.  From the left menu, select **Log stream**. You see the logs for your
-    app, including platform logs and logs from inside the container.
+## 练习 5：浏览至应用程序
 
-    ![](./media/image48.jpeg)
+1.  在 Azure 门户
+    （+++[https://portal.azure.com+++](https://portal.azure.com+++/)）
+    中，打开资源组 **ResourceGroup1** 并选择**App Service**资源。
 
-## Exercise 7: Clean up resources
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image43.png)
 
-1.  From the Azure portal Home page, select Resource groups.
+2.  从左侧菜单中，选择 **Overview** 并在 **Default domain**
+    下选择应用程序的 URL。
 
-    ![](./media/image49.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-2.	Select the **NetworkWatcherRG** and click on **Delete resource group**.
+3.  将复制的 URL 粘贴到新浏览器中以打开应用程序。
 
-    ![](./media/image57.png)
+![A screenshot of a fruit list AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-3.	Type +++NetworkWatcherRG+++ in the text box and click on **Delete**.
- 
-    ![](./media/image58.png)
+4.  在列表中添加一些水果。现在，你正在 Azure 应用服务中运行 Web
+    应用，并与 Azure Database for PostgreSQL 建立安全连接。
 
-    ![](./media/image59.png)
-  
-4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image46.jpeg)
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-5.	Click on **Delete resource group**.
+## 练习 6：流式传输诊断日志
 
-    ![](./media/image51.jpeg)
+Azure
+应用服务捕获输出到控制台的所有消息，以帮助你诊断应用程序的问题。示例应用程序包含标准
+JBoss 日志记录语句来演示此功能，如下所示。
 
-6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
- 
-    ![](./media/image52.jpeg)
+1.  在 Azure portal App
+    Service页的左侧菜单中，选择** Monitoring**下的** App Service
+    logs**。
 
-7.	Click on **Delete** in the confirmation dialog.
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-    ![](./media/image53.jpeg)
+2.  在 **Application logging**下，选择 **File
+    System**。在顶部菜单中，选择 **Save**。
 
-8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-    ![](./media/image54.jpeg)
-  	
-8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
-   
-    ![](./media/image64.jpeg)
+3.  从左侧菜单中，选择 **Log
+    stream**。您可以看到应用程序的日志，包括平台日志和来自容器内部的日志。
 
-**Summary:**
+![A computer screen shot of a computer screen AI-generated content may
+be incorrect.](./media/image50.jpeg)
 
-We have learnt to deploy a secure Quarkus application in Azure App
-Service, connected it to PostgreSQL database to add Fruit names from the
-app's UI.
+## 练习 7：清理资源
 
+1.  在 Azure 门户主页中，选择Resource groups。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
+
+2.  选择 **NetworkWatcherRG**，然后单击 **Delete resource group**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image52.png)
+
+3.  在文本框中键入 +++NetworkWatcherRG+++，然后单击 **Delete**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image54.png)
+
+4.  接下来，从 Resource group 页面中，选择您分配的 Resource group。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image55.png)
+
+5.  选择所有 **resources**，然后选择 **Delete**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image56.png)
+
+6.  在文本框中输入 +++**delete**+++，然后单击 **Delete**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image57.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image58.png)
+
+7.  已删除资源上的成功通知确认删除。
+
+8.  返回 GitHub 工作区，单击 **Code** 旁边的下拉菜单，选择 codespace
+    名称旁边的三个点，然后单击 **Delete**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
+
+**总结：**
+
+我们已经学习了在 Azure 应用服务中部署安全的 Quarkus 应用程序，将其连接到
+PostgreSQL 数据库，以从应用程序的 UI 添加水果名称。
