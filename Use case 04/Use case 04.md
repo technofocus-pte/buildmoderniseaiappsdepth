@@ -1,489 +1,567 @@
-# Usecase 04 - Build a TODO List ASP.NET app, deploy it to Azure App Service connecting to SQL Database
+# 用例 04 - 构建 ASP.NET 应用的 TODO 列表，将其部署到连接到 SQL 数据库的 Azure 应用服务
 
-**Estimated duration:** 40 minutes
+**预计持续时间** 40 分钟
 
-**Lab Type:** Instructor Led
+**实验类型** 讲师指导
 
-**Objective:**
+**目的**
 
-Azure App Service provides a highly scalable, self-patching web hosting
-service. In this lab, you will learn how to deploy a data-driven ASP.NET
-app in App Service and connect it to Azure SQL Database. When you\\re
-finished, you have an ASP.NET app running in Azure and connected to SQL
-Database.
+Azure 应用服务提供高度可缩放的自修补 Web
+托管服务。在本实验中，你将了解如何在应用服务中部署数据驱动的 ASP.NET
+应用并将其连接到 Azure SQL 数据库。完成后，你将在 Azure 中运行一个
+ASP.NET 应用并连接到 SQL 数据库。
 
-## Exercise 1: Deploying an ASP.NET app to Azure with Azure SQL Database
+## 练习 0：了解 VM 和凭据
 
-### Task 1: Set up Visual Studio 2022 and run the application
+在此任务中，我们将识别并了解我们将在整个实验室中使用的凭证。
 
-1.  From the Windows **Search** bar, type +++**Visual studio**+++ and select Visual Studio 2022. If it asks you to Sign in, continue with the steps 2 and 3 or continue from Step 4.
+1.  **Instructions**选项卡包含实验室指南，其中包含在整个实验室中要遵循的说明。
 
-    ![](./media/image1.jpeg)
+2.  **Resources** 选项卡已获取执行实验室所需的凭证。
 
-2.	Click on **Sign in** and and **sign in** with the **Username** and **password** under the **User Credentials** section in the Resources tab of the VM.
+    - **URL** – Azure portal的 URL
 
-    ![](./media/image2.jpeg)
+    - **Subscription** – 这是分配给你的订阅的 ID
 
-    ![](./media/image3.jpeg)
+    - **Username** – 登录 Azure 服务时需要使用的用户 ID。
 
-3.  Select **Start Visual Studio**.
+    - **Password** – Azure 登录名的密码。让我们将此用户名和密码称为
+      Azure 登录凭据。我们将在提及 Azure
+      登录凭据的任何地方使用这些凭据。
 
-    ![](./media/image4.jpeg)
+    - **Resource Group** – 分配给您的**Resource group**。
 
-4.  Select **Open a local folder**.
+>[！Alert] **重要提示** 请确保在此资源组下创建所有资源
 
-    ![](./media/image5.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-5.  Select **webappwithsqldb** folder in **C:\Labfiles** and click
-    on **Select Folder**.
+3.  **Help** 选项卡包含 **Support** 信息。此处的 **ID** 值是
+    将在实验室执行期间使用的实验室实例 **ID**。
 
-    ![](./media/image6.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-6.  Once the folder is opened, double click
-    on **DotNetAppSqlDb.sln** from the **Solution Explorer**.
+## 练习 1：使用 Azure SQL 数据库将 ASP.NET 应用程序部署到 Azure
 
-    **Note:** If the Solution Explorer does not get opened automatically,
-Click on **View -\> Solution Explorer.**
+### 任务 1：设置 Visual Studio 2022 并运行应用程序
 
-    ![](./media/image7.jpeg)
+1.  在 Windows **Search**栏中，键入 +++**Visual Studio**+++ 并选择
+    Visual Studio 2022。如果系统要求您登录，请继续执行步骤 2 和
+    3，或从步骤 4 继续。
 
-7.  Click on **Build** -\> **Build Solution**.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.jpeg)
 
-    ![](./media/image8.jpeg)
+2.  单击 **Sign in** ，然后使用 VM 的 Resources 选项卡中 **User
+    Credentials** 部分下的 **Username** 和**Password**登录。
 
-8.  Once the Build is completed, select **Debug -\>** **Start
-    Debugging**.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-    ![](./media/image9.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.png)
 
-    ![](./media/image10.jpeg)
+3.  选择 **Start Visual Studio**。
 
-9.  This opens up a browser with the **Todos web app** running in it.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-    ![](./media/image11.jpeg)
+4.  选择 **Open a local folder**。
 
-10. Add few items into the app by clicking on **Create New** as in the
-    screenshots below.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-    ![](./media/image12.jpeg)
+5.  在 **C：\Labfiles** 中选择 **webappwithsqldb** 文件夹 ，然后单击
+    **Select Folder。**
 
-    ![](./media/image13.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-11. Add few more items to the list.
+6.  打开文件夹后，双击 **Solution Explorer** 中的
+    **DotNetAppSqlDb.sln**。
 
-    ![](./media/image14.jpeg)
+    **注意** 如果 Solution Explorer 没有自动打开，请单击 **View -\> Solution Explorer**
 
-12. From the Visual Studio 2022, click on **Debug -\>** **Stop
-    Debugging**.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    ![](./media/image15.jpeg)
+7.  单击 **Build** -> **Build Solution**。
 
-### Task 2: Publish ASP.NET application to Azure
+    ![A computer screen shot of a black screen AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-1.  In the **Solution Explorer**, right-click on
-    your **DotNetAppSqlDb** project and select **Publish**.
+8.  构建完成后，选择 **Debug -\> Start Debugging**。
 
-    ![](./media/image16.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    ![](./media/image17.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-2.  Select **Azure** and and click on **Next**.
+9.  这将打开一个运行 **Todos Web App的**浏览器。
 
-    ![](./media/image18.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image13.jpeg)
 
-3.  Select **Azure App Service(Windows)** in **Which Azure service would
-    you like to use to host your application?** screen and click
-    on **Next**.
+10. 通过单击将一些项目添加到应用程序中 **Create New**的
+    如下面的屏幕截图所示。
 
-    ![](./media/image19.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-4.  In the Publish dialog, click **Sign In** and Sign in to your Azure
-    subscription, if not signed in already.
+    ![A screenshot of a application AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-    **Note:** If you're already signed into a Microsoft account, make sure
-that account holds your Azure subscription. If the signed-in Microsoft
-account doesn't have your Azure subscription, click it to add the
-correct account.
+11. 向列表中添加更多项。
 
-5.  Click on **Create new** to create a new App service.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image16.jpeg)
 
-    ![](./media/image20.jpeg)
+12. 在 Visual Studio 2022 中，单击 **Debug -\> Stop Debugging**。
 
-6.  Enter the below details.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image17.jpeg)
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Click on New -> **RGForWebAppSQL** and click on OK |
+### 任务 2：将 ASP.NET 应用程序发布到 Azure
 
-    ![](./media/image21.jpeg)
+1.  在**Solution Explorer**中，右键单击 **DotNetAppSqlDb**
+    项目，然后选择 **Publish**。
 
-7.  Click **New** on **Hosting Plan** option and enter the below details
-    and click **OK**.
+               ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.jpeg)
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Hosting Plan  | +++myAppServicePlan+++   |
-    | Location   |  **East US**  |
-    |  Size  |   **Free** |
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-    ![](./media/image77.png)
-    
-    **Note:** The location here is selected as East US. Please select a
-closest region if East US does not work for you.
+2.  选择 **Azure** ，然后单击 **Next**。
 
-9.  Click **Create** on the App Service window and wait for Azure
-    resources to get created.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.jpeg)
 
-    ![](./media/image73.png)
+3.  在**Which Azure service would you like to use to host your
+    application? **中选择**“Azure App Service(Windows)** 屏幕，然后单击
+    **Next**。
 
-10. The **Publish** dialog shows the resources you have configured.
-    Click **Finish**.
+![A screenshot of a computer application AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-    ![](./media/image23.jpeg)
+4.  在 Publish 对话框中，单击 **Sign In**并登录到您的 Azure
+    订阅（如果尚未登录）。
 
-11. Click on **Close**.
+**注意：**如果您已登录 Microsoft 帐户，请确保该帐户持有您的 Azure
+订阅。如果已登录的 Microsoft 帐户没有您的 Azure
+订阅，请单击该帐户以添加正确的帐户。
 
-    ![](./media/image24.jpeg)
+5.  单击 **Create new** 以创建新的 App 服务。
 
-12. Scroll down to the Server Dependencies section and click on
-    the **+** sign to add dependency.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image22.jpeg)
 
-    ![](./media/image25.jpeg)
+6.  输入以下详细信息。
 
-13. Select **Azure SQL Database** in the **Add dependency** page and
-    click on **Next**.
+[TABLE]
 
-    ![](./media/image26.jpeg)
+7.  点击 New 上**Hosting Plan**。
 
-14. Click on **Create New** next to SQL databases, in the **Connect to
-    Azure SQL Database** dialog box.
+8.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image23.png)
 
-    ![](./media/image27.jpeg)
+9.  点击 新建托管计划 选项并输入以下详细信息，然后单击 OK。
 
-15. In the **Azure SQL Database Create new** dialog box, click
-    on **New** next to the Database server.
+[TABLE]
 
-    ![](./media/image28.jpeg)
+10. ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image24.png)
 
-16. Fill in the below details and click on **OK**.
+11. 单击 App Service 窗口上的**Create** ，然后等待创建 Azure resources。
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database server name  | +++dotnetappsqldbdbserver98+++   |
-    |  Administrator username  |   +++sqladmin+++ |
-    |  Administrator password  |  +++PassWord98+++  |
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image25.png)
 
-    >[!Note] **Note:** The location here is selected as East US. Please select a closest region if East US does not work for you.
+12. **Publish** 对话框显示您配置的资源。单击 **Finish**。
 
-    ![](./media/image29.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image26.png)
 
-16. Click on **Create** in the Create new dialog.
+13. 单击 **Close**。
 
-    ![](./media/image30.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-### Task 3: Configure database connection
+14. 向下滚动到 Server Dependencies 部分，然后单击 **+**
+    sign以添加依赖项。
 
-1.  When the wizard finishes creating the database resources,
-    click **Next**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-    ![](./media/image31.jpeg)
+15. 在 **Add dependency**页面中选择 **Azure SQL Database**，然后单击
+    **Next**。
 
-2.  Fill in the below details in the **Connect to Azure SQL
-    Database** dialog and click **Finish**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database connection string Name  | +++MyDbConnection+++  |
-    |  Database connection user name |   +++Sqladmin+++ |
-    |  Database connection password |  +++PassWord98+++  |
-    |  Azure App Settings  |  Selected  |
+16. 在 **Connect to Azure SQL Database** 对话框中，单击 **SQL
+    databases** 旁边的 **Create New**。
 
-    ![](./media/image32.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-3.	Click on **Finish** after reviewing the **summary of changes**.
+17. 在 **Azure SQL Database Create new **对话框中，单击
+    数据库服务器旁边的**New**。
 
-    ![](./media/image74.png)
-  	
-4.  Wait for configuration wizard to finish and click **Close**. The
-    Azure SQL Db is now **connected** to your app.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.png)
 
-    ![](./media/image33.jpeg)
+18. 填写以下详细信息，然后单击 OK。
 
-5.  From the Publish page, click **Publish** on the top right corner.
+[TABLE]
 
-    ![](./media/image34.jpeg)
+19. ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image32.png)
 
-    **Note:** This will take around 5 minutes
+20. 单击 Create new 对话框中的 **Create。**
 
-6.  Once your ASP.NET app is deployed to Azure, your default browser is
-    launched with the URL to the deployed app. **Add a few to-do items**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image33.png)
 
-    ![](./media/image35.jpeg)
+### 任务 3：配置数据库连接
 
-### Task 4: Access the database locally
+1.  向导创建完数据库资源后，单击 **Next**。
 
-Visual Studio lets you explore and manage your new database in Azure
-easily in the **SQL Server Object Explorer**. The new database already
-opened its firewall to the App Service app that you created. But to
-access it from your local computer (such as from Visual Studio), you
-must open a firewall for your local machine\\s public IP address. If
-your internet service provider changes your public IP address, you need
-to reconfigure the firewall to access the Azure database again.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image34.png)
 
-1.  From the Visual Studio 2022, **View** menu, select **SQL Server
-    Object Explorer**.
+2.  在 **Connect to Azure SQL Database**
+    对话框中填写以下详细信息，然后单击 **Finish**。
 
-    ![](./media/image36.jpeg)
+[TABLE]
 
-2.  At the top of **SQL Server Object Explorer**, click the **Add SQL
-    Server** button.
+3.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image35.jpeg)
 
-    ![](./media/image37.jpeg)
+4.  单击 **Finish** 查看**summary of changes**后。
 
-### Task 5: Configure the database connection
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image36.png)
 
-1.  In the **Connect** dialog, expand the **Azure** node. All your SQL
-    Database instances in Azure are listed here.
+5.  等待配置向导完成，然后单击 **Close**。Azure SQL 数据库现已
+    **connected**到您的应用。
 
-2.  Select the database that you created
-    earlier(**dotnetappsqldbdbserver98**). The connection you created
-    earlier is automatically filled at the bottom.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-3.  Type the database administrator **password** you created
-    earlier(+++**PassWord98**+++) and click Connect.
+6.  在 Publish 页面中，单击 **Publish** 在右上角。
 
-    ![](./media/image38.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.png)
 
-### Task 6: Allow client connection from your computer
+**注意：**这大约需要 5 分钟
 
-The Create a new firewall rule dialog is opened. By default, a server
-only allows connections to its databases from Azure services, such as
-your Azure app. To connect to your database from outside of Azure,
-create a firewall rule at the server level. The firewall rule allows the
-public IP address of your local computer.
+7.  将 ASP.NET 应用程序部署到 Azure
+    后，将启动默认浏览器，其中包含已部署应用程序的 URL Add a few to-do
+    items。
 
-The dialog is already filled with your computer's public IP address.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-1.  Make sure that Add my client IP is selected and click OK.
+### 任务 4：在本地访问数据库
 
-    ![](./media/image39.jpeg)
+Visual Studio 允许你在 **SQL Server Object Explorer Azure**
+中的新数据库。新数据库已向你创建的应用服务应用打开了防火墙。但是，要从本地计算机（例如从
+Visual Studio）访问它，必须为本地计算机的公共 IP
+地址打开防火墙。如果您的 Internet 服务提供商更改了您的公共 IP
+地址，则需要重新配置防火墙以再次访问 Azure 数据库。
 
-2.  Once Visual Studio finishes creating the firewall setting for your
-    SQL Database instance, your connection shows up in **SQL Server
-    Object Explorer**.
+1.  从 Visual Studio 2022 的**View** 菜单中，选择**SQL Server Object
+    Explorer**。
 
-3.  Expand your **connection \> Databases \> \< YOUR DATABASE \> \>
-    Tables**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-    ![](./media/image40.jpeg)
+2.  在 **SQL Server Object Explorer**的顶部，单击 **Add SQL Server**
+    按钮。
 
-4.  Right-click on the **Todoes** table and select **View Data**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-    ![](./media/image41.jpeg)
+### 任务 5：配置数据库连接
 
-5.  View the contents of the table.
+1.  在 **Connect** 对话框中，展开 **Azure** 节点。此处列出了 Azure
+    中的所有 SQL 数据库实例。
 
-    ![](./media/image42.jpeg)
+2.  选择之前创建的数据库
+    （**dotnetappsqldbdbserver98**）。您之前创建的连接会自动填充在底部。
 
-## Exercise 2: Update app with Code First Migrations
+3.  键入您之前创建的数据库管理员**password**
+    （+++**PassWord98**+++），然后单击 Connect。
 
-1.  From the **Solution Explorer**, open **Models\Todo.cs** in the code
-    editor. Add the following property to the **ToDo** class as the last
-    line (after the **public DateTime CreatedDate { get; set; }** line
-    )and click on **Save**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-    +++**public bool Done { get; set; }**+++
+### 任务 6：允许来自计算机的客户端连接
 
-    ![](./media/image43.jpeg)
+此时将打开 Create a new firewall rule 对话框。默认情况下，服务器仅允许从
+Azure 服务（例如 Azure 应用程序）连接到其数据库。若要从 Azure
+外部连接到数据库，请在服务器级别创建防火墙规则。防火墙规则允许使用本地计算机的公有
+IP 地址。
 
-### Task 1: Run Code First Migrations locally
+该对话框已填充了您计算机的公共 IP 地址。
 
-Run a few commands to make updates to your local database.
+1.  确保已选中 Add my client IP，然后单击 OK。
 
-1.  From the **Tools** menu, click **NuGet Package
-    Manager** \> **Package Manager Console**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image43.jpeg)
 
-    ![](./media/image44.jpeg)
+2.  在 Visual Studio 完成为 SQL
+    数据库实例创建防火墙设置后，您的连接将显示在 **SQL Server Object
+    Explorer**中。
 
-2.  In the Package Manager Console window, enable Code First Migrations
-    by executing this command.
+3.  扩展您的**connection \> Databases \> \< YOUR DATABASE \> \>
+    Tables**。
 
-    +++**Enable-Migrations**+++
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-    ![](./media/image45.jpeg)
+4.  右键单击 **Todo** 表，然后选择 **View Data**。
 
-3.  Add a migration by executing the below command.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-    +++**Add-Migration AddProperty**+++
+5.  查看表的内容。从应用程序 UI 添加的数据应在此处列出。
 
-    ![](./media/image46.jpeg)
+![](./media/image46.jpeg)
 
-4.  Update the local database by executing the below command.
+## 练习 2：使用 Code First 迁移更新应用程序
 
-    +++**Update-Database**+++
+1.  在 **Solution Explorer** 中，打开代码编辑器中的
+    **Models\Todo.cs**。将以下属性作为最后一行添加到 **ToDo**
+    类中（在** public DateTime CreatedDate { get; set;** } 之后 行
+    ），然后单击 **Save** 。
 
-    ![](./media/image47.jpeg)
++++**public bool Done { get; set; }**+++
 
-5.  Type **Ctrl+F5** to run the app or click on **Debug -\> Start
-    without Debugging**. Test the edit, details, and create links.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-    ![](./media/image48.jpeg)
+### 任务 1：在本地运行 Code First 迁移
 
-6.  The application page opens up and it still looks the same because
-    your application logic is not using this new property yet.
+运行几个命令以更新您的本地数据库。
 
-    ![](./media/image49.jpeg)
+1.  在 **Tools** 菜单中，单击 **NuGet Package Manager** \> **Package
+    Manager Console**。
 
-### Task 2: Use the new property
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-Make some changes in your code to use the Done property.
+2.  在 Package Manager Console 窗口中，通过执行此命令启用 Code First
+    迁移。
 
-1.  From the Visual Studio, open **Controllers\TodosController.cs**.
-    Find the **Create()** method on line 52 and add +++**Done**+++ to the list
-    of properties in the Bind attribute. When you're done, your Create()
-    method signature look like the following code:
++++**Enable-Migrations**+++
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-2.  Open **Views\Todos\Create.cshtml**. Add the following code after the
-    < div class=\"form-group\" > for **CreatedDate**.
+3.  通过执行以下命令添加迁移。
 
-    ![](./media/image51.jpeg)
++++**Add-Migration AddProperty**+++
 
-    ```
-    <div class="form-group">
-    @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div class="checkbox">
-            @Html.EditorFor(model => model.Done)
-            @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
+![](./media/image50.jpeg)
 
-    ```
+4.  通过执行以下命令更新本地数据库。
 
-3.  Open **Views\Todos\Index.cshtml**. Add the following code in the
-    empty **th** element, after the **th** element for
-    the **CreatedDate**.
++++**Update-Database**+++
 
-    +++@Html.DisplayNameFor(model =\> model.Done)+++
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
 
-    ![](./media/image52.jpeg)
+5.  键入 **Ctrl+F5** 运行应用程序，或单击 **Debug -\> Start without
+    Debugging**。测试编辑、详细信息并创建链接。
 
-4.  Add this code just above the html.ActionLink() helper methods.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image52.jpeg)
 
-    ```
-    <td>
-    @Html.DisplayFor(modelItem => item.Done)
-</td>
+6.  应用程序页面将打开，它看起来仍然相同，因为您的应用程序逻辑尚未使用此新属性。
 
-    ```
-    ![](./media/image53.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.jpeg)
 
-5.  Type **Ctrl+F5** to run the app.
+### 任务 2：使用 new 属性
 
-    ![](./media/image54.jpeg)
+在代码中进行一些更改以使用 Done 属性。
 
-### Task 3: Enable Code First Migrations in Azure
+1.  在 Visual Studio 中，打开 **Controllers\TodosController.cs**。在第
+    52 行找到 **Create（）** 方法，并将 +++**Done**+++ 添加到 Bind
+    属性的属性列表中。完成后，您的 Create（） 方法签名将类似于以下代码：
 
-1.  Right click on the project and select **Publish**.
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image54.jpeg)
 
-    ![](./media/image55.jpeg)
+2.  打开 **Views\Todos\Create.cshtml**。在 **CreatedDat**e 的 \< div
+    class=“form-group” \>后添加以下代码。
 
-2.  Click **More actions** \> **Edit** to open the publish settings.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image55.jpeg)
 
-    ![](./media/image56.jpeg)
+\<div class="form-group"\>
 
-3.  In the **MyDatabaseContext** dropdown, select the database
-    connection for your Azure SQL Database.
+@Html.LabelFor(model =\> model.Done, htmlAttributes: new { @class =
+"control-label col-md-2" })
 
-4.  Select **Execute Code First Migrations** (runs on application
-    start), then click **Save**.
+\<div class="col-md-10"\>
 
-    ![](./media/image57.jpeg)
+\<div class="checkbox"\>
 
-5.  In the Publish page, click on **Publish**.
+@Html.EditorFor(model =\> model.Done)
 
-    ![](./media/image58.jpeg)
+@Html.ValidationMessageFor(model =\> model.Done, "", new { @class =
+"text-danger" })
 
-6.  The updated app is now available on Azure.
+\</div\>
 
-7.  Try adding to-do items again and select **Done**, and they should
-    show up in your homepage as a completed item.
+\</div\>
 
-    ![](./media/image59.jpeg)
-    
-    ![](./media/image60.jpeg)
+\`\`\`
 
-## Exercise 3: Stream application logs
+3.  打开 **Views\Todos\Index.cshtml**。在空的 **th** 元素中，在
+    **CreatedDate** 的 **th** 元素之后添加以下代码。
 
-1.  In the publish page, scroll down to the **Hosting** section. At the
-    right-hand corner, click **...** \> **View Streaming Logs**.
+<+++@Html.DisplayNameFor>(model =\> model.Done)+++
 
-    ![](./media/image61.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image56.jpeg)
 
-2.  The logs are now streamed into the Output window.
+4.  将此代码添加到 html 的正上方。ActionLink（） 辅助方法。
 
-    ![](./media/image62.jpeg)
+5.  \<td\>
 
-3.  You don't see any of the trace messages yet because, when you first
-    select View Streaming Logs, your Azure app sets the trace level to
-    Error, which only logs error events.
+6.  @Html.DisplayFor(modelItem =\> item.Done)
 
-**Note:** Restart the logging stream from the Visual Studio if you do
-not see them yet.
+\`\`\`
 
-### Task 1: Change trace levels
+\![\](./media/image53.jpeg)
 
-1.  Go to the publish page. In the Hosting section, click **… \> Open in
-    Azure portal**.
+7.  键入 **Ctrl+F5** 以运行应用程序。
 
-    ![](./media/image63.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image57.jpeg)
 
-2.	In the Azure portal – app page, select **App Service Logs** from the left pane under the **Monitoring** section.
+### 任务 3：在 Azure 中启用 Code First 迁移
 
-    ![](./media/image64.jpeg)
+1.  右键单击项目，然后选择 **Publish**。
 
-3.  Under **Application Logging** (File System), select **Verbose** in
-    Level. Click **Save**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image58.jpeg)
 
-    ![](./media/image65.jpeg)
+2.  单击 **More actions** \> **Edit** 以打开发布**settings**。
 
-4.  From your browser, access the web app on Azure and do some
-    activities.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
 
-    ![](./media/image66.jpeg)
+3.  在 **MyDatabaseContext** 下拉列表中，选择 Azure SQL
+    数据库的数据库连接。
 
-5.  The trace messages are now streamed to the Output window in Visual
-    Studio.
+4.  选择 **Execute Code First Migrations** （runs on
+    application，然后单击 **Save**。
 
-    ![](./media/image67.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image60.jpeg)
 
-6.  To stop the log-streaming service, click the **Stop
-    monitoring** button in the Output window.
+5.  在 Publish 页面中，单击 **Publish**。
 
-    ![](./media/image68.jpeg)
+![A black rectangular object with white text AI-generated content may be
+incorrect.](./media/image61.jpeg)
 
-7.  Close the Visual Studio.
+6.  更新后的应用现已在 Azure 上提供。
 
-## Exercise 4: Clean up resources
+7.  再次尝试添加待办事项并选择
+    **Done**，它们应该会在您的主页上显示为已完成的项目。
 
-1.	From the Azure portal, open the Resourcegroup **RGForWebAppSQL**. Click on **Delete resource group**.
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image62.jpeg)
 
-    ![](./media/image69.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image63.jpeg)
 
-2.	Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
+## 练习 3：流式传输应用程序日志
 
-    ![](./media/image70.jpeg) 
-   	
-3.	Click **Delete** on the Delete confirmation dialog box.
+1.  在发布页面中，向下滚动到 **Hosting** 部分。在右上角，单击
+    **... \> View Streaming Logs**。
 
-    ![](./media/image71.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image64.jpeg)
 
-**Summary**
+2.  日志现在已流式传输到 Output 窗口中。
 
-In this lab, you have learnt to deploy a data-driven ASP.NET app in App
-Service and connect it to Azure SQL Database.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image65.jpeg)
 
+3.  你还没有看到任何跟踪消息，因为当你首次选择 View Streaming Logs
+    （查看流式日志） 时，Azure 应用会将跟踪级别设置为
+    Error（错误），这只会记录错误事件。
+
+\[！注意\] **注意：**如果您还没有看到日志记录流，请从 Visual Studio
+重新启动它们。
+
+### 任务 1：更改跟踪级别
+
+1.  转到发布页面。在 Hosting 部分，单击 ** … \> Open in Azure portal**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image66.jpeg)
+
+2.  在 Azure 门户 - 应用页面中，
+    从**Monitoring **部分下的左窗格中选择**App Service Logs**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image67.jpeg)
+
+3.  在 **Application Logging** （File System） 下，在 Level 中选择
+    **Verbose**。单击 **Save** 。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image68.jpeg)
+
+4.  在浏览器中，访问 Azure 上的 Web 应用程序并执行一些活动。
+
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image69.jpeg)
+
+5.  跟踪消息现在流式传输到 Visual Studio 中的 Output 窗口。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image70.jpeg)
+
+6.  要停止日志流式处理服务，请单击 Output 窗口中的 **Stop monitoring**
+    按钮。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image71.jpeg)
+
+7.  关闭 Visual Studio。
+
+## 练习 4：清理资源
+
+1.  在 Azure 门户中，打开分配的Resourcegroup。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image72.png)
+
+2.  选择所有资源，然后单击 Delete。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image73.png)
+
+3.  在文本框中键入 +++delete+++，然后选择 Delete。在确认对话框中选择
+    Delete 。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image74.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image75.png)
+
+**总结**
+
+在本实验中，你学习了如何在应用服务中部署数据驱动的 ASP.NET
+应用并将其连接到 Azure SQL 数据库。
