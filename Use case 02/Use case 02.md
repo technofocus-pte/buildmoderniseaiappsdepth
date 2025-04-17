@@ -1,388 +1,464 @@
-# Usecase 02 - Build a Fruits List Quarkus web app with Azure App Service on Linux and PostgreSQL
+# 사용사례 02 - Linux 및 PostgreSQL에서 Azure App Service를 사용하여 Fruits List Quarkus 웹앱 빌드하기
 
-**Estimated duration:** 40 minutes
+**예상 소요 시간:** 40분
 
-**Lab Type:** Instructor Led
+**실습 유형:** 강사 진행
 
-**Objective:**
+**목표:**
 
-This usecase shows how to build, configure, and deploy a secure Quarkus
-application in Azure App Service that's connected to a PostgreSQL
-database (using Azure Database for PostgreSQL). Azure App Service is a
-highly scalable, self-patching, web-hosting service that can easily
-deploy apps on Windows or Linux. When you're finished, you'll have a
-Quarkus app running on Azure App Service on Linux.
+이 사용 사례에서는 PostgreSQL 데이터베이스(Azure Database for PostgreSQL
+사용)에 연결된 Azure App Service에서 보안 Quarkus 애플리케이션을 빌드,
+구성 및 배포하는 방법을 보여 줍니다. Azure App Service는 Windows 또는
+Linux에서 앱을 쉽게 배포할 수 있는 확장성이 뛰어난 자체 패치 웹 호스팅
+서비스입니다. 완료되면 Linux의 Azure App Service에서 Quarkus 앱이
+실행됩니다.
 
-**Pre-requisites:**
+**사전 요구 사항:**
 
-**GitHub account** -- You are expected to have your own GitHub login
-credentials. If you do not have, please create one from here
-- +++https://github.com/signup?user_email=&source=form-home-signup+++
+**GitHub 계정** -- 고유한 GitHub 로그인 자격 증명이 있어야 합니다.
+가지고 있지 않은 경우 여기에서 생성하세요
+- +++<https://github.com/signup?user_email=&source=form-home-signup+++>
 
-## Exercise 1: Run the sample
+## 연습 0: VM 및 자격 증명을 이해하기
 
-First, you set up a sample data-driven app as a starting point. The
-sample repository we are using here includes a dev container
-configuration. The dev container has everything you need to develop an
-application, including the database, cache, and all environment
-variables needed by the sample application. The dev container can run in
-a GitHub codespace, which means you can run the sample on any computer
-with a web browser.
+이 작업에서는 실습 전체에서 사용할 자격 증명을 식별하고 이해할 것입니다.
 
-1.  From a browser, sign in to your GitHub
-    account +++**https://github.com/login**+++.
+1.  **Instructions** 탭에는 실습 전체에서 따라야 할 지침이 있는 실습
+    가이드가 있습니다.
 
-2.  Open this url from a new
-    tab, +++**https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++.
+2.  **Resources** 탭에는 실습을 실행하는 데 필요한 자격 증명이 있습니다.
 
-3.  Select **Fork -\> Create a new fork**.
+    1.  **URL** – Azure 포털에 대한 URL
 
-    ![](./media/image1.jpeg)
+    2.  **Subscription** – 사용자에게 할당돤 구독의 ID
 
-4.  Click on **Create fork** in the Create a new fork page.
+    3.  **Username** – Azure 서비스에 로그인하는 데 사용하는 사용자 ID.
 
-    ![](./media/image2.jpeg)
+    4.  **Password** – Azure 로그인에 대한 비밀번호. 이 사용자 이름과
+        비밀번호를 Azure 로그인 자격 증명이라고 하겠습니다. Azure 로그인
+        자격 증명을 언급할 때마다 이러한 자격 증명을 사용할 것입니다.
 
-5.  In the forked page of the repo, select **Code** \> **Create
-    codespace on main**.
+    5.  **Resource Group** – 사용자에게 할당돤 **Resource group**.
 
-    ![](./media/image3.jpeg)
+\[!경고\] **중요:** 이 리소스 그룹 아래에 모든 리소스를 생성해야 합니다
 
-    **Note:** If Create Codespace on main option does not show up, click on
-the + symbol next to Codespaces.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-    ![](./media/image4.jpeg)
+1.  **Help** 탭에는 Support 정보가 있습니다. **ID** 값은 실습 중에
+    사용되는**Lab instance ID**입니다.
 
-    **Note:** The codespace creation takes around 10 minutes to set up.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)![A screenshot of a computer AI-generated
+content may be incorrect.](./media/image2.png)
 
-    ![](./media/image5.jpeg)
+## 연습 1: 샘플을 실행하기
 
-6.  Execute +++mvn quarkus:dev+++ in the Terminal. Click on **Allow** in the
-    pop up.
+먼저 샘플 데이터 기반 앱을 시작점으로 설정합니다. 여기에서 사용하는 샘플
+리포지토리에는 개발 컨테이너 구성이 포함되어 있습니다. 개발 컨테이너에는
+데이터베이스, 캐시 및 샘플 애플리케이션에 필요한 모든 환경 변수를
+포함하여 애플리케이션을 개발하는 데 필요한 모든 것이 있습니다. 개발
+컨테이너는 GitHub codespace에서 실행할 수 있으므로 웹 브라우저가 있는
+모든 컴퓨터에서 샘플을 실행할 수 있습니다.
 
-    ![](./media/image6.jpeg)
+1.  브라우저에서 GitHub 계정으로 로그인하세요
+    +++\*\*<https://github.com/login**+++>.
 
-    ![](./media/image7.jpeg)
+2.  다음url을 새 탭에서
+    여세요, +++\*\*<https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++>.
 
-7.  When you see the notification, **Your application running on port
-    8080** is available., select **Open in Browser**. You should see the
-    sample application in a new browser tab.
+3.  **Fork -\> Create a new fork**를 선택하세요.
 
-    If you see a **notification** with port **5005**, **skip** it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.jpeg)
 
-    ![](./media/image8.jpeg)
+4.  Create a new fork 페이지에서 **Create fork**를 클릭하세요.
 
-    ![](./media/image9.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-8.  To stop the Quarkus development server, type **Ctrl+C** in the
-    Codespace terminal.
+5.  repo의 분기된 페이지에서 **Code** \> **Create codespace on main**를
+    선택하세요.
 
-    ![](./media/image10.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.jpeg)
 
-## Exercise 2: Create App Service and PostgreSQL
+**참고:** 기본 옵션에서 Codespace 만들기가 표시되지 않으면 Codespaces
+옆에 있는 + 기호를 클릭하세요.
 
-First, you create the Azure resources. The steps used in this lab create
-a set of secure-by-default resources that include App Service and Azure
-Database for PostgreSQL.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-1.  Login to Azure portal
-    at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
+**참고:** codespace 만들기는 설정하는 데 약 10분이 걸립니다.
 
-    ![](./media/image11.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-2.  Select **Cancel** or the close button in the Welcome page.
+6.  터미널에서 +++mvn quarkus:dev+++를 실행하세요. 팝업에서 **Allow**를
+    클릭하세요.
 
-    ![](./media/image12.jpeg)
+![A screenshot of a browser AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-3.  Enter +++**web app database**+++ in the search bar at the top of the Azure
-    portal. Select the item labelled **Web App + Database** under
-    the **Marketplace** heading.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    ![](./media/image13.jpeg)
+7.  알림이 표시되면 **Your application running on port 8080**을 사용할
+    수 있습니다. **Open in Browser**를 선택하세요. 새 브라우저 탭에서
+    샘플 애플리케이션을 볼 수 있습니다.
 
-4.  On **Create Web App + Database**, fill in the below details and
-    select **Review + create**
+포트 **5005**에 대한 **notification** 이 표시되면 **skip**하세요.
 
-    | **Property**   |  **Value**  |
-    |:-------|:-------|
-    |  Subscription  |  Select your **assigned subscription**  |
-    | Resource group   |  Click **Create New** -> Enter +++**RGForAppService**+++  |
-    |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
-    | **Web App Details**   |    |
-    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
-    | Runtime stack   |  **Java 17**  |
-    |  **Database**  |    |
-    |  Engine  |  Select **PostgreSQL – Flexible Server**  |
-    |  Hosting Plan  |  Select **Basic**  |
-    
-    ![](./media/image14.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-    ![](./media/image15.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-6.  Once the validation passes, click on **Create**.
+8.  Quarkus 개발 서버를 중단하기 위해 Codespace 터미널에서 **Ctrl+C** 를
+    입력하세요.
 
-    ![](./media/image16.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-    **Note:** The app creation takes around 15 minutes.
+## 연습 2: Create App Service and PostgreSQL
 
-7.  Once the deployment is complete, click on **Go to resource**.
+먼저 Azure 리소스를 생성합니다. 이 실습에 사용된 단계에서는 App Service
+및 PostgreSQL용 Azure Database을 포함하는 기본 보안 리소스 집합을
+생성합니다.
 
-    ![](./media/image17.jpeg)
+1.  Open the Azure portal at +++<https://portal.azure.com/+++> 에서
+    Azure 포털을 열고VM의  **Resources** 탭에 있는 Azure 로그인 자격
+    증명으로**login**하세요.
 
-8.  You're taken directly to the **App Service page.** Click
-    on **Home** at the top left corner.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image13.png)
 
-    ![](./media/image18.jpeg)
+2.  Welcome 페이지에 있는 **Cancel** 또는 close 버튼을 선택하세요.
 
-9.  Click on the Portal menu and select **Resource Groups** from it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-    ![](./media/image19.jpeg)
+3.  Azure 포털의 상단에 검색 바에서 +++**web app database**+++ 를
+    입력하세요. **Marketplace** 제목 아래에서 **Web App +
+    Database** 라는 레이블이 지정된 항목을 선택하세요.
 
-10.  Select the Resource group assigned to you and see that the
-    following resources are created from the deployment that we just
-    performed.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-    - App Service plan
-    
-    - App Service
-    
-    - Virtual network
-    
-    - Azure Database for PostgreSQL flexible server
-    
-    - Private DNS zone
+4.  **Create Web App + Database**에서 다음 세부 정보를 입력하고
+    **Review + create**를 선택하세요
 
-   ![](./media/image20.jpeg)
+[TABLE]
 
-## Exercise 3: Verify connection settings
+5.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image16.png)
 
-The creation wizard generated the connectivity variables for you already
-as app settings. In this step, you learn where to find the app settings,
-and how you can create your own.
+6.  ![A screenshot of a web application AI-generated content may be
+    incorrect.](./media/image17.jpeg)
 
-1.  Click on the **App Service** from the list of resources in the
-    Resource group.
+7.  유효성 검사가 통과되면 **Create**를 클릭하세요.
 
-    ![](./media/image21.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.png)
 
-2.  In the App Service page, in the left menu, select **Environment
-    variables** under **Settings**.
+**참고:** 앱을 생성하는 데 약 15분이 걸립니다.
 
-3.  In the **App settings** tab of the **Environment variables** page,
-    verify that **AZURE_POSTGRESQL_CONNECTIONSTRING** is present. It's
-    injected at runtime as an environment variable.
+8.  배포가 완료되면 **Go to resource**를 클릭하세요.
 
-    ![](./media/image22.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-4.  Select **+ Add**.
+9.  **App Service page**로 바로 이동합니다**.** 왼쪽 상단에서**Home**를
+    클릭하세요.
 
-    ![](./media/image23.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.jpeg)
 
-5.  Name the setting +++**PORT**+++ and set its value to +++**8080**+++,
-    which is the default port of the Quarkus application.
-    Select **Apply**.
+10. 포털 메뉴를 클릭하고**Resource Groups**를 선택하세요.
 
-    ![](./media/image24.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-6.  Select **Apply**.
+11. 할당된 리소스 그룹을 선택하고 방금 수행한 배포에서 다음 리소스가
+    생성했는지 확인하세요.
 
-    ![](./media/image25.jpeg)
+> \- App Service plan
+>
+> \- App Service
+>
+> \- Virtual network
+>
+> \- Azure Database for PostgreSQL flexible server
+>
+> \- Private DNS zone
 
-7.  Select **Confirm**.
+![A screenshot of a group AI-generated content may be
+incorrect.](./media/image22.png)
 
-    ![](./media/image26.jpeg)
+## 연습 3: 연결 설정을 확인하세요
 
-8.  You will get a notification stating that the app settings has been
-    updated.
+Creation wizard는 이미 앱 설정으로 연결 변수를 생성했습니다. 이
+단계에서는 앱 설정을 찾을 수 있는 위치와 앱 설정을 직접 만드는 방법을
+알아볼 것입니다.
 
-    ![](./media/image27.jpeg)
+1.  Resource group의 리소스 목록에서 **App Service** 를 클릭하세요.
 
-## Exercise 4: Deploy sample code
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image23.jpeg)
 
-In this step, you'll configure GitHub deployment using GitHub Actions.
-It's just one of many ways to deploy to App Service, but also a great
-way to have continuous integration in your deployment process. By
-default, every git push to your GitHub repository will kick off the
-build and deploy action.
+2.  App Service 페이지에 왼쪽 메뉴에서**Settings**의 **Environment
+    variables**를 선택하세요.
 
-1.  From the App Service page, in the left menu, select **Deployment
-    Center** under **Deployment**.
+3.  **Environment variables** 페이지에서 **App settings** 탭에서
+    **AZURE_POSTGRESQL_CONNECTIONSTRING**가 있는지 확인하세요. 런타임에
+    환경 변수로 주입됩니다.
 
-    ![](./media/image28.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image24.jpeg)
 
-2.  In Source, select **GitHub**. By default, GitHub Actions is selected
-    as the build provider.
+4.  **+ Add**를 선택하세요.
 
-    ![](./media/image29.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image25.jpeg)
 
-3.  Click on **Authorize** and sign in to your GitHub account and follow
-    the prompt to authorize Azure.
+5.  설정 이름을 +++**PORT**+++로 지정하고 해당 값을 Quarkus
+    애플리케이션의 기본 포트인 +++**8080**+++로 설정하세요. **Apply**를
+    선택하세요.
 
-    ![](./media/image30.jpeg)
+![A screenshot of a login AI-generated content may be
+incorrect.](./media/image26.jpeg)
 
-4.  Fill in the details as below, leave the remaining to the default and
-    click on **Save**.
+6.  **Apply**를 선택하세요.
 
-    |  **Property**  | **Value**   |
-    |:--------|:---------|
-    |  Organization  |  Your GitHub account  |
-    |  Repository  |  Select **msdocs-quarkus-postgresql-sample-app**  |
-    |  Branch  |   **main** |
-    
-    ![](./media/image31.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-6.  Once **Save** is clicked on, App Service commits a workflow file
-    into the chosen GitHub repository, in the .github/workflows
-    directory.
+7.  **Confirm**를 선택하세요.
 
-7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into
-    your codespace.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-    ![](./media/image32.jpeg)
+8.  앱 설정이 업데이트되었다는 알림을 받게 됩니다..
 
-8.  Open **src/main/resources/application.properties** in the explorer.
-    Quarkus uses this file to load Java properties.
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-9.  Find the code (lines 10-11). This code sets the production variable
-    **%prod.quarkus.datasource.jdbc.url** to the app setting that the
-    creation wizard for you. The **quarkus.package.type** is set to build an
-    Uber-Jar, which you need to run in App Service.
+## 연습 4: 샘플 코드를 배포하기
 
-    ![](./media/image33.jpeg)
+이 단계에서는 GitHub Actions를 사용하여 GitHub 배포를 구성합니다. App
+Service에 배포하는 여러 방법 중 하나일 뿐만 아니라 배포 프로세스에서
+지속적인 통합을 수행하는 좋은 방법이기도 합니다. 기본적으로 GitHub
+리포지토리에 대한 모든 git push는 빌드 및 배포 작업을 시작합니다.
 
-10.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
-    the explorer. This file was created by the App Service create
-    wizard.
+1.  App Service 페이지의 왼쪽 메뉴에서 **Deployment**에 **Deployment
+    Center**를 선택하세요.
 
-11. Under the Build with Maven step, change the Maven command to +++**mvn clean install -DskipTests**+++.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-    **-DskipTests** skips the tests in your Quarkus project, to avoid the
-GitHub workflow failing prematurely.
+2.  Source에서 **GitHub**를 선택하세요. 기본적으로 GitHub Actions는 빌드
+    공급자로 선택됩니다.
 
-    ![](./media/image34.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.jpeg)
 
-12. Select the **Source Control** extension.
+3.  **Authorize**를 클릭하고 GitHub 계정에 로그인한 후 프롬프트에 따라
+    Azure에 권한을 부여하세요.
 
-    ![](./media/image35.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image32.jpeg)
 
-13. In the textbox, type a commit message like +++**Configure DB and
-    deployment workflow**+++. Select **Commit**, then confirm
-    with **Yes**.
+4.  아래와 같이 세부 정보를 입력하고 나머지는 기본값으로 두고 **Save**을
+    클릭하세요.
 
-    ![](./media/image36.jpeg)
+[TABLE]
 
-14. Select **Sync changes 1**, then confirm with **OK**.
+5.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image33.jpeg)
 
-    ![](./media/image37.jpeg)
+6.  **Save**을 클릭하면 App Service는 .github/workflows 디렉터리의
+    선택한 GitHub 리포지토리에 워크플로 파일을 커밋합니다.
 
-    ![](./media/image38.jpeg)
+7.  샘플 포크의 GitHub codespace로 돌아가서 +++git pull origin main+++를
+    실행합니다. 이렇게 하면 새로 커밋된 워크플로 파일을 codespace로
+    끌어옵니다.
 
-15. Back in the Deployment Center page in the Azure portal,
-    Select **Logs**. A new deployment run is already started from your
-    committed changes.
+\[!참고\] **참고:** 터미널에서 테스트 사례가 여전히 실행 중인 경우
+Ctrl+C를 누른 후 위의 명령을 실행할 수 있습니다.
 
-16. In the log item for the deployment run, select the **Build/Deploy
-    Logs** entry with the latest timestamp.
+![A screenshot of a computer code AI-generated content may be
+incorrect.](./media/image34.jpeg)
 
-    ![](./media/image39.jpeg)
+7.  Explorer에서**src/main/resources/application.properties**를 여세요.
+    Quarkus는 이 파일을 사용하여 Java 속성을 로드합니다.
 
-17. You're taken to your GitHub repository and see that the GitHub
-    action is running. The workflow file defines two separate stages,
-    build and deploy. Wait for the GitHub run to show a status of
-    Complete. It takes about 5 minutes.
+8.  코드(10-11행)를 찾습니다. 이 코드는 프로덕션 변수
+    **%prod.quarkus.datasource.jdbc.url**을 create wizard의 앱 설정으로
+    설정합니다. **quarkus.package.type**은 App Service에서 실행해야 하는
+    Uber-Jar를 빌드하도록 설정됩니다.
 
-    ![](./media/image40.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image35.jpeg)
 
-## Exercise 5: Browse to the app
+9.  Explorer에서 **.github/workflows/main_quarkuwebapp\[lab instance
+    id\].yml** 를 여세요. 이 파일은 App Service create wizard에서
+    생성했습니다.
 
-1.  From the Azure portal(+++https://portal.azure.com+++), open Resource
-    group **RGForAppService** and select the **App Service** resource.
+10. Build with Maven 단계에서 Maven 명령을 +++**mvn clean install
+    -DskipTests**+++로 변경하세요.
 
-    ![](./media/image41.jpeg)
+11. 
 
-2.  From the left menu, select **Overview** and select the URL of your
-    app under **Default domain**.
+**-DskipTests**는 GitHub 워크플로가 조기에 실패하는 것을 방지하기 위해
+Quarkus 프로젝트의 테스트를 건너뜁니다.
 
-    ![](./media/image42.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image36.jpeg)
 
-3.  Paste the copied url in a new browser to open the app.
+12. **Source Control** 확장을 선택하세요.
 
-    ![](./media/image43.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-4.  Add a few fruits to the list. Now, you're running a web app in Azure
-    App Service, with secure connectivity to Azure Database for
-    PostgreSQL.
+13. 텍스트 상자에 +++ **Configure DB and deployment workflow**+++와 같은
+    커밋 메시지를 입력하세요. **Commit**를 선택하고 **Yes**로
+    확인하세요.
 
-    ![](./media/image44.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.jpeg)
 
-    ![](./media/image45.jpeg)
+14. **Sync changes 1**를 선택하고**OK**로 확인하세요.
 
-## Exercise 6: Stream diagnostic logs
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-Azure App Service captures all messages output to the console to help
-you diagnose issues with your application. The sample application
-includes standard JBoss logging statements to demonstrate this
-capability as shown below.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-1.  From the Azure portal App Service page, from the left menu,
-    select **App Service logs** under **Monitoring**.
+15. Azure Portal의 배포 센터 페이지로 돌아가서 **Logs**를 선택하세요.
+    커밋된 변경 사항에서 새 배포 실행이 이미 시작되었을 것입니다.
 
-    ![](./media/image46.jpeg)
+16. 배포 실행에 대한 로그 항목에서 최신 타임스탬프가 있는 **Build/Deploy
+    Logs** 항목을 선택하세요.
 
-2.  Under **Application logging**, select **File System**. In the top
-    menu, select **Save**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-    ![](./media/image47.jpeg)
+17. GitHub 리포지토리로 이동하여 GitHub 작업이 실행 중인지 확인합니다.
+    워크플로 파일은 빌드와 배포라는 두 개의 별도 단계를 정의합니다.
+    GitHub 실행이 완료 상태를 표시할 때까지 기다립니다. 소요 시간은 약
+    5분입니다.
 
-3.  From the left menu, select **Log stream**. You see the logs for your
-    app, including platform logs and logs from inside the container.
+![A screenshot of a web page AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-    ![](./media/image48.jpeg)
+## 연습 5: 앱으로 이동하기
 
-## Exercise 7: Clean up resources
+1.  Azure 포털
+    (+++[https://portal.azure.com+++](https://portal.azure.com+++/))에서Resource
+    group **ResourceGroup1**를 열고**App Service** 리소스를 선택하세요.
 
-1.  From the Azure portal Home page, select Resource groups.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image43.png)
 
-    ![](./media/image49.jpeg)
+2.  왼쪽 메뉴에서 **Overview**를 선택하고 **Default domain**아래에
+    앱의URL을 선택하세요.
 
-2.	Select the **NetworkWatcherRG** and click on **Delete resource group**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-    ![](./media/image57.png)
+3.  앱을 열기 위해 복사한 URL을 새 브라우저에 붙여넣으세요.
 
-3.	Type +++NetworkWatcherRG+++ in the text box and click on **Delete**.
- 
-    ![](./media/image58.png)
+![A screenshot of a fruit list AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-    ![](./media/image59.png)
-  
-4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
+4.  목록에 몇 가지 과일을 추가하세요. 이제PostgreSQL용 Azure Database에
+    대한 보안 연결을 사용하여 Azure App Service에서 웹앱을 실행하고
+    있습니다.
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image46.jpeg)
 
-5.	Click on **Delete resource group**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-    ![](./media/image51.jpeg)
+## 연습 6: 진단 로그 스트림하기 
 
-6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
- 
-    ![](./media/image52.jpeg)
+Azure App Service는 콘솔에 출력되는 모든 메시지를 캡처하여
+애플리케이션의 문제를 진단하는 데 도움을 줍니다. 샘플 애플리케이션에는
+아래와 같이 이 기능을 보여주는 표준 JBoss 로깅 문이 포함되어 있습니다.
 
-7.	Click on **Delete** in the confirmation dialog.
+1.  Azure portal App Service 패이지의 왼쪽 메뉴에서**Monitoring**의**App
+    Service logs**를 선택하세요.
 
-    ![](./media/image53.jpeg)
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
+2.  **Application logging**에서**File System**를 선택하세요. 위
+    메뉴에서**Save**를 선택하세요.
 
-    ![](./media/image54.jpeg)
-  	
-8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
-   
-    ![](./media/image64.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-**Summary:**
+3.  왼쪽 메뉴에서 **Log stream** 을 선택하세요. 플랫폼 로그 및 컨테이너
+    내부의 로그를 포함하여 앱에 대한 로그가 표시됩니다.
 
-We have learnt to deploy a secure Quarkus application in Azure App
-Service, connected it to PostgreSQL database to add Fruit names from the
-app's UI.
+![A computer screen shot of a computer screen AI-generated content may
+be incorrect.](./media/image50.jpeg)
 
+## 연습 7: 리소스를 정리하기
+
+1.  Azure 포털 Home page에서 Resource groups를 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
+
+2.  **NetworkWatcherRG**를 선택하고**Delete resource group**를
+    클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image52.png)
+
+3.  텍스트 상자에서 +++NetworkWatcherRG+++를 입력하고**Delete**를
+    클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image54.png)
+
+4.  다음으로, Resource group 페이지에서 할당된Resource group을
+    선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image55.png)
+
+5.  모든 **resources**를 선택하고**Delete**를 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image56.png)
+
+6.  텍스트 상자에 +++**delete**+++를 입력하고**Delete**를 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image57.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image58.png)
+
+7.  삭제된 리소스에 대한 성공 알림은 삭제를 확인합니다.
+
+8.  GitHub 작업 영역으로 돌아가서 Code옆에 있는 드롭다운을 클릭하고,
+    코드스페이스 이름 옆에 있는 세 개의 점을 선택하고, **Delete**를
+    클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
+
+**요약:**
+
+Azure App Service에 보안 Quarkus 애플리케이션을 배포하고 PostgreSQL
+데이터베이스에 연결하여 앱의 UI에서 Fruit names이 추가하는 방법을
+배웠습니다.
