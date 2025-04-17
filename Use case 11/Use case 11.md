@@ -484,7 +484,7 @@ NoSQL，应用程序可以将这两种类型的数据存储在同一个容器中
     属性更新为当前 UTC 时间戳。调用传入新消息和分区键变量的
     CreateItemAsync。
 
-返回响应作为 InsertMessageAsync 的结果。
+    返回响应作为 InsertMessageAsync 的结果。
 
     ```nocopy
     PartitionKey partitionKey = new(message.SessionId);
