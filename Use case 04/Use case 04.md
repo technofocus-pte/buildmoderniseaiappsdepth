@@ -31,7 +31,7 @@ ASP.NET 应用并连接到 SQL 数据库。
 
     - **Resource Group** – 分配给您的**Resource group**。
 
->[！Alert] **重要提示** 请确保在此资源组下创建所有资源
+    >[！Alert] **重要提示** 请确保在此资源组下创建所有资源
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image1.png)
@@ -128,141 +128,154 @@ incorrect.](./media/image17.jpeg)
 1.  在**Solution Explorer**中，右键单击 **DotNetAppSqlDb**
     项目，然后选择 **Publish**。
 
-               ![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image18.jpeg)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image19.jpeg)
 
 2.  选择 **Azure** ，然后单击 **Next**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image20.jpeg)
 
 3.  在**Which Azure service would you like to use to host your
     application? **中选择**“Azure App Service(Windows)** 屏幕，然后单击
     **Next**。
 
-![A screenshot of a computer application AI-generated content may be
+    ![A screenshot of a computer application AI-generated content may be
 incorrect.](./media/image21.jpeg)
 
 4.  在 Publish 对话框中，单击 **Sign In**并登录到您的 Azure
     订阅（如果尚未登录）。
 
-**注意：**如果您已登录 Microsoft 帐户，请确保该帐户持有您的 Azure
+    **注意** 如果您已登录 Microsoft 帐户，请确保该帐户持有您的 Azure
 订阅。如果已登录的 Microsoft 帐户没有您的 Azure
 订阅，请单击该帐户以添加正确的帐户。
 
 5.  单击 **Create new** 以创建新的 App 服务。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image22.jpeg)
 
 6.  输入以下详细信息。
 
-[TABLE]
+    |  **财产**  |  **描述**  |
+    |:------|:-------|
+    |  名字  | +++TodoApp@lab.LabInstance.Id+++  |
+    | 资源组   |  C选择assigned Resource group |
+
 
 7.  点击 New 上**Hosting Plan**。
 
-8.  ![A screenshot of a computer AI-generated content may be
-    incorrect.](./media/image23.png)
+     ![A screenshot of a computer AI-generated content may be incorrect.](./media/image23.png)
 
-9.  点击 新建托管计划 选项并输入以下详细信息，然后单击 OK。
+8.  点击 新建托管计划 选项并输入以下详细信息，然后单击 OK。
 
-[TABLE]
+    |  **财产**  |  **描述**  |
+    |:------|:-------|
+    |  Hosting Plan  | +++myAppServicePlan+++   |
+    | 位置   |  选择West US  |
+    |  大小  |   **Free** |
 
-10. ![A screenshot of a computer AI-generated content may be
-    incorrect.](./media/image24.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image24.png)
 
 11. 单击 App Service 窗口上的**Create** ，然后等待创建 Azure resources。
 
-![A screenshot of a computer program AI-generated content may be
+    ![A screenshot of a computer program AI-generated content may be
 incorrect.](./media/image25.png)
 
 12. **Publish** 对话框显示您配置的资源。单击 **Finish**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image26.png)
 
 13. 单击 **Close**。
 
-![A screenshot of a computer program AI-generated content may be
+    ![A screenshot of a computer program AI-generated content may be
 incorrect.](./media/image27.jpeg)
 
 14. 向下滚动到 Server Dependencies 部分，然后单击 **+**
     sign以添加依赖项。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image28.jpeg)
 
 15. 在 **Add dependency**页面中选择 **Azure SQL Database**，然后单击
     **Next**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image29.jpeg)
 
 16. 在 **Connect to Azure SQL Database** 对话框中，单击 **SQL
     databases** 旁边的 **Create New**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image30.jpeg)
 
 17. 在 **Azure SQL Database Create new **对话框中，单击
     数据库服务器旁边的**New**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image31.png)
 
 18. 填写以下详细信息，然后单击 OK。
 
-[TABLE]
+    | **Property**   |  **Description**  |
+    |:-------|:--------|
+    |  Database server name  | **dotnetappsqldbdbserver@lab.LabInstance.Id**   |
+    |  Administrator username  |   +++sqladmin+++ |
+    |  Administrator password  |  +++PassWord98+++  |
 
-19. ![A screenshot of a computer AI-generated content may be
-    incorrect.](./media/image32.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image32.png)
 
 20. 单击 Create new 对话框中的 **Create。**
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image33.png)
 
 ### 任务 3：配置数据库连接
 
 1.  向导创建完数据库资源后，单击 **Next**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image34.png)
 
 2.  在 **Connect to Azure SQL Database**
     对话框中填写以下详细信息，然后单击 **Finish**。
 
-[TABLE]
+    | **财产**   |  **描述**  |
+    |:-------|:--------|
+    |  Database connection string Name  | +++MyDbConnection+++  |
+    |  Database connection user name |   +++Sqladmin+++ |
+    |  Database connection password |  +++PassWord98+++  |
+    |  Azure App Settings  |  Selected  |
 
-3.  ![A screenshot of a computer AI-generated content may be
-    incorrect.](./media/image35.jpeg)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image35.jpeg)
 
 4.  单击 **Finish** 查看**summary of changes**后。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image36.png)
 
 5.  等待配置向导完成，然后单击 **Close**。Azure SQL 数据库现已
     **connected**到您的应用。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image37.jpeg)
 
 6.  在 Publish 页面中，单击 **Publish** 在右上角。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image38.png)
 
-**注意：**这大约需要 5 分钟
+    **注意** 这大约需要 5 分钟
 
 7.  将 ASP.NET 应用程序部署到 Azure
     后，将启动默认浏览器，其中包含已部署应用程序的 URL Add a few to-do
     items。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image39.jpeg)
 
 ### 任务 4：在本地访问数据库
@@ -276,13 +289,13 @@ Visual Studio）访问它，必须为本地计算机的公共 IP
 1.  从 Visual Studio 2022 的**View** 菜单中，选择**SQL Server Object
     Explorer**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image40.jpeg)
 
 2.  在 **SQL Server Object Explorer**的顶部，单击 **Add SQL Server**
     按钮。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image41.jpeg)
 
 ### 任务 5：配置数据库连接
@@ -296,7 +309,7 @@ incorrect.](./media/image41.jpeg)
 3.  键入您之前创建的数据库管理员**password**
     （+++**PassWord98**+++），然后单击 Connect。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image42.jpeg)
 
 ### 任务 6：允许来自计算机的客户端连接
@@ -310,7 +323,7 @@ IP 地址。
 
 1.  确保已选中 Add my client IP，然后单击 OK。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image43.jpeg)
 
 2.  在 Visual Studio 完成为 SQL
@@ -320,17 +333,17 @@ incorrect.](./media/image43.jpeg)
 3.  扩展您的**connection \> Databases \> \< YOUR DATABASE \> \>
     Tables**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image44.jpeg)
 
 4.  右键单击 **Todo** 表，然后选择 **View Data**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image45.jpeg)
 
 5.  查看表的内容。从应用程序 UI 添加的数据应在此处列出。
 
-![](./media/image46.jpeg)
+    ![](./media/image46.jpeg)
 
 ## 练习 2：使用 Code First 迁移更新应用程序
 
@@ -339,7 +352,7 @@ incorrect.](./media/image45.jpeg)
     类中（在** public DateTime CreatedDate { get; set;** } 之后 行
     ），然后单击 **Save** 。
 
-+++**public bool Done { get; set; }**+++
+    +++**public bool Done { get; set; }**+++
 
 ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image47.jpeg)
@@ -351,39 +364,39 @@ incorrect.](./media/image47.jpeg)
 1.  在 **Tools** 菜单中，单击 **NuGet Package Manager** \> **Package
     Manager Console**。
 
-![A screenshot of a computer program AI-generated content may be
+    ![A screenshot of a computer program AI-generated content may be
 incorrect.](./media/image48.jpeg)
 
 2.  在 Package Manager Console 窗口中，通过执行此命令启用 Code First
     迁移。
 
-+++**Enable-Migrations**+++
+    +++**Enable-Migrations**+++
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image49.jpeg)
 
 3.  通过执行以下命令添加迁移。
 
-+++**Add-Migration AddProperty**+++
+    +++**Add-Migration AddProperty**+++
 
-![](./media/image50.jpeg)
+    ![](./media/image50.jpeg)
 
 4.  通过执行以下命令更新本地数据库。
 
-+++**Update-Database**+++
+    +++**Update-Database**+++
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image51.jpeg)
 
 5.  键入 **Ctrl+F5** 运行应用程序，或单击 **Debug -\> Start without
     Debugging**。测试编辑、详细信息并创建链接。
 
-![A screenshot of a computer program AI-generated content may be
+    ![A screenshot of a computer program AI-generated content may be
 incorrect.](./media/image52.jpeg)
 
 6.  应用程序页面将打开，它看起来仍然相同，因为您的应用程序逻辑尚未使用此新属性。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image53.jpeg)
 
 ### 任务 2：使用 new 属性
@@ -394,13 +407,13 @@ incorrect.](./media/image53.jpeg)
     52 行找到 **Create（）** 方法，并将 +++**Done**+++ 添加到 Bind
     属性的属性列表中。完成后，您的 Create（） 方法签名将类似于以下代码：
 
-![A screen shot of a computer AI-generated content may be
+    ![A screen shot of a computer AI-generated content may be
 incorrect.](./media/image54.jpeg)
 
 2.  打开 **Views\Todos\Create.cshtml**。在 **CreatedDat**e 的 \< div
     class=“form-group” \>后添加以下代码。
 
-![A screenshot of a computer program AI-generated content may be
+    ![A screenshot of a computer program AI-generated content may be
 incorrect.](./media/image55.jpeg)
 
 \<div class="form-group"\>
@@ -408,20 +421,18 @@ incorrect.](./media/image55.jpeg)
 @Html.LabelFor(model =\> model.Done, htmlAttributes: new { @class =
 "control-label col-md-2" })
 
-\<div class="col-md-10"\>
+    ```
+    <div class="form-group">
+    @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Done)
+            @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
 
-\<div class="checkbox"\>
-
-@Html.EditorFor(model =\> model.Done)
-
-@Html.ValidationMessageFor(model =\> model.Done, "", new { @class =
-"text-danger" })
-
-\</div\>
-
-\</div\>
-
-\`\`\`
+    ```
 
 3.  打开 **Views\Todos\Index.cshtml**。在空的 **th** 元素中，在
     **CreatedDate** 的 **th** 元素之后添加以下代码。
@@ -433,29 +444,30 @@ incorrect.](./media/image56.jpeg)
 
 4.  将此代码添加到 html 的正上方。ActionLink（） 辅助方法。
 
-5.  \<td\>
+    ```
+    <td>
+        @Html.DisplayFor(modelItem => item.Done)
+    </td>
 
-6.  @Html.DisplayFor(modelItem =\> item.Done)
+    ```
 
-\`\`\`
-
-\![\](./media/image53.jpeg)
+    ![](./media/image53.jpeg)
 
 7.  键入 **Ctrl+F5** 以运行应用程序。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image57.jpeg)
 
 ### 任务 3：在 Azure 中启用 Code First 迁移
 
 1.  右键单击项目，然后选择 **Publish**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image58.jpeg)
 
 2.  单击 **More actions** \> **Edit** 以打开发布**settings**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image59.jpeg)
 
 3.  在 **MyDatabaseContext** 下拉列表中，选择 Azure SQL
@@ -464,12 +476,12 @@ incorrect.](./media/image59.jpeg)
 4.  选择 **Execute Code First Migrations** （runs on
     application，然后单击 **Save**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image60.jpeg)
 
 5.  在 Publish 页面中，单击 **Publish**。
 
-![A black rectangular object with white text AI-generated content may be
+    ![A black rectangular object with white text AI-generated content may be
 incorrect.](./media/image61.jpeg)
 
 6.  更新后的应用现已在 Azure 上提供。
@@ -477,10 +489,10 @@ incorrect.](./media/image61.jpeg)
 7.  再次尝试添加待办事项并选择
     **Done**，它们应该会在您的主页上显示为已完成的项目。
 
-![A screenshot of a application AI-generated content may be
+    ![A screenshot of a application AI-generated content may be
 incorrect.](./media/image62.jpeg)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image63.jpeg)
 
 ## 练习 3：流式传输应用程序日志
@@ -488,43 +500,43 @@ incorrect.](./media/image63.jpeg)
 1.  在发布页面中，向下滚动到 **Hosting** 部分。在右上角，单击
     **... \> View Streaming Logs**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image64.jpeg)
 
 2.  日志现在已流式传输到 Output 窗口中。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image65.jpeg)
 
 3.  你还没有看到任何跟踪消息，因为当你首次选择 View Streaming Logs
     （查看流式日志） 时，Azure 应用会将跟踪级别设置为
     Error（错误），这只会记录错误事件。
 
-\[！注意\] **注意：**如果您还没有看到日志记录流，请从 Visual Studio
+    >[!Note] **注意** 如果您还没有看到日志记录流，请从 Visual Studio
 重新启动它们。
 
 ### 任务 1：更改跟踪级别
 
-1.  转到发布页面。在 Hosting 部分，单击 ** … \> Open in Azure portal**。
+1.  转到发布页面。在 Hosting 部分，单击 ** … > Open in Azure portal**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image66.jpeg)
 
 2.  在 Azure 门户 - 应用页面中，
     从**Monitoring **部分下的左窗格中选择**App Service Logs**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image67.jpeg)
 
 3.  在 **Application Logging** （File System） 下，在 Level 中选择
     **Verbose**。单击 **Save** 。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image68.jpeg)
 
 4.  在浏览器中，访问 Azure 上的 Web 应用程序并执行一些活动。
 
-![A screenshot of a application AI-generated content may be
+    ![A screenshot of a application AI-generated content may be
 incorrect.](./media/image69.jpeg)
 
 5.  跟踪消息现在流式传输到 Visual Studio 中的 Output 窗口。
@@ -544,21 +556,21 @@ incorrect.](./media/image71.jpeg)
 
 1.  在 Azure 门户中，打开分配的Resourcegroup。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image72.png)
 
 2.  选择所有资源，然后单击 Delete。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image73.png)
 
 3.  在文本框中键入 +++delete+++，然后选择 Delete。在确认对话框中选择
     Delete 。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image74.png)
 
-![A screenshot of a computer error AI-generated content may be
+    ![A screenshot of a computer error AI-generated content may be
 incorrect.](./media/image75.png)
 
 **总结**
