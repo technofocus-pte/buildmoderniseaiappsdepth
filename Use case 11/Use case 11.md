@@ -1,250 +1,298 @@
-# Use case 11 - Building a Copilot using Azure OpenAI, Azure Cosmos DB for NoSQL
+# 用例 11 - 使用 Azure OpenAI、Azure Cosmos DB for NoSQL 构建 Copilot
 
-In this use case, you will connect a Blazor web application to Azure
-Cosmos DB for NoSQL and Azure OpenAI using .NET software development
-kits. Your code manages and queries items in an API for NoSQL container.
-Your code also sends prompts to Azure OpenAI and parses the responses.
+在此用例中，你将使用 .NET 软件开发工具包将 Blazor Web 应用程序连接到
+Azure Cosmos DB for NoSQL 和 Azure OpenAI。您的代码管理和查询 API for
+NoSQL 容器中的项目。您的代码还会向 Azure OpenAI 发送提示并分析响应。
 
-**Lab duration:** 45 minutes
+**实验时长** 45 分钟
 
-**Lab Type**: Instructor led
+**实验类型**：讲师指导
 
-**Objective**
+**目的**
 
-- To set up the development environment for Blazor, PostgreSQL, and
-  OpenAI.
+- 为 Blazor、PostgreSQL 和 OpenAI 设置开发环境。
 
-- To create a Blazor project and design a responsive chat interface.
+- 创建 Blazor 项目并设计响应式聊天界面。
 
-- To configure PostgreSQL database on Azure and connect it to the Blazor
-  app.
+- 在 Azure 上配置 PostgreSQL 数据库并将其连接到 Blazor 应用。
 
-- To integrate Azure OpenAI for enhanced chat functionalities.
+- 集成 Azure OpenAI 以增强聊天功能。
 
-- To deploy the Blazor application and PostgreSQL database on Azure.
+- 在 Azure 上部署 Blazor 应用程序和 PostgreSQL 数据库。Azure.
 
-- To test the application in order to ensure seamless interaction
-  between components.
+- 测试应用程序以确保组件之间的无缝交互。
 
-- To monitor and troubleshoot the deployed application on Azure.
+- 监视 Azure 上部署的应用程序并对其进行故障排除。
 
-**Key Technologies Used:** Azure Cosmos DB for NoSQL, Azure OpenAI
+**使用的关键技术：**Azure Cosmos DB for NoSQL、Azure OpenAI
 
-## Exercise 1: Deploy the infrastructure and complete the initial setup
+## 练习 0：了解 VM 和凭据
 
-To complete this project, you need an Azure Cosmos DB for NoSQL account
-and an Azure OpenAI account. To streamline this process, deploy a Bicep
-template to Azure with both of these accounts.
+在此任务中，我们将识别并了解我们将在整个实验室中使用的凭证。
 
-### Task 1: Deploy infrastructure from template
+1.  **Instructions**选项卡包含实验室指南，其中包含在整个实验室中要遵循的说明。
 
-1.  Open a new browser and enter the following URL in the address
-    bar: +++https://portal.azure.com/+++ to open the Azure Portal.
+2.  **Resources** 选项卡已获取执行实验室所需的凭证。
 
-    ![](./media/image1.jpeg)
+    - **URL** – Azure 门户的 URL
 
-2.  In the Azure portal, click on the **\[\>\_\] (Cloud Shell)** button
-    at the top of the page to the right of the search box. A Cloud Shell
-    pane will open at the bottom of the portal. The first time you open
-    the Cloud Shell, you may be prompted to choose the type of shell you
-    want to use (**Bash** or **PowerShell**). Select **Bash**. If you
-    don't see this option, then skip this step.
+    - **Subscription** – 这是分配给你的订阅的 ID
 
-    ![](./media/image2.jpeg)
-    
-    ![](./media/image3.jpeg)
+    - **Username** – 登录 Azure 服务时需要使用的用户 ID。
 
-3.  In the **Getting Started** dialog, select **Mount storage account**, select your **subscription** and then click on **Apply**.
+    - **Password** – Azure 登录名的密码。让我们将此用户名和密码称为
+      Azure 登录凭据。我们将在提及 Azure
+      登录凭据的任何地方使用这些凭据。
 
-    ![](./media/image4.jpeg)
+    - **Resource Group** – 分配给您的**Resource Group** 。
 
-4.	In the **Mount storage account** dialog, select **we will create a storage account for you** and click on **Next**.
+>[!Alert] **重要提示：**请确保在此资源组下创建所有资源
 
-    ![](./media/image5.jpeg)
-    
-    ![](./media/image6.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-5.  Ensure the type of shell indicated on the top left of the Cloud
-    Shell pane is switched to **Bash**. If it's **PowerShell**, switch
-    to **Bash** by using the drop-down menu.
+3.**Help** 选项卡包含 Support 信息。此处的 **ID** 值是
+将在实验室执行期间使用的**Lab instance ID**。
 
-    ![](./media/image7.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-6.  Once the terminal starts, click on **Manage files -\> Upload**.
+## 练习 1：部署基础设施并完成初始设置
 
-    ![](./media/image8.jpeg)
+若要完成此项目，需要一个 Azure Cosmos DB for NoSQL 帐户和一个 Azure
+OpenAI 帐户。若要简化此过程，请使用这两个帐户将 Bicep 模板部署到 Azure。
 
-7.  Select **azuredeploy.JSON** file from the path **C:\Labfiles\Build
-    and Test a custom chat application Using Azure Cosmos DB and
-    AzureOpenAI** and select **Open**.
+### 任务 1：从模板部署基础设施
 
-    ![](./media/image9.jpeg)
+1.  从路径 **C：\Labfiles\Build and Test a custom chat application Using
+    Azure Cosmos DB and AzureOpenAI** 打开文件，并将第 96 行的 Azure
+    OpenAI 版本更新为 +++0125+++。 **Save**文件。
 
-    You should get a success message for the file upload.
+  ![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image3.png)
 
-    ![](./media/image10.jpeg)
+2.  打开新浏览器，并在地址栏中输入以下 URL：
 
-8.  Create a new shell variable named **resourceGroupName** with the
-    name of the Azure resource group that you create
-    (mslearn-cosmos-openai).
+    +++https://portal.azure.com/+++ 以打开 Azure 门户。
 
-    +++resourceGroupName="mslearn-cosmos-openai"+++
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-    ![](./media/image11.jpeg)
+3.  在 Azure 门户中，单击页面顶部搜索框右侧的 **\[\>\_\] （Cloud
+    Shell）** 按钮。Cloud Shell 窗格将在门户底部打开。首次打开 Cloud
+    Shell 时，系统可能会提示您选择要使用的 shell 类型（**Bash** 或
+    **PowerShell**）。选择
+    **Bash**。如果您没有看到此选项，请跳过此步骤。
 
-8.  Create a resource group using the **az group create** command. Then,
-    execute the following command
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.jpeg)
 
-    +++az group create --name $resourceGroupName --location "uksouth"+++
-    
-    ![](./media/image12.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-9.  Deploy the **azuredeploy.json** template file to the resource group
-    using az group deployment create. Then, execute the following
-    command.
+4.  在**Getting Started** 对话框中，选择**Mount storage account**
+    ，选择**subscription** ，然后单击**Apply**。
 
-    +++az deployment group create --resource-group $resourceGroupName --name zero-touch-deployment --template-file azuredeploy.json+++
-    
-    **Note:** This deployment can take approximately 5-10 minutes.
-    
-    ![](./media/image13.jpeg)
-    
-    ![](./media/image14.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-### Task 2: Get Azure Cosmos DB for NoSQL and Azure OpenAI account credentials
+5.  在 **Mount storage account** 对话框中，选择 **we will create a
+    storage account for you** ，然后单击 **Next**。
 
-The above deployment has deployed Azure Cosmos DB for NoSQL and Azure
-OpenAI accounts and then stored their credentials in the Azure App
-Service web app's configuration. Now, you have the choice of using the
-Azure portal or Azure CLI to retrieve the credentials for each service.
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-1.  From the Azure portal Home page, click on **Resource groups.**
+  ![A close-up of a computer screen AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    ![](./media/image15.jpeg)
+6.  确保 Cloud Shell 窗格左上角指示的 shell 类型已切换到
+    **Bash**。如果是 **PowerShell**， 请使用下拉菜单切换到 **Bash**。
 
-2.  Select the **mslearn-cosmos-openai** resource group.
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-    ![](./media/image16.jpeg)
+7.  终端启动后，单击 **Manage files -\> Upload**。
 
-3.  On the **Resource Groups** page, expand the **Essentials** panel and
-    observe the **Deployments** header. The status for the deployment
-    should be **Succeeded** at this point.
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    ![](./media/image17.jpeg)
+8.  选择 **azuredeploy。JSON** 文件，来自路径 ** C:\Labfiles\Build and
+    Test a custom chat application Using Azure Cosmos DB and
+    AzureOpenAI，**然后选择**Open**。
 
-4.  Now, select the **Azure Cosmos DB** account to navigate to the
-    resource's page.
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-    ![](./media/image18.jpeg)
+  您应该会收到文件上传的成功消息。
 
-5.  Select the **Keys** option in the **Settings** section of the
-    resource navigation menu. Record the value of
-    the **URI** and **PRIMARY KEY** fields. You use these values later.
+  ![A white background with black text AI-generated content may be
+incorrect.](./media/image13.jpeg)
 
-    ![](./media/image19.jpeg)
+9.  使用创建的 Azure 资源组 （mslearn-cosmos-openai） 的名称创建名为
+    **resourceGroupName** 的新 shell 变量。
 
-6.  Return to the **Resource Groups** page. Select the **Azure
-    OpenAI** account.
+  +++resourceGroupName="ResourceGroup1"+++(Get the Resource Group name
+from the Resources tab)
 
-    ![](./media/image20.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image14.png)
 
-7.  In your **Azure Open AI** window, navigate to the **Resource
-    Management** section, and click on **Keys and Endpoints**.
+10. 使用 az group deployment create 将 **azuredeploy.json**
+    模板文件部署到资源组。然后，执行以下命令。
 
-    ![](./media/image21.jpeg)
+  +++az deployment group create --resource-group $resourceGroupName --name
+zero-touch-deployment --template-file azuredeploy.json+++
 
-8.  In **Keys and Endpoints** page, copy **KEY1,** (*You can use either
-    KEY1 or KEY2)* and **Endpoint** and then **Save** the notepad to use
-    the information in the upcoming tasks.
+**注意：**此部署可能需要大约 5-10 分钟。
 
-    ![](./media/image22.jpeg)
+  ![A screenshot of a computer screen AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-### Task 3: Run the Docker
+  ![A screenshot of a computer screen AI-generated content may be
+incorrect.](./media/image16.jpeg)
 
-1.  In your Windows search box, type Docker , then click on **Docker
-    Desktop**.
+### 任务 2：获取 Azure Cosmos DB for NoSQL 和 Azure OpenAI 帐户凭据
 
-    ![](./media/image23.jpeg)
+上述部署部署已部署适用于 NoSQL 的 Azure Cosmos DB 和 Azure OpenAI
+帐户，然后将其凭据存储在 Azure 应用服务 Web
+应用的配置中。现在，您可以选择使用 Azure 门户或 Azure CLI
+来检索每个服务的凭据。
 
-2.  Run the Docker Desktop.
+1.  在 Azure 门户主页中，单击**Resource groups。**
 
-    ![](./media/image24.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image17.jpeg)
 
-## Exercise 2 - Setup and build the starter application
+2.  选择您的resource group。
 
-1.  From the VM searchbar, search for +++Visual Studio+++ and
-    select **Visual Studio Code**.
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.png)
 
-2.  Click on **File** -\> **Open Folder**
+3.  在 **Resource Groups** 页面上，展开 **Essentials** 面板并观察
+    **Deployments** 标头。此时，部署的状态应为 **Succeeded** 。
 
-    ![](./media/image25.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.png)
 
-3.  Select **cosmosdb-chatgpt** from **C:\LabFiles** and click
-    on **Select Folder**.
+4.  现在，选择 **Azure Cosmos DB** 帐户以导航到资源页面。
 
-    ![](./media/image26.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.png)
 
-4.  Click on **Yes, I trust the authors** option in the **Do you trust
-    the authors dialog**.
+5.  在 资源导航菜单的 **Settings** 部分中选择 **Keys** 选项。记录
+    **URI** 和 **PRIMARY KEY** 字段的值。稍后将使用这些值。
 
-    ![](./media/image27.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-5.  If there is an already open terminal, delete it.
+6.  返回到 **Resource Groups** 页面。选择 **Azure OpenAI** 帐户。
 
-    ![](./media/image28.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image22.png)
 
-6.  In the **Visual Studio Code** editor, click on **Terminal**, open
-    a **New Terminal**.
+7.  在 **Azure Open AI** 窗口中，导航到 **Resource Management**
+    部分，然后单击 **Keys and Endpoints**。
 
-    ![](./media/image29.jpeg)
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image23.jpeg)
 
-7.  In a .NET application, it's common to use the configuration
-    providers to inject new settings into your application. For this
-    application, use the **appsettings.Development.json** file to
-    provide the most current values for the Azure OpenAI endpoint and
-    key.
+8.  在 **Keys and Endpoints** 页面中，复制 **KEY1（***您可以使用 KEY1 或
+    KEY2）*和
+    **Endpoint**，然后**Save** 记事本以在即将执行的任务中使用这些信息。
 
-8.  Open the **appsettings.Development.JSON** file. Replace the already
-    existing values for uri and key values of **Azure Cosmos
-    DB** and **Azure OpenAI** resources in the file with the values that
-    we saved earlier.
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image24.jpeg)
 
-    ![](./media/image30.jpeg)
+### 任务 3：运行 Docker
 
-9.  **Build** the .NET project by executing the below command.
+1.  在 Windows 搜索框中，键入 +++Docker+++，然后单击 **Docker
+    Desktop**。
+
+  ![A screenshot of a desktop AI-generated content may be
+incorrect.](./media/image25.jpeg)
+
+2.  运行 Docker Desktop。
+
+  ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image26.jpeg)
+
+## 练习 2 - 设置和构建 Starter 应用程序
+
+1.  在 VM 搜索栏中，搜索 +++Visual Studio+++，然后选择 **Visual Studio
+    Code**。
+
+2.  单击 **File** -\> **Open Folder**
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image27.jpeg)
+
+3.  从 **C：\LabFiles** 中选择 **cosmosdb-chatgpt**，然后单击 **Select
+    Folder。**
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
+
+4.  单击 **Do you trust the authors 对话框中**的 Yes， I trust the
+    authors **选项**。
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image29.jpeg)
+
+5.  在 **Visual Studio Code** 编辑器中，单击 **Terminal**，打开 **New
+    Terminal**。
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
+
+6.  在 .NET
+    应用程序中，通常使用配置提供程序将新设置注入应用程序。对于此应用程序，请使用
+    **appsettings.Development.json**文件提供 Azure OpenAI
+    终结点和密钥的最新值。
+
+7.  打开 **appsettings。Development.JSON** 文件。将文件中 **Azure Cosmos
+    DB** 和 **Azure OpenAI** 资源的 uri 和 key
+    值的占位符替换为我们之前保存的值。
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.jpeg)
+
+8.  通过执行以下命令**Build** .NET 项目。
 
     +++dotnet build+++
 
-    ![](./media/image31.jpeg)
+    ![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image32.jpeg)
 
-## Exercise 3: Understand the code
+## 练习 3：了解代码
 
-### Task 1: Add required members and a client instance
+### 任务 1：添加所需的成员和客户端实例
 
-1.  Open the **Services/OpenAiService.cs** file. This file implements
-    the class variables required to use the Azure OpenAI client. It
-    implements a few static prompts and create a new instance of the
-    OpenAIClient class.
+1.  打开 **Services/OpenAiService.cs** 文件。此文件实现使用 Azure OpenAI
+    客户端所需的类变量。它实现了一些静态提示，并创建了 OpenAIClient
+    类的新实例。
 
-2.  This code block creates a new string variable named
-    \_systemPromptText with a static block of text to send to the AI
-    assistant before each prompt.
+2.  此代码块创建一个名为 \_systemPromptText
+    的新字符串变量，其中包含一个静态文本块，以便在每个提示之前发送到 AI
+    助手。
 
+    ```nocopy
     private readonly string _systemPrompt = @"
     You are an AI assistant that helps people find information.
     Provide concise answers that are polite and professional." + Environment.NewLine;
+    ```
 
-3.  This code block creates another new string variable named
-    \_summarizePrompt with a static block of text to send to the AI
-    assistant with instructions on how to summarize a conversation.
+3.  此代码块创建另一个名为 \_summarizePrompt
+    的新字符串变量，其中包含一个静态文本块，以发送到 AI
+    助手，其中包含有关如何汇总对话的说明。
 
+    ```nocopy
     private readonly string _summarizePrompt = @"
     Summarize this prompt in one or two words to use as a label in a button on a web page.
     Do not use any punctuation." + Environment.NewLine;
+    ```
 
-4.  This code block creates a new instance of the OpenAIClient class
-    using the endpoint to build a Uri and the key to build an
-    AzureKeyCredential.
+4.  此代码块使用终端节点创建 OpenAIClient 类的新实例，并使用密钥生成
+    AzureKeyCredential。
 
     ```nocopy
       Uri uri = new(endpoint);
@@ -255,19 +303,14 @@ Azure portal or Azure CLI to retrieve the credentials for each service.
           );
     ```
 
+**任务 2：向 AI 模型提问**
 
-### Task 2: Ask the AI model a question
+首先，通过发送系统提示、问题和会话 ID 来实现问答对话，以便 AI
+模型可以在当前对话的上下文中提供答案。确保测量解析提示并返回响应（或在此上下文中的完成）所需的令牌数量。
 
-First, implement a question-answer conversation by sending a system
-prompt, a question, and session ID so the AI model can provide an answer
-in the context of the current conversation. Make sure you measure the
-number of tokens it takes to parse the prompt and return a response (or
-completion in this context).
-
-1.  This code block creates a new variable named options of type
-    ChatCompletionsOptions. Adds the two message variables to the
-    Messages list and sets the value of User to the sessionId
-    constructor parameter.
+1.  此代码块将创建一个名为 options 的新变量，该变量的类型为
+    ChatCompletionsOptions。将两个 message 变量添加到消息列表中，并将
+    User 的值设置为 sessionId 构造函数参数。
 
     ```nocopy
     ChatCompletionsOptions options = new()
@@ -285,17 +328,18 @@ completion in this context).
             PresencePenalty = 0
         };
     ```
-2.  The GetChatCompletionsAsync method of the Azure OpenAI client
-    variable (\_client) is invoked Asynchronously. The result is stored
-    in a variable named completions of type ChatCompletions.
 
+2.  Azure OpenAI 客户端变量 （\_client） 的 GetChatCompletionsAsync
+    方法是异步调用的。结果存储在名为 completions 的 ChatCompletion
+    类型的变量中。
+
+    ```nocopy
     Response<ChatCompletions> completionsResponse = await_client.GetChatCompletionsAsync(options);
     ChatCompletions completions = completionsResponse.Value;
+    ```
 
-3.  Finally, the below block of code, returns a tuple as the result of
-    the GetChatCompletionAsync method with the content of the completion
-    as a string, the number of tokens associated with the prompt, and
-    the number of tokens for the response.
+3.  最后，下面的代码块返回一个元组作为 GetChatCompletionAsync
+    方法的结果，其中完成的内容以字符串形式显示，与提示关联的令牌数以及响应的令牌数。
 
     ```nocopy
     return (
@@ -304,16 +348,14 @@ completion in this context).
         );
     ```
 
-### Task 3: Ask the AI model to summarize a conversation
+**任务 3：要求 AI 模型总结对话**
 
-Now, send the AI model a different system prompt, your current
-conversation, and session ID so the AI model can summarize the
-conversation in a couple of words.
+现在，向 AI 模型发送不同的系统提示、您当前的对话和会话 ID，以便 AI
+模型可以用几个词来总结对话。
 
-2.  The below code creates a ChatCompletionsOptions variable named
-    options with the two message variables in the Messages list, User
-    set to the sessionId constructor parameter, MaxTokens set to 200,
-    and the remaining properties.
+2.下面的代码创建一个名为 options 的 ChatCompletionsOptions
+变量，其中包含 Messages 列表中的两个 message 变量，User 设置为 sessionId
+构造函数参数，MaxTokens 设置为 200，其余属性。
 
     ```nocopy
     ChatCompletionsOptions options = new()
@@ -331,12 +373,7 @@ conversation in a couple of words.
             PresencePenalty = 0
         };
     ```
-
-3.  The below code invokes the \_client.GetChatCompletionsAsync
-    asynchronously with the model name (\_modelName) and the options
-    variable as parameter and stores the result in a variable named
-    completions of type ChatCompletions. It returns the content of the
-    completion as a string as the result of the SummarizeAsync method.
+3.  下面的代码调用 _client。GetChatCompletionsAsync，并将模型名称 （_modelName） 和 options 变量作为参数，并将结果存储在名为 completions 的 ChatCompletion 类型的变量中。它将完成的内容作为 SummarizeAsync 方法的结果作为字符串返回。
 
     ```nocopy
     Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(options);
@@ -345,25 +382,26 @@ conversation in a couple of words.
     return completionText;
     ```
 
-    ![](./media/image32.jpeg)
+    ![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image33.jpeg)
 
-### Task 4 - Connect to Azure Cosmos DB for NoSQL
+**任务 4 - 连接到 Azure Cosmos DB for NoSQL**
 
-The CosmosDbService class contains a stub implementation of a service
-similar to the OpenAiService class you worked on previously in this
-module. In contrast, this class uses the .NET SDK for Azure Cosmos DB,
-which works slightly different.
+CosmosDbService 类包含类似于本模块前面使用的 OpenAiService
+类的服务的存根实现。相比之下，此类使用适用于 Azure Cosmos DB 的 .NET
+SDK，其工作方式略有不同。
 
-This section exaplins the implementation of the class variables and
-client required to access Azure Cosmos DB for NoSQL using the client.
+本部分简要介绍了使用客户端访问 Azure Cosmos DB for NoSQL
+所需的类变量和客户端的实现。
 
-1.  Open the **Services/CosmosDbService.cs** file.
+1.  打开 **Services/CosmosDbService.cs** 文件。
 
-    ![](./media/image33.jpeg)
+    ![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image34.jpeg)
 
-2.  The below code creates a variable named options of type
-    CosmosSerializationOptions and Set the PropertyNamingPolicy property
-    of the variable to CosmosPropertyNamingPolicy.CamelCase.
+2.  下面的代码创建一个名为 options 的 CosmosSerializationOptions
+    类型的变量，并将该变量的 PropertyNamingPolicy 属性设置为
+    CosmosPropertyNamingPolicy.CamelCase。
 
     ```nocopy
     CosmosSerializationOptions options = new()
@@ -372,74 +410,67 @@ client required to access Azure Cosmos DB for NoSQL using the client.
     };
     ```
 
-    **Note:** Setting this property will ensure that the JSON produced by
-the SDK is both serialized and deserialized in camel case regardless of
-how it's corresponding property is cased in the .NET class.
+**注意：**设置此属性将确保 SDK 生成的 JSON
+以驼峰式大小写进行序列化和反序列化，而不管其对应的属性在 .NET
+类中如何大小写。
 
-3.  The below code creates a new instance of type CosmosClient named
-    client using the CosmosClientBuilder class, endpoint, key, and
-    serialization options you specified earlier.
+3.  下面的代码使用之前指定的 CosmosClientBuilder
+    类、终结点、密钥和序列化选项创建一个名为 client 的 CosmosClient
+    类型的新实例。
 
     ```nocopy
     CosmosClient client = new CosmosClientBuilder(endpoint, key)
         .WithSerializerOptions(options)
         .Build();
     ```
-    
-4.  The below code create a new nullable variable of type Database named
-    database by calling the GetDatabase method of the client variable.
+
+4.  下面的代码通过调用 client 变量的 GetDatabase 方法，创建一个名为
+    database 的 Database 类型的新可为 null 变量。
 
     **Database? database = client?.GetDatabase(databaseName);**
 
-5.  The below code assigns the constructor's container variable to the
-    class' \_container variable only if it's not null. If it's null,
-    throw an ArgumentException.
+5.  下面的代码仅在 class 不为 null 时将构造函数的 container
+    变量分配给类的 \_container 变量。如果为 null，则引发
+    ArgumentException。
 
     ```nocopy
     _container = container ??
     throw new ArgumentException("Unable to connect to existing Azure Cosmos DB container or database.");
     ```
-    
-    ![](./media/image34.jpeg)
 
-### Task 5 - Implement the Azure Cosmos DB for NoSQL service
+    ![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image35.jpeg)
 
-The Azure Cosmos DB service (CosmosDbService) manages querying,
-creating, deleting, and updating sessions and messages in your AI
-assistant application. To manage all of these operations, the service is
-required to implement multiple methods for each potential operation
-using various features of the .NET SDK.
+**任务 5 - 实现 Azure Cosmos DB for NoSQL 服务**
 
-There are multiple key requirements to tackle in this exercise:
+Azure Cosmos DB 服务 （CosmosDbService） 管理在 AI
+助理应用程序中查询、创建、删除和更新会话和消息。为了管理所有这些作，该服务需要使用
+.NET SDK 的各种功能为每个潜在作实现多种方法。
 
-- Implement operations to create a session or message
+在本练习中，有多个关键要求需要解决:
 
-- Implement queries to retrieve multiple sessions or messages
+- 实施创建会话或消息的作
 
-- Implement an operation to update a single session or batch update
-  multiple messages
+- 实施查询以检索多个会话或消息
 
-- Implement an operation to query and delete multiple related sessions
-  and messages
+- 实现更新单个会话或批量更新多条消息的作
 
-Azure Cosmos DB for NoSQL stores data in JSON format allowing us to
-store many types of data in a single container. This application stores
-both a chat "session" with the AI assistant and the individual
-"messages" within each session. With the API for NoSQL, the application
-can store both types of data in the same container and then
-differentiate between these types using a simple type field.
+- 实现查询和删除多个相关会话和消息的作
 
-1.  Open the **Services/CosmosDbService.cs** file.
+Azure Cosmos DB for NoSQL 以 JSON
+格式存储数据，允许我们在单个容器中存储多种类型的数据。此应用程序存储与
+AI 助手的聊天“会话”和每个会话中的单个“消息”。借助 API for
+NoSQL，应用程序可以将这两种类型的数据存储在同一个容器中，然后使用简单的类型字段区分这些类型。
 
-2.  The below code creates a new variable named partitionKey of type
-    PartitionKey using the current session's SessionId property as the
-    parameter.
+1.  打开 **Services/CosmosDbService.cs** 文件。
 
-    **PartitionKey partitionKey = new(session.SessionId);**
+2.  下面的代码使用当前会话的 SessionId 属性作为参数，创建一个名为
+    partitionKey 的新变量，该变量的类型为 PartitionKey。
 
-3.  The below code invokes the CreateItemAsync method of the container
-    passing in the session parameter and partitionKey variable. Returns
-    the response as the result of the InsertSessionAsync method.
+**PartitionKey partitionKey = new(session.SessionId);**
+
+3.  下面的代码调用容器的 CreateItemAsync 方法，并传入 session 参数和
+    partitionKey 变量。返回作为 InsertSessionAsync 方法结果的响应。
 
     ```nocopy
     return await _container.CreateItemAsync<Session>(
@@ -448,12 +479,12 @@ differentiate between these types using a simple type field.
     );
     ```
 
-4.  The below code creates a PartitionKey variable using
-    session.SessionId as the value of the partition key.Creates a new
-    message variable named newMessage with the Timestamp property
-    updated to the current UTC timestamp. Invoke the CreateItemAsync
-    passing in both the new message and partition key variables. Return
-    the response as the result of InsertMessageAsync.
+4.  下面的代码使用 session 创建一个 PartitionKey 变量。SessionId
+    作为分区键的值。创建一个名为 newMessage 的新消息变量，并将 Timestamp
+    属性更新为当前 UTC 时间戳。调用传入新消息和分区键变量的
+    CreateItemAsync。
+
+返回响应作为 InsertMessageAsync 的结果。
 
     ```nocopy
     PartitionKey partitionKey = new(message.SessionId);
@@ -463,161 +494,161 @@ differentiate between these types using a simple type field.
         partitionKey: partitionKey
     );
     ```
-    
-    ![](./media/image35.jpeg)
 
-### Task 6: Retrieve multiple sessions or messages
+    ![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image36.jpeg)
 
-There are two main use cases where the application needs to retrieve
-multiple items from our container. First, the application retrieves all
-sessions for the current user by filtering the items to ones where type
-= Session. Second, the application retrieves all messages for a session
-by performing a similar filter where type = Session & sessionId = . Both
-queries are here implemented using the .NET SDK and a feed iterator.
+**任务 6：检索多个会话或消息**
 
-1.  The below code creates a new variable named query of type
-    QueryDefinition. It uses the fluent WithParameter method to assign
-    the name of the Session class as the value for the parameter. Then
-    invokes the generic GetItemQueryIterator\<\> method on the
-    \_container variable passing in the generic type Session and the
-    query variable as a parameter. Store the result in a variable of
-    type FeedIterator named response.
+在两个主要用例中，应用程序需要从我们的容器中检索多个项目。首先，应用程序通过将项目筛选为
+type = Session
+的项目来检索当前用户的所有会话。其次，应用程序通过执行类似的过滤器来检索会话的所有消息，其中type
+= Session & sessionId = 。此处的两个查询都是使用 .NET SDK
+和源迭代器实现的。
+
+1.  以下代码创建一个名为 query、类型为 QueryDefinition 的新变量。它使用
+    Fluent WithParameter 方法将 Session 类的名称分配为参数的值。然后对
+    \_container 变量调用泛型 GetItemQueryIterator\<\> 方法，将泛型类型
+    Session 和查询变量作为参数传入。将结果存储在名为 response 的
+    FeedIterator 类型的变量中。
 
     ```nocopy
     QueryDefinition query = new QueryDefinition("SELECT DISTINCT * FROM c WHERE c.type = @type")
     .WithParameter("@type", nameof(Session));
     FeedIterator<Session> response = _container.GetItemQueryIterator<Session>(query);
     ```
-    
-2.  The below code within the while loop, asynchronously get the next
-    page of results by invoking ReadNextAsync on the response variable
-    and then add those results to the list variable named output.
-    Outside the while loop, the output variable is returned with a list
-    of sessions as the result of the GetSessionsAsync method.
-    
+
+2.  在 while 循环中，以下代码通过对响应变量调用 ReadNextAsync
+    异步获取下一页结果，然后将这些结果添加到名为 output 的列表变量中。在
+    while 循环之外，output 变量将返回一个会话列表，作为 GetSessionsAsync
+    方法的结果。
+
     ```nocopy
     FeedResponse<Session> results = await response.ReadNextAsync();
     output.AddRange(results);
     return output;
-    ```
 
-4.  The below code uses the fluent WithParameter method to assign the
-    @sessionId parameter to the session identifier passed in as a
-    parameter, and the @type parameter to the name of the Message class.
+3.  下面的代码使用 fluent WithParameter 方法将 @sessionId
+    参数分配给作为参数传入的会话标识符，并将 @type 参数分配给 Message
+    类的名称。
 
     ```nocopy
     QueryDefinition query = new QueryDefinition("SELECT * FROM c WHERE  c.sessionId = @sessionId AND c.type = @type")
         .WithParameter("@sessionId", sessionId)
         .WithParameter("@type", nameof(Message));
     ```
-    
-4.  Create a FeedIterator\< Message \> using the query variable and the
-    GetItemQueryIterator\<\> method.
 
-    FeedIterator<Message> response = _container.GetItemQueryIterator<Message>(query);
+4.  使用 query 变量和 GetItemQueryIterator\<\> 方法创建 FeedIterator \<
+    Message \>。
 
-    ![](./media/image36.jpeg)
+    FeedIterator response = \_container.GetItemQueryIterator(query);
 
-## Exercise 4: Execute the app
+    ![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-Now your application has a full implementation of Azure OpenAI and Azure
-Cosmos DB. You can test the application end-to-end by debugging the
-solution.
+## 练习 4：执行应用程序
 
-1.  From the **Visual Studio Code Terminal**, build the project using
-    the below command.
+现在，应用程序已实现 Azure OpenAI 和 Azure Cosmos
+DB。您可以通过调试解决方案来端到端测试应用程序。
+
+1.  在 **Visual Studio Code Terminal**中，使用以下命令构建项目。
 
     +++**dotnet build**+++
 
-    ![](./media/image37.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.jpeg)
 
-2.  Start the application with hot reloads enabled using dotnet watch.
+2.  使用 dotnet watch 启用热重载启动应用程序。
 
     +++**dotnet watch run --non-interactive**+++
-    
-    ![](./media/image38.jpeg)
 
-3.  Visual Studio Code launches the in-tool simple browser with the web
-    application running. In the web application, create a new chat
-    session by clicking on **+ Create New Chat** and ask the AI
-    assistant a question. Then, close the running web application.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-    ![](./media/image39.jpeg)
+3.  Visual Studio Code 将启动工具内简单浏览器，并运行 Web 应用程序。在
+    Web 应用程序中，通过单击 **+ Create New
+    Chat**来创建新的聊天会话，然后向 AI 助手提问。然后，关闭正在运行的
+    Web 应用程序。
 
-4.  Paste the following text in the text box and click on
-    the **Send** icon.
+    ![A screenshot of a chat AI-generated content may be
+incorrect.](./media/image40.jpeg)
+
+4.  将以下文本粘贴到文本框中，然后单击 ** Send** 图标。
 
     +++How many wins does it take to promote to the Premier League?+++
-    
-    ![](./media/image40.jpeg)
-    
-    ![](./media/image41.jpeg)
 
-5.  Paste the following text in the text box and click on
-    the **Send** icon.
+    ![A screenshot of a chat AI-generated content may be
+incorrect.](./media/image41.jpeg)
+
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image42.jpeg)
+
+5.  将以下文本粘贴到文本框中，然后单击 ** Send** 图标。
 
     +++What is Azure OpenAI?+++
-    
-    ![](./media/image42.jpeg)
-    
-    ![](./media/image43.jpeg)
 
-6.  Close the terminal.
+    ![A screenshot of a chat AI-generated content may be
+incorrect.](./media/image43.jpeg)
 
-## Exercise 5: Clean up resource group
+    ![A screenshot of a chat AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-1.  Open a new browser and enter the following URL in the address
-    bar: +++https://portal.azure.com/+++ to open the Azure Portal.
+6.  关闭terminal。
 
-2.  Click on the **Portal Menu**, then select **Resource group.**
+## 练习 5：清理资源组
 
-    ![](./media/image15.jpeg)
+1.  打开新浏览器，并在地址栏中输入以下
+    URL：+++https://portal.azure.com/+++ 以打开 Azure 门户。
 
-3.  Select the **mslearn-cosmos-openai** resource group.
+2.  在 Resource group 页面中，选择您 ** assigned Resource group**。
 
-    ![](./media/image16.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image45.png)
 
-4.  In the Resource group page, navigate to command bar and click
-    on **Delete resource group**.
+3.  选择所有 **resources**，然后选择 **Delete**。
 
-    ![](./media/image44.jpeg)
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image46.png)
 
-5.  In the **Delete Resource group** pane that appears on the right
-    side, enter the **resource group name** and click
-    on **Delete** button.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.png)
 
-    ![](./media/image45.jpeg)
+4.  在文本框中输入 +++**delete**+++，然后单击 **Delete**。
 
-6.  Once the Resource group is deleted, from the Azure portal home page,
-    search for **Azure AI Services** and select it.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image48.png)
 
-    ![](./media/image46.jpeg)
+    ![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image49.png)
 
-7.  Select **Azure OpenAI** from the left pane and then select **Manage
-    deleted resources**.
+5.  已删除资源上的成功通知确认删除。
 
-    ![](./media/image47.jpeg)
+6.  删除资源后，在 Azure 门户主页中搜索 **Azure AI Services**并选择它。
 
-8.  Select the resource that gets listed there and then click
-    on **Purge**.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image50.jpeg)
 
-    ![](./media/image48.jpeg)
+7.  从左侧窗格中选择 **Azure OpenAI，**然后选择 **Manage deleted
+    resources**。
 
-9.  Click on **Yes**.
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
 
-    ![](./media/image49.jpeg)
-    
-    ![](./media/image50.jpeg)
+8.  选择此处列出的资源，然后单击 **Purge**。
 
-**Summary**
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image52.jpeg)
 
-This lab provided a comprehensive guide to building, deploying, and
-testing a custom chat application using Blazor, PostgreSQL, and Azure
-OpenAI. In this lab, you've learned to set up the necessary development
-environment, created and designed a Blazor-based chat interface,
-configured and connected a PostgreSQL database on Azure, integrated
-Azure OpenAI for enhanced functionalities, and finally deployed and
-tested the application on Azure. This hands-on experience equipped you
-with the skills to develop and manage modern web applications using
-cutting-edge technologies and cloud services
+9.  单击 **Yes**。
 
+    ![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.jpeg)
+
+**总结**
+
+此实验室提供了使用 Blazor、PostgreSQL 和 Azure OpenAI
+构建、部署和测试自定义聊天应用程序的全面指南。在本实验中，你学习了如何设置必要的开发环境，创建和设计了基于
+Blazor 的聊天界面，在 Azure 上配置和连接了 PostgreSQL 数据库，集成了
+Azure OpenAI 以增强功能，最后在 Azure
+上部署和测试了应用程序。这种实践经验使您具备了使用尖端技术和云服务开发和管理现代
+Web 应用程序的技能
