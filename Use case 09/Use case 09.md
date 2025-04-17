@@ -1,530 +1,641 @@
-# Usecase 09 - Building a Chat bot experience using Azure Cosmos DB for MongoDB and Azure OpenAI Service
+# 사용 사례 09 - MongoDB용 Azure Cosmos DB 및 Azure OpenAI Service를 사용하여 Chat bot 경험을 구축하기 
 
-**Objective:**
+**목표:**
 
-This usecase will create an intelligent solution that combines
-vCore-based Azure Cosmos DB for MongoDB vector search and document
-retrieval with Azure OpenAI services to build a chat bot experience.
+이 사용 사례는 vCore 기반MongoDB용 Azure Cosmos DB 벡터 검색 및 문서
+검색을 Azure OpenAI 서비스와 결합하여 챗봇 경험을 구축하는 지능형
+솔루션을 생성할 것입니다.
 
-![](./media/image1.jpeg)
+![A diagram of a software application AI-generated content may be
+incorrect.](./media/image1.jpeg)
 
-**Key technologies used** -- Azure OpenAI Service, Azure Cosmos DB,
-ChatGPT model
+**사용된 핵심 기술** -- Azure OpenAI Service, Azure Cosmos DB, ChatGPT
+모델
 
-**Estimated duration** -- 60 minutes
+**사용된 소요 시간** -- 60분
 
-**Lab Type** -- Instructor led
+**실습 유형** -- 강사 진행
 
-**Important:** If any of the commands does not get **pasted** in
-the **PowerShell**, please open a notepad, keep the cursor at an empty
-space of the notepad and then click on the T button of the command to be
-pasted. The contents will get copied to the notepad and then you can
-copy and paste from the notepad onto the PowerShell.
+**중요: PowerShell**에 **붙여넣지** 못한 명령이 있으면 메모장을 열고
+커서를 메모장의 빈 공간에 유지한 후 붙여넣을 명령의 T 버튼을 클릭하세요.
+내용이 메모장에 복사된 후 메모장에서 복사하여 PowerShell에 붙여넣을 수
+있습니다.
 
-## Exercise 1: Provision Azure resources
+## 연습 0: VM 및 자격 증명을 이해하기
 
-### Task 1: Create Azure resources using script
+이 작업에서는 실습 전체에서 사용할 자격 증명을 식별하고 이해할 것입니다.
 
-1.	Login to Azure portal at +++**https://portal.azure.com**+++ and login using your Azure login credentials from the **Resources** tab.
-   
-2.	From Azure portal, select your subscription. From the left pane, select Resource providers under Settings, select +++**Microsoft.Alertsmanagement**+++ and click on **Register**.
+3.  **Instructions** 탭에는 실습 전체에서 따라야 할 지침이 있는 실습
+    가이드가 있습니다.
 
-    ![](./media/pic100.jpg)
+4.  **Resources** 탭에는 실습을 실행하는 데 필요한 자격 증명이 있습니다.
 
-3.  From the VM, search for +++**power shell**+++, right click on **Windows
-    PowerShell** and select **Run as administrator**. Click
-    on **Yes** in the confirmation dialog.
+    1.  **URL** – Azure 포털에 대한 URL
 
-    ![](./media/image2.jpeg)
+    2.  **Subscription** – 사용자에게 할당돤 구독의 ID
 
-    ![](./media/image3.jpeg)
+    3.  **Username** – Azure 서비스에 로그인하는 데 사용하는 사용자 ID.
 
-4.  Execute the below command to install Az in the PowerShell.
+    4.  **Password** – Azure 로그인에 대한 비밀번호. 이 사용자 이름과
+        비밀번호를 Azure 로그인 자격 증명이라고 하겠습니다. Azure 로그인
+        자격 증명을 언급할 때마다 이러한 자격 증명을 사용할 것입니다.
 
-    +++**Install-Module Az**+++
+    5.  **Resource Group** – 사용자에게 할당돤 **Resource group**.
 
-    Select **A** (Yes to all) when prompted.
-    
-    **Note:** This will take upto 5 minutes to complete.
+\[!경고\] **중요:** 이 리소스 그룹 아래에 모든 리소스를 생성해야 합니다
 
-    ![](./media/image4.jpeg)
-    
-    ![](./media/image5.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-5.  Once done, execute the below command to import the Az module.
+1.  **Help** 탭에는 Support 정보가 있습니다. **ID** 값은 실습 중에
+    사용되는**Lab instance ID**입니다.
 
-    +++**Import-Module Az**+++
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.png)
 
-    ![](./media/image6.jpeg)
+## 연습 1: Azure 리소스 프로비전하기
 
-6.  Execute the below command to use browser-based sign-in
+### 작업 1: 스크립트를 사용하여 Azure 리소스를 생성하기
 
-    +++Update-AzConfig -EnableLoginByWam $false+++
+2.  +++\*\* 에서 Azure 포털로 로그인하여 **Resources** 탭에소 Azure
+    로그인 자격 증명으로 로그인하세요.
 
-    ![](./media/image7.jpeg)
+3.  Azure 포털에서 구독을 선택하세요. 왼쪽 창에서 Settings의 Resource
+    providers를 선택하고 +++**Microsoft.Alertsmanagement**+++를 선택하여
+    **Register**를 클릭하세요.
 
-7.  Execute the below command and select your Azure login if prompted,
-    to login to Azure.
+![A screenshot of a computer screen AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-    +++Connect-AzAccount+++
-    
-    ![](./media/image8.jpeg)
+4.  VM에서 +++**power shell**+++를 검색하고**Windows PowerShell**을
+    마우스 오른쪽 버튼으로 클릭하고 **Run as administrator**을
+    선택하세요. 확인 대화 상자에서 **Yes**를 클릭하세요.
 
-8.  Execute the below commands to navigate to the **LabFiles** folder.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.jpeg)
 
-    +++cd\\+++
-    
-    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-    ![](./media/image9.jpeg)
+5.  아래 명령을 실행하여 PowerShell에 Az를 설치하세요.
 
-9.  Execute the below command to install **Microsoft
-    Bicep** using **winget**.
++++**Install-Module Az**+++
 
-    +++winget install -e --id Microsoft.Bicep+++
-    
-    Type **Y** if prompted.
-    
-    ![](./media/image10.jpeg)
+메시지가 표시되면 **A** (모두 Yes)를 선택하세요.
 
-10.  **Close** the PowerShell and **open** it again.
+**참고:** 완료하는 데 최대 5분이 소요됩니다.
 
-11.  Redo the **login to Azure** step of executing Connect-AzAccount.
+![A computer screen with white text AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-12. Execute the below commands to navigate to the **LabFiles** folder.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-    +++cd\\+++
-    
-    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
+6.  Az 모듈을 가져오기 위해 완료되면 아래 명령을 실행하세요.
 
-    ![](./media/image9.jpeg)
++++**Import-Module Az**+++
 
-14. Execute the below command replacing **\< Subscription id \>** with
-    your subscription id.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    +++Set-AzContext -SubscriptionId < Subscription id >+++
+7.  아래 명령을 실행하여 브라우저 기반 로그인을 사용하세요
 
-    >[!Note] **Note:** To get your subscription id, login to https://portal.azure.com and click on Subscriptions. Copy the
-Subscription id from the Subscription page.
++++Update-AzConfig -EnableLoginByWam $false+++
 
-    ![](./media/image11.jpeg)
-    
-    ![](./media/image12.jpeg)
+![A screenshot of a computer screen AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-15. Create a new **Resource group** named **mongo-devguide-rg** in Azure
-    by executing the below command.
+8.  아래 명령을 실행하고 메시지가 표시되면 Azure 로그인을 선택하여
+    Azure에 로그인하세요.
 
-    +++New-AzResourceGroup -Name mongo-devguide-rg -Location 'francecentral'+++
++++Connect-AzAccount+++
 
-    ![](./media/image13.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    >[!Note] **Note:** The location **francecentral** is used here. It can be changed
-to a **nearest location**
+9.  아래 명령을 실행하여 **LabFiles** 폴더로 이동하세요.
 
-16. Execute the below command to deploy the resources like Azure Cosmos
-    DB workspace, Azure OpenAI in Azure.
++++cd\\++
 
-    ```
-    New-AzResourceGroupDeployment -ResourceGroupName mongo-devguide-rg  -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
-    ```
++++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
 
-    >[!Note] **Note:** The deployment will take around 10 to 15 minutes.
+![A blue rectangular sign with white text AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-    >[!Note] **Note:** Type Y when prompted.
+10. **winget**을 사용하여 **Microsoft Bicep**을 설치하려면 아래 명령을
+    실행하세요.
 
-    ![](./media/image14.jpeg)
-    
-    ![](./media/image15.jpeg)
++++winget install -e --id Microsoft.Bicep+++
 
-### Task 2: Check the created resources in Azure
+Type **Y** if prompted.
 
-1.  Login to **Azure portal** at +++https://portal.azure.com/+++ using
-    your **Azure login credentials**. Select **Resource groups**.
+![A computer screen with white text AI-generated content may be
+incorrect.](./media/image13.jpeg)
 
-    ![](./media/image16.jpeg)
+11. PowerShell을 **닫았다**가 다시 **여세요.**
 
-2.  From the Resource groups list, select **mongo-devguide-rg**.
+12. 아래 명령을 실행하고 메시지가 표시되면 Azure 로그인을 선택하여
+    Azure에 로그인하세요.
 
-    ![](./media/image17.jpeg)
++++Connect-AzAccount+++
 
-3.  Notice that a set of resources including **Azure OpenAI
-    resource**, **App Service**, **Azure Cosmos DB for MongoDB** are
-    created.
+12. 아래 명령을 실행하여 **LabFiles** 폴더로 이동하세요.
 
-    ![](./media/image18.jpeg)
++++cd\\++
 
-4.  Click on the **Azure OpenAI** resource.
++++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
 
-    ![](./media/image19.jpeg)
+![A blue rectangular sign with white text AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-5.  Select **Keys and Endpoint** under **Resource Management**.
+13. 아래 명령을 실행하여 구독 ID를 설정하세요.
 
-    ![](./media/image20.jpeg)
++++Set-AzContext -SubscriptionId @lab.CloudSubscription.Id+++
 
-6.  Copy and save the **Key 1** and **Endpoint** in a notepad for later
-    reference.
+![A computer screen shot of a blue screen AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-    ![](./media/image21.jpeg)
+14. **C:\LabFiles\Build a Chat bot\Labs\deploy** 경로에서
+    **azuredeploy.bicep** 파일을 열고 35줄의
+    **dgxxxxxxx** 문자를 <+++dg@lab.LabInstance.Id>+++로 바꾸세요.
+    **74**행에서 버전을 +++**0125**+++로 업데이트하세요.
 
-7.  Back in the **mongo-devguide-rg** resource group page, select
-    the **Azure Cosmos DB for Mongo DB** resource.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image15.png)
 
-    ![](./media/image22.jpeg)
+![](./media/image16.png)
 
-8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
+15. Azure Cosmos DB 작업 영역, Azure의 Azure OpenAI와 같은 리소스를
+    배포하기 위해 아래 명령을 실행하세요.
 
-    ![](./media/image99.jpg)
+New-AzResourceGroupDeployment -ResourceGroupName
+@lab.CloudResourceGroup(ResourceGroup1).Name -TemplateFile
+.\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json
+-c \`\`\`
 
-9.  Copy the connection string and paste it in a notepad. Replace the
-    \< **password** \> with +++**myMongoDB98**+++ in the copied
-    connection string and save it in the notepad.
+\>\[!참고\] \*\*참고:\*\* 배포에는 약 10-15분이 소요됩니다.
 
-## Exercise 2: Explore and use Azure OpenAI models from code
+배포에 문제가 있고 실패한 경우 14단계의 이름을 다른 이름으로
+업데이트하고 다시 시도하세요.
 
-### Task 1: Set up the Environment
+\>\[!참고\] \*\*참고:\*\* 메시지가 표시되면 Y를 입력하세요.
 
-1.  From the lab VM windows search bar, search for +++Visual studio
-    code+++ and open **Visual Studio Code**.
+![A computer screen shot of a blue screen AI-generated content may be
+incorrect.](./media/image17.jpeg)
 
-    ![](./media/image24.jpeg)
+![](./media/image18.jpeg)
 
-2.  Click on **Open Folder**. (If it does not pop up, select **File -\>
-    Open Folder**)
+\>\[!참고\] \*\*참고:\*\* 15분에서 20분 후에도 PowerShell에 업데이트가
+없으면 Azure Portal의 리소스 그룹 -\> 배포를 확인하거나
+\*\*PowerShell\*\* 창에서 \*\*Enter\*\*를 누르세요.
 
-    ![](./media/image25.jpeg)
+### 작업 2: Azure에서 생성된 리소스를 확인하기
 
-3.  Navigate to **C:\Labfiles**, click on **Build a Chat bot** folder
-    and select **Select Folder.**
+1.  **Azure login credentials**을 사용하여
+    +++<https://portal.azure.com/+++>에서 **Azure portal** 에
+    로그인하세요. **Resource groups**를 선택하세요.
 
-    ![](./media/image26.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-4.  Click on **Yes, I trust the Authors** in the pop up.
+2.  Resource groups 목록에서 **assigned Resource Group**를 선택하세요.
 
-    ![](./media/image27.jpeg)
+![A screenshot of a web page AI-generated content may be
+incorrect.](./media/image20.png)
 
-5.  From Visual Studio Code,
-    open **lab_0_explore_and_use_models.ipynb** from
-    the **Labs** folder.
+3.  **Azure OpenAI resource, App Service, Azure Cosmos DB for
+    MongoDB**를 포함한 리소스 집합이 생성됩니다.
 
-    ![](./media/image28.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image21.png)
 
-6.  Click on **Select Kernel.**
+4.  **Azure OpenAI** 리소스를 클릭하세요.
 
-7.  Select **Install** in the **Do you want to install the recommended
-    extensions for Python** pop up.
+![](./media/image22.png)
 
-    ![](./media/image29.jpeg)
+5.  **Resource Management**에서 **Keys and Endpoint**를 선택하세요.
 
-8.  Click on **Allow access** if prompted.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image23.jpeg)
 
-    ![](./media/image30.jpeg)
+6.  나중에 참조하기 위해**Key 1** 및 **Endpoint**를 복사하여 메모장에
+    저장하세요.
 
-9.  Click on **Select Kernel**. Select **Python Environments** and
-    then **Python 3.12.3** or higher that gets listed as
-    the **Suggested** or **Recommended** option.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image24.jpeg)
 
-    ![](./media/image31.jpeg)
-    
-    ![](./media/image32.jpeg)
+7.  리소스 그룹 페이지로 돌아가서 **Azure Cosmos DB for Mongo
+    DB** 리소스를 선택하세요.
 
-10. Open the **.env** file
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image25.png)
 
-11. Replace **DB_CONNECTION
-    STRING**, **AOAI_KEY** and **AOAI_Endpoint** that we saved in
-    the **notepad** earlier in Task 2 of Exercise 1.
+8.  **Settings**에서 **Connection strings**를 클릭하세요. Self의 값을
+    복사하세요 (항상 이 클러스터.
 
-    ![](./media/image36.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image26.jpeg)
 
-Now, the environment variables are set to point to the Azure resources
-that we have created already.
+9.  연결 문자열을 복사하여 메모장에 붙여넣으세요. 복사된 연결 문자열에서
+    \< **password** \> +++**myMongoDB98**+++로 바꾸고 메모장에
+    저장하세요.
 
-### Task 2: Execute the code
+## 연습 2: 코드에서 Azure OpenAI 모델을 탐색하고 사용하기
 
-1.  Back in the **Lab 0 ipynb** file, **execute** the **first cell** by
-    clicking on the Play button, to install the latest OpenAI client
-    library.
+### 작업 1: 환경을 설정하기
 
-    ![](./media/image37.jpeg)
-    
-    ![](./media/image38.jpeg)
+1.  실습 VM 창 검색 창에서 +++Visual Studio code+++를 검색하고 **Visual
+    Studio Code**를 여세요.
 
-2.  **Execute** the next cell to install the **Python-dotenv**
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-    ![](./media/image39.jpeg)
+2.  **Open Folder**를 클릭하세요. (팝업되지 않는 경우 **File -\> Open
+    Folder**를 선택하세요)
 
-3.  Press **Ctrl+Shift+P**, type +++Reload Window+++ and select
-    Developer:Reload Window option that gets listed.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-    ![](./media/image40.jpeg)
+3.  **C:\Labfiles**로 이동하여 **Build a Chat bot** 폴더를 클릭하고
+    **Select Folder**를 선택하세요.
 
-4.  Execute from the **first cell** again.
+![A screenshot of a chat bot AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-5.  **Execute** the next cell to import the required OpenAI library, os
-    to access the environment variables and dotenv to load the
-    environment variables from .env file.
+4.  팝업에서 **Yes, I trust the Authors**를 클릭하세요.
 
-    ![](./media/image41.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-6.  **Execute** the next cell to create the **Azure OpenAI client** to
-    call the Azure OpenAI Chat completion API:
+5.  Visual Studio Code에, **Labs** 폴더에서
+    **lab_0_explore_and_use_models.ipynb**를 여세요.
 
-    ![](./media/image42.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.jpeg)
 
-7.  **Execute** the next cell to call
-    the **.chat.completions.create()** method on the client to perform
-    a **chat completion**. You should get a chat response.
+6.  **Select Kernel**를 클릭하세요.
 
-    ![](./media/image43.jpeg)
+7.  **Do you want to install the recommended extensions for
+    Python** 팝업에서**Install**를 선택하세요.
 
-## Exercise 3: First Cosmos DB for MongoDB API application
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image32.jpeg)
 
-This exercise will cover how to create your first Cosmos DB project.
-We'll use a notebook to demonstrate the basic CRUD operations.
+8.  프롬프트되면**Allow access**를 클릭하세요.
 
-1.  Open the file **lab_1_first_application.ipynb** from
-    the **Labs** folder.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image33.jpeg)
 
-2.  Click on **Select kernel** and choose the **Python version**.
+9.  **Select Kernel**을 클릭하세요. **Python Environments**을 선택한 후
+    **Suggested** or **Recommended** 옵션으로 나열되는 **Python
+    3.12.3**이상을 선택하세요.
 
-    ![](./media/image44.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image34.jpeg)
 
-3.  **Execute** the first cell to do install **pymongo**.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image35.jpeg)
 
-    ![](./media/image45.jpeg)
+10. **.env** 파일을 여세요
 
-4.  **Execute** the next cell to do the required **imports**
+11. 연습 1의 작업 2에서 **notepad**을 저장한 **DB_CONNECTION
+    STRING**, **AOAI_KEY** 및 **AOAI_Endpoint**를 바꾸세요.
 
-    ![](./media/image46.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image36.jpeg)
 
-5.  Execute the next cell to **Create a database.**
+이제 환경 변수가 이미 만든 Azure 리소스를 가리키도록 설정되었습니다.
 
-    >[!Note] **Note:** This will use the connection string that we updated in the
-.env file
+### 작업 2: 코드를 실행하기
 
-    ![](./media/image47.jpeg)
+1.  **Lab 0 ipynb** 파일로 돌아가서 Play 버튼을 클릭하여 **first
+    cell**을 **execute**하여 최신 OpenAI 클라이언트 라이브러리를
+    설치하세요.
 
-6.  **Execute** the next cell to create a **collection**.
+![A black screen with a black background AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-    ![](./media/image48.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image38.jpeg)
 
-7.  **Execute** the next cell to create a **document**. One method of
-    creating a document is using the insert_one method. This method
-    takes a single document and inserts it into the database.
+2.  다음 셀을 **Execute**하여 **Python-dotenv**를 설치하세요
 
-    ![](./media/image49.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-8.  **Execute** the next cell to **retrieve a single document** from the
-    database. The **find_one** method is used here for this purpose.
+3.  Press **Ctrl+Shift+P**를 누르고 +++Reload Window+++를 입력한 후
+    나열된 Developer:Reload Window 옵션을 선택하세요.
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-9.  **Execute** the next cell in which **find_one_and_update** method is
-    used to update a single document in the database.
+4.  **First cell**에서 다시 실행하세요.
 
-    ![](./media/image51.jpeg)
+5.  다음 셀을 **Execute**하여 필요한 OpenAI 라이브러리를 가져오고, os를
+    실행하여 환경 변수에 액세스하고, dotenv를 실행하여 .env 파일에서
+    환경 변수를 로드하세요.
 
-10. **Execute** the next cell in which **delete_one** method is used to
-    delete a single document from the database.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-    ![](./media/image52.jpeg)
+6.  다음 셀을 **Execute**하여 Azure OpenAI 채팅 완료 API를 호출하는
+    **Azure OpenAI client**를 생성하세요:
 
-11. The **find** method is used to query for multiple documents in the
-    database. **Execute** the **next 3 cells** one by one to see it in
-    action.
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-    ![](./media/image53.jpeg)
-    
-    ![](./media/image54.jpeg)
+7.  다음 셀을 **Execute**하여 클라이언트에서
+    **.chat.completions.create()** 메소드를 호출하여 **chat
+    completion**를 수행하세요. 채팅 응답을 받아야 합니다.
 
-    ![](./media/image55.jpeg)
-    
-    ![](./media/image56.jpeg)
+![A computer screen with text on it AI-generated content may be
+incorrect.](./media/image43.jpeg)
 
-12. The following cell will **delete** the database and collection
-    created in this exercise. This is done by using
-    the **drop_database** method on the database object
+## 연습 3: 첫 번째 MongoDB API용 Cosmos DB 애플리케이션
 
-    ![](./media/image57.jpeg)
+이 연습에서는 첫 번째 Cosmos DB 프로젝트를 생성하는 방법을 설명합니다.
+Notebook을 사용하여 기본 CRUD 작업을 시연할 것입니다.
 
-## Exercise 4: Load data into Cosmos DB using the MongoDB API
+1.  **Labs** 폴더에서 **lab_1_first_application.ipynb** 파일을 여세요.
 
-The previous exercise demonstrated how to add data to a collection
-individually. This exercise will demonstrate how to load data using bulk
-operations into multiple collections. This data will be used in
-subsequent labs to explain further the capabilities of Azure Cosmos DB
-API for MongoDB about AI.
+2.  **Select kernel**을 클릭하여**Python version**를 선택하세요.
 
-This notebook demonstrates how to load data into Cosmos DB from Cosmic
-Works JSON files into the database using the MongoDB API.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-1.  Open the file **lab_2_load_data.ipynb** from the **Labs** folder.
-    Click on **Select Kernel** and select the **Python version**.
+3.  **pymongo**를 설치하기 위해first cell을 **Execute**하세요.
 
-    ![](./media/image58.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-2.  Execute the first cell to install **requests**.
+4.  다음 셀을 **Execute**하여 필요한 **imports**를 수행하세요
 
-    ![](./media/image59.jpeg)
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image46.jpeg)
 
-3.  **Execute** the next cell to do the required **imports**.
+5.  **Create a database**를 위해 다음 셀을 실행하세요
 
-    ![](./media/image60.jpeg)
+\[!참고\] **참고:** 그러면 .env 파일에서 업데이트한 연결 문자열이
+사용됩니다
 
-4.  **Execute** the next cell which establishes a **connection** with
-    the **database**.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-    ![](./media/image61.jpeg)
-    
-    ![](./media/image62.jpeg)
+6.  **Collection** 를 생성하기 위해 다음 셀을 **Execute** 하세요.
 
-5.  **Execute** the next cell to **load** the **products**.
+![A black screen with white text AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-    ![](./media/image63.jpeg)
+7.  **Document**를 생성하기 위해 다음 셀을 **Execute** 하세요. 문서를
+    생상하는 한 가지 방법은 insert_one 방법을 사용하는 것입니다. 이
+    방법은 단일 문서를 가져 와서 데이터베이스에 삽입합니다.
 
-6.  **Execute** the next cells
-    to **load** the **customers** and **sales** **raw data**. In this
-    repository, the customer and sales data are stored in the same file.
-    The type field is used to differentiate between the two types of
-    documents.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-    ![](./media/image64.jpeg)
-    
-    ![](./media/image65.jpeg)
-    
-    ![](./media/image66.jpeg)
+8.  데이터베이스에서 **retrieve a single document**하기 위해 다음 셀을
+    **Execute**하세요. 이를 위해 **find_one** 방법이 여기에 사용됩니다.
 
-7.  **Execute** the next cell to **clean up**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image50.jpeg)
 
-    ![](./media/image67.jpeg)
+9.  **find_one_and_update** 메소드가 데이터베이스의 단일 문서를
+    업데이트하는 데 사용되는 다음 셀을 **Execute**하세요.
 
-## Exercise 5: Vector Search using vCore-based Azure Cosmos DB for MongoDB
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
 
-1.  Open the
-    file **lab_3_mongodb_vector_search.ipynb** from **Labs** folder.
+10. **delete_one** 메소드가 데이터베이스에서 단일 문서를 삭제하는 데
+    사용되는 다음 셀을 **Execute**하세요.
 
-2.  Click on **Select Kernel** and select the **Python version**.
+![](./media/image52.jpeg)
 
-    ![](./media/image68.jpeg)
+11. **find** 메소드는 데이터베이스의 여러 문서를 쿼리하는 데
+    사용됩니다.  **next 3 cells**의 셀을 하나씩 **Execute**하여 작동
+    상태를 확인하세요.
 
-3.  **Execute** the first cell to install **tenacity**.
+![A computer screen shot of a program AI-generated content may be
+incorrect.](./media/image53.jpeg)
 
-    ![](./media/image69.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image54.jpeg)
 
-4.  **Execute** the next cell to perform the required **imports**.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image55.jpeg)
 
-    ![](./media/image70.jpeg)
+![A computer screen shot of a program AI-generated content may be
+incorrect.](./media/image56.jpeg)
 
-5.  **Execute** the next cell to **load** the **settings** from the .env
-    file.
+12. 다음 셀은 이 연습에서 만든 데이터베이스와 컬렉션을 **delete**합니다.
+    이 작업은 데이터베이스 개체에서 **drop_database** 메서드를 사용하여
+    수행됩니다.
 
-    ![](./media/image71.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image57.jpeg)
 
-6.  Execute the next cell to establish **connectivity** to
-    the **database**.
+## 연습 4: MongoDB API를 사용하여 Cosmos DB에 데이터를 로드하기
 
-    ![](./media/image72.jpeg)
+이전 연습에서는 컬렉션에 데이터를 개별적으로 추가하는 방법을
+설명했습니다. 이 연습에서는 대량 작업을 사용하여 데이터를 여러 컬렉션에
+로드하는 방법을 보여 줍니다. 이 데이터는 AI에 대한MongoDB용 Azure Cosmos
+DB API의 기능을 자세히 설명하기 위해 후속 실습에서 사용됩니다.
 
-7.  **Execute** the next cell to establish **Azure OpenAI
-    connectivity**.
+이 Notebook은 MongoDB API를 사용하여 Cosmic Works JSON 파일에서
+데이터베이스로 데이터를 Cosmos DB로 로드하는 방법을 보여 줍니다.
 
-    ![](./media/image73.jpeg)
+1.  **Labs** 폴더에서 **lab_2_load_data.ipynb**를 여세요. **Select
+    Kernel**을 클릭하여**Python version**을 선택하세요.
 
-8.  The process of creating a vector embedding field on each document
-    only needs to be done once. However, if a document changes, the
-    vector embedding field will need to be updated with an updated
-    vector. It is done in the next two cells. **Execute** the next two
-    cells and observe the **embeddings** obtained as output in the
-    second one.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image58.jpeg)
 
-    ![](./media/image74.jpeg)
-    
-    ![](./media/image75.jpeg)
+2.  첫 번째 셀을 실행하여 **requests**을 설치하세요.
 
-9.  **Execute** the next cell to **Vectorize and update all documents in
-    the Cosmic Works database.**
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
 
-    ![](./media/image76.jpeg)
+3.  필요한 **imports**를 수행하기 위해 다음 셀을 **Execute**하세요.
 
-10. **Execute** the next **3** cells to add **vector
-    fields** to **products, customer and sales documents.**
+![A computer screen with green text AI-generated content may be
+incorrect.](./media/image60.jpeg)
 
-   **Note:** The first cell will take around 5 minutes, second one around 3 minutes and the third one around 20 minutes to complete execution.
+4.  **Database**와의 **connection**을 설정하는 다음 셀을
+    **Execute**하세요.
 
-    ![](./media/image77.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image61.jpeg)
 
-11. **Execute** the next cell to create **products vector index**.
+![A computer screen shot of text AI-generated content may be
+incorrect.](./media/image62.jpeg)
 
-    ![](./media/image78.jpeg)
-    
-    ![](./media/image79.jpeg)
+5.  **Products**을 **load**하기 위해 **Execute**하세요.
 
-12. Now that each document has its associated vector embedding and the
-    vector indexes have been created on each collection, we can now use
-    the vector search capabilities of vCore-based Azure Cosmos DB for
-    MongoDB. **Execute** the next **3** cells.
+![A screen shot of a computer screen AI-generated content may be
+incorrect.](./media/image63.jpeg)
 
-    ![](./media/image80.jpeg)
-    
-    ![](./media/image81.jpeg)
-    
-    ![](./media/image82.jpeg)
+6.  **customers** 및 **sales** **raw data**를 **load**하기 위해 다음
+    셀을 **Execute**하세요. 이 저장소에서 고객 및 판매 데이터는 동일한
+    파일에 저장됩니다. type 필드는 두 가지 유형의 문서를 구별하는 데
+    사용됩니다.
 
-13. **Execute** the next cells to observe the usage of **vector search
-    results** in a RAG pattern with Chat GPT-3.5
+![A screen shot of a computer code AI-generated content may be
+incorrect.](./media/image64.jpeg)
 
-    ![](./media/image83.jpeg)
-    
-    ![](./media/image84.jpeg)
-    
-    ![](./media/image85.jpeg)
+![](./media/image65.jpeg)
 
-14. Observe the output of the following cells.
+![A screen shot of a computer code AI-generated content may be
+incorrect.](./media/image66.jpeg)
 
-    ![](./media/image86.jpeg)
-    
-    ![](./media/image87.jpeg)
+7.  **clean up**할 다음 셀을 **Execute**하세요.
 
-## Exercise 6: Delete the deployed resources
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image67.jpeg)
 
-1.  From the Azure portal(+++**https://portal.azure.com**+++), select
-    the resource group **mongo-devguide-rg** and then select **Delete
-    resource group**.
+## 연습 5: vCore 기반 MongoDB용 Azure Cosmos DB를 사용한 벡터를 검색하기
 
-    ![](./media/image88.jpeg)
+1.  **Labs** 폴더에서**lab_3_mongodb_vector_search.ipynb**를 파일을
+    여세요.
 
-2.  Type the resource group name **mongo-devguide-rg** in the **Enter
-    resource group name** to confirm deletion text box and click
-    on **Delete**.
+2.  **Select Kernel**을 클릭하고**Python version**을 선택하세요.
 
-    ![](./media/image89.jpeg)
+![](./media/image68.jpeg)
 
-3.  Click on **Delete** in the **Delete confirmation** dialog.
+3.  **tenacity**를 설치하기 위해 첫 셀을 **Execute**하세요.
 
-    ![](./media/image90.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image69.jpeg)
 
-4.  Once the Resource group is deleted, from the Azure portal home page,
-    search for +++**Azure AI Services**+++ and select it.
+4.  필요한 **imports**를 수행하기 위해 다음 셀을 **Execute**하세요.
 
-    ![](./media/image91.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image70.jpeg)
 
-5.  Select **Azure OpenAI** from the left pane and then select **Manage
-    deleted resources**.
+5.  .env 파일에서 **settings** 을 **load** 하기 위해 다음 셀을
+    **Execute**하세요.
 
-    ![](./media/image92.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image71.jpeg)
 
-6.  Select the resource that gets listed there and then click
-    on **Purge**.
+6.  **database**에 **connectivity** 수립하기 위해 다음 셀을 실행하세요.
 
-    ![](./media/image93.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image72.jpeg)
 
-7.  Click on **Yes**.
+7.  **Azure OpenAI connectivity**를 수립하기 위해 다음 셀을
+    **Execute**하세요.
 
-    ![](./media/image94.jpeg)
-    
-    ![](./media/image95.jpeg)
+![A screen shot of a computer code AI-generated content may be
+incorrect.](./media/image73.jpeg)
 
-**Summary:**
+8.  각 문서에 벡터 임베딩 필드를 생성하는 과정은 한 번만 수행하면
+    됩니다. 그러나 문서가 변경되면 벡터 임베딩 필드를 업데이트된 벡터로
+    업데이트해야 합니다. 다음 두 셀에서 수행됩니다. 두 번째 셀에서
+    출력으로 얻은 **embeddings**을 관찰하기 위해 다음 두 셀을
+    **Execute**하세요.
 
-You have successfully created a solution with Azure Cosmos DB for
-MongoDB vector search and document retrieval with Azure OpenAI services.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image74.jpeg)
 
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image75.jpeg)
+
+9.  **Vectorize and update all documents in the Cosmic Works
+    database**를 위해 다음 셀을 **Execute**하세요**.**
+
+![A computer screen shot of a program code AI-generated content may be
+incorrect.](./media/image76.jpeg)
+
+10. **products, customer and sales documents**에 **vector fields**를
+    추가하기 위해 다음 **3** 셀을 **Execute**하세요.
+
+**참고:** 첫 번째 셀은 실행을 완료하는 데 약 5분, 두 번째 셀은 약 3분,
+세 번째 셀은 약 20분이 소요됩니다.
+
+\![\](./media/image77.jpeg)
+
+11. **products vector index**를 생성하기 위해 다음 셀을
+    **Execute**하세요.
+
+![A screen shot of a computer screen AI-generated content may be
+incorrect.](./media/image77.jpeg)
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image78.jpeg)
+
+12. 이제 각 문서에 연결된 벡터 포함이 있고 각 컬렉션에서 벡터 인덱스가
+    생성했으므로 이제 vCore 기반MongoDB용 Azure Cosmos DB의 벡터 검색
+    기능을 사용할 수 있습니다. 다음 **3** 셀을 **Execute**하세요.
+
+![](./media/image79.jpeg)
+
+![](./media/image80.jpeg)
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image81.jpeg)
+
+13. Chat GPT-3.5를 사용하여 RAG패턴에서 **vector search results**의
+    사용을 관찰하기 위해 다음 셀을 **Execute**하세요.
+
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image82.jpeg)
+
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image83.jpeg)
+
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image84.jpeg)
+
+14. 다음 셀의 출력을 관찰하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image85.jpeg)
+
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image86.jpeg)
+
+## 연습 6: 배포된 리소스를 삭제하기
+
+1.  Azure 포털
+    (+++[https://portal.azure.com+++](https://portal.azure.com+++/))에서
+    할당된 리소스 그룹을 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image87.png)
+
+2.  그 아래에 있는 모든 리소스를 선택하고 메뉴에서 **three dots**을
+    클릭한 후 **delete**를 선택하여 모든 리소스를 삭제합니다.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image88.png)
+
+3.  텍스트 상자에 +++delete+++를 입력하고 Delete 버튼을 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image89.png)
+
+4.  리소스가 삭제되면 Azure Portal 홈페이지에서 **+++Azure AI
+    Services+++**를 검색하여 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image90.jpeg)
+
+5.  왼쪽 창에서 **Azure OpenAI**를 선택하고**Manage deleted
+    resources**를 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image91.jpeg)
+
+6.  거기에 나열되는 리소스를 선택하고 **Purge**를 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image92.jpeg)
+
+7.  **Yes**를 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image93.jpeg)
+
+**요약:**
+
+Azure OpenAI 서비스를 사용하여MongoDB용 Azure Cosmos DB 벡터 검색 및
+문서 검색을 사용하여 솔루션을 성공적으로 생성했습니다.
