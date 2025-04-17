@@ -22,9 +22,9 @@ for PostgreSQL）。Azure 应用服务是一种高度可缩放的自修补 Web
 
 在此任务中，我们将识别并了解我们将在整个实验室中使用的凭证。
 
-> **1.Instructions**选项卡包含实验室指南，其中包含在整个实验室中要遵循的说明。
->
-> **2. Resources** 选项卡已获取执行实验室所需的凭证**。**
+**1.Instructions**选项卡包含实验室指南，其中包含在整个实验室中要遵循的说明。
+
+**2. Resources** 选项卡已获取执行实验室所需的凭证**。**
 
 - **URL** – Azure portal的 URL
 
@@ -39,15 +39,15 @@ for PostgreSQL）。Azure 应用服务是一种高度可缩放的自修补 Web
 
 - **Resource Group** – 分配给您的**Resource Group** 。
 
-\[！Alert\] **重要提示：**请确保在此资源组下创建所有资源
+>[！Alert] **重要提示** 请确保在此资源组下创建所有资源
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image1.png)
 
 3.  **Help**选项卡包含 Support 信息。此处的 **ID** 值是
     将在实验室执行期间使用的实 **Lab instance** ID。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image2.png)
 
 ## 练习 1：运行示例
@@ -64,36 +64,36 @@ GitHub codespace 中运行，这意味着您可以在任何具有 Web
 
 3.  选择 **Fork -\> Create a new fork**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image3.jpeg)
 
 4.  单击 Create a new fork 页面中的 **Create fork**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image4.jpeg)
 
 5.  在存储库的分叉页中，选择 **Code** \> **Create codespace on main**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image5.jpeg)
 
-**注意：**如果未显示“在主 Create Codespace”选项上，请单击 “Codespaces”
+    **注意** 如果未显示“在主 Create Codespace”选项上，请单击 “Codespaces”
 旁边的 +symbol 。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image6.jpeg)
 
-**注意：**codespace 创建大约需要 10 分钟才能完成设置。
+**注意** codespace 创建大约需要 10 分钟才能完成设置。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image7.jpeg)
 
 6.  在终端中执行 +++mvn quarkus:dev+++。点击 **Allow ** 在弹出窗口中。
 
-![A screenshot of a browser AI-generated content may be
+    ![A screenshot of a browser AI-generated content may be
 incorrect.](./media/image8.jpeg)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image9.jpeg)
 
 7.  当您看到通知 **Your application running on port 8080** is
@@ -102,15 +102,15 @@ incorrect.](./media/image9.jpeg)
 
 如果您看到 端口 **5005** 的**notification**，请**skip**它。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image10.jpeg)
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image11.jpeg)
 
 8.  要停止 Quarkus 开发服务器， 请在 Codespace 终端中键入 **Ctrl+C**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image12.jpeg)
 
 ## 练习 2：创建应用服务和 PostgreSQL
@@ -123,67 +123,75 @@ Database for PostgreSQL。
     门户](https://portal.azure.com/+++%20%20打开%20%20Azure%20门户)，然后从
     VM 的**Resources**选项卡中使用 Azure **login** 凭据登录。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image13.png)
 
 2.  选择 **Cancel** 或 Welcome 页面中的 close 按钮。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image14.jpeg)
 
 3.  在 Azure 门户顶部的搜索栏中输入 +++**web app database**+++。在
     **Marketplace** 标题下选择标记为 **Web App + Database** **的项目**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image15.jpeg)
 
 4.  在**Create Web App +
     Database**中，填写以下详细信息，然后选择**Review + create** 
 
-[TABLE]
+    | **财产**   |  **价值**  |
+    |:-------|:-------|
+    |  订阅  |  选择您的**assigned subscription** |
+    | 资源组   |  选择您的**assigned Resource group**  |
+    |  地区  |  选择  @lab.CloudResourceGroup(ResourceGroup1).Location  |
+    | **Web App Details**   |    |
+    | 名字   |  进入 +++quarkuwebapp@lab.LabInstance.Id+++  |
+    | 运行时堆栈  |  **Java 17**  |
+    |  **Database**  |    |
+    |  Engine  |  选择 **PostgreSQL – Flexible Server**  |
+    |  托管计划  |  选择 **Basic**  |
 
-5.  ![A screenshot of a computer AI-generated content may be
-    incorrect.](./media/image16.png)
+    ![A screenshot of a computer AI-generated content may be incorrect.](./media/image16.png)
 
-6.  ![A screenshot of a web application AI-generated content may be
-    incorrect.](./media/image17.jpeg)
+    ![A screenshot of a web application AI-generated content may be incorrect.](./media/image17.jpeg)
 
 7.  验证通过后，单击 **Create**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image18.png)
 
-**注意：**应用程序创建大约需要 15 分钟。
+    **注意：**应用程序创建大约需要 15 分钟。
 
 8.  部署完成后，单击 **Go to resource**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image19.jpeg)
 
 9.  您将直接转到 **App ServicePage。** 点击 左上角的Home 。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image20.jpeg)
 
 10. 单击 Portal 菜单，然后从中选择 **Resource Groups**。
 
-![A screenshot of a computer AI-generated content may be
+    ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image21.jpeg)
 
 11. 选择分配给您的 Resource
     group（资源组），并查看以下资源是从我们刚刚执行的部署中创建的。
 
-> \- App Service plan
->
-> \- App Service
->
-> \- Virtual network
->
-> \- Azure Database for PostgreSQL flexible server
->
-> \- Private DNS zone
+    - App Service plan
+    
+    - App Service
+    
+    - Virtual network
+    
+    - Azure Database for PostgreSQL flexible server
+    
+    - Private DNS zone
 
-![A screenshot of a group AI-generated content may be
+    ![A screenshot of a group AI-generated content may be
 incorrect.](./media/image22.png)
 
 ## 练习 3：验证连接设置
