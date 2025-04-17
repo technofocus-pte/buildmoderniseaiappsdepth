@@ -1,6 +1,6 @@
 # 用例 02 - 在 Linux 和 PostgreSQL 上使用 Azure 应用服务构建水果列表 Quarkus Web 应用程序
 
-**预计持续时间：**40 分钟
+**预计持续时间** 40 分钟
 
 **实验类型：** 讲师指导
 
@@ -77,13 +77,13 @@ incorrect.](./media/image4.jpeg)
     ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image5.jpeg)
 
-**注意** 如果未显示“在主 Create Codespace”选项上，请单击 “Codespaces”
+    **注意** 如果未显示“在主 Create Codespace”选项上，请单击 “Codespaces”
 旁边的 +symbol 。
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image6.jpeg)
 
-**注意** codespace 创建大约需要 10 分钟才能完成设置。
+    **注意** codespace 创建大约需要 10 分钟才能完成设置。
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image7.jpeg)
@@ -100,7 +100,7 @@ incorrect.](./media/image9.jpeg)
     available时，请选择 **Open in
     Browser**。您应该会在新的浏览器选项卡中看到示例应用程序。
 
-如果您看到 端口 **5005** 的**notification**，请**skip**它。
+    如果您看到 端口 **5005** 的**notification**，请**skip**它。
 
     ![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image10.jpeg)
@@ -191,7 +191,7 @@ incorrect.](./media/image21.jpeg)
     
     - Private DNS zone
 
-![A screenshot of a group AI-generated content may be
+    ![A screenshot of a group AI-generated content may be
 incorrect.](./media/image22.png)
 
 ## 练习 3：验证连接设置
