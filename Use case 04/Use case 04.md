@@ -1,489 +1,580 @@
-# Usecase 04 - Build a TODO List ASP.NET app, deploy it to Azure App Service connecting to SQL Database
+# 사용 사례 04 - TODO List ASP.NET 앱을 구축하고 SQL Database에 연결하는 Azure App Service에 배포하기
 
-**Estimated duration:** 40 minutes
+**예상 소요 시간:** 40분
 
-**Lab Type:** Instructor Led
+**실습 유형:** 강사 진행
 
-**Objective:**
+**목표:**
 
-Azure App Service provides a highly scalable, self-patching web hosting
-service. In this lab, you will learn how to deploy a data-driven ASP.NET
-app in App Service and connect it to Azure SQL Database. When you\\re
-finished, you have an ASP.NET app running in Azure and connected to SQL
-Database.
+Azure App Service는 확장성이 뛰어난 자체 패치 웹 호스팅 서비스를
+제공합니다. 이 실습에서는 App Service에서 데이터 기반 ASP.NET 앱을
+배포하고 Azure SQL Database에 연결하는 방법을 배울 것입니다. 완료되면,
+Azure에서 실행 중인 ASP.NET앱이 있고 SQL Database에 연결되어 있을
+것입니다.
 
-## Exercise 1: Deploying an ASP.NET app to Azure with Azure SQL Database
+## 연습 0: VM 및 자격 증명을 이해하기
 
-### Task 1: Set up Visual Studio 2022 and run the application
+이 작업에서는 실습 전체에서 사용할 자격 증명을 식별하고 이해할 것입니다.
 
-1.  From the Windows **Search** bar, type +++**Visual studio**+++ and select Visual Studio 2022. If it asks you to Sign in, continue with the steps 2 and 3 or continue from Step 4.
+1.  **Instructions** 탭에는 실습 전체에서 따라야 할 지침이 있는 실습
+    가이드가 있습니다.
 
-    ![](./media/image1.jpeg)
+2.  **Resources** 탭에는 실습을 실행하는 데 필요한 자격 증명이 있습니다.
 
-2.	Click on **Sign in** and and **sign in** with the **Username** and **password** under the **User Credentials** section in the Resources tab of the VM.
+    1.  **URL** – Azure 포털에 대한 URL
 
-    ![](./media/image2.jpeg)
+    2.  **Subscription** – 사용자에게 할당돤 구독의 ID
 
-    ![](./media/image3.jpeg)
+    3.  **Username** – Azure 서비스에 로그인하는 데 사용하는 사용자 ID.
 
-3.  Select **Start Visual Studio**.
+    4.  **Password** – Azure 로그인에 대한 비밀번호. 이 사용자 이름과
+        비밀번호를 Azure 로그인 자격 증명이라고 하겠습니다. Azure 로그인
+        자격 증명을 언급할 때마다 이러한 자격 증명을 사용할 것입니다.
 
-    ![](./media/image4.jpeg)
+    5.  **Resource Group** – 사용자에게 할당돤 **Resource group**.
 
-4.  Select **Open a local folder**.
+\[!경고\] **중요:** 이 리소스 그룹 아래에 모든 리소스를 생성해야 합니다
 
-    ![](./media/image5.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-5.  Select **webappwithsqldb** folder in **C:\Labfiles** and click
-    on **Select Folder**.
+1.  **Help** 탭에는 Support 정보가 있습니다. **ID** 값은 실습 중에
+    사용되는**Lab instance ID**입니다.
 
-    ![](./media/image6.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-6.  Once the folder is opened, double click
-    on **DotNetAppSqlDb.sln** from the **Solution Explorer**.
+## 연습 1: Azure SQL Database를 사용하여 Azure에 ASP.NET 앱을 배포하기
 
-    **Note:** If the Solution Explorer does not get opened automatically,
-Click on **View -\> Solution Explorer.**
+### 작업 1: Visual Studio 2022를 설정하고 애플리케이션을 실행하기
 
-    ![](./media/image7.jpeg)
+3.  Windows **Search** 바에 +++**Visual studio**+++를 입력하고Visual
+    Studio 2022를 선택하세요. 로그인하라는 메시지가 표시되면 2단계와 3
+    단계를 계속하거나 4단계부터 계속하세요.
 
-7.  Click on **Build** -\> **Build Solution**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.jpeg)
 
-    ![](./media/image8.jpeg)
+4.  Click on **Sign in**을 클릭하고 VM의 리소스 탭에 있는 **User
+    Credentials** 섹션에서 **Username** 및 **password** 를 사용하여
+    **sign in** 하새요.
 
-8.  Once the Build is completed, select **Debug -\>** **Start
-    Debugging**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-    ![](./media/image9.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.png)
 
-    ![](./media/image10.jpeg)
+5.  **Start Visual Studio**를 선택하세요.
 
-9.  This opens up a browser with the **Todos web app** running in it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-    ![](./media/image11.jpeg)
+6.  **Open a local folder**를 선택하세요.
 
-10. Add few items into the app by clicking on **Create New** as in the
-    screenshots below.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-    ![](./media/image12.jpeg)
+7.  **C:\Labfiles**의 **webappwithsqldb** 폴더를 선택하고 **Select
+    Folder**를 클릭하세요.
 
-    ![](./media/image13.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-11. Add few more items to the list.
+8.  폴더가 열리면**Solution Explorer**에서**DotNetAppSqlDb.sln**를 두 번
+    클릭하세요.
 
-    ![](./media/image14.jpeg)
+**참고:** Solution Explorer가 자동으로 열리지 않으면 **View -\> Solution
+Explorer**를 클릭하세요**.**
 
-12. From the Visual Studio 2022, click on **Debug -\>** **Stop
-    Debugging**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    ![](./media/image15.jpeg)
+9.  **Build** -\> **Build Solution**를 클릭하세요.
 
-### Task 2: Publish ASP.NET application to Azure
+![A computer screen shot of a black screen AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-1.  In the **Solution Explorer**, right-click on
-    your **DotNetAppSqlDb** project and select **Publish**.
+10. 빌드가 완료되면 **Debug -\>** **Start Debugging**를 선택하세요.
 
-    ![](./media/image16.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    ![](./media/image17.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-2.  Select **Azure** and and click on **Next**.
+11. 그러면 **Todos web app**이 실행 중인 브라우저가 열립니다.
 
-    ![](./media/image18.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image13.jpeg)
 
-3.  Select **Azure App Service(Windows)** in **Which Azure service would
-    you like to use to host your application?** screen and click
-    on **Next**.
+12. 아래 스크인샷과 같이 **Create New**를 클릭하여 앱에 몇 가지 항목을
+    추가하세요.
 
-    ![](./media/image19.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-4.  In the Publish dialog, click **Sign In** and Sign in to your Azure
-    subscription, if not signed in already.
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-    **Note:** If you're already signed into a Microsoft account, make sure
-that account holds your Azure subscription. If the signed-in Microsoft
-account doesn't have your Azure subscription, click it to add the
-correct account.
+13. 목록에 몇 가지 항목을 추가하세요.
 
-5.  Click on **Create new** to create a new App service.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image16.jpeg)
 
-    ![](./media/image20.jpeg)
+14. Visual Studio 2022에서 **Debug -\>** **Stop Debugging**를
+    클릭하세요.
 
-6.  Enter the below details.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image17.jpeg)
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Click on New -> **RGForWebAppSQL** and click on OK |
+### 작업 2: Azure에 ASP.NET 애플리케이션을 개시하기
 
-    ![](./media/image21.jpeg)
+2.  **Solution Explorer**에서 **DotNetAppSqlDb** 프로젝트를 마우스
+    오른쪽 버튼으로 클릭하고**Publish**를 선택하세요.
 
-7.  Click **New** on **Hosting Plan** option and enter the below details
-    and click **OK**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.jpeg)
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Hosting Plan  | +++myAppServicePlan+++   |
-    | Location   |  **East US**  |
-    |  Size  |   **Free** |
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-    ![](./media/image77.png)
-    
-    **Note:** The location here is selected as East US. Please select a
-closest region if East US does not work for you.
+3.  **Azure**를 선택하고**Next**를 클릭하세요.
 
-9.  Click **Create** on the App Service window and wait for Azure
-    resources to get created.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.jpeg)
 
-    ![](./media/image73.png)
+4.  **Azure App Service(Windows)** in **Which Azure service would you
+    like to use to host your application?** 화면을 선택하고 **Next**를
+    클릭하세요.
 
-10. The **Publish** dialog shows the resources you have configured.
-    Click **Finish**.
+![A screenshot of a computer application AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-    ![](./media/image23.jpeg)
+5.  아직 로그인 하지 않은 경우 Publish 대화상자에서 **Sign In**을
+    클릭하고  Azure 구독에 로그인하세요.
 
-11. Click on **Close**.
+**참고:** Microsoft 계정에 이미 로그인한 경우 해당 Azure 구독이 있는지
+확인하세요. 로그인한 Microsoft 계정에 Azure 구독이 없는 경우 클릭하여
+올바른 계정을 추가하세요.
 
-    ![](./media/image24.jpeg)
+6.  새로운 App 서비스를 생성하기 위해 **Create new**를 클릭하세요.
 
-12. Scroll down to the Server Dependencies section and click on
-    the **+** sign to add dependency.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image22.jpeg)
 
-    ![](./media/image25.jpeg)
+7.  다음 세부 정보를 입력하세요.
 
-13. Select **Azure SQL Database** in the **Add dependency** page and
-    click on **Next**.
+[TABLE]
 
-    ![](./media/image26.jpeg)
+8.  **Hosting Plan**에서 **New**를 클릭하세요.
 
-14. Click on **Create New** next to SQL databases, in the **Connect to
-    Azure SQL Database** dialog box.
+9.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image23.png)
 
-    ![](./media/image27.jpeg)
+10. **Hosting Plan** 옵션에서 **New**를 클릭하고 다음 세부 정보를
+    입력하고 **OK**를 클릭하세요.
 
-15. In the **Azure SQL Database Create new** dialog box, click
-    on **New** next to the Database server.
+[TABLE]
 
-    ![](./media/image28.jpeg)
+11. ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image24.png)
 
-16. Fill in the below details and click on **OK**.
+12. App Service 창에서 **Create**를 클릭하고 Azure 리소스가 생성될
+    때까지 기다리세요.
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database server name  | +++dotnetappsqldbdbserver98+++   |
-    |  Administrator username  |   +++sqladmin+++ |
-    |  Administrator password  |  +++PassWord98+++  |
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image25.png)
 
-    >[!Note] **Note:** The location here is selected as East US. Please select a closest region if East US does not work for you.
+13. **Publish** 대화 상자에는 구성한 리소스가 표시됩니다. **Finish**를
+    클릭하세요.
 
-    ![](./media/image29.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image26.png)
 
-16. Click on **Create** in the Create new dialog.
+14. **Close**를 클릭하세요.
 
-    ![](./media/image30.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-### Task 3: Configure database connection
+15. Server Dependencies 섹션까지 아래로 스크롤하고 **+** 기호를 클릭하여
+    종속성을 추가하세요.
 
-1.  When the wizard finishes creating the database resources,
-    click **Next**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-    ![](./media/image31.jpeg)
+16. **Add dependency** 페이지에서 **Azure SQL Database**를 선택하고
+    **Next**를 클릭하세요.
 
-2.  Fill in the below details in the **Connect to Azure SQL
-    Database** dialog and click **Finish**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database connection string Name  | +++MyDbConnection+++  |
-    |  Database connection user name |   +++Sqladmin+++ |
-    |  Database connection password |  +++PassWord98+++  |
-    |  Azure App Settings  |  Selected  |
+17. **Connect to Azure SQL Database** 대화 상자에서 SQL데이터베이스 옆에
+    있는 **Create New** 를 클릭하세요.
 
-    ![](./media/image32.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-3.	Click on **Finish** after reviewing the **summary of changes**.
+18. **Azure SQL Database Create new** 대화 상자에서 데이터베이스 서버
+    옆에 있는 **New**를 클릭하세요.
 
-    ![](./media/image74.png)
-  	
-4.  Wait for configuration wizard to finish and click **Close**. The
-    Azure SQL Db is now **connected** to your app.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.png)
 
-    ![](./media/image33.jpeg)
+19. 다음 세부 정보를 입력하고 **OK**를 클릭하세요.
 
-5.  From the Publish page, click **Publish** on the top right corner.
+[TABLE]
 
-    ![](./media/image34.jpeg)
+20. ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image32.png)
 
-    **Note:** This will take around 5 minutes
+21. Create new 대화 상자에서 **Create** 를 클릭하세요.
 
-6.  Once your ASP.NET app is deployed to Azure, your default browser is
-    launched with the URL to the deployed app. **Add a few to-do items**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image33.png)
 
-    ![](./media/image35.jpeg)
+### 작업 3: 데어터베이스 연결을 구성하기
 
-### Task 4: Access the database locally
+1.  Wizard가 데이터베이스 리소스를 생성을 미치면 **Next**를 클릭하세요.
 
-Visual Studio lets you explore and manage your new database in Azure
-easily in the **SQL Server Object Explorer**. The new database already
-opened its firewall to the App Service app that you created. But to
-access it from your local computer (such as from Visual Studio), you
-must open a firewall for your local machine\\s public IP address. If
-your internet service provider changes your public IP address, you need
-to reconfigure the firewall to access the Azure database again.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image34.png)
 
-1.  From the Visual Studio 2022, **View** menu, select **SQL Server
-    Object Explorer**.
+2.  **Connect to Azure SQL Database** 대화 상자에서 다음 세부 정보를
+    입력하고 **Finish**를 클릭하세요.
 
-    ![](./media/image36.jpeg)
+[TABLE]
 
-2.  At the top of **SQL Server Object Explorer**, click the **Add SQL
-    Server** button.
+3.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image35.jpeg)
 
-    ![](./media/image37.jpeg)
+4.  **Summary of changes**을 검토한 후 **Finish**를 클릭하세요.
 
-### Task 5: Configure the database connection
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image36.png)
 
-1.  In the **Connect** dialog, expand the **Azure** node. All your SQL
-    Database instances in Azure are listed here.
+5.  구성 wizard가 완료될 때까지 기다렸다가 **Close**를 클릭하세요. 이제
+    Azure SQL 유가 앱에**connected**되었습니다.
 
-2.  Select the database that you created
-    earlier(**dotnetappsqldbdbserver98**). The connection you created
-    earlier is automatically filled at the bottom.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-3.  Type the database administrator **password** you created
-    earlier(+++**PassWord98**+++) and click Connect.
+6.  Publish 페이지에서 오른쪽 상단의 **Publish**를 클릭하세요.
 
-    ![](./media/image38.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.png)
 
-### Task 6: Allow client connection from your computer
+**참고:** 약 5분 정도 소요됩니다
 
-The Create a new firewall rule dialog is opened. By default, a server
-only allows connections to its databases from Azure services, such as
-your Azure app. To connect to your database from outside of Azure,
-create a firewall rule at the server level. The firewall rule allows the
-public IP address of your local computer.
+7.  ASP.NET 앱이 Azure에 배포되면 배포된 앱의 URL과 함께 기본 브라우저가
+    시작됩니다. **Add a few to-do items**.
 
-The dialog is already filled with your computer's public IP address.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-1.  Make sure that Add my client IP is selected and click OK.
+### 작업 4: 로컬에서 데이터베이스에 액세스하기
 
-    ![](./media/image39.jpeg)
+Visual Studio를 사용하면 **SQL Server Object Explorer**에서 Azure의 새
+데이터베이스를 쉽게 탐색하고 관리할 수 있습니다. 새 데이터베이스는
+사용자가 생성된 App Service 앱에 대한 방화벽을 이미 열었습니다. 그러나
+로컬 컴퓨터 (예: Visual Studio)에서 액세스하려면 로컬 컴퓨터의 공용 IP
+주소에 대한 방화벽을 열어야합니다. 인터넷 서비스 공급자가 공용 IP 주소를
+변경하는 경우 Azure 데이터베이스에 다시 액세스하도록 방화벽을 다시
+구성해야 합니다.
 
-2.  Once Visual Studio finishes creating the firewall setting for your
-    SQL Database instance, your connection shows up in **SQL Server
-    Object Explorer**.
+1.  Visual Studio 2022의 **View** 메뉴에서 **SQL Server Object
+    Explorer**를 선택하세요.
 
-3.  Expand your **connection \> Databases \> \< YOUR DATABASE \> \>
-    Tables**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-    ![](./media/image40.jpeg)
+2.  **SQL Server Object Explorer** 위에서 **Add SQL Server** 버튼을
+    클릭하세요.
 
-4.  Right-click on the **Todoes** table and select **View Data**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-    ![](./media/image41.jpeg)
+### 작업 5: 데이터베이스 연결을 구성하기
 
-5.  View the contents of the table.
+1.  **Connect** 대화상자에서 **Azure** 노드를 확장하세요. Azure의 SQL
+    Database인스턴스가 여기에 나열됩니다.
 
-    ![](./media/image42.jpeg)
+2.  이전에 생성한 데이터베이스 (**dotnetappsqldbdbserver98**)를
+    선택하세요. 이전에 생성한 연결은 맨 아래에 자동으로 채워집니다.
 
-## Exercise 2: Update app with Code First Migrations
+3.  이전에 생성한 데이터베이스 관리자 **password**
+    (+++**PassWord98**+++)를 입력하고 Connect를 클릭하세요.
 
-1.  From the **Solution Explorer**, open **Models\Todo.cs** in the code
-    editor. Add the following property to the **ToDo** class as the last
-    line (after the **public DateTime CreatedDate { get; set; }** line
-    )and click on **Save**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-    +++**public bool Done { get; set; }**+++
+### 작업 6: 컴퓨터에서 클라이언트 연결을 허용하기
 
-    ![](./media/image43.jpeg)
+Create a new firewall rule 대화 상자가 열립니다. 기본적으로 서버는 Azure
+앱과 같은 Azure 서비스에서만 데이터베이스에 대한 연결을 허용합니다.
+Azure 외부에서 데이터베이스에 연결하려면 서버 수준에서 방화벽 규칙을
+생성합니다. 방화벽 규칙은 로컬 컴퓨터의 공용 IP 주소를 허용합니다.
 
-### Task 1: Run Code First Migrations locally
+대화 상자는 이미 컴퓨터의 공용 IP 주소로 채워져 있습니다.
 
-Run a few commands to make updates to your local database.
+1.  Add my client IP기 선택되어 있는지 확인하고 OK를 클릭하세요.
 
-1.  From the **Tools** menu, click **NuGet Package
-    Manager** \> **Package Manager Console**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image43.jpeg)
 
-    ![](./media/image44.jpeg)
+2.  Visual Studio에서 SQL Database 인스턴스에 대한 방화벽 설정 생성을
+    완료하면 **SQL Server Object Explorer**에 연결이 표시됩니다.
 
-2.  In the Package Manager Console window, enable Code First Migrations
-    by executing this command.
+3.  **Connection \> Databases \> \< YOUR DATABASE \> \> Tables**를
+    확장하세요.
 
-    +++**Enable-Migrations**+++
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-    ![](./media/image45.jpeg)
+4.  **Todoes** 테이블을 마우스 오른쪽 클릭하고 **View Data**를
+    선택하세요.
 
-3.  Add a migration by executing the below command.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-    +++**Add-Migration AddProperty**+++
+5.  테이블의 내용을 봅니다. 앱 UI에서 추가된 데이터는 여기에 나열되어야
+    합니다.
 
-    ![](./media/image46.jpeg)
+![](./media/image46.jpeg)
 
-4.  Update the local database by executing the below command.
+## 연습 2: Code First Migrations로 앱을 업데이트하기
 
-    +++**Update-Database**+++
+1.  **Solution Explorer**에서 코드 편집기에 **Models\Todo.cs**를 여세요.
+    다음 속성을 **ToDo** 클래스의 마지막 줄 (**public DateTime
+    CreatedDate { get; set; }** 줄뒤)로 추가하고**Save**를 클릭하세요.
 
-    ![](./media/image47.jpeg)
++++**public bool Done { get; set; }**+++
 
-5.  Type **Ctrl+F5** to run the app or click on **Debug -\> Start
-    without Debugging**. Test the edit, details, and create links.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-    ![](./media/image48.jpeg)
+### 작업 1: Code First Migrations 로컬로 실행하기
 
-6.  The application page opens up and it still looks the same because
-    your application logic is not using this new property yet.
+로컬 데이터베이스를 업데이트하기 위해 몇 가지 명령을 실행하세요.
 
-    ![](./media/image49.jpeg)
+1.  **Tools** 메뉴에서 **NuGet Package Manager** \> **Package Manager
+    Console**를 선택하세요.
 
-### Task 2: Use the new property
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-Make some changes in your code to use the Done property.
+2.  Package Manager Console 창에서 이 명령을 실행하여Code First
+    Migrations을 사용하도록 설정하세요.
 
-1.  From the Visual Studio, open **Controllers\TodosController.cs**.
-    Find the **Create()** method on line 52 and add +++**Done**+++ to the list
-    of properties in the Bind attribute. When you're done, your Create()
-    method signature look like the following code:
++++**Enable-Migrations**+++
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-2.  Open **Views\Todos\Create.cshtml**. Add the following code after the
-    < div class=\"form-group\" > for **CreatedDate**.
+3.  아래 명령을 실행하여 마이그레이션을 추가하세요.
 
-    ![](./media/image51.jpeg)
++++**Add-Migration AddProperty**+++
 
-    ```
-    <div class="form-group">
-    @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div class="checkbox">
-            @Html.EditorFor(model => model.Done)
-            @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
+![](./media/image50.jpeg)
 
-    ```
+4.  아래 명령을 실행하여 로컬 데이터베이스를 업데이트하세요.
 
-3.  Open **Views\Todos\Index.cshtml**. Add the following code in the
-    empty **th** element, after the **th** element for
-    the **CreatedDate**.
++++**Update-Database**+++
 
-    +++@Html.DisplayNameFor(model =\> model.Done)+++
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
 
-    ![](./media/image52.jpeg)
+5.  앱을 실행하기 위해 **Ctrl+F5**를 입력하여 **Debug -\> Start without
+    Debugging**를 클릭하세요. 편집, 세부 정보 테스트하고 링크를
+    생성하세요.
 
-4.  Add this code just above the html.ActionLink() helper methods.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image52.jpeg)
 
-    ```
-    <td>
-    @Html.DisplayFor(modelItem => item.Done)
-</td>
+6.  애플리케이션 페이지가 열리고 애플리케이션 로직이 아직 이 새 속성을
+    사용하지 않기 때문에 여전히 동일하게 보입니다.
 
-    ```
-    ![](./media/image53.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.jpeg)
 
-5.  Type **Ctrl+F5** to run the app.
+### 작업 2: 새 속성을 사용하기
 
-    ![](./media/image54.jpeg)
+Done 속성을 사용하도록 코드를 약간 변경하세요.
 
-### Task 3: Enable Code First Migrations in Azure
+1.  Visual Studio에서 **Controllers\TodosController.cs**를 여세요.
+    52행에서 **Create()** 방법을 찾아 Bind 속성의 속성 목록에
+    +++**Done**+++ 를 추가하세요. 완료되면 Create() 메서드 서명이 다음
+    코드와 같이 표시됩니다:
 
-1.  Right click on the project and select **Publish**.
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image54.jpeg)
 
-    ![](./media/image55.jpeg)
+2.  **Views\Todos\Create.cshtml**를 여세요. **CreatedDate**에 대한 \<
+    div class="form-group" \> 뒤에 다음 코드를 추가하세요.
 
-2.  Click **More actions** \> **Edit** to open the publish settings.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image55.jpeg)
 
-    ![](./media/image56.jpeg)
+\<div class="form-group"\>
 
-3.  In the **MyDatabaseContext** dropdown, select the database
-    connection for your Azure SQL Database.
+@Html.LabelFor(model =\> model.Done, htmlAttributes: new { @class =
+"control-label col-md-2" })
 
-4.  Select **Execute Code First Migrations** (runs on application
-    start), then click **Save**.
+\<div class="col-md-10"\>
 
-    ![](./media/image57.jpeg)
+\<div class="checkbox"\>
 
-5.  In the Publish page, click on **Publish**.
+@Html.EditorFor(model =\> model.Done)
 
-    ![](./media/image58.jpeg)
+@Html.ValidationMessageFor(model =\> model.Done, "", new { @class =
+"text-danger" })
 
-6.  The updated app is now available on Azure.
+\</div\>
 
-7.  Try adding to-do items again and select **Done**, and they should
-    show up in your homepage as a completed item.
+\</div\>
 
-    ![](./media/image59.jpeg)
-    
-    ![](./media/image60.jpeg)
+\`\`\`
 
-## Exercise 3: Stream application logs
+3.  **Views\Todos\Index.cshtml**를 여세요. **CreatedDate**에 대한 **th**
+    요소 뒤의 빈 **th** 요소에 다음 코드를 추가하세요.
 
-1.  In the publish page, scroll down to the **Hosting** section. At the
-    right-hand corner, click **...** \> **View Streaming Logs**.
+<+++@Html.DisplayNameFor>(model =\> model.Done)+++
 
-    ![](./media/image61.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image56.jpeg)
 
-2.  The logs are now streamed into the Output window.
+4.  html ActionLink() 도우미 메서드 바로 위에이 코드를 추가하세요.
 
-    ![](./media/image62.jpeg)
+5.  \<td\>
 
-3.  You don't see any of the trace messages yet because, when you first
-    select View Streaming Logs, your Azure app sets the trace level to
-    Error, which only logs error events.
+6.  @Html.DisplayFor(modelItem =\> item.Done)
 
-**Note:** Restart the logging stream from the Visual Studio if you do
-not see them yet.
+\`\`\`
 
-### Task 1: Change trace levels
+\![\](./media/image53.jpeg)
 
-1.  Go to the publish page. In the Hosting section, click **… \> Open in
-    Azure portal**.
+5.  앱을 실행하기 위해 **Ctrl+F5**를 입력하세요.
 
-    ![](./media/image63.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image57.jpeg)
 
-2.	In the Azure portal – app page, select **App Service Logs** from the left pane under the **Monitoring** section.
+### 작업 3: Azure에서 Code First Migrations를 활성화하기
 
-    ![](./media/image64.jpeg)
+1.  프로젝트를 마우스 오른쪽 버튼으로 클릭하고 **Publish**를 선택하세요.
 
-3.  Under **Application Logging** (File System), select **Verbose** in
-    Level. Click **Save**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image58.jpeg)
 
-    ![](./media/image65.jpeg)
+2.  개시 설정을 열기 위해 **More actions** \> **Edit**를 클릭하세요.
 
-4.  From your browser, access the web app on Azure and do some
-    activities.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
 
-    ![](./media/image66.jpeg)
+3.  **MyDatabaseContext** 드롭다운에서 Azure SQL Database에 대한
+    데이터베이스 연결을 선택하세요.
 
-5.  The trace messages are now streamed to the Output window in Visual
-    Studio.
+4.  **Execute Code First Migrations** (애플리케이션 시작 시 실행)를
+    선택하고 **Save**를 클릭하세요.
 
-    ![](./media/image67.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image60.jpeg)
 
-6.  To stop the log-streaming service, click the **Stop
-    monitoring** button in the Output window.
+5.  Publish 페이지에서 **Publish**를 클릭하세요.
 
-    ![](./media/image68.jpeg)
+![A black rectangular object with white text AI-generated content may be
+incorrect.](./media/image61.jpeg)
 
-7.  Close the Visual Studio.
+6.  이제 업데이트된 앱을 Azure에서 사용할 수 있습니다.
 
-## Exercise 4: Clean up resources
+7.  할 일 항목을 다시 추가하고**Done**를 선택하면 홈페이지에 완료괸
+    항목으로 표시되어야 합니다.
 
-1.	From the Azure portal, open the Resourcegroup **RGForWebAppSQL**. Click on **Delete resource group**.
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image62.jpeg)
 
-    ![](./media/image69.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image63.jpeg)
 
-2.	Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
+## 연습 3: 애플리케이션 로그를 스트리밍하기
 
-    ![](./media/image70.jpeg) 
-   	
-3.	Click **Delete** on the Delete confirmation dialog box.
+1.  Publish 페이지에서 **Hosting** 섹션까지 아래로 스크롤하세요. 오른쪽
+    모서리에서 **...** \> **View Streaming Logs**를 클릭하세요.
 
-    ![](./media/image71.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image64.jpeg)
 
-**Summary**
+2.  이제 로그가 Output 창으로 스트리밍됩니다.
 
-In this lab, you have learnt to deploy a data-driven ASP.NET app in App
-Service and connect it to Azure SQL Database.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image65.jpeg)
 
+3.  View Streaming Logs를 처음 선택하면 Azure 앱이 추적 수준을 오류
+    이벤트만 기록하는 오류로 설장하기 때문에 추적 메시지가 아직 표시되지
+    않습니다.
+
+\[!참고\] **참고:** 로깅 스티리밍이 아직 표시되지 않는 경우 Visual
+Studio에서 다시 시작하세요.
+
+### 작업 1: 추적 수준을 변경하기
+
+1.  Publish 페이지로 이동하세요. Hosting 섹션에서 **… \> Open in Azure
+    portal**를 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image66.jpeg)
+
+2.  Azure 포털 – 앱 페이지에서**Monitoring** 섹션의 왼쪽 창에서 **App
+    Service Logs**를 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image67.jpeg)
+
+3.  **Application Logging** (File System)에서Level의 **Verbose**를
+    선택하세요. **Save**를 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image68.jpeg)
+
+4.  브라우저에서 Azure의 웹앱에 액세스하고 몇 가지 작업을 수행하세요.
+
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image69.jpeg)
+
+5.  이제 추적 메시지가 Visual Studio의 Output 창으로 스트리밍됩니다.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image70.jpeg)
+
+6.  로그 스트리밍 서비스를 중지하려면 Output 창에서 **Stop
+    monitoring** 버튼을 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image71.jpeg)
+
+7.  Visual Studio를 닫으세요.
+
+## 연습 4: 리소스를 정리하기
+
+1.  Azure 포털에서 할당된 Resourcegroup를 여세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image72.png)
+
+2.  모든 리소스를 선택하고 Delete를 클릭하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image73.png)
+
+3.  텍스트 상자에 +++delete+++ 를 입력하고Delete를 선택하세요.
+    확인란에서Delete를 선택하세요.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image74.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image75.png)
+
+**요약**
+
+이 실습에서는 데이터 기반 ASP.NET 앱을 App Service에 배포하고 Azure SQL
+Database에 연결하는 방법을 배웠습니다.
