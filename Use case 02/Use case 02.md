@@ -39,9 +39,9 @@ for PostgreSQL）。Azure 应用服务是一种高度可缩放的自修补 Web
 
 - **Resource Group** – 分配给您的**Resource Group** 。
 
->[！Alert] **重要提示：**请确保在此资源组下创建所有资源
+>[！Alert]** 重要提示：**请确保在此资源组下创建所有资源
 
-    ![A screenshot of a computer AI-generated content may be
+![A screenshot of a computer AI-generated content may be
 incorrect.](./media/image1.png)
 
 3.  **Help**选项卡包含 Support 信息。此处的 **ID** 值是
