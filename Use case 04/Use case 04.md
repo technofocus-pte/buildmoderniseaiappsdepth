@@ -1,489 +1,571 @@
-# Usecase 04 - Build a TODO List ASP.NET app, deploy it to Azure App Service connecting to SQL Database
+# ユースケース 04 - TODO リスト ASP.NET アプリを構築し、SQL データベースに接続する Azure App Service にデプロイする
 
-**Estimated duration:** 40 minutes
+**推定時間:** 40分
 
-**Lab Type:** Instructor Led
+**ラボタイプ:** インストラクター主導
 
-**Objective:**
+**目的:**
 
-Azure App Service provides a highly scalable, self-patching web hosting
-service. In this lab, you will learn how to deploy a data-driven ASP.NET
-app in App Service and connect it to Azure SQL Database. When you\\re
-finished, you have an ASP.NET app running in Azure and connected to SQL
-Database.
+Azure App Service は、高度にスケーラブルで自己修正可能な Web
+ホスティング サービスを提供します。このラボでは、データ駆動型 ASP.NET
+アプリを App Service にデプロイし、Azure SQL Database
+に接続する方法を学習します。完了すると、Azure で実行され、SQL Database
+に接続された ASP.NET アプリが完成します。
 
-## Exercise 1: Deploying an ASP.NET app to Azure with Azure SQL Database
+## 手順 0: VM と資格情報を理解する
 
-### Task 1: Set up Visual Studio 2022 and run the application
+このタスクでは、ラボ全体で使用する資格情報を特定して理解します。
 
-1.  From the Windows **Search** bar, type +++**Visual studio**+++ and select Visual Studio 2022. If it asks you to Sign in, continue with the steps 2 and 3 or continue from Step 4.
+1.  **\[Instructions**\]
+    タブには、ラボ全体に従うべき指示が記載されたラボ ガイドがあります。
 
-    ![](./media/image1.jpeg)
+&nbsp;
 
-2.	Click on **Sign in** and and **sign in** with the **Username** and **password** under the **User Credentials** section in the Resources tab of the VM.
+1.  **\[Resources**\] タブには、ラボの実行に必要な資格情報があります。
 
-    ![](./media/image2.jpeg)
+    - **URL** – Azure portalへのURL
 
-    ![](./media/image3.jpeg)
+    - **Subscription** – アサインされたサブスクリプションのID
 
-3.  Select **Start Visual Studio**.
+    - **Username** –Azure servicesへログインするために必要となるユーザID
 
-    ![](./media/image4.jpeg)
+    - **Password** –
+      Azureログインのパスワード。このユーザー名とパスワードをAzureログイン資格情報と呼びます。Azureログイン資格情報について記載する場合は必ずこの資格情報を使用します。
 
-4.  Select **Open a local folder**.
+    - **Resource Group** – アサインされた**Resource group**
 
-    ![](./media/image5.jpeg)
+\[!注意\] 重要: すべてのリソースをこのリソース グループの下に作成する。
 
-5.  Select **webappwithsqldb** folder in **C:\Labfiles** and click
-    on **Select Folder**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-    ![](./media/image6.jpeg)
+2.  **「ヘルプ**」タブにはサポート情報が表示されます。ここで表示される**ID**は、　ラボ実行時に使用される**ラボインスタンスID**です。.
 
-6.  Once the folder is opened, double click
-    on **DotNetAppSqlDb.sln** from the **Solution Explorer**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-    **Note:** If the Solution Explorer does not get opened automatically,
-Click on **View -\> Solution Explorer.**
+## 手順 1: Azure SQL Database を使用して ASP.NET アプリを Azure にデプロイする
 
-    ![](./media/image7.jpeg)
+### タスク 1: Set up Visual Studio 2022を設定してアプリを実行する
 
-7.  Click on **Build** -\> **Build Solution**.
+1.  1\. Windows 検索バーに「+++Visual studio+++」と入力し、「Visual
+    Studio 2022」を選択します。サインインを求められた場合は、手順 2 と 3
+    に進むか、手順 4 から続行します。
 
-    ![](./media/image8.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.jpeg)
 
-8.  Once the Build is completed, select **Debug -\>** **Start
-    Debugging**.
+2.  **Sign
+    inをクリックして、VMのResourcesタブ中にあるユーザ資格情報　　　セクションにあるUsername** と **passwordを使用してサインインする**![A
+    screenshot of a computer AI-generated content may be
+    incorrect.](./media/image4.jpeg)
 
-    ![](./media/image9.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.png)
 
-    ![](./media/image10.jpeg)
+3.  **Start Visual Studio**を選択する
 
-9.  This opens up a browser with the **Todos web app** running in it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-    ![](./media/image11.jpeg)
+4.  **Open a local folder**を選択する
 
-10. Add few items into the app by clicking on **Create New** as in the
-    screenshots below.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-    ![](./media/image12.jpeg)
+5.  **C:\Labfileの中にwebappwithsqldbフォルダを選択してSelect
+    Folder**を　　クリックする
 
-    ![](./media/image13.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-11. Add few more items to the list.
+1.  フォルダが開いたら、**ソリューションエクスプローラー**から**DotNetAppSqlDb.sln**をダブルクリックする。
 
-    ![](./media/image14.jpeg)
+**注意:** ソリューションエクスプローラーが自動的に開かない場合**View -\>
+Solution Explorer** をクリックする
 
-12. From the Visual Studio 2022, click on **Debug -\>** **Stop
-    Debugging**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    ![](./media/image15.jpeg)
+6.  **Build** -\> **Build Solution**をクリックする
 
-### Task 2: Publish ASP.NET application to Azure
+![A computer screen shot of a black screen AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-1.  In the **Solution Explorer**, right-click on
-    your **DotNetAppSqlDb** project and select **Publish**.
+7.  ビルドが完了したら**Debug -\>** **Start Debugging**を選択する
 
-    ![](./media/image16.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    ![](./media/image17.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-2.  Select **Azure** and and click on **Next**.
+8.  これが**Todos web app** を実行されているブラウザを開きます
 
-    ![](./media/image18.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image13.jpeg)
 
-3.  Select **Azure App Service(Windows)** in **Which Azure service would
-    you like to use to host your application?** screen and click
-    on **Next**.
+9.  Add few items into the app by clicking
+    on 以下のスクリーンショットのようアプリにいくつかのアイテムを追加するために**Create
+    Newをクリックする** ![A screenshot of a computer AI-generated
+    content may be incorrect.](./media/image14.jpeg)
 
-    ![](./media/image19.jpeg)
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-4.  In the Publish dialog, click **Sign In** and Sign in to your Azure
-    subscription, if not signed in already.
+10. リストにさらにいくつかの項目を追加します。
 
-    **Note:** If you're already signed into a Microsoft account, make sure
-that account holds your Azure subscription. If the signed-in Microsoft
-account doesn't have your Azure subscription, click it to add the
-correct account.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image16.jpeg)
 
-5.  Click on **Create new** to create a new App service.
+11. Visual Studio 2022から**Debug -\>** **Stop Debugging**をクリックする
 
-    ![](./media/image20.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image17.jpeg)
 
-6.  Enter the below details.
+### タスク 2: ASP.NET アプリケーションを Azure に公開する
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Click on New -> **RGForWebAppSQL** and click on OK |
+1.  **Solution
+    Explorer**で**DotNetAppSqlDb**プロジェクトに右クリックして**Publish**を選択する。
 
-    ![](./media/image21.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.jpeg)
 
-7.  Click **New** on **Hosting Plan** option and enter the below details
-    and click **OK**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Hosting Plan  | +++myAppServicePlan+++   |
-    | Location   |  **East US**  |
-    |  Size  |   **Free** |
+2.  **Azureを選択し、Next**をクリックする
 
-    ![](./media/image77.png)
-    
-    **Note:** The location here is selected as East US. Please select a
-closest region if East US does not work for you.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.jpeg)
 
-9.  Click **Create** on the App Service window and wait for Azure
-    resources to get created.
+3.  **Which Azure service would you like to use to host your
+    application?** 画面に**Azure App
+    Service(Windows)** を選択し、**Next**をクリックする
 
-    ![](./media/image73.png)
+![A screenshot of a computer application AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-10. The **Publish** dialog shows the resources you have configured.
-    Click **Finish**.
+4.  Publishダイアログの中に**Sign
+    Inをクリックし、Azureサブスクリプションにサインインする（まだサインインしていない場合）。注意：既にMicrosoftアカウントにサインインしている場合、そのアカウントにAzureサブスクリプションが設定されていることを確認する。サインインしているMicrosoftアカウントにAzureサブスクリプションがない場合は、正しいアカウントを追加するためにそれをクリックする。**
 
-    ![](./media/image23.jpeg)
+5.  Click on **Create
+    newをクリックして新しいアプリサービスを作成する。**
 
-11. Click on **Close**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image22.jpeg)
 
-    ![](./media/image24.jpeg)
+6.  以下の詳細を入力する。
 
-12. Scroll down to the Server Dependencies section and click on
-    the **+** sign to add dependency.
+[TABLE]
 
-    ![](./media/image25.jpeg)
+7.  **New** on **Hosting Plan**上に**New**をクリックする。
 
-13. Select **Azure SQL Database** in the **Add dependency** page and
-    click on **Next**.
+8.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image23.png)
 
-    ![](./media/image26.jpeg)
+9.  **Hosting
+    Planオプション上にNewをクリックして以下の情報を入力しOKをクリック**。
 
-14. Click on **Create New** next to SQL databases, in the **Connect to
-    Azure SQL Database** dialog box.
+[TABLE]
 
-    ![](./media/image27.jpeg)
+10. ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image24.png)
 
-15. In the **Azure SQL Database Create new** dialog box, click
-    on **New** next to the Database server.
+11. App Service
+    windowで**Create**をクリックしてAzureリソースを作成されるのを待つ 。
 
-    ![](./media/image28.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image25.png)
 
-16. Fill in the below details and click on **OK**.
+12. The **Publishダイアログには設定したリソースが表示される。Finishをクリックする** 。
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database server name  | +++dotnetappsqldbdbserver98+++   |
-    |  Administrator username  |   +++sqladmin+++ |
-    |  Administrator password  |  +++PassWord98+++  |
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image26.png)
 
-    >[!Note] **Note:** The location here is selected as East US. Please select a closest region if East US does not work for you.
+13. **Closeをクリックする**
 
-    ![](./media/image29.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-16. Click on **Create** in the Create new dialog.
+14. Server
+    Dependenciesセクションまでスコロールし、＋記号をクリックして依存関係を追加する。
 
-    ![](./media/image30.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-### Task 3: Configure database connection
+15. Select **Azure SQL Database** in the **Add dependencyページ中にAzure
+    SQL Database**  を選択して**Next**をクリックする。
 
-1.  When the wizard finishes creating the database resources,
-    click **Next**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-    ![](./media/image31.jpeg)
+16. **Connect to Azure SQL
+    Databaseダイアログボックス中に、SQLデータベースの横にあるCreate
+    New** をクリックする。
 
-2.  Fill in the below details in the **Connect to Azure SQL
-    Database** dialog and click **Finish**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database connection string Name  | +++MyDbConnection+++  |
-    |  Database connection user name |   +++Sqladmin+++ |
-    |  Database connection password |  +++PassWord98+++  |
-    |  Azure App Settings  |  Selected  |
+17. **Azure SQL Database Create
+    newダイアログボックス中にデータベースサーバーの横にあるNew**をクリックする。 
 
-    ![](./media/image32.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.png)
 
-3.	Click on **Finish** after reviewing the **summary of changes**.
+18. 以下の詳細を入力し、OKをクリックする
 
-    ![](./media/image74.png)
-  	
-4.  Wait for configuration wizard to finish and click **Close**. The
-    Azure SQL Db is now **connected** to your app.
+[TABLE]
 
-    ![](./media/image33.jpeg)
+19. ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image32.png)
 
-5.  From the Publish page, click **Publish** on the top right corner.
+20. Create newダイアログ中に**Create**をクリックする。
 
-    ![](./media/image34.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image33.png)
 
-    **Note:** This will take around 5 minutes
+### タスク 3: データベース接続の構成
 
-6.  Once your ASP.NET app is deployed to Azure, your default browser is
-    launched with the URL to the deployed app. **Add a few to-do items**.
+1.  ウィザードでデータベースリソースの作成を完了したら**Nextをクリックする**
 
-    ![](./media/image35.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image34.png)
 
-### Task 4: Access the database locally
+2.  **Connect to Azure SQL
+    Databaseに以下の詳細を入力し、Finish**をクリックする 
 
-Visual Studio lets you explore and manage your new database in Azure
-easily in the **SQL Server Object Explorer**. The new database already
-opened its firewall to the App Service app that you created. But to
-access it from your local computer (such as from Visual Studio), you
-must open a firewall for your local machine\\s public IP address. If
-your internet service provider changes your public IP address, you need
-to reconfigure the firewall to access the Azure database again.
+[TABLE]
 
-1.  From the Visual Studio 2022, **View** menu, select **SQL Server
-    Object Explorer**.
+3.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image35.jpeg)
 
-    ![](./media/image36.jpeg)
+4.  **Summary of changes**を確認した後**Finish**をクリックする
 
-2.  At the top of **SQL Server Object Explorer**, click the **Add SQL
-    Server** button.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image36.png)
 
-    ![](./media/image37.jpeg)
+5.  構成ウィザードが完了するまで待ち、**Close**
+    をクリックする。これでAzure SQL Dbがアプリに接続されました。 is
+    now **connected** to your app.
 
-### Task 5: Configure the database connection
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-1.  In the **Connect** dialog, expand the **Azure** node. All your SQL
+6.  Publishページで右上隅にある**Publish**をクリックする。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.png)
+
+**注意：**これは約5分かかります
+
+> 7\. ASP.NET アプリが Azure にデプロイされると、デプロイされたアプリの
+> URL が表示された既定のブラウザーが起動します。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
+
+### タスク 4: データベースにローカルでアクセスする
+
+Visual Studioでは**SQL Server Object
+Explorer**を使用してAzureの新しいデータベースを簡単に探索と管理にできます。新しいデータベースでは作成したAppServiceアプリに対するファイヤーウォールを既にオープンしました。ただし、ローカル
+コンピュータ (Visual Studio など) からアクセスするには、ローカル
+マシンのパブリック IP
+アドレスに対してファイアウォールを開く必要があります。インターネットサービスプロバイダーがパブリックIPアドレスを変更した場合Azureデータベースに再度アクセスするようにファイヤーウォールを再構成する必要です
+
+1.  From the Visual Studio 2022の**View**メニュから**SQL Server Object
+    Explorer**を選択する。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
+
+2.  At the top of **SQL Server Object Explorerの上、Add SQL
+    Server** ボタンをクリックする。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image41.jpeg)
+
+### タスク 5: データベース接続を構成する
+
+1.  In the **Connect** dialog, expand the **Azure** node. All your SQL
     Database instances in Azure are listed here.
 
-2.  Select the database that you created
-    earlier(**dotnetappsqldbdbserver98**). The connection you created
-    earlier is automatically filled at the bottom.
+> **コネクトダイアログ**で**Azureノード**を展開する。Azure内のすべてのSQLデータベースがここに一覧表示されます。
 
-3.  Type the database administrator **password** you created
-    earlier(+++**PassWord98**+++) and click Connect.
+2.  以前作成したデータベースを選択する(**dotnetappsqldbdbserver98**)。前作成した接続は下部に自動的に入力されます。
 
-    ![](./media/image38.jpeg)
+3.  前作成したデータベース管理者パスワードを入力し(+++**PassWord98**+++)、Connectをクリックする。
 
-### Task 6: Allow client connection from your computer
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-The Create a new firewall rule dialog is opened. By default, a server
-only allows connections to its databases from Azure services, such as
-your Azure app. To connect to your database from outside of Azure,
-create a firewall rule at the server level. The firewall rule allows the
-public IP address of your local computer.
+### タスク 6: コンピュータからのクライアント接続を許可する
 
-The dialog is already filled with your computer's public IP address.
+Create a new
+firewallルールダイアログが開きます。デフォルトでは、サーバーがAzureアプリなどのAzureサービスからのみデータベースへの接続を許可します。Azureの外部からデータベースへーに接続するには、サーバーレベルでファイアウォールルールを作成する。ファイアウォールルールはローカルコンピューターのIPアドレスを許可しています。
 
-1.  Make sure that Add my client IP is selected and click OK.
+ダイアログには、コンピューターのパブリックIPアドレスが既に入力されています。
 
-    ![](./media/image39.jpeg)
+1.  Add my client IPが選択されていることを確認し、OKをクリックする
 
-2.  Once Visual Studio finishes creating the firewall setting for your
-    SQL Database instance, your connection shows up in **SQL Server
-    Object Explorer**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image43.jpeg)
 
-3.  Expand your **connection \> Databases \> \< YOUR DATABASE \> \>
-    Tables**.
+2.  Visual
+    StudioでSQLデータベースインスタンスのファイアウォール設定の作成が完了すると、接続が**SQL
+    Server Object Explorer**に表示されます**。**
 
-    ![](./media/image40.jpeg)
+3.   **connection \> Databases \> \< YOUR DATABASE \> \>
+    Tables**を展開する。
 
-4.  Right-click on the **Todoes** table and select **View Data**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-    ![](./media/image41.jpeg)
+4.  **Todoes表で右クリックし、** **View Data**を選択する。
 
-5.  View the contents of the table.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-    ![](./media/image42.jpeg)
+5.  テーブルの内容を表示する。アプリのUIから追加されたデータは、ここに一覧表示されます。
 
-## Exercise 2: Update app with Code First Migrations
+![](./media/image46.jpeg)
 
-1.  From the **Solution Explorer**, open **Models\Todo.cs** in the code
-    editor. Add the following property to the **ToDo** class as the last
-    line (after the **public DateTime CreatedDate { get; set; }** line
-    )and click on **Save**.
+## 手順 2: Code First Migrations でアプリを更新する
 
-    +++**public bool Done { get; set; }**+++
+1.  ソリューション エクスプローラー**で、コード エディターで**
+    Models\Todo.cs **を開きます** 。次のプロパティを **ToDo**
+    クラスの最後の行として追加します (**public DateTime CreatedDate {
+    get; set; }** 行)をクリックし、\[Save\]をクリックします .
 
-    ![](./media/image43.jpeg)
++++**public bool Done { get; set; }**+++
 
-### Task 1: Run Code First Migrations locally
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-Run a few commands to make updates to your local database.
+### タスク 1: Code First Migrations をローカルで実行する
 
-1.  From the **Tools** menu, click **NuGet Package
-    Manager** \> **Package Manager Console**.
+いくつかのコマンドを実行して、ローカルデータベースを更新します。
 
-    ![](./media/image44.jpeg)
+1.  **Tools**メニューから**NuGet Package Manager** \> **Package Manager
+    Console**をクリックする
 
-2.  In the Package Manager Console window, enable Code First Migrations
-    by executing this command.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-    +++**Enable-Migrations**+++
+2.  パッケージ マネージャー コンソール
+    ウィンドウで、次のコマンドを実行して Code First Migrations
+    を有効にします。
 
-    ![](./media/image45.jpeg)
++++**Enable-Migrations**+++
 
-3.  Add a migration by executing the below command.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-    +++**Add-Migration AddProperty**+++
+3.  次のコマンドを実行して、マイグレーションを追加する
 
-    ![](./media/image46.jpeg)
+> +++**Add-Migration Addプロパティ**+++
 
-4.  Update the local database by executing the below command.
+![](./media/image50.jpeg)
 
-    +++**Update-Database**+++
+4.  次のコマンドを実行してローカルデータベースを更新する。
 
-    ![](./media/image47.jpeg)
++++**Update-Database**+++
 
-5.  Type **Ctrl+F5** to run the app or click on **Debug -\> Start
-    without Debugging**. Test the edit, details, and create links.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
 
-    ![](./media/image48.jpeg)
+5.  **Ctrl+F5キーを押してアプリを実行する、又はDebug -\> Start without
+    Debuggingをクリックする。編集、と詳細をテストし、リンクを作成する**
 
-6.  The application page opens up and it still looks the same because
-    your application logic is not using this new property yet.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image52.jpeg)
 
-    ![](./media/image49.jpeg)
+1.  アプリケーション ページが開きますが、アプリケーション
+    ロジックでこの新しいプロパティがまだ使用されていないため、外観は同じままです。
 
-### Task 2: Use the new property
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.jpeg)
 
-Make some changes in your code to use the Done property.
+### タスク 2: 新しいプロパティを使用する
 
-1.  From the Visual Studio, open **Controllers\TodosController.cs**.
-    Find the **Create()** method on line 52 and add +++**Done**+++ to the list
-    of properties in the Bind attribute. When you're done, your Create()
-    method signature look like the following code:
+Make some changes in your code to use the Done プロパティ.
 
-    ![](./media/image50.jpeg)
+1.  Visual Studioから**Controllers\TodosController.csを開く。**52行目で
+    **Create()** メソッドを見つけた後Bind属性のプロパティリストに
+    +++**Done**+++ を追加する。完了するとCreate()
+    メソッドのシグネチャーは次のコードのようになります。
 
-2.  Open **Views\Todos\Create.cshtml**. Add the following code after the
-    < div class=\"form-group\" > for **CreatedDate**.
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image54.jpeg)
 
-    ![](./media/image51.jpeg)
+1.  **Views\Todos\Create.cshtmlを開きます。CreatedDate** **の** div
+    class="form-group" \> \<の後に、次のコードを追加します。
 
-    ```
-    <div class="form-group">
-    @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div class="checkbox">
-            @Html.EditorFor(model => model.Done)
-            @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image55.jpeg)
 
-    ```
+\<div class="form-group"\>
 
-3.  Open **Views\Todos\Index.cshtml**. Add the following code in the
-    empty **th** element, after the **th** element for
-    the **CreatedDate**.
+@Html.LabelFor(model =\> model.Done, htmlAttributes: new { @class =
+"control-label col-md-2" })
 
-    +++@Html.DisplayNameFor(model =\> model.Done)+++
+\<div class="col-md-10"\>
 
-    ![](./media/image52.jpeg)
+\<div class="checkbox"\>
 
-4.  Add this code just above the html.ActionLink() helper methods.
+@Html.EditorFor(model =\> model.Done)
 
-    ```
-    <td>
-    @Html.DisplayFor(modelItem => item.Done)
-</td>
+@Html.ValidationMessageFor(model =\> model.Done, "", new { @class =
+"text-danger" })
 
-    ```
-    ![](./media/image53.jpeg)
+\</div\>
 
-5.  Type **Ctrl+F5** to run the app.
+\</div\>
 
-    ![](./media/image54.jpeg)
+\`\`\`
 
-### Task 3: Enable Code First Migrations in Azure
+3.  **Views\Todos\Index.cshtmlを開く。CreatedDate** の **th**
+    要素の後の空の **th** 要素**に次のコードを追加します**。
 
-1.  Right click on the project and select **Publish**.
+<+++@Html.DisplayNameFor>(model =\> model.Done)+++
 
-    ![](./media/image55.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image56.jpeg)
 
-2.  Click **More actions** \> **Edit** to open the publish settings.
+4.  html.ActionLink() helper
+    methods.このコードをhtml.ActionLink()ヘルパメソッドのすぐ上に追加する。
 
-    ![](./media/image56.jpeg)
+5.  \<td\>
 
-3.  In the **MyDatabaseContext** dropdown, select the database
-    connection for your Azure SQL Database.
+6.  @Html.DisplayFor(modelItem =\> item.Done)
 
-4.  Select **Execute Code First Migrations** (runs on application
-    start), then click **Save**.
+\`\`\`
 
-    ![](./media/image57.jpeg)
+\![\](./media/image53.jpeg)
 
-5.  In the Publish page, click on **Publish**.
+5.  **Ctrl+F5を入力し、アプリを実行する。** 
 
-    ![](./media/image58.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image57.jpeg)
 
-6.  The updated app is now available on Azure.
+### タスク 3: AzureでEnable Code First Migrationsを有効する in 
 
-7.  Try adding to-do items again and select **Done**, and they should
-    show up in your homepage as a completed item.
+1.  プロジェクトを右クリックして**Publish**を選択する。
 
-    ![](./media/image59.jpeg)
-    
-    ![](./media/image60.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image58.jpeg)
 
-## Exercise 3: Stream application logs
+2.  Publish **More
+    actions** \> **Edit**をクリックしてPublishの設定を開きます。
 
-1.  In the publish page, scroll down to the **Hosting** section. At the
-    right-hand corner, click **...** \> **View Streaming Logs**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
 
-    ![](./media/image61.jpeg)
+3.  In the **MyDatabaseContextドロップダウンで** Azure SQL Database
+    のデータベース接続を選択する。
 
-2.  The logs are now streamed into the Output window.
+4.  Select **Execute Code First
+    Migrations** (アプリの起動時に実行)を選択し、**Save**をクリックする。
 
-    ![](./media/image62.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image60.jpeg)
 
-3.  You don't see any of the trace messages yet because, when you first
-    select View Streaming Logs, your Azure app sets the trace level to
-    Error, which only logs error events.
+5.  Publishページで**Publishをクリックする。**
 
-**Note:** Restart the logging stream from the Visual Studio if you do
-not see them yet.
+![A black rectangular object with white text AI-generated content may be
+incorrect.](./media/image61.jpeg)
 
-### Task 1: Change trace levels
+6.  これで更新されたアプリがAzureで利用できるようになりました。
 
-1.  Go to the publish page. In the Hosting section, click **… \> Open in
-    Azure portal**.
+7.  To-do項目をもう一度追加し、Doneを選択するとホームページで完了項目として、表示されます。
 
-    ![](./media/image63.jpeg)
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image62.jpeg)
 
-2.	In the Azure portal – app page, select **App Service Logs** from the left pane under the **Monitoring** section.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image63.jpeg)
 
-    ![](./media/image64.jpeg)
+## 手順 3: アプリケーションログのストリーム
 
-3.  Under **Application Logging** (File System), select **Verbose** in
-    Level. Click **Save**.
+1.  PublishページでHostingセクションまでにスクロールする。右隅にある［…］**View
+    Streaming Logs**をクリックする。
 
-    ![](./media/image65.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image64.jpeg)
 
-4.  From your browser, access the web app on Azure and do some
-    activities.
+2.  これで、ロッグがアウトプットウィンドウにストリーミングされます
 
-    ![](./media/image66.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image65.jpeg)
 
-5.  The trace messages are now streamed to the Output window in Visual
-    Studio.
+3.  トレースメセッジはまだ表示されません。View Streaming
+    Logsはじめに選択したときにAzureアプリによってトレースレベルがエラーに設定されエラーイベントのみログに記録されるためです
 
-    ![](./media/image67.jpeg)
+\[!注意\] **注意:** まだ表示されない場合Visual Studio
+からログストリーミを再起度する。
 
-6.  To stop the log-streaming service, click the **Stop
-    monitoring** button in the Output window.
+### タスク 1: トレースレベルの変更
 
-    ![](./media/image68.jpeg)
+1.  Publishページへ移動して、ホスティングセクションで **… \> Open in
+    Azure portal**をクリックする。
 
-7.  Close the Visual Studio.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image66.jpeg)
 
-## Exercise 4: Clean up resources
+2.  AzureポータルのアプリページでMonitoringセクションの左側画面から**App
+    Service Logs** を選択する。
 
-1.	From the Azure portal, open the Resourcegroup **RGForWebAppSQL**. Click on **Delete resource group**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image67.jpeg)
 
-    ![](./media/image69.jpeg)
+3.  Under **Application Logging** (File System)
+    の下にLevelでVerboseを選択する。Saveをクリックする。
 
-2.	Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image68.jpeg)
 
-    ![](./media/image70.jpeg) 
-   	
-3.	Click **Delete** on the Delete confirmation dialog box.
+4.  ブラウザからAzure上のウェッブアプリにアクセスし、いくつかの活動を実行する。
 
-    ![](./media/image71.jpeg)
+![A screenshot of a application AI-generated content may be
+incorrect.](./media/image69.jpeg)
 
-**Summary**
+5.  これで、トレースメセッジがVisual Studio
+    のアウトプットウィンドウにストリーミングされるようになります。
 
-In this lab, you have learnt to deploy a data-driven ASP.NET app in App
-Service and connect it to Azure SQL Database.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image70.jpeg)
 
+6.  ロッグストリーミングサービスを停止するにはアウトプットウィンドウで**Stop
+    monitoring** ボタンをクリックする。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image71.jpeg)
+
+7.  Visual Studioを閉じる
+
+## 手順 4: リソースの削除
+
+1.  Azure portalからアサインされたResourcegroupを開く。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image72.png)
+
+2.  全てのリソースを選択してDeleteをクリックする。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image73.png)
+
+3.  Type
+    テキストボックスの中に+++delete+++を入力し、Deleteを選択する。確認ダイアログボックスでDeleteを選択する。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image74.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image75.png)
+
+**要約**
+
+このラボではデータ駆動型ASP.NETアプリをApp
+Serviceにデプロイし、それをAzure SQL
+Databaseに接続する方法を学びました。
