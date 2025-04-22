@@ -1,530 +1,641 @@
-# Usecase 09 - Building a Chat bot experience using Azure Cosmos DB for MongoDB and Azure OpenAI Service
+# ユース ケース 09 - Azure Cosmos DB for MongoDB と Azure OpenAI Service を使用したチャット ボット エクスペリエンスの構築
 
-**Objective:**
+**目的：**
 
-This usecase will create an intelligent solution that combines
-vCore-based Azure Cosmos DB for MongoDB vector search and document
-retrieval with Azure OpenAI services to build a chat bot experience.
+このユースケースでは、MongoDB ベクトル検索とドキュメント取得のための
+vCore ベースの Azure Cosmos DB と Azure OpenAI
+サービスを組み合わせて、チャットボット
+エクスペリエンスを構築するインテリジェントなソリューションを作成します。
 
-![](./media/image1.jpeg)
+![A diagram of a software application AI-generated content may be
+incorrect.](./media/image1.jpeg)
 
-**Key technologies used** -- Azure OpenAI Service, Azure Cosmos DB,
+**使用した主なテクノロジー**-- Azure OpenAI Service, Azure Cosmos DB,
 ChatGPT model
 
-**Estimated duration** -- 60 minutes
+**推定時間**—60分
 
-**Lab Type** -- Instructor led
+**ラボタイプ** -- インストラクター主導
 
-**Important:** If any of the commands does not get **pasted** in
-the **PowerShell**, please open a notepad, keep the cursor at an empty
-space of the notepad and then click on the T button of the command to be
-pasted. The contents will get copied to the notepad and then you can
-copy and paste from the notepad onto the PowerShell.
+**重要：PowerShellにコマンドが貼り付けられない場合は、メモ帳を開き、メモ帳の空白部分にカーソルを置いたまま、貼り付けたいコマンドのTボタンをクリックする。内容がメモ帳にコピーされ、メモ帳からPowerShellにコピー＆ペーストできるようになります。**
 
-## Exercise 1: Provision Azure resources
+## 手順 0: VM と資格情報を理解
 
-### Task 1: Create Azure resources using script
+このタスクでは、ラボ全体で使用する資格情報を特定して理解します。
 
-1.	Login to Azure portal at +++**https://portal.azure.com**+++ and login using your Azure login credentials from the **Resources** tab.
-   
-2.	From Azure portal, select your subscription. From the left pane, select Resource providers under Settings, select +++**Microsoft.Alertsmanagement**+++ and click on **Register**.
+1.  **\[Instructions\]**
+    タブには、ラボ全体に従うべき指示が記載されたラボ
+    ガイドが含まれています。
 
-    ![](./media/pic100.jpg)
+2.  **\[リソース**\] タブには、ラボの実行に必要な資格情報があります。
 
-3.  From the VM, search for +++**power shell**+++, right click on **Windows
-    PowerShell** and select **Run as administrator**. Click
-    on **Yes** in the confirmation dialog.
+    - **URL** – Azure portal の URL。
 
-    ![](./media/image2.jpeg)
+    - **Subscription** – アサインされてサブスクリプションの ID。
 
-    ![](./media/image3.jpeg)
+    - **Username** – Azure サービスにログインするために必要なユーザー
+      ID。
 
-4.  Execute the below command to install Az in the PowerShell.
+    - **Password** – Azure
+      ログインのパスワード。このユーザー名とパスワードを Azure
+      ログイン資格情報と呼ぶことにします。これらのクレドは、Azure
+      のログイン資格情報について言及するすべての場所で使用します。
 
-    +++**Install-Module Az**+++
+    - **Resource Group** – アサインされた **Resource group**
 
-    Select **A** (Yes to all) when prompted.
-    
-    **Note:** This will take upto 5 minutes to complete.
+\[!
+アラート\]**重要:**このリソースグループの下にすべてのリソースを作成必要です。
 
-    ![](./media/image4.jpeg)
-    
-    ![](./media/image5.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-5.  Once done, execute the below command to import the Az module.
+3.  **\[ヘルプ**\] タブには、サポート情報が表示されます。ここでの **ID**
+    値は、**ラボの実行中に使用される**ラボ インスタンス ID です。
 
-    +++**Import-Module Az**+++
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.png)
 
-    ![](./media/image6.jpeg)
+## 手順 1: Provision Azure resources
 
-6.  Execute the below command to use browser-based sign-in
+### タスク 1: スクリプトを使用して Azure リソースを作成する
 
-    +++Update-AzConfig -EnableLoginByWam $false+++
+1.  Azure portal (+++\*\* にログインし、\[Resources**\] タブから Azure
+    ログイン資格情報を使用してログイン**する。
 
-    ![](./media/image7.jpeg)
+2.  Azure portal から、サブスクリプションを選択します。左側の画面で、
+    \[Settings\] の \[Resource provider\] を選択し、
+    \[+++Microsoft.Alertsmanagement+++\] を選択して、 \[Register\]
+    をクリックします。
 
-7.  Execute the below command and select your Azure login if prompted,
-    to login to Azure.
+![A screenshot of a computer screen AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-    +++Connect-AzAccount+++
-    
-    ![](./media/image8.jpeg)
+3.  VMから**+++power shell+++**を検索し、**Windows
+    PowerShell**を右クリックして\[**管理者として実行\]**を選択します。
+    確認ダイアログで\[**はい**\]をクリックします。
 
-8.  Execute the below commands to navigate to the **LabFiles** folder.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.jpeg)
 
-    +++cd\\+++
-    
-    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-    ![](./media/image9.jpeg)
+4.  次のコマンドを実行して、PowerShell に Az をインストールします。
 
-9.  Execute the below command to install **Microsoft
-    Bicep** using **winget**.
++++**Install-Module Az**+++
 
-    +++winget install -e --id Microsoft.Bicep+++
-    
-    Type **Y** if prompted.
-    
-    ![](./media/image10.jpeg)
+プロンプトが表示されたら、\[A**\] (\[Yes to All\])** を選択します。
 
-10.  **Close** the PowerShell and **open** it again.
+**注:** この処理には最大 5 分かかります。
 
-11.  Redo the **login to Azure** step of executing Connect-AzAccount.
+![A computer screen with white text AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-12. Execute the below commands to navigate to the **LabFiles** folder.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-    +++cd\\+++
-    
-    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
+5.  完了したら、以下のコマンドを実行して Az
+    モジュールをインポートします。
 
-    ![](./media/image9.jpeg)
++++**Import-Module Az**+++
 
-14. Execute the below command replacing **\< Subscription id \>** with
-    your subscription id.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    +++Set-AzContext -SubscriptionId < Subscription id >+++
+6.  以下のコマンドを実行して、ブラウザベースのサインインを使用します
 
-    >[!Note] **Note:** To get your subscription id, login to https://portal.azure.com and click on Subscriptions. Copy the
-Subscription id from the Subscription page.
++++Update-AzConfig -EnableLoginByWam $false+++
 
-    ![](./media/image11.jpeg)
-    
-    ![](./media/image12.jpeg)
+![A screenshot of a computer screen AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-15. Create a new **Resource group** named **mongo-devguide-rg** in Azure
-    by executing the below command.
+7.  以下のコマンドを実行し、プロンプトが表示されたらAzureログインを選択してAzureにログインします。
 
-    +++New-AzResourceGroup -Name mongo-devguide-rg -Location 'francecentral'+++
++++Connect-AzAccount+++
 
-    ![](./media/image13.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    >[!Note] **Note:** The location **francecentral** is used here. It can be changed
-to a **nearest location**
+8.  次のコマンドを実行して、**LabFiles**フォルダに移動します。
 
-16. Execute the below command to deploy the resources like Azure Cosmos
-    DB workspace, Azure OpenAI in Azure.
++++cd\\++
 
-    ```
-    New-AzResourceGroupDeployment -ResourceGroupName mongo-devguide-rg  -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
-    ```
++++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
 
-    >[!Note] **Note:** The deployment will take around 10 to 15 minutes.
+![A blue rectangular sign with white text AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-    >[!Note] **Note:** Type Y when prompted.
+9.  以下のコマンドを実行して、**winget**を使用して**MicrosoftBicep**をインストールします。
 
-    ![](./media/image14.jpeg)
-    
-    ![](./media/image15.jpeg)
++++winget install -e --id Microsoft.Bicep+++
 
-### Task 2: Check the created resources in Azure
+プロンプトが表示されたら**、Y** を入力します。
 
-1.  Login to **Azure portal** at +++https://portal.azure.com/+++ using
-    your **Azure login credentials**. Select **Resource groups**.
+![A computer screen with white text AI-generated content may be
+incorrect.](./media/image13.jpeg)
 
-    ![](./media/image16.jpeg)
+10. **PowerShell を閉じ**てから **、もう一度**開きます。
 
-2.  From the Resource groups list, select **mongo-devguide-rg**.
+11. 以下のコマンドを実行し、プロンプトが表示されたらAzureログインを選択してAzureにログインします。
 
-    ![](./media/image17.jpeg)
++++Connect-AzAccount+++
 
-3.  Notice that a set of resources including **Azure OpenAI
-    resource**, **App Service**, **Azure Cosmos DB for MongoDB** are
-    created.
+12. 次のコマンドを実行して、**LabFiles**フォルダに移動します。
 
-    ![](./media/image18.jpeg)
++++cd\\++
 
-4.  Click on the **Azure OpenAI** resource.
++++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
 
-    ![](./media/image19.jpeg)
+![A blue rectangular sign with white text AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-5.  Select **Keys and Endpoint** under **Resource Management**.
+13. 以下のコマンドを実行して、サブスクリプションIDを設定します。
 
-    ![](./media/image20.jpeg)
++++Set-AzContext -SubscriptionId @lab.CloudSubscription.Id+++
 
-6.  Copy and save the **Key 1** and **Endpoint** in a notepad for later
-    reference.
+![A computer screen shot of a blue screen AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-    ![](./media/image21.jpeg)
+14. **C:\LabFiles\Build a Chat bot\Labs\deploy** にあるファイル
+    **azuredeploy.bicep** を開き、35 行目の **dgxxxxxxx** を
+    +++dg@lab.LabInstance.Id+++ に置き換えます。**74**
+    行目のバージョン**を +++0125+++** に更新します。
 
-7.  Back in the **mongo-devguide-rg** resource group page, select
-    the **Azure Cosmos DB for Mongo DB** resource.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image15.png)
 
-    ![](./media/image22.jpeg)
+![](./media/image16.png)
 
-8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
+15. 次のコマンドを実行して、Azure Cosmos DB ワークスペース、Azure OpenAI
+    などのリソースを Azure にデプロイします。
 
-    ![](./media/image99.jpg)
+New-AzResourceGroupDeployment -ResourceGroupName
+@lab.CloudResourceGroup(ResourceGroup1).Name -TemplateFile
+.\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json
+-c \`\`\`
 
-9.  Copy the connection string and paste it in a notepad. Replace the
-    \< **password** \> with +++**myMongoDB98**+++ in the copied
-    connection string and save it in the notepad.
+\>\[!注\] \*\*注:\*\* デプロイには約 10 分から 15 分かかります。
 
-## Exercise 2: Explore and use Azure OpenAI models from code
+デプロイメントに問題があり、失敗した場合は、ステップ 14
+の名前を別の名前に更新して、もう一度やり直します。
 
-### Task 1: Set up the Environment
+\>\[!注\] \*\*注:\*\* プロンプトが表示されたら「Y」と入力します。
 
-1.  From the lab VM windows search bar, search for +++Visual studio
-    code+++ and open **Visual Studio Code**.
+![A computer screen shot of a blue screen AI-generated content may be
+incorrect.](./media/image17.jpeg)
 
-    ![](./media/image24.jpeg)
+![](./media/image18.jpeg)
 
-2.  Click on **Open Folder**. (If it does not pop up, select **File -\>
-    Open Folder**)
+\>\[!注\] \*\*注:\*\* 15 分から 20 分後に PowerShell
+に更新がない場合は、Azure ポータルの \[Resource group -\> Deploy\]
+で確認するか、\*\*PowerShell\*\* ウィンドウで \*\*Enter\*\*
+キーを押します。
 
-    ![](./media/image25.jpeg)
+### タスク 2: Azureで作成したリソースを確認する
 
-3.  Navigate to **C:\Labfiles**, click on **Build a Chat bot** folder
-    and select **Select Folder.**
+1.  Azure ログイン資格情報**を使用して**
+    、+++[https://portal.azure.com/+++ で](https://portal.azure.com/+++)
+    Azure portal **にログインします**。 \[**Resource Group\]**
+    を選択します。
 
-    ![](./media/image26.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-4.  Click on **Yes, I trust the Authors** in the pop up.
+2.  \[リソース グループ\] の一覧から、**アサインされたResource
+    Groupを選択します**。
 
-    ![](./media/image27.jpeg)
+![A screenshot of a web page AI-generated content may be
+incorrect.](./media/image20.png)
 
-5.  From Visual Studio Code,
-    open **lab_0_explore_and_use_models.ipynb** from
-    the **Labs** folder.
+3.  Azure OpenAI リソース**、**App Service**、**Azure Cosmos DB for
+    MongoDB **などの一連のリソース** が作成されていることに注意する。
 
-    ![](./media/image28.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image21.png)
 
-6.  Click on **Select Kernel.**
+4.  Azure OpenAI **リソース**をクリックします。
 
-7.  Select **Install** in the **Do you want to install the recommended
-    extensions for Python** pop up.
+![](./media/image22.png)
 
-    ![](./media/image29.jpeg)
+5.  \[**リソース管理\] で** \[**キーとエンドポイント\]** を選択します。
 
-8.  Click on **Allow access** if prompted.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image23.jpeg)
 
-    ![](./media/image30.jpeg)
+6.  後で参照できるように、キー 1
+    とエンドポイントをメモ帳にコピーして保存します。
 
-9.  Click on **Select Kernel**. Select **Python Environments** and
-    then **Python 3.12.3** or higher that gets listed as
-    the **Suggested** or **Recommended** option.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image24.jpeg)
 
-    ![](./media/image31.jpeg)
-    
-    ![](./media/image32.jpeg)
+7.  リソース グループ ページに戻り、**Azure Cosmos DB for Mongo DB**
+    リソースを選択します。
 
-10. Open the **.env** file
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image25.png)
 
-11. Replace **DB_CONNECTION
-    STRING**, **AOAI_KEY** and **AOAI_Endpoint** that we saved in
-    the **notepad** earlier in Task 2 of Exercise 1.
+8.  \[**Settings**\] の下の \[**接続文字列**\] をクリックします。Self
+    の値をコピーします (常にこのクラスターです。
 
-    ![](./media/image36.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image26.jpeg)
 
-Now, the environment variables are set to point to the Azure resources
-that we have created already.
+9.  接続文字列をコピーして、メモ帳に貼り付けます。
+    コピーした接続文字列の\<**パスワード**\>を**+++myMongoDB98+++**に置き換えて、メモ帳に保存します。
 
-### Task 2: Execute the code
+## 手順 2: コードから Azure OpenAI モデルを探索して使用する
 
-1.  Back in the **Lab 0 ipynb** file, **execute** the **first cell** by
-    clicking on the Play button, to install the latest OpenAI client
-    library.
+### タスク 1: 環境のセットアップ
 
-    ![](./media/image37.jpeg)
-    
-    ![](./media/image38.jpeg)
+1.  ラボ VM ウィンドウの検索バーで、+++Visual Studio code+++
+    を検索し、**Visual Studio Code を開きます**。
 
-2.  **Execute** the next cell to install the **Python-dotenv**
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-    ![](./media/image39.jpeg)
+2.  \[フォルダを開く\]**をクリックします**。(ポップアップしない場合は、
+    **ファイル -\> フォルダ**を開く)
 
-3.  Press **Ctrl+Shift+P**, type +++Reload Window+++ and select
-    Developer:Reload Window option that gets listed.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-    ![](./media/image40.jpeg)
+3.  C:\Labfiles **に移動し、\[Build a Chat bot\]
+    をクリックして、\[Select folder**\] **を選択します。**
 
-4.  Execute from the **first cell** again.
+![A screenshot of a chat bot AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-5.  **Execute** the next cell to import the required OpenAI library, os
-    to access the environment variables and dotenv to load the
-    environment variables from .env file.
+4.  ポップアップでは**Yes, I trust the Authorsをクリックする**。
 
-    ![](./media/image41.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-6.  **Execute** the next cell to create the **Azure OpenAI client** to
-    call the Azure OpenAI Chat completion API:
+5.  Visual Studio Code で、**Labs** フォルダー**から**
+    \[**lab_0_explore_and_use_models.ipynb**\] を開きます。
 
-    ![](./media/image42.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.jpeg)
 
-7.  **Execute** the next cell to call
-    the **.chat.completions.create()** method on the client to perform
-    a **chat completion**. You should get a chat response.
+6.  **Select Kernel**をクリックする。
 
-    ![](./media/image43.jpeg)
+7.  **Do you want to install the recommended extensions for
+    PythonポップアップでInstallを選択する。**
 
-## Exercise 3: First Cosmos DB for MongoDB API application
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image32.jpeg)
 
-This exercise will cover how to create your first Cosmos DB project.
-We'll use a notebook to demonstrate the basic CRUD operations.
+8.  プロンプトが表示されたら**、\[Allow access\]**をクリックします。
 
-1.  Open the file **lab_1_first_application.ipynb** from
-    the **Labs** folder.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image33.jpeg)
 
-2.  Click on **Select kernel** and choose the **Python version**.
+9.  **Select Kernel**をクリックする**。** \[Python
+    Environmentsを選択して**\]を選択し**
+    、\[**Suggested**\]または**\[Recommended**\]オプション**としてリストされる**Python
+    3.12.3以降を選択します。
 
-    ![](./media/image44.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image34.jpeg)
 
-3.  **Execute** the first cell to do install **pymongo**.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image35.jpeg)
 
-    ![](./media/image45.jpeg)
+10.  **.env**ファイルを開く
 
-4.  **Execute** the next cell to do the required **imports**
+11. タスク 2 の手順 1で以前**notepad中に保存されたDB_CONNECTION
+    STRING**, **AOAI_KEY** and **AOAI_Endpoint** を置き換える。
 
-    ![](./media/image46.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image36.jpeg)
 
-5.  Execute the next cell to **Create a database.**
+これで、環境変数は、既に作成した Azure
+リソースを指すように設定されました。
 
-    >[!Note] **Note:** This will use the connection string that we updated in the
-.env file
+### タスク 2: コードを実行する
 
-    ![](./media/image47.jpeg)
+1.  ラボ 0 の ipynb **ファイル**に戻り**、\[Play\]
+    ボタンをクリックして**最初のセル**を実行し**、最新の OpenAI
+    クライアント ライブラリをインストールします。
 
-6.  **Execute** the next cell to create a **collection**.
+![A black screen with a black background AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-    ![](./media/image48.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image38.jpeg)
 
-7.  **Execute** the next cell to create a **document**. One method of
-    creating a document is using the insert_one method. This method
-    takes a single document and inserts it into the database.
+2.  **次のセル**を実行して**Python-dotenvをインストールします**
 
-    ![](./media/image49.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-8.  **Execute** the next cell to **retrieve a single document** from the
-    database. The **find_one** method is used here for this purpose.
+3.  Ctrl+Shift+P **を押し**、+++Reload Window+++
+    と入力して、リストに表示される Developer:Reload Window
+    オプションを選択します。
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-9.  **Execute** the next cell in which **find_one_and_update** method is
-    used to update a single document in the database.
+4.  **最初のセルから**再度実行します。
 
-    ![](./media/image51.jpeg)
+5.  次のセルを**実行**して必要なOpenAIライブラリをインポートし、osを実行して環境変数にアクセスし、dotenvを実行して.envファイルから環境変数をロードします。
 
-10. **Execute** the next cell in which **delete_one** method is used to
-    delete a single document from the database.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-    ![](./media/image52.jpeg)
+6.  **次のセル**を実行して、**Azure OpenAI チャット完了 API を呼び出す**
+    Azure OpenAI クライアントを作成します。
 
-11. The **find** method is used to query for multiple documents in the
-    database. **Execute** the **next 3 cells** one by one to see it in
-    action.
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-    ![](./media/image53.jpeg)
-    
-    ![](./media/image54.jpeg)
+7.  次のセルを実行して、クライアント側で**.chat.completions.create()**メソッドを呼び出し、**チャット補完を実行**します。チャットレスポンスが返されるはずです。
 
-    ![](./media/image55.jpeg)
-    
-    ![](./media/image56.jpeg)
+![A computer screen with text on it AI-generated content may be
+incorrect.](./media/image43.jpeg)
 
-12. The following cell will **delete** the database and collection
-    created in this exercise. This is done by using
-    the **drop_database** method on the database object
+## 手順 3: 最初の Cosmos DB for MongoDB API アプリケーション
 
-    ![](./media/image57.jpeg)
+この手順では、最初の Cosmos DB
+プロジェクトを作成する方法について説明します。ノートブックを使用して、基本的な
+CRUD 操作を示します。
 
-## Exercise 4: Load data into Cosmos DB using the MongoDB API
+1.  Labs **フォルダ**から **lab_1_first_application.ipynb**
+    ファイルを開きます。
 
-The previous exercise demonstrated how to add data to a collection
-individually. This exercise will demonstrate how to load data using bulk
-operations into multiple collections. This data will be used in
-subsequent labs to explain further the capabilities of Azure Cosmos DB
-API for MongoDB about AI.
+2.  \[カーネルの選択**\]をクリックし**
+    、**Pythonバージョンを選択します**。
 
-This notebook demonstrates how to load data into Cosmos DB from Cosmic
-Works JSON files into the database using the MongoDB API.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image44.jpeg)
 
-1.  Open the file **lab_2_load_data.ipynb** from the **Labs** folder.
-    Click on **Select Kernel** and select the **Python version**.
+3.  **最初のセル**を実行して**pymongoをインストールします**.
 
-    ![](./media/image58.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-2.  Execute the first cell to install **requests**.
+4.  次のセルを**実行**して、必要な**インポート**を実行します
 
-    ![](./media/image59.jpeg)
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image46.jpeg)
 
-3.  **Execute** the next cell to do the required **imports**.
+5.  次のセルを実行して**データベースを作成します。**
 
-    ![](./media/image60.jpeg)
+\[!【ノート】**ノート:** これは、.env
+ファイルで更新した接続文字列を使用します
 
-4.  **Execute** the next cell which establishes a **connection** with
-    the **database**.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-    ![](./media/image61.jpeg)
-    
-    ![](./media/image62.jpeg)
+6.  次のセルを実行してCollectionを作成します。
 
-5.  **Execute** the next cell to **load** the **products**.
+![A black screen with white text AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-    ![](./media/image63.jpeg)
+7.  **次のセル**を**実行**して**ドキュメントを作成**します。ドキュメントを作成する方法の
+    1 つは、insert_one メソッドを使用することです。このメソッドは、1
+    つのドキュメントを取得し、それをデータベースに挿入します.
 
-6.  **Execute** the next cells
-    to **load** the **customers** and **sales** **raw data**. In this
-    repository, the customer and sales data are stored in the same file.
-    The type field is used to differentiate between the two types of
-    documents.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-    ![](./media/image64.jpeg)
-    
-    ![](./media/image65.jpeg)
-    
-    ![](./media/image66.jpeg)
+8.  **次のセル**を実行して、データベースから **1
+    つのドキュメントを取得します**。ここでは、**この目的のためにfind_one**方法を使用します。
 
-7.  **Execute** the next cell to **clean up**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image50.jpeg)
 
-    ![](./media/image67.jpeg)
+9.  **find_one_and_update**メソッドを使用してデータベース内の 1
+    つのドキュメントを更新する**次のセル**を**実行**します。
 
-## Exercise 5: Vector Search using vCore-based Azure Cosmos DB for MongoDB
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
 
-1.  Open the
-    file **lab_3_mongodb_vector_search.ipynb** from **Labs** folder.
+10. **delete_one**メソッドを使用してデータベースから 1
+    つのドキュメントを削除する**次のセル**を**実行**します。
 
-2.  Click on **Select Kernel** and select the **Python version**.
+![](./media/image52.jpeg)
 
-    ![](./media/image68.jpeg)
+11. **find**
+    メソッドは、データベース内の複数のドキュメントをクエリするために使用されます。
+    次の**3つのセルを** 1つずつ**実行**して、動作を確認します。
 
-3.  **Execute** the first cell to install **tenacity**.
+![A computer screen shot of a program AI-generated content may be
+incorrect.](./media/image53.jpeg)
 
-    ![](./media/image69.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image54.jpeg)
 
-4.  **Execute** the next cell to perform the required **imports**.
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image55.jpeg)
 
-    ![](./media/image70.jpeg)
+![A computer screen shot of a program AI-generated content may be
+incorrect.](./media/image56.jpeg)
 
-5.  **Execute** the next cell to **load** the **settings** from the .env
-    file.
+12. 次のセルは、
+    この手順で作成したデータベースとコレクションを**削除**します。これは、
+    **データベースオブジェクトで** **drop_database**
+    メソッドを使用して行われます
 
-    ![](./media/image71.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image57.jpeg)
 
-6.  Execute the next cell to establish **connectivity** to
-    the **database**.
+## 手順 4: MongoDB API を使用して Cosmos DB にデータを読み込む
 
-    ![](./media/image72.jpeg)
+前の手順では、コレクションにデータを個別に追加する方法を示しました。この手順では、一括操作を使用してデータを複数のコレクションにロードする方法を示します.
+このデータは、後続のラボで、AI に関する MongoDB 用 Azure Cosmos DB API
+の機能についてさらに説明するために使用されます。
 
-7.  **Execute** the next cell to establish **Azure OpenAI
-    connectivity**.
+このノートブックでは、MongoDB API を使用して、Cosmic Works JSON
+ファイルからデータベースにデータを Cosmos DB
+にロードする方法を示します。
 
-    ![](./media/image73.jpeg)
+1.  ラボフォルダから**lab_2_load_data.ipynbファイルを開く。**Click
+    on **Select Kernelをclickし、Python version**を選択する。
 
-8.  The process of creating a vector embedding field on each document
-    only needs to be done once. However, if a document changes, the
-    vector embedding field will need to be updated with an updated
-    vector. It is done in the next two cells. **Execute** the next two
-    cells and observe the **embeddings** obtained as output in the
-    second one.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image58.jpeg)
 
-    ![](./media/image74.jpeg)
-    
-    ![](./media/image75.jpeg)
+2.  **requests**をインストールするために最初のセルを実行する
 
-9.  **Execute** the next cell to **Vectorize and update all documents in
-    the Cosmic Works database.**
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
 
-    ![](./media/image76.jpeg)
+3.  次のセルを実行して、必要な**インポートを実行します**。
 
-10. **Execute** the next **3** cells to add **vector
-    fields** to **products, customer and sales documents.**
+![A computer screen with green text AI-generated content may be
+incorrect.](./media/image60.jpeg)
 
-   **Note:** The first cell will take around 5 minutes, second one around 3 minutes and the third one around 20 minutes to complete execution.
+4.  **database**と**接続**を確立するための次のセルを**実行**する**。**
 
-    ![](./media/image77.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image61.jpeg)
 
-11. **Execute** the next cell to create **products vector index**.
+![A computer screen shot of text AI-generated content may be
+incorrect.](./media/image62.jpeg)
 
-    ![](./media/image78.jpeg)
-    
-    ![](./media/image79.jpeg)
+5.  **次のセル**を実行して**製品を**ロード**します**。
 
-12. Now that each document has its associated vector embedding and the
-    vector indexes have been created on each collection, we can now use
-    the vector search capabilities of vCore-based Azure Cosmos DB for
-    MongoDB. **Execute** the next **3** cells.
+![A screen shot of a computer screen AI-generated content may be
+incorrect.](./media/image63.jpeg)
 
-    ![](./media/image80.jpeg)
-    
-    ![](./media/image81.jpeg)
-    
-    ![](./media/image82.jpeg)
+6.  次のセルを**実行**して、**顧客データ**と**売上データ**を**読み込みます**。このリポジトリでは、顧客データと売上データは同じファイルに保存されています。typeフィールドは、2種類のドキュメントを区別するために使用されます。
 
-13. **Execute** the next cells to observe the usage of **vector search
-    results** in a RAG pattern with Chat GPT-3.5
+![A screen shot of a computer code AI-generated content may be
+incorrect.](./media/image64.jpeg)
 
-    ![](./media/image83.jpeg)
-    
-    ![](./media/image84.jpeg)
-    
-    ![](./media/image85.jpeg)
+![](./media/image65.jpeg)
 
-14. Observe the output of the following cells.
+![A screen shot of a computer code AI-generated content may be
+incorrect.](./media/image66.jpeg)
 
-    ![](./media/image86.jpeg)
-    
-    ![](./media/image87.jpeg)
+7.  **clean up**するために次のセルを実行.
 
-## Exercise 6: Delete the deployed resources
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image67.jpeg)
 
-1.  From the Azure portal(+++**https://portal.azure.com**+++), select
-    the resource group **mongo-devguide-rg** and then select **Delete
-    resource group**.
+## 手順 5: vCore ベースの Azure Cosmos DB for MongoDBを使用したベクトル検索
 
-    ![](./media/image88.jpeg)
+1.  **Labs**フォルダから**lab_3_mongodb_vector_search.ipynb**ファイルを開**く** 。
 
-2.  Type the resource group name **mongo-devguide-rg** in the **Enter
-    resource group name** to confirm deletion text box and click
-    on **Delete**.
+2.  **Select Kernelクリックし、Python version**を選択する。
 
-    ![](./media/image89.jpeg)
+![](./media/image68.jpeg)
 
-3.  Click on **Delete** in the **Delete confirmation** dialog.
+3.  **tenacityをインストールするために最初のセルを実施する。**
 
-    ![](./media/image90.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image69.jpeg)
 
-4.  Once the Resource group is deleted, from the Azure portal home page,
-    search for +++**Azure AI Services**+++ and select it.
+4.  **必要なImportsを実施するために次のセルを実施する**
 
-    ![](./media/image91.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image70.jpeg)
 
-5.  Select **Azure OpenAI** from the left pane and then select **Manage
-    deleted resources**.
+5.  次のセルを**実行**して**、** .env
+    ファイルから**設定を読み込みます**。
 
-    ![](./media/image92.jpeg)
+![A computer screen with text AI-generated content may be
+incorrect.](./media/image71.jpeg)
 
-6.  Select the resource that gets listed there and then click
-    on **Purge**.
+6.  次のセルを実行して、**データベース**への**接続**を確立**します**.
 
-    ![](./media/image93.jpeg)
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image72.jpeg)
 
-7.  Click on **Yes**.
+7.  **Azure OpenAI connectivity**を確立するために次のセルを実施する。
 
-    ![](./media/image94.jpeg)
-    
-    ![](./media/image95.jpeg)
+![A screen shot of a computer code AI-generated content may be
+incorrect.](./media/image73.jpeg)
 
-**Summary:**
+8.  各ドキュメントにベクトル埋め込みフィールドを作成するプロセスは、一度だけ実行する必要があります。ただし、ドキュメントが変更された場合は、ベクトル埋め込みフィールドを更新されたベクトルで更新する必要があります。これは、次の
+    2 つのセルで行われます。 次の 2 つのセルを**実行**し、 2
+    番目のセルで出力として得られた**埋め込みを**観察します.
 
-You have successfully created a solution with Azure Cosmos DB for
-MongoDB vector search and document retrieval with Azure OpenAI services.
+![A screen shot of a computer program AI-generated content may be
+incorrect.](./media/image74.jpeg)
 
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image75.jpeg)
+
+9.  次のセルを実施して**Vectorize and update all documents in the Cosmic
+    Works databaseを行う。**
+
+![A computer screen shot of a program code AI-generated content may be
+incorrect.](./media/image76.jpeg)
+
+10. **products, customer and sales documentsにvector
+    fields** を**追加するよう次のセルを3つを実施する。**
+
+注: 最初のセルは約 5 分、2 番目のセルは約 3 分、3 番目のセルは約 20
+分をかかり実行をで完了します。
+
+\![\](./media/image77.jpeg)
+
+11. 次のセルを**実行**して**products vector indexを作成します。**
+
+![A screen shot of a computer screen AI-generated content may be
+incorrect.](./media/image77.jpeg)
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image78.jpeg)
+
+12. 各ドキュメントに関連付けられたベクター埋め込みと、各コレクションにベクターインデックスが作成されたので、vCore
+    ベースの Azure Cosmos DB for MongoDB
+    のベクター検索機能を使用できるようになりました。次の **3
+    つのセルを実行**する。
+
+![](./media/image79.jpeg)
+
+![](./media/image80.jpeg)
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image81.jpeg)
+
+13. 次のセルを**実行**して、Chat
+    GPT-3.5を使用した**RAGパターンでのベクトル検索結果**の使用を観察します。
+
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image82.jpeg)
+
+![A screen shot of a computer AI-generated content may be
+incorrect.](./media/image83.jpeg)
+
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image84.jpeg)
+
+14. 次のセルの出力を観察します。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image85.jpeg)
+
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image86.jpeg)
+
+## 手順 6: デプロイされたリソースの削除
+
+1.  Azure
+    portal(+++[https://portal.azure.com+++](https://portal.azure.com+++/))から、アサインされたresource
+    groupを選択する。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image87.png)
+
+2.  その下にあるすべてのリソースを選択し、メニューの**3つのドットをクリックして**\[削除**\]を選択し**
+    、すべてのリソースを削除します.
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image88.png)
+
+3.  テキストボックスで +++delete+++を入力してDeleteボタンうをclickする
+    。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image89.png)
+
+4.  リソースが削除されたら、Azure portal のホーム ページで **+++Azure AI
+    Services+++** を検索して選択します。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image90.jpeg)
+
+5.  左側の画面から **\[Azure OpenAI**\] を選択し、 \[**Manage deleted
+    resources\]** を選択します。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image91.jpeg)
+
+6.  そこにリストされるリソースを選択し、\[**パージ\]
+    をクリックします**。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image92.jpeg)
+
+7.  **Yesをクリックする。**
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image93.jpeg)
+
+**要約**
+
+Azure Cosmos DB for MongoDBベクター検索とAzure OpenAI
+でのドキュメント取得でソリューションを正常に作成しました。
