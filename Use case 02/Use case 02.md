@@ -1,388 +1,457 @@
-# Usecase 02 - Build a Fruits List Quarkus web app with Azure App Service on Linux and PostgreSQL
+# ユースケース02 - Linux と PostgreSQL 上の Azure App Service を使用して Fruits List Quarkus Web アプリを作成する
 
-**Estimated duration:** 40 minutes
+**推定時間:** 40分
 
-**Lab Type:** Instructor Led
+**ラボタイプ:** インストラクター主導
 
-**Objective:**
+**目的：**
 
-This usecase shows how to build, configure, and deploy a secure Quarkus
-application in Azure App Service that's connected to a PostgreSQL
-database (using Azure Database for PostgreSQL). Azure App Service is a
-highly scalable, self-patching, web-hosting service that can easily
-deploy apps on Windows or Linux. When you're finished, you'll have a
-Quarkus app running on Azure App Service on Linux.
+このユースケースでは、PostgreSQL データベースに接続されている Azure App
+Service で安全な Quarkus
+アプリケーションを構築、構成、デプロイする方法を示します (Azure Database
+for PostgreSQL を使用)。Azure App Service は、Windows または Linux
+にアプリを簡単にデプロイできる、高度にスケーラブルな自己修正プログラム
+Web ホスティング サービスです。完了すると、Linux 上の Azure App Service
+で Quarkus アプリが実行されます。
 
-**Pre-requisites:**
+**前提条件:**
 
-**GitHub account** -- You are expected to have your own GitHub login
-credentials. If you do not have, please create one from here
-- +++https://github.com/signup?user_email=&source=form-home-signup+++
+**GitHubアカウント** --
+GitHubのログイン認証情報をお持ちである必要があります。お持ちでない場合は、こちらから作成できましす。
+- +++<https://github.com/signup?user_email=&source=form-home-signup+++>
 
-## Exercise 1: Run the sample
+## 手順 0: VM と資格情報を理解する
 
-First, you set up a sample data-driven app as a starting point. The
-sample repository we are using here includes a dev container
-configuration. The dev container has everything you need to develop an
-application, including the database, cache, and all environment
-variables needed by the sample application. The dev container can run in
-a GitHub codespace, which means you can run the sample on any computer
-with a web browser.
+このタスクでは、ラボ全体で使用する資格情報を特定して理解します。
 
-1.  From a browser, sign in to your GitHub
-    account +++**https://github.com/login**+++.
+1.  **\[Instructions\]** タブ
+    には、ラボ全体に従うべき指示が記載されたラボ
+    ガイドが含まれています。
 
-2.  Open this url from a new
-    tab, +++**https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++.
+&nbsp;
 
-3.  Select **Fork -\> Create a new fork**.
+2.  **\[リソース**\] タブには、ラボの実行に必要な資格情報があります。
 
-    ![](./media/image1.jpeg)
+    - **URL** – Azure portal の URL
 
-4.  Click on **Create fork** in the Create a new fork page.
+    - **Subscription** –割り当てられたサブスクリプションの ID です
 
-    ![](./media/image2.jpeg)
+    - **Username** – Azure サービスにログインするために必要なユーザー
+      ID。
 
-5.  In the forked page of the repo, select **Code** \> **Create
-    codespace on main**.
+    - **Password** – Azure ログインのパスワード。
 
-    ![](./media/image3.jpeg)
+このユーザー名とパスワードをAzureログイン資格情報と呼びます。Azureログイン資格情報について記載する際には、必ずこの資格情報を使用します。
 
-    **Note:** If Create Codespace on main option does not show up, click on
-the + symbol next to Codespaces.
+- **Resource Group** – **割り当てられた**リソース グループ
 
-    ![](./media/image4.jpeg)
+\[!アラート\]**重要:**このリソースグループの下にすべてのリソースを作成します。
 
-    **Note:** The codespace creation takes around 10 minutes to set up.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image1.png)
 
-    ![](./media/image5.jpeg)
+3.  **\[ヘルプ**\] タブには、サポート情報が表示されます。ここでの **ID**
+    値は、 ラボの実行中に使用される**ラボ インスタンス ID** です。
 
-6.  Execute +++mvn quarkus:dev+++ in the Terminal. Click on **Allow** in the
-    pop up.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image2.png)
 
-    ![](./media/image6.jpeg)
+## 手順 1: サンプルを実行する
 
-    ![](./media/image7.jpeg)
+まず、出発点としてサンプルのデータ駆動型アプリをセットアップします。ここで使用するサンプルリポジトリには、開発コンテナの設定が含まれています。開発コンテナには、データベース、キャッシュ、サンプルアプリケーションに必要なすべての環境変数など、アプリケーション開発に必要なものがすべて揃っています。開発コンテナはGitHubのコードスペースで実行できるため、Webブラウザであらゆるコンピュータでサンプルを実行できます。
 
-7.  When you see the notification, **Your application running on port
-    8080** is available., select **Open in Browser**. You should see the
-    sample application in a new browser tab.
+1.  ブラウザーから、GitHub にサインインする
+    account +++\*\*<https://github.com/login**+++>.
 
-    If you see a **notification** with port **5005**, **skip** it.
+2.  新しいタブからこのURLを開く+++\*\*<https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++>.
 
-    ![](./media/image8.jpeg)
+3.  **Fork -\> Create a new fork**を選択する
 
-    ![](./media/image9.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image3.jpeg)
 
-8.  To stop the Quarkus development server, type **Ctrl+C** in the
-    Codespace terminal.
+4.  Create a new forkページで**Create fork** をクリックする。
 
-    ![](./media/image10.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image4.jpeg)
 
-## Exercise 2: Create App Service and PostgreSQL
+5.  リポジトリのフォークされたページで、 \[**Code\]** \> **\[Create
+    codespace on main\] を選択します**。
 
-First, you create the Azure resources. The steps used in this lab create
-a set of secure-by-default resources that include App Service and Azure
-Database for PostgreSQL.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image5.jpeg)
 
-1.  Login to Azure portal
-    at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
+**注:** メイン オプションで \[Create Codespace\]
+が表示されない場合は、Codespaces の横にある \[+\] 記号をクリックします。
 
-    ![](./media/image11.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image6.jpeg)
 
-2.  Select **Cancel** or the close button in the Welcome page.
+**注:** codespace の作成には、設定に約 10 分かかります。
 
-    ![](./media/image12.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image7.jpeg)
 
-3.  Enter +++**web app database**+++ in the search bar at the top of the Azure
-    portal. Select the item labelled **Web App + Database** under
-    the **Marketplace** heading.
+5.  ターミナルで+++mvn
+    quarkus:dev+++を実行する。ポップアップで**Allowをクリックする。**
 
-    ![](./media/image13.jpeg)
+![A screenshot of a browser AI-generated content may be
+incorrect.](./media/image8.jpeg)
 
-4.  On **Create Web App + Database**, fill in the below details and
-    select **Review + create**
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image9.jpeg)
 
-    | **Property**   |  **Value**  |
-    |:-------|:-------|
-    |  Subscription  |  Select your **assigned subscription**  |
-    | Resource group   |  Click **Create New** -> Enter +++**RGForAppService**+++  |
-    |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
-    | **Web App Details**   |    |
-    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
-    | Runtime stack   |  **Java 17**  |
-    |  **Database**  |    |
-    |  Engine  |  Select **PostgreSQL – Flexible Server**  |
-    |  Hosting Plan  |  Select **Basic**  |
-    
-    ![](./media/image14.jpeg)
+6.  **Your application running on port 8080** is
+    availableとの通知が表示される場合**Open in Browser**を選択する**。**
+    新しいブラウザ タブにサンプル アプリケーションが表示されます。
 
-    ![](./media/image15.jpeg)
+port **5005**との通知が表示さるたら**skip**する。
 
-6.  Once the validation passes, click on **Create**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image10.jpeg)
 
-    ![](./media/image16.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image11.jpeg)
 
-    **Note:** The app creation takes around 15 minutes.
+1.  Quarkus 開発サーバーを停止するには、 **Codespace ターミナルで**
+    **Ctrl+C** を入力する。
 
-7.  Once the deployment is complete, click on **Go to resource**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image12.jpeg)
 
-    ![](./media/image17.jpeg)
+## 手順 2: App Service と PostgreSQL を作成する
 
-8.  You're taken directly to the **App Service page.** Click
-    on **Home** at the top left corner.
+まず、Azure リソースを作成します。このラボで使用する手順では、App
+Service や Azure Database for PostgreSQL
+など、既定でセキュリティが確保されたリソースのセットを作成します。
 
-    ![](./media/image18.jpeg)
+1.  Azure portal を +++<https://portal.azure.com/+++> で開き、 **VM の
+    \[Resources**\] タブから Azure
+    ログイン資格情報を使用して**ログイン**する。
 
-9.  Click on the Portal menu and select **Resource Groups** from it.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image13.png)
 
-    ![](./media/image19.jpeg)
+2.  \[Welcome\] ページで \[キャンセル\] または閉じるボタンを選択します。
 
-10.  Select the Resource group assigned to you and see that the
-    following resources are created from the deployment that we just
-    performed.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image14.jpeg)
 
-    - App Service plan
-    
-    - App Service
-    
-    - Virtual network
-    
-    - Azure Database for PostgreSQL flexible server
-    
-    - Private DNS zone
+3.  Azure portal の上部にある検索バーに「**+++web app
+    database+++**」と入力します。**\[Marketplace\]**
+    の見出し**の下にある** \[**Web App + Database**\]
+    というラベルの付いた項目を選択します.
 
-   ![](./media/image20.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image15.jpeg)
 
-## Exercise 3: Verify connection settings
+4.  **Create Web App + Databaseで次の情報を記入してReview +
+    createを選択する。**
 
-The creation wizard generated the connectivity variables for you already
-as app settings. In this step, you learn where to find the app settings,
-and how you can create your own.
+[TABLE]
 
-1.  Click on the **App Service** from the list of resources in the
-    Resource group.
+5.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image16.png)
 
-    ![](./media/image21.jpeg)
+6.  ![A screenshot of a web application AI-generated content may be
+    incorrect.](./media/image17.jpeg)
 
-2.  In the App Service page, in the left menu, select **Environment
-    variables** under **Settings**.
+7.  検証に合格したら、「作成」をクリックする
 
-3.  In the **App settings** tab of the **Environment variables** page,
-    verify that **AZURE_POSTGRESQL_CONNECTIONSTRING** is present. It's
-    injected at runtime as an environment variable.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image18.png)
 
-    ![](./media/image22.jpeg)
+**注:** アプリの作成には約 15 分かかります。
 
-4.  Select **+ Add**.
+8.  デプロイメントが完了したら**Go to resource**をクリックする。
 
-    ![](./media/image23.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image19.jpeg)
 
-5.  Name the setting +++**PORT**+++ and set its value to +++**8080**+++,
-    which is the default port of the Quarkus application.
-    Select **Apply**.
+1.  App Service ページ**に直接移動します**。
+    左上隅にある**\[ホーム**\]をクリックする。
 
-    ![](./media/image24.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image20.jpeg)
 
-6.  Select **Apply**.
+9.  ポータルメニューをクリックし、**Resource Groupsをクリックする。**
 
-    ![](./media/image25.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image21.jpeg)
 
-7.  Select **Confirm**.
+10. アサインされたResource
+    groupを選択し、実行したデプロイからつぃぎの resourceが作成さっれていることを確認する。
 
-    ![](./media/image26.jpeg)
+> \- アプリサービスプラン
+>
+> \- アプリサービス
+>
+> \- 仮想ネットワーク
+>
+> \- Azure Database for PostgreSQL flexible server
+>
+> \- プライベートDNSゾーン
 
-8.  You will get a notification stating that the app settings has been
-    updated.
+![A screenshot of a group AI-generated content may be
+incorrect.](./media/image22.png)
 
-    ![](./media/image27.jpeg)
+## 手順 3: 接続設定の確認
 
-## Exercise 4: Deploy sample code
+作成ウィザードでは、接続変数がアプリ設定として既に生成されています。この手順では、アプリ設定の場所と、独自の設定を作成する方法について説明します。
 
-In this step, you'll configure GitHub deployment using GitHub Actions.
-It's just one of many ways to deploy to App Service, but also a great
-way to have continuous integration in your deployment process. By
-default, every git push to your GitHub repository will kick off the
-build and deploy action.
+1.  Resource Group内のリソースの一覧から **App Service**
+    をクリックする。
 
-1.  From the App Service page, in the left menu, select **Deployment
-    Center** under **Deployment**.
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image23.jpeg)
 
-    ![](./media/image28.jpeg)
+2.  App Serviceページの左側メニューで**Settings**の下の **Environment
+    variables**  を選択する。
 
-2.  In Source, select **GitHub**. By default, GitHub Actions is selected
-    as the build provider.
+3.  **Environment variablesページのApp
+    settings**タブで **AZURE_POSTGRESQL_CONNECTIONSTRINGが存在することを確認する。　**これは、実行時に環境変数として挿入されます。
 
-    ![](./media/image29.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image24.jpeg)
 
-3.  Click on **Authorize** and sign in to your GitHub account and follow
-    the prompt to authorize Azure.
+4.  **+ Add**を選択する。
 
-    ![](./media/image30.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image25.jpeg)
 
-4.  Fill in the details as below, leave the remaining to the default and
-    click on **Save**.
+1.  設定に +++**PORT**+++ という名前を付け、その値を Quarkus
+    アプリケーションのデフォルトポートである +++**8080**+++
+    に設定します。\[**適用\]** を選択します。
 
-    |  **Property**  | **Value**   |
-    |:--------|:---------|
-    |  Organization  |  Your GitHub account  |
-    |  Repository  |  Select **msdocs-quarkus-postgresql-sample-app**  |
-    |  Branch  |   **main** |
-    
-    ![](./media/image31.jpeg)
+![A screenshot of a login AI-generated content may be
+incorrect.](./media/image26.jpeg)
 
-6.  Once **Save** is clicked on, App Service commits a workflow file
-    into the chosen GitHub repository, in the .github/workflows
-    directory.
+5.  **Apply**を選択する
 
-7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into
-    your codespace.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image27.jpeg)
 
-    ![](./media/image32.jpeg)
+6.  **Confirm**を選択する
 
-8.  Open **src/main/resources/application.properties** in the explorer.
-    Quarkus uses this file to load Java properties.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image28.jpeg)
 
-9.  Find the code (lines 10-11). This code sets the production variable
-    **%prod.quarkus.datasource.jdbc.url** to the app setting that the
-    creation wizard for you. The **quarkus.package.type** is set to build an
-    Uber-Jar, which you need to run in App Service.
+7.  アプリの設定が更新されことを示す通知が届きます。
 
-    ![](./media/image33.jpeg)
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image29.jpeg)
 
-10.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
-    the explorer. This file was created by the App Service create
-    wizard.
+## 手順 4: Deploy sample code
 
-11. Under the Build with Maven step, change the Maven command to +++**mvn clean install -DskipTests**+++.
+この手順ではGitHub
+Actionsを使用してGitHubの展開を構成します。これはアプリサービスにデプロイする多くの方法の一つであるとデプロイプロセスで継続的の統合を実現するための優れた方法でもあります。デフォルトでは、GitHub
+リポジトリへのすべての git
+プッシュによって、ビルドとデプロイのアクションが開始されます
 
-    **-DskipTests** skips the tests in your Quarkus project, to avoid the
-GitHub workflow failing prematurely.
+1.  アプリサービスページで左側のメニューから**Deployment**
+    の下に**Deployment Center** を選択する。
 
-    ![](./media/image34.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image30.jpeg)
 
-12. Select the **Source Control** extension.
+2.  Sourceの中で**GitHub**を選択する。デフォルトでは、ビルド
+    プロバイダーとして GitHub Actions が選択されます。
 
-    ![](./media/image35.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image31.jpeg)
 
-13. In the textbox, type a commit message like +++**Configure DB and
-    deployment workflow**+++. Select **Commit**, then confirm
-    with **Yes**.
+3.  **Authorizeをクリックすることで**GitHubアカウントにサインし、プロンプトに伴ってAzureを承認する。
 
-    ![](./media/image36.jpeg)
+![A screenshot of a computer program AI-generated content may be
+incorrect.](./media/image32.jpeg)
 
-14. Select **Sync changes 1**, then confirm with **OK**.
+4.  下記のほうに詳細を記入し、残りはデフォルトのままにして**Save**をクリックする。他をデフォルトでとして残り
 
-    ![](./media/image37.jpeg)
+[TABLE]
 
-    ![](./media/image38.jpeg)
+5.  ![A screenshot of a computer AI-generated content may be
+    incorrect.](./media/image33.jpeg)
 
-15. Back in the Deployment Center page in the Azure portal,
-    Select **Logs**. A new deployment run is already started from your
-    committed changes.
+6.  **\[保存**\] をクリックすると、App Service はワークフロー
+    ファイルを選択した GitHub リポジトリの .github/workflows
+    ディレクトリにコミットします.
 
-16. In the log item for the deployment run, select the **Build/Deploy
-    Logs** entry with the latest timestamp.
+7.  サンプル フォークの GitHub codespace に戻り、+++git pull origin
+    main+++ を実行します。これにより、新しくコミットされたワークフロー
+    ファイルが codespace に取り込まれます。
 
-    ![](./media/image39.jpeg)
+\[!注\]**注:**ターミナルでテストケースがまだ実行されている場合は、Ctrl +
+Cを押してから上記のコマンドを実行できます.
 
-17. You're taken to your GitHub repository and see that the GitHub
-    action is running. The workflow file defines two separate stages,
-    build and deploy. Wait for the GitHub run to show a status of
-    Complete. It takes about 5 minutes.
+![A screenshot of a computer code AI-generated content may be
+incorrect.](./media/image34.jpeg)
 
-    ![](./media/image40.jpeg)
+7.  エクスプローラーで src/main/resources/application.properties
+    **を開きます** 。Quarkus は、このファイルを使用して Java
+    プロパティをロードします.
 
-## Exercise 5: Browse to the app
+8.  コード（10～11行目）を見つけてください。このコードは、プロダクション変数
+    %prod.quarkus.datasource.jdbc.url
+    を、作成ウィザードで指定されたアプリ設定に設定します。quarkus.package.type
+    は、App Service で実行する必要がある Uber-Jar
+    をビルドするように設定されています。
 
-1.  From the Azure portal(+++https://portal.azure.com+++), open Resource
-    group **RGForAppService** and select the **App Service** resource.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image35.jpeg)
 
-    ![](./media/image41.jpeg)
+9.  エクスプローラーで .github/workflows/main_quarkuwebapp\[lab instance
+    id\].yml **を開きます** 。このファイルは、App Service
+    作成ウィザードによって作成されました.
 
-2.  From the left menu, select **Overview** and select the URL of your
-    app under **Default domain**.
+10. Build with Mavenを使用したステップでMaven commandを+++**mvn clean
+    install -DskipTests**+++に変更する。
 
-    ![](./media/image42.jpeg)
+**-DskipTests** は、GitHub
+ワークフローが途中で失敗するのを避けるために、Quarkus
+プロジェクトのテストをスキップします.
 
-3.  Paste the copied url in a new browser to open the app.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image36.jpeg)
 
-    ![](./media/image43.jpeg)
+11. **Source Control拡張機能を選択する。**
 
-4.  Add a few fruits to the list. Now, you're running a web app in Azure
-    App Service, with secure connectivity to Azure Database for
-    PostgreSQL.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image37.jpeg)
 
-    ![](./media/image44.jpeg)
+12. テクストボックスの中に+++**Configure DB and deployment
+    workflow**+++のようなコミットメセッジを入力する。**Commitを選択し、Yesで確認する。**
 
-    ![](./media/image45.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image38.jpeg)
 
-## Exercise 6: Stream diagnostic logs
+13. **Sync changes 1**を選択し**、OK**で確認する**。**
 
-Azure App Service captures all messages output to the console to help
-you diagnose issues with your application. The sample application
-includes standard JBoss logging statements to demonstrate this
-capability as shown below.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image39.jpeg)
 
-1.  From the Azure portal App Service page, from the left menu,
-    select **App Service logs** under **Monitoring**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image40.jpeg)
 
-    ![](./media/image46.jpeg)
+14. Back in the Deployment Center page in the Azureポータルの Deployment
+    Center
+    ページに戻り、**Logs**を選択する。コミットされた変更からすでに新規のデプロイ実行が開始される。
 
-2.  Under **Application logging**, select **File System**. In the top
-    menu, select **Save**.
+15. デプロイ実行のログ項目で、 **最新のタイムスタンプを持つ**
+    Build/Deploy Logs エントリを選択します.
 
-    ![](./media/image47.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image41.jpeg)
 
-3.  From the left menu, select **Log stream**. You see the logs for your
-    app, including platform logs and logs from inside the container.
+1.  GitHub リポジトリに移動し、GitHub
+    アクションが実行されていることを確認します。ワークフロー
+    ファイルでは、ビルドとデプロイの 2
+    つのステージが定義されています。GitHub の実行で \[完了\]
+    の状態が表示されるまで待ちます。所要時間は約5分です。
 
-    ![](./media/image48.jpeg)
+![A screenshot of a web page AI-generated content may be
+incorrect.](./media/image42.jpeg)
 
-## Exercise 7: Clean up resources
+## 手順 5: アプリをブラウズする
 
-1.  From the Azure portal Home page, select Resource groups.
+1.  Azureポータル(+++[https://portal.azure.com+++](https://portal.azure.com+++/))から、リソースグループ**ResourceGroup1**を開き**、App
+    Service**リソースを選択する。
 
-    ![](./media/image49.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image43.png)
 
-2.	Select the **NetworkWatcherRG** and click on **Delete resource group**.
+2.  左側のメニューから**Overview**を選択して**Default
+    domainの下のアプリの**URL**を選択する。**![A screenshot of a
+    computer AI-generated content may be
+    incorrect.](./media/image44.jpeg)
 
-    ![](./media/image57.png)
+3.  コーピしたurlを新しいブラウザに張り付けて、アプリを開く。
 
-3.	Type +++NetworkWatcherRG+++ in the text box and click on **Delete**.
- 
-    ![](./media/image58.png)
+![A screenshot of a fruit list AI-generated content may be
+incorrect.](./media/image45.jpeg)
 
-    ![](./media/image59.png)
-  
-4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
+4.  リストにFruitをいくつか追加します。これで、Azure Database for
+    PostgreSQL へのセキュアあな接続を備えた Web アプリを Azure App
+    Service で実行できるようになりました。
 
-    ![](./media/image50.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image46.jpeg)
 
-5.	Click on **Delete resource group**.
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image47.jpeg)
 
-    ![](./media/image51.jpeg)
+## 手順 6: 診断ログのストリーム
 
-6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
- 
-    ![](./media/image52.jpeg)
+Azure App
+Serviceがコンソールに出力された全てのメセッジをキャプチャーして、アプリの問題を診断するのに役立ちます。以下のようサンプルアプリにはこの機能を示す標準のJBossロギングステートメントが含まります。
 
-7.	Click on **Delete** in the confirmation dialog.
+1.  Azure portal の \[App Service\] ページで、左側のメニューから
+    \[**Monitoring**\] の下の **\[App Service Logs\] を選択します**。
 
-    ![](./media/image53.jpeg)
+![A screenshot of a phone AI-generated content may be
+incorrect.](./media/image48.jpeg)
 
-8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
+1.  **Application logging**の下に **File System**を選択する**。**
+    上部のメニューで、\[Save\] を選択する。
 
-    ![](./media/image54.jpeg)
-  	
-8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
-   
-    ![](./media/image64.jpeg)
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image49.jpeg)
 
-**Summary:**
+2.  左側のメニューから**Log
+    stream**を選択する。プラットフォームログやコンテナ内のログを含まりアプリのログが表示されます。
 
-We have learnt to deploy a secure Quarkus application in Azure App
-Service, connected it to PostgreSQL database to add Fruit names from the
-app's UI.
+![A computer screen shot of a computer screen AI-generated content may
+be incorrect.](./media/image50.jpeg)
 
+## 手順 7: リソースの削除
+
+1.  AzureポータルのホームページでResource groupsを選択する
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image51.jpeg)
+
+2.  **NetworkWatcherRGを選択してDelete resource group**をクリックする
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image52.png)
+
+3.  テキストボックスの中に+++NetworkWatcherRG+++を選択して**Delete**をクリックする。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image53.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image54.png)
+
+4.  次に、Resource groupページからアサインされてResource
+    groupを選択する。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image55.png)
+
+5.  全ての**resourcesを選択して、Delete**を選択する。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image56.png)
+
+6.  テキストボックスの中に+++**delete**+++を入力して**Delete**をクリックする。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image57.png)
+
+![A screenshot of a computer error AI-generated content may be
+incorrect.](./media/image58.png)
+
+7.  削除されたリソースの正常通知が削除を確認します。
+
+8.  GitHub ワークスペースに戻り、 \[**コード**\]
+    の横にあるドロップダウンをクリックし、codespace 名の横にある 3
+    つのドットを選択して、 \[**削除**\] をクリックします。
+
+![A screenshot of a computer AI-generated content may be
+incorrect.](./media/image59.jpeg)
+
+**要約：**
+
+Azure App
+Service中でセキュアなQuarkusアプリをデプロイして、それをPostgreSQLデータベースに接続して,
+アプリのUIからFruit名を追加する方法を学びました。
