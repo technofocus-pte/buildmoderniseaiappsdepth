@@ -119,7 +119,7 @@ perform the following steps
 
 11. Create an Azure Kubernetes Cluster, You'll need an Azure Kubernetes Cluster to deploy the Java app (container image) to.
 
-    +++az aks create --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER --attach-acr $AZ_CONTAINER_REGISTRY --dns-name-prefix=$AZ_KUBERNETES_CLUSTER_DNS_PREFIX --generate-ssh-keys | jq+++
+    +++az aks create --resource-group $AZ_RESOURCE_GROUP --name $AZ_KUBERNETES_CLUSTER --attach-acr $AZ_CONTAINER_REGISTRY --dns-name-prefix=$AZ_KUBERNETES_CLUSTER_DNS_PREFIX --generate-ssh-keys --node-vm-size Standard_D2s_v3 | jq+++
 
     ![](./media/image10.jpeg)
 
