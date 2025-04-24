@@ -1,489 +1,606 @@
-# Usecase 04 - Build a TODO List ASP.NET app, deploy it to Azure App Service connecting to SQL Database
+# Caso de uso 04 – Criar um aplicativo de lista de tarefas em ASP.NET e implementá-lo no Azure App Service conectá-lo ao bando de dados SQL
 
-**Estimated duration:** 40 minutes
+**Duração estimada:** 40 minutos
 
-**Lab Type:** Instructor Led
+**Tipo de laboratório:** Conduzido por instrutor
 
-**Objective:**
+**Objetivo:**
 
-Azure App Service provides a highly scalable, self-patching web hosting
-service. In this lab, you will learn how to deploy a data-driven ASP.NET
-app in App Service and connect it to Azure SQL Database. When you\\re
-finished, you have an ASP.NET app running in Azure and connected to SQL
-Database.
+O Azure App Service oferece um serviço de hospedagem na Web altamente
+escalável e com atualizações automáticas. Neste laboratório, você
+aprenderá como implementar um aplicativo ASP.NET baseado em dados no App
+Service e conectá-lo ao Azure SQL Database. Quando terminar, você terá
+um aplicativo ASP.NET em execução no Azure e conectado ao Banco de Dados
+SQL.
 
-## Exercise 1: Deploying an ASP.NET app to Azure with Azure SQL Database
+## Exercício 0: Entender a VM e as credenciais
 
-### Task 1: Set up Visual Studio 2022 and run the application
+Nesta tarefa, identificaremos e entenderemos as credenciais que usaremos
+em todo o laboratório.
 
-1.  From the Windows **Search** bar, type +++**Visual studio**+++ and select Visual Studio 2022. If it asks you to Sign in, continue with the steps 2 and 3 or continue from Step 4.
+1.  A guia **Instructions** contém o guia do laboratório com as
+    instruções a serem seguidas em todo o laboratório.
 
-    ![](./media/image1.jpeg)
+2.  A guia **Resources** tem as credenciais necessárias para executar o
+    laboratório.
 
-2.	Click on **Sign in** and and **sign in** with the **Username** and **password** under the **User Credentials** section in the Resources tab of the VM.
+    - **URL** – URL para o portal do Azure
 
-    ![](./media/image2.jpeg)
+    - **Subscription** – Este é o ID da assinatura atribuída a você
 
-    ![](./media/image3.jpeg)
+    - **Username** – a ID de usuário com a qual você precisa fazer login
+      nos serviços do Azure.
 
-3.  Select **Start Visual Studio**.
+    - **Password** – senha para o login do Azure.
 
-    ![](./media/image4.jpeg)
+Vamos chamar esse nome de usuário e senha como credenciais de login do
+Azure. Usaremos essas credenciais sempre que mencionarmos as credenciais
+de login do Azure.
 
-4.  Select **Open a local folder**.
+- **Resource Group** – O **Resource Group** atribuído a você.
 
-    ![](./media/image5.jpeg)
+\[! Alerta\] **Importante:** certifique-se de criar todos os seus
+recursos neste grupo de recursos
 
-5.  Select **webappwithsqldb** folder in **C:\Labfiles** and click
-    on **Select Folder**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image1.png)
 
-    ![](./media/image6.jpeg)
+1.  A guia **Help** contém as informações de suporte. O valor do **ID**
+    aqui é o **Lab instance ID** que será usado durante a execução do
+    laboratório.
 
-6.  Once the folder is opened, double click
-    on **DotNetAppSqlDb.sln** from the **Solution Explorer**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image2.png)
 
-    **Note:** If the Solution Explorer does not get opened automatically,
-Click on **View -\> Solution Explorer.**
+## Exercício 1: Implementando um aplicativo ASP.NET no Azure com o Azure SQL Database
 
-    ![](./media/image7.jpeg)
+### Tarefa 1: Configurar o Visual Studio 2022 e executar o aplicativo
 
-7.  Click on **Build** -\> **Build Solution**.
+1.  Na barra de **Pesquisa** do Windows , digite **+++Visual Studio+++**
+    e selecione Visual Studio 2022. Se ele solicitar que você faça
+    login, continue com as etapas 2 e 3 ou continue a partir da Etapa 4.
 
-    ![](./media/image8.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image3.jpeg)
 
-8.  Once the Build is completed, select **Debug -\>** **Start
+2.  Clique em **Sign in** e **digite** o **Username** e o **password**
+    na seção **User Credentials** na guia Recursos da VM.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image4.jpeg)
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image5.png)
+
+3.  Selecione **Start Visual Studio**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image6.jpeg)
+
+4.  Selecione **Open a local folder**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image7.jpeg)
+
+5.  Selecione a pasta **webappwithsqldb** em **C:\Labfiles** e clique em
+    **Select Folder**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image8.jpeg)
+
+6.  Depois que a pasta for aberta, clique duas vezes em
+    **DotNetAppSqlDb.sln** no **Solution Explorer**.
+
+**Observação:** Se o Gerenciador de Soluções não for aberto
+automaticamente, clique em **View -\> Solution Explorer.**
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image9.jpeg)
+
+7.  Clique em **Build** -\> **Build Solution**.
+
+![Uma captura de tela de computador de uma tela preta O conteúdo gerado
+por IA pode estar incorreto.](./media/image10.jpeg)
+
+8.  Depois que o Build for concluído, selecione **Debug -\>** **Start
     Debugging**.
 
-    ![](./media/image9.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image11.jpeg)
 
-    ![](./media/image10.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image12.jpeg)
 
-9.  This opens up a browser with the **Todos web app** running in it.
+9.  Isso abrirá um navegador com o **Todos web app** em execução nele.
 
-    ![](./media/image11.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image13.jpeg)
 
-10. Add few items into the app by clicking on **Create New** as in the
-    screenshots below.
+10. Adicione alguns itens ao aplicativo clicando em **Create New** como
+    nas capturas de tela abaixo.
 
-    ![](./media/image12.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image14.jpeg)
 
-    ![](./media/image13.jpeg)
+![Uma captura de tela de um aplicativo O conteúdo gerado por IA pode
+estar incorreto.](./media/image15.jpeg)
 
-11. Add few more items to the list.
+11. Adicione mais alguns itens à lista.
 
-    ![](./media/image14.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image16.jpeg)
 
-12. From the Visual Studio 2022, click on **Debug -\>** **Stop
-    Debugging**.
+12. No Visual Studio 2022, clique em **Debug -\>** **Stop Debugging**.
 
-    ![](./media/image15.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image17.jpeg)
 
-### Task 2: Publish ASP.NET application to Azure
+### Tarefa 2: Publicar o aplicativo ASP.NET no Azure
 
-1.  In the **Solution Explorer**, right-click on
-    your **DotNetAppSqlDb** project and select **Publish**.
+1.  No **Solution Explorer**, clique com o botão direito do mouse no
+    projeto **DotNetAppSqlDb** e selecione **Publicar**.
 
-    ![](./media/image16.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image18.jpeg)
 
-    ![](./media/image17.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image19.jpeg)
 
-2.  Select **Azure** and and click on **Next**.
+2.  Selecione **Azure** e clique em **Next**.
 
-    ![](./media/image18.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image20.jpeg)
 
-3.  Select **Azure App Service(Windows)** in **Which Azure service would
-    you like to use to host your application?** screen and click
-    on **Next**.
+3.  Selecione **Azure App Service(Windows)** em **Which Azure service
+    would you like to use to host your application?**  e clique em
+    **Next**.
 
-    ![](./media/image19.jpeg)
+![Uma captura de tela de um aplicativo de computador O conteúdo gerado
+por IA pode estar incorreto.](./media/image21.jpeg)
 
-4.  In the Publish dialog, click **Sign In** and Sign in to your Azure
-    subscription, if not signed in already.
+4.  Na caixa de diálogo Publish, clique em **Entrar** e acesse sua
+    assinatura do Azure, se ainda não estiver conectado.
 
-    **Note:** If you're already signed into a Microsoft account, make sure
-that account holds your Azure subscription. If the signed-in Microsoft
-account doesn't have your Azure subscription, click it to add the
-correct account.
+**Observação:** se você já estiver conectado a uma conta da Microsoft,
+verifique se essa conta contém sua assinatura do Azure. Se a conta da
+Microsoft conectada não tiver sua assinatura do Azure, clique nela para
+adicionar a conta correta.
 
-5.  Click on **Create new** to create a new App service.
+5.  Clique em **Create new** para criar um novo App service.
 
-    ![](./media/image20.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image22.jpeg)
 
-6.  Enter the below details.
+6.  Insira os detalhes abaixo.
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Name  | +++TodoAppXX+++ (Replace XX with a unique number since the Webapp name should be unique across Azure)   |
-    | Resource group   |  Click on New -> **RGForWebAppSQL** and click on OK |
+[TABLE]
 
-    ![](./media/image21.jpeg)
+7.  Clique em **New** no **Hosting Plan**.
 
-7.  Click **New** on **Hosting Plan** option and enter the below details
-    and click **OK**.
+8.  ![Uma captura de tela de um computador O conteúdo gerado por IA pode
+    estar incorreto.](./media/image23.png)
 
-    |  **Property**  |  **Description**  |
-    |:------|:-------|
-    |  Hosting Plan  | +++myAppServicePlan+++   |
-    | Location   |  **East US**  |
-    |  Size  |   **Free** |
+9.  Clique na opção **New** no **Hosting Plan**, insira os detalhes
+    abaixo e clique em **OK.**
 
-    ![](./media/image77.png)
-    
-    **Note:** The location here is selected as East US. Please select a
-closest region if East US does not work for you.
+[TABLE]
 
-9.  Click **Create** on the App Service window and wait for Azure
-    resources to get created.
+10. ![Uma captura de tela de um computador O conteúdo gerado por IA pode
+    estar incorreto.](./media/image24.png)
 
-    ![](./media/image73.png)
+11. Clique em **Create** na janela App Service e aguarde a criação dos
+    recursos do Azure.
 
-10. The **Publish** dialog shows the resources you have configured.
-    Click **Finish**.
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image25.png)
 
-    ![](./media/image23.jpeg)
+12. A caixa de diálogo **Publish** mostra os recursos que você
+    configurou. Clique em **Finish**.
 
-11. Click on **Close**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image26.png)
 
-    ![](./media/image24.jpeg)
+13. Clique em **Close**.
 
-12. Scroll down to the Server Dependencies section and click on
-    the **+** sign to add dependency.
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image27.jpeg)
 
-    ![](./media/image25.jpeg)
+14. Role para baixo até a seção Server Dependencies e clique no + sign
+    para adicionar dependência.
 
-13. Select **Azure SQL Database** in the **Add dependency** page and
-    click on **Next**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image28.jpeg)
 
-    ![](./media/image26.jpeg)
+15. Selecione **Azure SQL Database** na página **Add dependency** e
+    clique em **Next**.
 
-14. Click on **Create New** next to SQL databases, in the **Connect to
-    Azure SQL Database** dialog box.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image29.jpeg)
 
-    ![](./media/image27.jpeg)
+16. Clique em **Create New**  ao lado de Bancos de dados SQL, na caixa
+    de diálogo **Connect to Azure SQL Database**.
 
-15. In the **Azure SQL Database Create new** dialog box, click
-    on **New** next to the Database server.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image30.jpeg)
 
-    ![](./media/image28.jpeg)
+17. Na caixa de diálogo **Azure SQL Database Create new**, clique em
+    **New** próximo a Database server.
 
-16. Fill in the below details and click on **OK**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image31.png)
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database server name  | +++dotnetappsqldbdbserver98+++   |
-    |  Administrator username  |   +++sqladmin+++ |
-    |  Administrator password  |  +++PassWord98+++  |
+18. Preencha os detalhes abaixo e clique em **OK.**
 
-    >[!Note] **Note:** The location here is selected as East US. Please select a closest region if East US does not work for you.
+[TABLE]
 
-    ![](./media/image29.jpeg)
+19. ![Uma captura de tela de um computador O conteúdo gerado por IA pode
+    estar incorreto.](./media/image32.png)
 
-16. Click on **Create** in the Create new dialog.
+20. Clique na caixa de diálogo **Create** para Criar um novo banco de
+    dados.
 
-    ![](./media/image30.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image33.png)
 
-### Task 3: Configure database connection
+### Tarefa 3: Configurar a conexão com o banco de dados
 
-1.  When the wizard finishes creating the database resources,
-    click **Next**.
+1.  Quando o assistente terminar de criar os recursos do banco de dados,
+    clique em **Next**.
 
-    ![](./media/image31.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image34.png)
 
-2.  Fill in the below details in the **Connect to Azure SQL
-    Database** dialog and click **Finish**.
+2.  Preencha os detalhes abaixo na caixa de diálogo **Connect to Azure
+    SQL Database** e clique em **Finish**.
 
-    | **Property**   |  **Description**  |
-    |:-------|:--------|
-    |  Database connection string Name  | +++MyDbConnection+++  |
-    |  Database connection user name |   +++Sqladmin+++ |
-    |  Database connection password |  +++PassWord98+++  |
-    |  Azure App Settings  |  Selected  |
+[TABLE]
 
-    ![](./media/image32.jpeg)
+3.  ![Uma captura de tela de um computador O conteúdo gerado por IA pode
+    estar incorreto.](./media/image35.jpeg)
 
-3.	Click on **Finish** after reviewing the **summary of changes**.
+4.  Clique em **Finish** depois de revisar o **summary of changes**.
 
-    ![](./media/image74.png)
-  	
-4.  Wait for configuration wizard to finish and click **Close**. The
-    Azure SQL Db is now **connected** to your app.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image36.png)
 
-    ![](./media/image33.jpeg)
+5.  Aguarde a conclusão do assistente de configuração e clique em
+    **Close**. O Azure SQL Db agora está **conectado** ao seu
+    aplicativo.
 
-5.  From the Publish page, click **Publish** on the top right corner.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image37.jpeg)
 
-    ![](./media/image34.jpeg)
+6.  Na página Publish, clique em **Publish** no canto superior direito.
 
-    **Note:** This will take around 5 minutes
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image38.png)
 
-6.  Once your ASP.NET app is deployed to Azure, your default browser is
-    launched with the URL to the deployed app. **Add a few to-do items**.
+**Observação:** Isso levará cerca de 5 minutos
 
-    ![](./media/image35.jpeg)
+7.  Depois que o aplicativo ASP.NET é implementado no Azure, o navegador
+    padrão é iniciado com a URL do aplicativo implementando. **Add a few
+    to-do items**.
 
-### Task 4: Access the database locally
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image39.jpeg)
 
-Visual Studio lets you explore and manage your new database in Azure
-easily in the **SQL Server Object Explorer**. The new database already
-opened its firewall to the App Service app that you created. But to
-access it from your local computer (such as from Visual Studio), you
-must open a firewall for your local machine\\s public IP address. If
-your internet service provider changes your public IP address, you need
-to reconfigure the firewall to access the Azure database again.
+### Tarefa 4: Acessar o banco de dados localmente
 
-1.  From the Visual Studio 2022, **View** menu, select **SQL Server
+O Visual Studio permite que você explore e gerencie seu novo banco de
+dados no Azure facilmente no **SQL Server Object Explorer**. O novo
+banco de dados já abriu seu firewall para o aplicativo App Service que
+você criou. Mas para acessá-lo do computador local (como do Visual
+Studio), você deve abrir um firewall para o endereço IP público do
+computador local. Se o provedor de serviços de Internet alterar seu
+endereço IP público, você precisará reconfigurar o firewall para acessar
+o banco de dados do Azure novamente.
+
+1.  No menu **View** do Visual Studio 2022 , selecione **SQL Server
     Object Explorer**.
 
-    ![](./media/image36.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image40.jpeg)
 
-2.  At the top of **SQL Server Object Explorer**, click the **Add SQL
-    Server** button.
+2.  Na parte superior do **SQL Server Object Explorer**, clique no botão
+    **Add SQL Server**.
 
-    ![](./media/image37.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image41.jpeg)
 
-### Task 5: Configure the database connection
+### Tarefa 5: Configurar a conexão com o banco de dados
 
-1.  In the **Connect** dialog, expand the **Azure** node. All your SQL
-    Database instances in Azure are listed here.
+1.  Na caixa de diálogo **Connect**, expanda o nó do **Azure**. Todas as
+    suas instâncias do Banco de Dados SQL no Azure estão listadas aqui.
 
-2.  Select the database that you created
-    earlier(**dotnetappsqldbdbserver98**). The connection you created
-    earlier is automatically filled at the bottom.
+2.  Selecione o banco de dados que você criou anteriormente
+    (**dotnetappsqldbdbserver98**). A conexão que você criou
+    anteriormente é preenchida automaticamente na parte inferior.
 
-3.  Type the database administrator **password** you created
-    earlier(+++**PassWord98**+++) and click Connect.
+3.  Digite a **senha** de administrador do banco de dados que você criou
+    anteriormente (**+++PassWord98+++**) e clique em Connect.
 
-    ![](./media/image38.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image42.jpeg)
 
-### Task 6: Allow client connection from your computer
+### Tarefa 6: Permitir conexão de cliente do seu computador
 
-The Create a new firewall rule dialog is opened. By default, a server
-only allows connections to its databases from Azure services, such as
-your Azure app. To connect to your database from outside of Azure,
-create a firewall rule at the server level. The firewall rule allows the
-public IP address of your local computer.
+A caixa de diálogo Create uma nova regra de firewall é aberta. Por
+padrão, um servidor só permite conexões com seus bancos de dados de
+serviços do Azure, como seu aplicativo do Azure. Para se conectar ao
+banco de dados de fora do Azure, crie uma regra de firewall no nível do
+servidor. A regra de firewall permite o endereço IP público do seu
+computador local.
 
-The dialog is already filled with your computer's public IP address.
+A caixa de diálogo já está preenchida com o endereço IP público do seu
+computador.
 
-1.  Make sure that Add my client IP is selected and click OK.
+1.  Certifique-se de que Add my client IP esteja selecionado e clique em
+    OK.
 
-    ![](./media/image39.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image43.jpeg)
 
-2.  Once Visual Studio finishes creating the firewall setting for your
-    SQL Database instance, your connection shows up in **SQL Server
-    Object Explorer**.
+2.  Depois que o Visual Studio concluir a criação da configuração de
+    firewall para sua instância do Banco de Dados SQL, sua conexão será
+    exibida no **SQL Server Object Explorer**..
 
-3.  Expand your **connection \> Databases \> \< YOUR DATABASE \> \>
+3.  Expanda sua **connection \> Databases \> \< YOUR DATABASE \> \>
     Tables**.
 
-    ![](./media/image40.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image44.jpeg)
 
-4.  Right-click on the **Todoes** table and select **View Data**.
+4.  Clique com o botão direito do mouse na tabela **Todoes** e selecione
+    **View Data**.
 
-    ![](./media/image41.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image45.jpeg)
 
-5.  View the contents of the table.
+5.  Visualize o conteúdo da tabela. Os dados adicionados da interface do
+    usuário do aplicativo devem ser listados aqui.
 
-    ![](./media/image42.jpeg)
+![](./media/image46.jpeg)
 
-## Exercise 2: Update app with Code First Migrations
+## Exercício 2: Atualizar o aplicativo com Code First Migrations
 
-1.  From the **Solution Explorer**, open **Models\Todo.cs** in the code
-    editor. Add the following property to the **ToDo** class as the last
-    line (after the **public DateTime CreatedDate { get; set; }** line
-    )and click on **Save**.
+1.  No **Solution Explorer**, abra o arquivo **Modelos\Todo.cs** no
+    editor de código. Adicione a seguinte propriedade à classe **ToDo**
+    como a última linha (após o **public DateTime CreatedDate { get;
+    set; }** ) e clique em **Salve**.
 
-    +++**public bool Done { get; set; }**+++
++++**public bool Done { get; set; }**+++
 
-    ![](./media/image43.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image47.jpeg)
 
-### Task 1: Run Code First Migrations locally
+### Tarefa 1: Executar migrações do Code First localmente
 
-Run a few commands to make updates to your local database.
+Execute alguns comandos para fazer atualizações no banco de dados local.
 
-1.  From the **Tools** menu, click **NuGet Package
-    Manager** \> **Package Manager Console**.
+1.  No menu **Tools**, clique em **NuGet Package Manager** \> **Package
+    Manager Console**.
 
-    ![](./media/image44.jpeg)
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image48.jpeg)
 
-2.  In the Package Manager Console window, enable Code First Migrations
-    by executing this command.
+2.  Na janela Package Manager Console, habilite as Code First Migrations
+    executando este comando.
 
-    +++**Enable-Migrations**+++
+**+++Habilitar-Migrações+++**
 
-    ![](./media/image45.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image49.jpeg)
 
-3.  Add a migration by executing the below command.
+3.  Adicione uma migração executando o comando abaixo.
 
-    +++**Add-Migration AddProperty**+++
++++**Add-Migration AddProperty**+++
 
-    ![](./media/image46.jpeg)
+![](./media/image50.jpeg)
 
-4.  Update the local database by executing the below command.
+4.  Atualize o banco de dados local executando o comando abaixo.
 
-    +++**Update-Database**+++
++++**Update-Database**+++
 
-    ![](./media/image47.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image51.jpeg)
 
-5.  Type **Ctrl+F5** to run the app or click on **Debug -\> Start
-    without Debugging**. Test the edit, details, and create links.
+5.  Digite **Ctrl+F5** para executar o aplicativo ou clique em **Debug
+    -\> Start without Debugging**. Teste a edição, os detalhes e crie
+    links.
 
-    ![](./media/image48.jpeg)
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image52.jpeg)
 
-6.  The application page opens up and it still looks the same because
-    your application logic is not using this new property yet.
+6.  A página do aplicativo é aberta e ainda tem a mesma aparência porque
+    a lógica do aplicativo ainda não está usando essa nova propriedade.
 
-    ![](./media/image49.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image53.jpeg)
 
-### Task 2: Use the new property
+### Tarefa 2: Usar a nova propriedade
 
-Make some changes in your code to use the Done property.
+Faça algumas alterações em seu código para usar a propriedade Done.
 
-1.  From the Visual Studio, open **Controllers\TodosController.cs**.
-    Find the **Create()** method on line 52 and add +++**Done**+++ to the list
-    of properties in the Bind attribute. When you're done, your Create()
-    method signature look like the following code:
+1.  No Visual Studio, abra **Controllers\TodosController.cs**. Encontre
+    o método **Create()** na linha 52 e adicione **+++Done+++** à lista
+    de propriedades no atributo Bind. Quando terminar, a assinatura do
+    método Create() será semelhante ao seguinte código:
 
-    ![](./media/image50.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image54.jpeg)
 
-2.  Open **Views\Todos\Create.cshtml**. Add the following code after the
-    < div class=\"form-group\" > for **CreatedDate**.
+2.  Abra **Views\Todos\Create.cshtml**. Adicione o código a seguir após
+    o \< div class="form-group" \> para **CreatedDate**.
 
-    ![](./media/image51.jpeg)
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image55.jpeg)
 
-    ```
-    <div class="form-group">
-    @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div class="checkbox">
-            @Html.EditorFor(model => model.Done)
-            @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
+\<div class="form-group"\>
 
-    ```
+@Html.LabelFor(model =\> model.Done, htmlAttributes: new { @class =
+"control-label col-md-2" })
 
-3.  Open **Views\Todos\Index.cshtml**. Add the following code in the
-    empty **th** element, after the **th** element for
-    the **CreatedDate**.
+\<div class="col-md-10"\>
 
-    +++@Html.DisplayNameFor(model =\> model.Done)+++
+\<div class="checkbox"\>
 
-    ![](./media/image52.jpeg)
+@Html.EditorFor(model =\> model.Done)
 
-4.  Add this code just above the html.ActionLink() helper methods.
+@Html.ValidationMessageFor(model =\> model.Done, "", new { @class =
+"text-danger" })
 
-    ```
-    <td>
-    @Html.DisplayFor(modelItem => item.Done)
-</td>
+\</div\>
 
-    ```
-    ![](./media/image53.jpeg)
+\</div\>
 
-5.  Type **Ctrl+F5** to run the app.
+\`\`\`
 
-    ![](./media/image54.jpeg)
+3.  Abra **Views\Todos\Index.cshtml**. Adicione o código a seguir no
+    elemento **th** vazio, logo após o elemento **th** para o
+    **CreatedDate**.
 
-### Task 3: Enable Code First Migrations in Azure
+<+++@Html.DisplayNameFor>(model =\> model.Done)+++
 
-1.  Right click on the project and select **Publish**.
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image56.jpeg)
 
-    ![](./media/image55.jpeg)
+4.  Adicione este código logo acima do html. ActionLink().
 
-2.  Click **More actions** \> **Edit** to open the publish settings.
+5.  \<td\>
 
-    ![](./media/image56.jpeg)
+6.  @Html.DisplayFor(modelItem =\> item.Done)
 
-3.  In the **MyDatabaseContext** dropdown, select the database
-    connection for your Azure SQL Database.
+\`\`\`
 
-4.  Select **Execute Code First Migrations** (runs on application
-    start), then click **Save**.
+! \[\](./media/image53.jpeg)
 
-    ![](./media/image57.jpeg)
+5.  Digite **Ctrl+F5** para executar o aplicativo.
 
-5.  In the Publish page, click on **Publish**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image57.jpeg)
 
-    ![](./media/image58.jpeg)
+### Tarefa 3: Habilitar Code First Migrations no Azure
 
-6.  The updated app is now available on Azure.
+1.  Clique com o botão direito do mouse no projeto e selecione
+    **Publish**.
 
-7.  Try adding to-do items again and select **Done**, and they should
-    show up in your homepage as a completed item.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image58.jpeg)
 
-    ![](./media/image59.jpeg)
-    
-    ![](./media/image60.jpeg)
+2.  Clique em **More actions** \> **Edit**  para abrir as configurações
+    de publicação.
 
-## Exercise 3: Stream application logs
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image59.jpeg)
 
-1.  In the publish page, scroll down to the **Hosting** section. At the
-    right-hand corner, click **...** \> **View Streaming Logs**.
+3.  No menu suspenso **MyDatabaseContext**, selecione a conexão de banco
+    de dados para o Azure SQL Database.
 
-    ![](./media/image61.jpeg)
+4.  Selecione **Execute Code First Migrations** (é executado na
+    inicialização do aplicativo) e clique em **Salve**.
 
-2.  The logs are now streamed into the Output window.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image60.jpeg)
 
-    ![](./media/image62.jpeg)
+5.  Na página Publish, clique em **Publish**.
 
-3.  You don't see any of the trace messages yet because, when you first
-    select View Streaming Logs, your Azure app sets the trace level to
-    Error, which only logs error events.
+![Um objeto retangular preto com texto branco O conteúdo gerado por IA
+pode estar incorreto.](./media/image61.jpeg)
 
-**Note:** Restart the logging stream from the Visual Studio if you do
-not see them yet.
+6.  O aplicativo atualizado agora está disponível no Azure.
 
-### Task 1: Change trace levels
+7.  Tente adicionar itens de tarefas novamente e selecione **Done**, e
+    eles devem aparecer em sua página inicial como um item concluído.
 
-1.  Go to the publish page. In the Hosting section, click **… \> Open in
-    Azure portal**.
+![Uma captura de tela de um aplicativo O conteúdo gerado por IA pode
+estar incorreto.](./media/image62.jpeg)
 
-    ![](./media/image63.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image63.jpeg)
 
-2.	In the Azure portal – app page, select **App Service Logs** from the left pane under the **Monitoring** section.
+## Exercício 3: Transmitir logs de aplicativos
 
-    ![](./media/image64.jpeg)
+1.  Na página de publicação, role para baixo até a seção **Hosting**. No
+    canto direito, clique em **...** \> **View Streaming Logs**.
 
-3.  Under **Application Logging** (File System), select **Verbose** in
-    Level. Click **Save**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image64.jpeg)
 
-    ![](./media/image65.jpeg)
+2.  Os logs agora são transmitidos para a janela Output.
 
-4.  From your browser, access the web app on Azure and do some
-    activities.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image65.jpeg)
 
-    ![](./media/image66.jpeg)
+3.  Você ainda não vê nenhuma das mensagens de rastreamento porque,
+    quando você seleciona View Streaming Logs pela primeira vez, seu
+    aplicativo do Azure define o nível de rastreamento como Erro, que
+    registra apenas eventos de erro.
 
-5.  The trace messages are now streamed to the Output window in Visual
-    Studio.
+\[! Observação\] **Observação:** reinicie o fluxo de log do Visual
+Studio se você ainda não os vir.
 
-    ![](./media/image67.jpeg)
+### Tarefa 1: Alterar níveis de rastreamento
 
-6.  To stop the log-streaming service, click the **Stop
-    monitoring** button in the Output window.
+1.  Vá para a página de publicação. Na seção Hospedagem, clique em **...
+    \> Open in Azure portal**.
 
-    ![](./media/image68.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image66.jpeg)
 
-7.  Close the Visual Studio.
+2.  No Portal do Azure – página do aplicativo, selecione **Open in Azure
+    portal** no painel à esquerda na seção **Monitoring**.
 
-## Exercise 4: Clean up resources
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image67.jpeg)
 
-1.	From the Azure portal, open the Resourcegroup **RGForWebAppSQL**. Click on **Delete resource group**.
+3.  Em **Application Logging** (Sistema de Arquivos), selecione
+    **Verbose** em Nível. Clique em **Salve**.
 
-    ![](./media/image69.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image68.jpeg)
 
-2.	Type the name +++**RGForWebAppSQL**+++ and then click on **Delete**.
+4.  No navegador, acesse o aplicativo Web no Azure e execute algumas
+    atividades.
 
-    ![](./media/image70.jpeg) 
-   	
-3.	Click **Delete** on the Delete confirmation dialog box.
+![Uma captura de tela de um aplicativo O conteúdo gerado por IA pode
+estar incorreto.](./media/image69.jpeg)
 
-    ![](./media/image71.jpeg)
+5.  As mensagens de rastreamento agora são transmitidas para a janela
+    Output no Visual Studio.
 
-**Summary**
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image70.jpeg)
 
-In this lab, you have learnt to deploy a data-driven ASP.NET app in App
-Service and connect it to Azure SQL Database.
+6.  Para interromper o serviço de streaming de logs, clique no botão
+    **Stop monitoring** na janela Output.
 
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image71.jpeg)
+
+7.  Feche o Visual Studio.
+
+## Exercício 4: Limpar recursos
+
+1.  No portal do Azure, abra o Resourcegroup atribuído.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image72.png)
+
+2.  Selecione todos os recursos e clique em Delete.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image73.png)
+
+3.  Digite +++delete+++ na caixa de texto e selecione Delete. Selecione
+    Delete na caixa de diálogo de confirmação.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image74.png)
+
+![Uma captura de tela de um erro do computador O conteúdo gerado por IA
+pode estar incorreto.](./media/image75.png)
+
+**Resumo**
+
+Neste laboratório, você aprendeu a implementar um aplicativo ASP.NET
+controlado por dados no App Service e conectá-lo ao Azure SQL Database.
