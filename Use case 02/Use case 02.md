@@ -1,388 +1,485 @@
-# Usecase 02 - Build a Fruits List Quarkus web app with Azure App Service on Linux and PostgreSQL
+# Caso de uso 02 – Criar um aplicativo Web Quarkus da Lista de Frutas com o Azure App Service no Linux e no PostgreSQL
 
-**Estimated duration:** 40 minutes
+**Duração estimada:** 40 minutos
 
-**Lab Type:** Instructor Led
+**Tipo de laboratório:** Conduzido por instrutor
 
-**Objective:**
+**Objetivo:**
 
-This usecase shows how to build, configure, and deploy a secure Quarkus
-application in Azure App Service that's connected to a PostgreSQL
-database (using Azure Database for PostgreSQL). Azure App Service is a
-highly scalable, self-patching, web-hosting service that can easily
-deploy apps on Windows or Linux. When you're finished, you'll have a
-Quarkus app running on Azure App Service on Linux.
+Este caso de uso mostra como criar, configurar e implementar um
+aplicativo Quarkus seguro no Azure App Service conectado a um banco de
+dados PostgreSQL (usando o Azure Database for PostgreSQL). O Azure App
+Service é um serviço de hospedagem na Web altamente escalonável e com
+aplicação automática de patches que pode implementar facilmente
+aplicativos no Windows ou no Linux. Quando terminar, você terá um
+aplicativo Quarkus em execução no Azure App Service no Linux.
 
-**Pre-requisites:**
+**Pré-requisitos:**
 
-**GitHub account** -- You are expected to have your own GitHub login
-credentials. If you do not have, please create one from here
-- +++https://github.com/signup?user_email=&source=form-home-signup+++
+**Conta do GitHub** – Espera-se que você tenha suas próprias credenciais
+de login do GitHub. Se você não tiver, crie um aqui -
++++<https://github.com/signup?user_email=&source=form-home-signup+++>
 
-## Exercise 1: Run the sample
+## Exercício 0: Entender a VM e as credenciais
 
-First, you set up a sample data-driven app as a starting point. The
-sample repository we are using here includes a dev container
-configuration. The dev container has everything you need to develop an
-application, including the database, cache, and all environment
-variables needed by the sample application. The dev container can run in
-a GitHub codespace, which means you can run the sample on any computer
-with a web browser.
+Nesta tarefa, identificaremos e entenderemos as credenciais que usaremos
+em todo o laboratório.
 
-1.  From a browser, sign in to your GitHub
-    account +++**https://github.com/login**+++.
+1.  A guia **Instructions** contém o guia do laboratório com as
+    instruções a serem seguidas em todo o laboratório.
 
-2.  Open this url from a new
-    tab, +++**https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++.
+2.  A guia **Resources** tem as credenciais necessárias para executar o
+    laboratório.
 
-3.  Select **Fork -\> Create a new fork**.
+    - **URL** – URL para o portal do Azure
 
-    ![](./media/image1.jpeg)
+    - **Subscription** – Este é o ID da assinatura atribuída a você
 
-4.  Click on **Create fork** in the Create a new fork page.
+    - **Username** – a ID de usuário com a qual você precisa fazer login
+      nos serviços do Azure.
 
-    ![](./media/image2.jpeg)
+    - **Password** – senha para o login do Azure.
 
-5.  In the forked page of the repo, select **Code** \> **Create
+Vamos chamar esse nome de usuário e senha como credenciais de login do
+Azure. Usaremos essas credenciais sempre que mencionarmos as credenciais
+de login do Azure.
+
+- **Resource Group** – O **Resource Group** atribuído a você.
+
+\[! Alerta\] **Importante:** certifique-se de criar todos os seus
+recursos neste grupo de recursos
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image1.png)
+
+3.  A guia **Help** contém as informações de suporte. O valor do **ID**
+    aqui é o **Lab instance ID** que será usado durante a execução do
+    laboratório.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image2.png)
+
+## Exercício 1: Executar o exemplo
+
+Primeiro, você configura um aplicativo controlado por dados de exemplo
+como ponto de partida. O repositório de exemplo que estamos usando aqui
+inclui uma configuração de contêiner de desenvolvimento. O contêiner dev
+tem tudo o que você precisa para desenvolver um aplicativo, incluindo o
+banco de dados, o cache e todas as variáveis de ambiente necessárias
+para o aplicativo de exemplo. O contêiner dev pode ser executado em um
+codespace GitHub, o que significa que você pode executar o exemplo em
+qualquer computador com um navegador da Web.
+
+1.  Em um navegador, entre na sua conta do GitHub
+    +++\*\*<https://github.com/login**+++>.
+
+2.  Abra este url em uma nova guia,
+    +++\*\*<https://github.com/technofocus-pte/msdocs-quarkus-postgresql-sample-app**+++>.
+
+3.  Selecione **Fork -\> Create a new fork**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image3.jpeg)
+
+4.  Clique em **Create fork** na página Create a new fork.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image4.jpeg)
+
+5.  Na página forked do repositório, selecione **Code** \> **Create
     codespace on main**.
 
-    ![](./media/image3.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image5.jpeg)
 
-    **Note:** If Create Codespace on main option does not show up, click on
-the + symbol next to Codespaces.
+**Observação:** se a opção Create Codespace on main não aparecer, clique
+no símbolo + próximo a Codespaces.
 
-    ![](./media/image4.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image6.jpeg)
 
-    **Note:** The codespace creation takes around 10 minutes to set up.
+**Observação:** a criação do codespace leva cerca de 10 minutos para ser
+configurada.
 
-    ![](./media/image5.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image7.jpeg)
 
-6.  Execute +++mvn quarkus:dev+++ in the Terminal. Click on **Allow** in the
-    pop up.
+6.  Execute +++mvn quarkus:dev+++ no Terminal. Clique em **Allow** no
+    pop-up.
 
-    ![](./media/image6.jpeg)
+![Uma captura de tela de um navegador O conteúdo gerado por IA pode
+estar incorreto.](./media/image8.jpeg)
 
-    ![](./media/image7.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image9.jpeg)
 
-7.  When you see the notification, **Your application running on port
-    8080** is available., select **Open in Browser**. You should see the
-    sample application in a new browser tab.
+7.  Quando você vir a notificação, **Your application running on port
+    8080** está disponível, selecione **Open in Browser**. Você deve ver
+    o aplicativo de exemplo em uma nova guia do navegador.
 
-    If you see a **notification** with port **5005**, **skip** it.
+Se você vir uma **notification** com a porta **5005**, **ignore-a**.
 
-    ![](./media/image8.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image10.jpeg)
 
-    ![](./media/image9.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image11.jpeg)
 
-8.  To stop the Quarkus development server, type **Ctrl+C** in the
-    Codespace terminal.
+8.  Para interromper o servidor de desenvolvimento do Quarkus, digite
+    **Ctrl+C** no terminal do Codespace.
 
-    ![](./media/image10.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image12.jpeg)
 
-## Exercise 2: Create App Service and PostgreSQL
+## Exercício 2: Criar o App Service e o PostgreSQL
 
-First, you create the Azure resources. The steps used in this lab create
-a set of secure-by-default resources that include App Service and Azure
-Database for PostgreSQL.
+Primeiro, você cria os recursos do Azure. As etapas usadas neste
+laboratório criam um conjunto de recursos seguros por padrão que incluem
+o App Service e o Azure Database for PostgreSQL.
 
-1.  Login to Azure portal
-    at +++https://portal.azure.com/+++ and **login** with
-    the **Username** and **password** under the **User Credentials** section in the **Resources** tab of the VM.
+1.  Abra o portal do Azure em +++<https://portal.azure.com/+++> e faça
+    **login** com as credenciais de login do Azure na guia **Resources**
+    da VM.
 
-    ![](./media/image11.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image13.png)
 
-2.  Select **Cancel** or the close button in the Welcome page.
+2.  Selecione **Cancel** ou o botão fechar na página de boas-vindas.
 
-    ![](./media/image12.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image14.jpeg)
 
-3.  Enter +++**web app database**+++ in the search bar at the top of the Azure
-    portal. Select the item labelled **Web App + Database** under
-    the **Marketplace** heading.
+3.  Insira +++**web app database**+++ na barra de pesquisa na parte
+    superior do portal do Azure. Selecione o item rotulado **Web App +
+    Database** sob o título **Marketplace**.
 
-    ![](./media/image13.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image15.jpeg)
 
-4.  On **Create Web App + Database**, fill in the below details and
-    select **Review + create**
+4.  Em **Create Web App + Database**, preencha os detalhes abaixo e
+    selecione **Review + create**
 
-    | **Property**   |  **Value**  |
-    |:-------|:-------|
-    |  Subscription  |  Select your **assigned subscription**  |
-    | Resource group   |  Click **Create New** -> Enter +++**RGForAppService**+++  |
-    |  Region  |  Select your nearest region(East US2 is selected here for this execution)  |
-    | **Web App Details**   |    |
-    | Name   |  Enter +++quarkuwebappXX+++ (Replace XX with a random number since the app name should be universally unique)  |
-    | Runtime stack   |  **Java 17**  |
-    |  **Database**  |    |
-    |  Engine  |  Select **PostgreSQL – Flexible Server**  |
-    |  Hosting Plan  |  Select **Basic**  |
-    
-    ![](./media/image14.jpeg)
+[TABLE]
 
-    ![](./media/image15.jpeg)
+5.  ![Uma captura de tela de um computador O conteúdo gerado por IA pode
+    estar incorreto.](./media/image16.png)
 
-6.  Once the validation passes, click on **Create**.
+6.  ![Uma captura de tela de um aplicativo da web O conteúdo gerado por
+    IA pode estar incorreto.](./media/image17.jpeg)
 
-    ![](./media/image16.jpeg)
+7.  Assim que a validação for aprovada, clique em **Create**.
 
-    **Note:** The app creation takes around 15 minutes.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image18.png)
 
-7.  Once the deployment is complete, click on **Go to resource**.
+**Observação:** a criação do aplicativo leva cerca de 15 minutos.
 
-    ![](./media/image17.jpeg)
+8.  Quando a implementação estiver concluída, clique em **Go to
+    resource**.
 
-8.  You're taken directly to the **App Service page.** Click
-    on **Home** at the top left corner.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image19.jpeg)
 
-    ![](./media/image18.jpeg)
+9.  Você será direcionado diretamente para a **página do App Service.**
+    Clique em **Home** no canto superior esquerdo.
 
-9.  Click on the Portal menu and select **Resource Groups** from it.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image20.jpeg)
 
-    ![](./media/image19.jpeg)
+10. Clique no menu Portal e selecione **Resource Groups** nele.
 
-10.  Select the Resource group assigned to you and see that the
-    following resources are created from the deployment that we just
-    performed.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image21.jpeg)
 
-    - App Service plan
-    
-    - App Service
-    
-    - Virtual network
-    
-    - Azure Database for PostgreSQL flexible server
-    
-    - Private DNS zone
+11. Selecione o grupo de recursos atribuído a você e veja se os recursos
+    a seguir são criados a partir da implementação que acabamos de
+    executar.
 
-   ![](./media/image20.jpeg)
+> \- App Service plan
 
-## Exercise 3: Verify connection settings
+\- App Service
 
-The creation wizard generated the connectivity variables for you already
-as app settings. In this step, you learn where to find the app settings,
-and how you can create your own.
+\- Virtual network
 
-1.  Click on the **App Service** from the list of resources in the
-    Resource group.
+\- Azure Database for PostgreSQL flexible server
 
-    ![](./media/image21.jpeg)
+\- Private DNS zone
 
-2.  In the App Service page, in the left menu, select **Environment
-    variables** under **Settings**.
+![Uma captura de tela de um grupo O conteúdo gerado por IA pode estar
+incorreto.](./media/image22.png)
 
-3.  In the **App settings** tab of the **Environment variables** page,
-    verify that **AZURE_POSTGRESQL_CONNECTIONSTRING** is present. It's
-    injected at runtime as an environment variable.
+## Exercício 3: Verificar as configurações de conexão
 
-    ![](./media/image22.jpeg)
+O assistente de criação gerou as variáveis de conectividade para você já
+como configurações do aplicativo. Nesta etapa, você aprenderá onde
+encontrar as configurações do aplicativo e como criar as suas próprias.
 
-4.  Select **+ Add**.
+1.  Clique no **App Service** na lista de recursos em Resource group.
 
-    ![](./media/image23.jpeg)
+![Uma captura de tela de um telefone O conteúdo gerado por IA pode estar
+incorreto.](./media/image23.jpeg)
 
-5.  Name the setting +++**PORT**+++ and set its value to +++**8080**+++,
-    which is the default port of the Quarkus application.
-    Select **Apply**.
+2.  Na página App Service, no menu à esquerda, selecione **Environment
+    variables** em **Settings**.
 
-    ![](./media/image24.jpeg)
+3.  Na guia **App settings** da página **Environment variables**,
+    verifique se **AZURE_POSTGRESQL_CONNECTIONSTRING** está presente.
+    Ele é injetado em tempo de execução como uma variável de ambiente.
 
-6.  Select **Apply**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image24.jpeg)
 
-    ![](./media/image25.jpeg)
+4.  Selecione **+ Add**.
 
-7.  Select **Confirm**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image25.jpeg)
 
-    ![](./media/image26.jpeg)
+5.  Nomeie a configuração **+++PORT+++** e defina seu valor como
+    **+++8080+++**, que é a porta padrão do aplicativo Quarkus.
+    Selecione **Apply**.
 
-8.  You will get a notification stating that the app settings has been
-    updated.
+![Uma captura de tela de um login O conteúdo gerado por IA pode estar
+incorreto.](./media/image26.jpeg)
 
-    ![](./media/image27.jpeg)
+6.  Selecione **Apply**.
 
-## Exercise 4: Deploy sample code
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image27.jpeg)
 
-In this step, you'll configure GitHub deployment using GitHub Actions.
-It's just one of many ways to deploy to App Service, but also a great
-way to have continuous integration in your deployment process. By
-default, every git push to your GitHub repository will kick off the
-build and deploy action.
+7.  Selecione **Confirm**.
 
-1.  From the App Service page, in the left menu, select **Deployment
-    Center** under **Deployment**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image28.jpeg)
 
-    ![](./media/image28.jpeg)
+8.  Você receberá uma notificação informando que as configurações do
+    aplicativo foram atualizadas.
 
-2.  In Source, select **GitHub**. By default, GitHub Actions is selected
-    as the build provider.
+![Uma captura de tela de um telefone O conteúdo gerado por IA pode estar
+incorreto.](./media/image29.jpeg)
 
-    ![](./media/image29.jpeg)
+## Exercício 4: Implementar código de exemplo
 
-3.  Click on **Authorize** and sign in to your GitHub account and follow
-    the prompt to authorize Azure.
+Nesta etapa, você configurará a implementação do GitHub usando GitHub
+Actions. É apenas uma das muitas maneiras de implementar no App Service,
+mas também uma ótima maneira de ter integração contínua em seu processo
+de implementação. Por padrão, cada git push para o repositório GitHub
+iniciará a ação de criar e implementar.
 
-    ![](./media/image30.jpeg)
+1.  Na página do App Service, no menu à esquerda, selecione Centro de
+    **Deployment Center**  em **Deployment**.
 
-4.  Fill in the details as below, leave the remaining to the default and
-    click on **Save**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image30.jpeg)
 
-    |  **Property**  | **Value**   |
-    |:--------|:---------|
-    |  Organization  |  Your GitHub account  |
-    |  Repository  |  Select **msdocs-quarkus-postgresql-sample-app**  |
-    |  Branch  |   **main** |
-    
-    ![](./media/image31.jpeg)
+2.  Em Origem, selecione **GitHub**. Por padrão, GitHub Actions é
+    selecionado como o provedor de criação.
 
-6.  Once **Save** is clicked on, App Service commits a workflow file
-    into the chosen GitHub repository, in the .github/workflows
-    directory.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image31.jpeg)
 
-7.  Back in the GitHub codespace of your sample fork, run +++**git pull origin main**+++. This pulls the newly committed workflow file into
-    your codespace.
+3.  Clique em **Authorize** e entre em sua conta do GitHub e siga o
+    prompt para autorizar o Azure.
 
-    ![](./media/image32.jpeg)
+![Uma captura de tela de um programa de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image32.jpeg)
 
-8.  Open **src/main/resources/application.properties** in the explorer.
-    Quarkus uses this file to load Java properties.
+4.  Preencha os detalhes abaixo, deixe o restante para o padrão e clique
+    em **Save**.
 
-9.  Find the code (lines 10-11). This code sets the production variable
-    **%prod.quarkus.datasource.jdbc.url** to the app setting that the
-    creation wizard for you. The **quarkus.package.type** is set to build an
-    Uber-Jar, which you need to run in App Service.
+[TABLE]
 
-    ![](./media/image33.jpeg)
+5.  ![Uma captura de tela de um computador O conteúdo gerado por IA pode
+    estar incorreto.](./media/image33.jpeg)
 
-10.  Open **.github/workflows/main_msdocs-quarkus-postgres-XYZ.yml** in
-    the explorer. This file was created by the App Service create
-    wizard.
+6.  Depois que **Salve** é clicado, o App Service confirma um arquivo de
+    fluxo de trabalho no repositório GitHub escolhido, no diretório
+    .github/workflows.
 
-11. Under the Build with Maven step, change the Maven command to +++**mvn clean install -DskipTests**+++.
+7.  De volta ao espaço de código do GitHub de seu fork de amostra,
+    execute +++**git pull origin main+++.** Isso puxa o arquivo de fluxo
+    de trabalho recém-confirmado para o codespace.
 
-    **-DskipTests** skips the tests in your Quarkus project, to avoid the
-GitHub workflow failing prematurely.
+\[! Nota\] **Observação:** Se você encontrar casos de teste ainda em
+execução no terminal, pressione Ctrl+C e execute o comando acima.
 
-    ![](./media/image34.jpeg)
+![Uma captura de tela de um código de computador O conteúdo gerado por
+IA pode estar incorreto.](./media/image34.jpeg)
 
-12. Select the **Source Control** extension.
+8.  Abra **src/main/resources/application.properties** no explorer. O
+    Quarkus usa esse arquivo para carregar propriedades Java.
 
-    ![](./media/image35.jpeg)
+9.  Encontre o código (linhas 10-11). Esse código define a variável de
+    produção **%prod.quarkus.datasource.jdbc.url** para a configuração
+    do aplicativo que o assistente de criação para você. O
+    **quarkus.package.type** é definido para criar um Uber-Jar, que você
+    precisa executar no App Service.
 
-13. In the textbox, type a commit message like +++**Configure DB and
-    deployment workflow**+++. Select **Commit**, then confirm
-    with **Yes**.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image35.jpeg)
 
-    ![](./media/image36.jpeg)
+10. Abra **.github/workflows/main_quarkuwebapp\[lab instance id\].yml**
+    no explorer. Esse arquivo foi criado pelo assistente de criação do
+    App Service.
 
-14. Select **Sync changes 1**, then confirm with **OK**.
+11. Na etapa Compilar com Maven, altere o comando Maven para +++**mvn
+    clean install -DskipTests**+++.
 
-    ![](./media/image37.jpeg)
+**-DskipTests** ignora os testes em seu projeto Quarkus, para evitar que
+o fluxo de trabalho do GitHub falhe prematuramente.
 
-    ![](./media/image38.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image36.jpeg)
 
-15. Back in the Deployment Center page in the Azure portal,
-    Select **Logs**. A new deployment run is already started from your
-    committed changes.
+12. Selecione a extensão **Source Control** .
 
-16. In the log item for the deployment run, select the **Build/Deploy
-    Logs** entry with the latest timestamp.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image37.jpeg)
 
-    ![](./media/image39.jpeg)
+13. Na caixa de texto, digite uma mensagem de confirmação como
+    +++**Configure DB and deployment workflow**+++. Selecione **Commit**
+    e confirme com **Yes**.
 
-17. You're taken to your GitHub repository and see that the GitHub
-    action is running. The workflow file defines two separate stages,
-    build and deploy. Wait for the GitHub run to show a status of
-    Complete. It takes about 5 minutes.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image38.jpeg)
 
-    ![](./media/image40.jpeg)
+14. Selecione **Sync changes 1** e confirme com **OK.**
 
-## Exercise 5: Browse to the app
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image39.jpeg)
 
-1.  From the Azure portal(+++https://portal.azure.com+++), open Resource
-    group **RGForAppService** and select the **App Service** resource.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image40.jpeg)
 
-    ![](./media/image41.jpeg)
+15. De volta à página Deployment Center no portal do Azure, selecione
+    **Logs**. Uma nova execução de implementação já teria começado a
+    partir de suas alterações confirmadas.
 
-2.  From the left menu, select **Overview** and select the URL of your
-    app under **Default domain**.
+16. No item de log da execução de implementação, selecione
+    **Build/Deploy Logs**  com o carimbo de data/hora mais recente.
 
-    ![](./media/image42.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image41.jpeg)
 
-3.  Paste the copied url in a new browser to open the app.
+17. Você será direcionado ao seu repositório do GitHub e verá que a ação
+    do GitHub está em execução. O arquivo de fluxo de trabalho define
+    dois estágios separados, criação e implementação. Aguarde até que a
+    execução do GitHub mostre um status de Concluído. Isso leva cerca de
+    5 minutos.
 
-    ![](./media/image43.jpeg)
+![Uma captura de tela de uma página da web O conteúdo gerado por IA pode
+estar incorreto.](./media/image42.jpeg)
 
-4.  Add a few fruits to the list. Now, you're running a web app in Azure
-    App Service, with secure connectivity to Azure Database for
-    PostgreSQL.
+## Exercício 5: Navegue até o aplicativo
 
-    ![](./media/image44.jpeg)
+1.  No portal do
+    Azure(+++[https://portal.azure.com+++](https://portal.azure.com+++/)),
+    abra o Resource group **ResourceGroup1** e selecione o recurso **App
+    Service**.
 
-    ![](./media/image45.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image43.png)
 
-## Exercise 6: Stream diagnostic logs
+2.  No menu à esquerda, selecione **Overview** e selecione a URL do seu
+    aplicativo em **Default domain**.
 
-Azure App Service captures all messages output to the console to help
-you diagnose issues with your application. The sample application
-includes standard JBoss logging statements to demonstrate this
-capability as shown below.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image44.jpeg)
 
-1.  From the Azure portal App Service page, from the left menu,
-    select **App Service logs** under **Monitoring**.
+3.  Cole a URL copiada em um novo navegador para abrir o aplicativo.
 
-    ![](./media/image46.jpeg)
+![Uma captura de tela de uma lista de frutas O conteúdo gerado por IA
+pode estar incorreto.](./media/image45.jpeg)
 
-2.  Under **Application logging**, select **File System**. In the top
-    menu, select **Save**.
+4.  Adicione algumas frutas à lista. Agora, você está executando um
+    aplicativo Web no Azure App Service, com conectividade segura com o
+    Azure Database for PostgreSQL.
 
-    ![](./media/image47.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image46.jpeg)
 
-3.  From the left menu, select **Log stream**. You see the logs for your
-    app, including platform logs and logs from inside the container.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image47.jpeg)
 
-    ![](./media/image48.jpeg)
+## Exercício 6: Transmitir logs de diagnóstico
 
-## Exercise 7: Clean up resources
+O Azure App Service captura todas as mensagens enviadas para o console
+para auxiliar no diagnostico de problemas com seu aplicativo. O
+aplicativo de exemplo inclui instruções de log padrão do JBoss para
+demonstrar essa funcionalidade, conforme mostrado abaixo.
 
-1.  From the Azure portal Home page, select Resource groups.
+1.  Na página Portal do App Service do Azure, no menu à esquerda,
+    selecione **App Service logs** em **Monitoring.**
 
-    ![](./media/image49.jpeg)
+![Uma captura de tela de um telefone O conteúdo gerado por IA pode estar
+incorreto.](./media/image48.jpeg)
 
-2.	Select the **NetworkWatcherRG** and click on **Delete resource group**.
+2.  Em **Application logging**, selecione **File System**. No menu
+    superior, selecione **Save**.
 
-    ![](./media/image57.png)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image49.jpeg)
 
-3.	Type +++NetworkWatcherRG+++ in the text box and click on **Delete**.
- 
-    ![](./media/image58.png)
+3.  No menu à esquerda, selecione **Log stream**. Você vera os logs do
+    seu aplicativo, incluindo os logs da plataforma e logs gerados
+    dentro do contêiner.
 
-    ![](./media/image59.png)
-  
-4.	Next, from the Resource group page, select the Resource group **RGForAppService**.
+![Uma captura de tela de computador de uma tela de computador O conteúdo
+gerado por IA pode estar incorreto.](./media/image50.jpeg)
 
-    ![](./media/image50.jpeg)
+## Exercício 7: Limpar recursos
 
-5.	Click on **Delete resource group**.
+1.  Na página inicial do portal do Azure, selecione Resource groups.
 
-    ![](./media/image51.jpeg)
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image51.jpeg)
 
-6.	Type the resource group name in the text field as +++**RGForAppService**+++ and click on **Delete**.
- 
-    ![](./media/image52.jpeg)
+2.  Selecione o **NetworkWatcherRG** e clique em **Delete resource
+    group**.
 
-7.	Click on **Delete** in the confirmation dialog.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image52.png)
 
-    ![](./media/image53.jpeg)
+3.  Digite +++NetworkWatcherRG+++ na caixa de texto e clique em
+    **Delete**.
 
-8.	A notification stating **Deleted resource group RGForAppService** confirms the deletion.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image53.png)
 
-    ![](./media/image54.jpeg)
-  	
-8.	Back in the GitHub Workspace, click on the drop down next to **Code**, select the three dots next to the codespace name and click on **Delete**.
-   
-    ![](./media/image64.jpeg)
+![Uma captura de tela de um erro do computador O conteúdo gerado por IA
+pode estar incorreto.](./media/image54.png)
 
-**Summary:**
+4.  Em seguida, na página Resource group, selecione o Resource group
+    atribuído.
 
-We have learnt to deploy a secure Quarkus application in Azure App
-Service, connected it to PostgreSQL database to add Fruit names from the
-app's UI.
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image55.png)
 
+5.  Selecione todos os **resources** e, em seguida, selecione
+    **Delete**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image56.png)
+
+6.  Digite **+++delete+++** na caixa de texto e clique em **Delete**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image57.png)
+
+![Uma captura de tela de um erro do computador O conteúdo gerado por IA
+pode estar incorreto.](./media/image58.png)
+
+7.  Uma mensagem de confirmação vai aparecer avisando que os recursos
+    foram excluídos com sucesso.
+
+8.  De volta ao GitHub Workspace, clique no menu suspenso ao lado de
+    **Code**, selecione os três pontos ao lado do nome do codespace e
+    clique em **Delete**.
+
+![Uma captura de tela de um computador O conteúdo gerado por IA pode
+estar incorreto.](./media/image59.jpeg)
+
+**Resumo:**
+
+Aprendemos a implementar um aplicativo Quarkus seguro no Azure App
+Service, conectando-o ao banco de dados PostgreSQL para adicionar nomes
+de frutas da interface do usuário do aplicativo.
