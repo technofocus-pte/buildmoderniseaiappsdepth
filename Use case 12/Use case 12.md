@@ -1,1273 +1,1549 @@
-# Use case 12- Integrate generative AI capabilities with Azure Database for PostgreSQL Flexible Server to evaluate reviews of given AI listings
+# Caso d'uso 12- Integrare le funzionalità di intelligenza artificiale generativa con il server flessibile di Database di Azure per PostgreSQL per valutare le recensioni di determinati elenchi di intelligenza artificiale
 
-**Lab Duration --** 40 minutes
+**Durata del laboratorio --** 40 minuti
 
-**Lab Type --** Instructor led
+**Tipo di laboratorio --** Guidato dall'istruttore
 
-**Introduction**
+**Introduzione**
 
-In this lab, you will learn how to integrate Azure AI services with
-PostgreSQL to enhance your database with advanced AI functionalities. By
-leveraging the power of Azure OpenAI and PostgreSQL extensions such as
-pgvector and PostGIS, you will enable sophisticated text analysis,
-vector similarity searches, and geospatial queries directly within your
-database. This lab guides you through provisioning the necessary Azure
-resources, configuring your database, and executing complex queries that
-combine AI-driven insights with geospatial data.**Objectives**
+In questo lab imparerai come integrare i servizi di Azure AI con
+PostgreSQL per migliorare il suo database con funzionalità avanzate di
+AI. Sfruttando la potenza delle estensioni Azure OpenAI e PostgreSQL, ad
+esempio pgvector e PostGIS, è possibile abilitare analisi del testo
+sofisticate, ricerche di somiglianza vettoriale e query geospaziali
+direttamente all'interno del database. Questo lab illustra il
+provisioning delle risorse di Azure necessarie, la configurazione del
+database e l'esecuzione di query complesse che combinano informazioni
+dettagliate basate sull'intelligenza artificiale con data geospaziali.
 
-- To provision and configure Azure Database for PostgreSQL Flexible
-  Server.
+**Obiettivi**
 
-- To create and manage vector embeddings using the Azure OpenAI service.
+- Per effettuare il provisioning e configurare il server flessibile di
+  Database di Azure per PostgreSQL.
 
-- To perform vector similarity searches in order to find semantically
-  similar text data.
+- Per creare e gestire gli incorporamenti vettoriali usando il servizio
+  Azure OpenAI.
 
-- To utilize the PostGIS extension for geospatial data analysis.
+- Per eseguire ricerche di somiglianza vettoriale al fine di trovare
+  data di testo semanticamente simili.
 
-- To integrate Azure AI Language services for sentiment analysis and
-  other cognitive functions.
+- Per utilizzare l'estensione PostGIS per l'analisi dei data
+  geospaziali.
 
-- To optimize and analyze query performance using indexing and query
-  planning tools.
+- Per integrare i servizi di Azure AI Language per l'analisi del
+  sentiment e altre funzioni cognitive.
 
-**Important:** If any of the commands does not get **pasted** in
-the **CloudShell**, please open a notepad, keep the cursor at an empty
-space of the notepad and then click on the T button of the command to be
-pasted. The contents will get copied to the notepad and then you can
-copy and paste from the notepad onto the CloudShell.
+- Per ottimizzare e analizzare le prestazioni delle query utilizzando
+  gli strumenti di indicizzazione e pianificazione delle query.
 
-## Exercise 1: Provision an Azure Database for PostgreSQL Flexible Server
+**Importante:** Se uno qualsiasi dei comandi non viene **pasted** in
+**CloudShell**, apri un notepad, tieni il cursore in uno spazio vuoto
+del notepad e quindi fai clic sul pulsante T del comando da incollare.
+Il contenuto verrà copiato nel blocco note e quindi sarà possibile
+copiare e incollare dal notepad su CloudShell.
 
-### Task 1: Provision an Azure Database for PostgreSQL Flexible Server
+## Esercizio 0: Informazioni sulla macchina virtuale e sulle credenziali
 
-1.  Open a web browser and navigate to the +++https://portal.azure.com+++
+In questa attività, identificheremo e comprenderemo le credenziali che
+utilizzeremo in tutto il laboratorio.
 
-2.  Select the **Cloud Shell** icon in the Azure portal toolbar to open
-    a new Cloud Shell pane at the top of your browser window.
+1.  **Instructions tab** Tenere la guida del laboratorio con le
+    istruzioni da seguire durante il laboratorio.
 
-    ![](./media/image1.jpeg)
+2.  **Resources tab** contiene le credenziali necessarie per
+    l'esecuzione del lab.
 
-3.  The first time you open the Cloud Shell, you may be prompted to
-    choose the type of shell you want to use
-    (**Bash** or **PowerShell**). Select **Bash**.
+    - **URL**: URL del portale di Azure
 
-    ![](./media/image2.jpeg)
+    - **Subscription**: questo è l'ID dell'abbonamento assegnato
+      all'utente
 
-4.  In **Getting started** dialog box, select **Mount storage
-    account** and select your azure subscription. Click on
-    the **Apply** button.
+    - **Username**: l'ID utente con cui è necessario accedere ai servizi
+      di Azure.
 
-    ![](./media/image3.jpeg)
+    - **Password**: password per l'account di accesso di Azure.
+      Chiamiamo questo nome utente e password come credenziali di
+      accesso di Azure. Useremo questi crediti ogni volta che
+      menzioniamo le credenziali di accesso di Azure.
 
-5.  In **Mount storage account** dialog box, select **we will create a
-    storage account for you** and click on the **Next** button.
+    - **Resource Group**: il **Resource Group** assegnato all'utente.
 
-    ![](./media/image4.jpeg)
-    
-    ![](./media/image5.jpeg)
+\[! Vigile\] **Importante:** assicurarsi di creare tutte le risorse in
+questo Resource Group
 
-6.  At the cloud shell prompt, run the following commands to define
-    variables for creating resources. The variables represent the names
-    to assign to your resource group and database and specify the Azure
-    region into which resources should be deployed.
+![](./media/image1.png)
 
-7.  The resource group name specified is **rg-postgresql-labs**, but you
-    can provide any name you wish to use to host the resources
-    associated with this lab.
+3.  **Help tab** contiene le informazioni di supporto. Il valore **ID**
+    è l' **ID** **Lab instance** che verrà utilizzato durante
+    l'esecuzione del lab.
 
-    +++RG_NAME=rg-postgresql-labs+++
-    
-    ![](./media/image6.jpeg)
+![](./media/image2.png)
 
-8.  In the database name, replace the {SUFFIX} token with a unique
-    value, such as your initials, to ensure the database server name is
-    globally unique.
+## Esercizio 1: Effettuare il provisioning di un server flessibile di Database di Azure per PostgreSQL
 
-    +++DATABASE_NAME=pgsql-flex-{SUFFIX}+++
+### Attività 0: Registrare i provider di risorse
 
-    ![](./media/image7.jpeg)
+1.  Accedere al **Azure Portal** -
+    +++[https://portal.azure.com+++](https://portal.azure.com+++/)
+    usando le credenziali di accesso di Azure.
 
-9.  Replace the region with your nearest location. In this lab we are
-    using westus
+2.  Fare clic su **Subscriptions** e selezionare **Resource Providers**
+    in **Settings** nel riquadro sinistro.
 
-    +++REGION=westus+++
+3.  Cercare +++**Microsoft.DBforPostgreSQL**+++ e fare clic su
+    **Register** per registrare questo Resource Provider.
 
-    ![](./media/image8.jpeg)
+![](./media/image3.png)
 
-10. Run the following Azure CLI command to create a resource group,
-    specifying the location. If you have more than one Azure
-    subscription, use the az account set --subscription \< subscription
-    id \> command first to select the subscription you want to use for
-    lab resources.
+### Attività 1: Effettuare il provisioning di un server flessibile di Database di Azure per PostgreSQL
 
-    +++az group create --name $RG_NAME --location $REGION+++
+1.  Apri un browser web e vai a
+    +++[https://portal.azure.com+++](https://portal.azure.com+++/)
 
-11. Provision an Azure Database for PostgreSQL database instance within
-    the resource group you created above by running the following Azure
-    CLI command(10 Min)
+2.  Selezionare l' icona **Cloud Shell** nella barra degli strumenti del
+    Azure portal per aprire un nuovo riquadro di Cloud Shell nella parte
+    superiore della finestra del browser.
 
-    ```
-    az postgres flexible-server create --name $DATABASE_NAME --location $REGION --resource-group $RG_NAME \
-    --admin-user s2admin --admin-password Seattle123Seattle123 --database-name airbnb \
-    --public-access 0.0.0.0-255.255.255.255 --version 16 \
-    --sku-name Standard_D2s_v3 --storage-size 32 --yes
-    ```
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image4.jpeg)
 
-    ![](./media/image9.jpeg)
+3.  La prima volta che si apre Cloud Shell, potrebbe essere richiesto di
+    scegliere il tipo di shell che si desidera utilizzare (**Bash** o
+    **PowerShell**). Seleziona **Bash**.
 
-### Task 2: Connect to the database using psql in the Azure Cloud Shell
+![](./media/image5.jpeg)
 
-In this task, you use the psql command-line utility from the Azure Cloud
-Shell to connect to your database.
+4.  Nella finestra di dialogo **Getting started,** selezionare **Mount
+    storage account** e selezionare la sottoscrizione di Azure. Fare
+    clic sul pulsante **Apply**.
 
-1.  Open a browser go to +++https://portal.azure.com+++ and sign in with
-    your Azure subscription account.
+![](./media/image6.png)
 
-2.  On the **Home** page, click on **Resource Groups**.
+5.  Nella finestra di dialogo **Mount storage account**, selezionare
+    **we will create a storage account for you** e fare clic sul
+    pulsante **Next**.
 
-    ![](./media/image10.jpeg)
+![](./media/image7.jpeg)
 
-3.  Click on **your resource group** name
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image8.jpeg)
 
-    ![](./media/image11.jpeg)
+6.  Al prompt di Cloud Shell eseguire i comandi seguenti per definire le
+    variabili per la creazione di risorse. Le variabili rappresentano i
+    nomi da assegnare al gruppo di risorse e al database e specificano
+    l'area di Azure in cui devono essere distribuite le risorse.
 
-4.  In the resource group, select **PostgreSQL Flexible
-    Server** resource
+7.  Sostituire il Resource group Name nel comando seguente con il gruppo
+    di risorse assegnato ed eseguire il comando.
 
-    ![](./media/image12.jpeg)
++++RG_NAME= \< Resource group Name\>+++
 
-5.  In the left-hand navigation menu,
-    select **Connect** under **Settings**.
+![](./media/image9.png)
 
-    ![](./media/image13.jpeg)
+8.  Nel nome del database, sostituire il token {SUFFIX} con l' **Lab
+    instance ID**, ad esempio le iniziali, per assicurarsi che il nome
+    del server di database sia univoco a livello globale.
 
-6.  From the database's **Connect** page in the Azure portal,
-    select **airbnb** for the **Database name**, then copy
-    the **Connection details** block and paste it into the notepad to
-    use the information in the upcoming tasks.
++++DATABASE_NAME=<pgsql-flex-@lab.LabInstance.Id>+++
 
-    ![](./media/image14.jpeg)
+![](./media/image10.jpeg)
 
-7.  In the Azure Database for PostgresSQL home page, click
-    on **Overview** in the left-sided navigation menu and copy the
-    Server name and paste it into notepad, then **Save** the notepad to
-    use the information in the upcoming lab.
+9.  Eseguire il comando seguente per impostare il valore della regione.
 
-    ![](./media/image15.jpeg)
-
-8.  In the Azure Database for PostgreSQL home page,
-    select **Networking** under settings and select **Allow public
-    access from any Azure service within Azure to this server**. Click
-    on **Save** button.
-
-    ![](./media/image16.jpeg)
-    
-    ![](./media/image17.jpeg)
-
-9.  Select the **Cloud Shell** icon in the Azure portal toolbar to open
-    a new Cloud Shell pane at the top of your browser window.
-
-10. Paste **Connection details** into the Cloud Shell.
-
-    ![](./media/image18.jpeg)
-
-11. At the Cloud Shell prompt, replace the **{your_password}** token
-    with the password you assigned to the **s2admin** user when creating
-    your database, the password should be +++**Seattle123Seattle123**+++.
-
-    ![](./media/image19.jpeg)
-
-12. Connect to your database using the psql command-line utility by
-    entering the following at the prompt:
-
-    +++psql+++
-    
-    ![](./media/image20.jpeg)
-
-Connecting to the database from the Cloud Shell requires that the Allow
-public access from any Azure service within Azure to the server box is
-checked on the **Networking** page of the database. If you receive a
-message that you are unable to connect, please verify this is checked
-and try again.
-
-### Task 3: Add data to the database
-
-Using the psql command prompt, you will create tables and populate them
-with data for use in the lab.
-
-1.  Run the following commands to create temporary tables for importing
-    JSON data from a public blob storage account.
-
-    ```
-    CREATE TABLE temp_calendar (data jsonb);
-    CREATE TABLE temp_listings (data jsonb);
-    CREATE TABLE temp_reviews (data jsonb);
-    ```
-    
-    ![](./media/image21.jpeg)
-
-2.  Using the COPY command, populate each temporary table with data from
-    JSON files in a public storage account.
-
-    +++\COPY temp_calendar (data) FROM PROGRAM 'curl https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/calendar.json'+++
-    +++\COPY temp_listings (data) FROM PROGRAM 'curl https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/listings.json'+++
-    +++\COPY temp_reviews (data) FROM PROGRAM 'curl https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/reviews.json'+++
-
-    ![](./media/image22.jpeg)
-    
-    ![](./media/image23.jpeg)
-
-3.  Run the following command to create the tables for storing data in
-    the shape used by this lab:
-
-    ```
-    CREATE TABLE listings (
-    listing_id int,
-    name varchar(50),
-    street varchar(50),
-    city varchar(50),
-    state varchar(50),
-    country varchar(50),
-    zipcode varchar(50),
-    bathrooms int,
-    bedrooms int,
-    latitude decimal(10,5), 
-    longitude decimal(10,5), 
-    summary varchar(2000),
-    description varchar(2000),
-    host_id varchar(2000),
-    host_url varchar(2000),
-    listing_url varchar(2000),
-    room_type varchar(2000),
-    amenities jsonb,
-    host_verifications jsonb,
-    data jsonb
-    );
-    ```
-    ![](./media/image24.jpeg)
-
-    ```
-     CREATE TABLE reviews (
-        id int, 
-        listing_id int, 
-        reviewer_id int, 
-        reviewer_name varchar(50), 
-        date date,
-        comments varchar(2000)
-    );
-    CREATE TABLE calendar (
-        listing_id int, 
-        date date,
-        price decimal(10,2), 
-        available boolean
-    );
-    ```
-
-    ![](./media/image25.jpeg)
-
-4.  Finally, run the following **INSERT INTO** statements to load data
-    from the temporary tables to the main tables, extracting data from
-    the JSON data field into individual columns:
-
-    ```
-    INSERT INTO listings
-    SELECT 
-        data['id']::int, 
-        replace(data['name']::varchar(50), '"', ''),
-        replace(data['street']::varchar(50), '"', ''),
-        replace(data['city']::varchar(50), '"', ''),
-        replace(data['state']::varchar(50), '"', ''),
-        replace(data['country']::varchar(50), '"', ''),
-        replace(data['zipcode']::varchar(50), '"', ''),
-        data['bathrooms']::int,
-        data['bedrooms']::int,
-        data['latitude']::decimal(10,5),
-        data['longitude']::decimal(10,5),
-        replace(data['description']::varchar(2000), '"', ''),        
-        replace(data['summary']::varchar(2000), '"', ''),        
-        replace(data['host_id']::varchar(50), '"', ''),
-        replace(data['host_url']::varchar(50), '"', ''),
-        replace(data['listing_url']::varchar(50), '"', ''),
-        replace(data['room_type']::varchar(50), '"', ''),
-        data['amenities']::jsonb,
-        data['host_verifications']::jsonb,
-        data::jsonb
-    FROM temp_listings;
-    INSERT INTO reviews
-    SELECT 
-        data['id']::int,
-        data['listing_id']::int,
-        data['reviewer_id']::int,
-        replace(data['reviewer_name']::varchar(50), '"', ''), 
-        to_date(replace(data['date']::varchar(50), '"', ''), 'YYYY-MM-DD'),
-        replace(data['comments']::varchar(2000), '"', '')
-    FROM temp_reviews;
-    INSERT INTO calendar
-    SELECT 
-        data['listing_id']::int,
-        to_date(replace(data['date']::varchar(50), '"', ''), 'YYYY-MM-DD'),
-        data['price']::decimal(10,2),
-        replace(data['available']::varchar(50), '"', '')::boolean
-    FROM temp_calendar;
-    ```
-
-    ![](./media/image26.jpeg)
-
-## Exercise 2: Add Azure AI and Vector extensions to allowlist
-
-Throughout this lab, you use the azure_ai and pgvector extensions to add
-generative AI capabilities to your PostgreSQL database. In this
-exercise, you add these extensions to your server's *allowlist*, as
-described in how to use PostgreSQL extensions.
-
-1.  On the Home page, click on **Resource Groups**.
-
-    ![](./media/image27.jpeg)
-
-2.  Click on your resource group name
-
-    ![](./media/image28.jpeg)
-
-3.  In the resource group, select **PostgreSQL Flexible
-    Server** resource
-
-    ![](./media/image29.jpeg)
-
-4.  From the database's left-hand navigation menu, select **Server
-    parameters** under **Settings**, then
-    enter +++**azure.extensions**+++ into the search box. Expand
-    the **VALUE** dropdown list, then locate and check the box next to
-    each of the following extensions:
++++REGION=@lab. CloudResourceGroup(ResourceGroup1).Location+++
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image11.jpeg)
+
+10. Effettuare il provisioning di un'istanza del database di Database di
+    Azure per PostgreSQL all'interno del gruppo di risorse assegnato
+    eseguendo il comando dell'interfaccia della riga di comando di Azure
+    seguente ( Il completamento di questo comando richiederà 10 minuti)
+
+> \`\`\`
+>
+> az postgres flexible-server create --name $DATABASE_NAME --location
+> $REGION --resource-group $RG_NAME \\
+>
+> --admin-user s2admin --admin-password Seattle123Seattle123
+> –database-name airbnb \\
+>
+> --public-access 0.0.0.0-255.255.255.255 --version 16 \\
+>
+> --sku-name Standard_D2s_v3 –storage-size-32 --yes
+>
+> \`\`\`
+
+![](./media/image12.jpeg)
+
+### Attività 2: Connettersi al database usando psql in Azure Cloud Shell
+
+In questa attività si usa l'utilità della riga di comando psql di Azure
+Cloud Shell per connettersi al database.
+
+1.  Aprire un browser, passare a
+    +++[https://portal.azure.com+++](https://portal.azure.com+++/) e
+    accedere con l'account della sottoscrizione di Azure.
+
+2.  Nella **Home** page fare clic su **Resource Groups**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image13.jpeg)
+
+3.  Fare clic sul nome del **your assigned resource.**
+
+![](./media/image14.png)
+
+4.  Nel gruppo di risorse, selezionare risorsa **PostgreSQL Flexible
+    Server.**
+
+![](./media/image15.png)
+
+5.  Nel menu di navigazione a sinistra, seleziona **Connect** in
+    **Settings**.
+
+![](./media/image16.jpeg)
+
+6.  Dalla pagina del database **Connect** nel di Azure Portal
+    selezionare **airbnb** per il del **Database name**, quindi copiare
+    il blocco **Connection details** e incollarlo nel notepad per usare
+    le informazioni nelle attività future.
+
+![](./media/image17.jpeg)
+
+7.  Nella home page di Database di Azure per PostgresSQL fare clic su
+    **Overview** nel menu di spostamento a sinistra e copiare il nome
+    del server e incollarlo nel blocco note, quindi **Save** il notepad
+    per usare le informazioni nel lab successivo.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image18.jpeg)
+
+8.  Nella home page di Database di Azure per PostgreSQL selezionare
+    **Networking** in Impostazioni e selezionare **Allow public access
+    from any Azure service within Azure to this server**. Fare clic sul
+    pulsante **Save**.
+
+![](./media/image19.jpeg)
+
+![](./media/image20.jpeg)
+
+9.  Selezionare l' icona **Cloud Shell** nella barra degli strumenti del
+    Azure portal per aprire un nuovo riquadro di Cloud Shell nella parte
+    superiore della finestra del browser.
+
+10. Incollare i **Connection details** in Cloud Shell.
+
+![Schermata del computer di una schermata nera I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image21.jpeg)
+
+11. Al prompt di Cloud Shell, sostituire il token **{your_password}**
+    con la password assegnata all' utente **s2admin** durante la
+    creazione del database, la password deve essere
+    +++**Seattle123Seattle123**+++.
+
+![](./media/image22.jpeg)
+
+12. Connettersi al database utilizzando l'utilità della riga di comando
+    psql immettendo quanto segue al prompt:
+
++++psql+++
+
+![](./media/image23.jpeg)
+
+Per la connessione al database da Cloud Shell è necessario che la
+casella Consenti l'accesso pubblico da qualsiasi servizio Azure
+all'interno di Azure al server sia selezionata nella pagina
+**Networking** del database. Se ricevi un messaggio che ti informa che
+non riesci a connetterti, verifica che questa opzione sia selezionata e
+riprova.
+
+### Attività 3: Aggiungere data al database
+
+Utilizzando il prompt dei comandi psql, si creeranno tabelle e le si
+popolerà con i data da utilizzare in laboratorio.
+
+1.  Eseguire i comandi seguenti per creare tabelle temporanee per
+    l'importazione di data JSON da un account di archiviazione BLOB
+    pubblico.
+
+> CREATE TABLE temp_calendar (data jsonb);
+>
+> CREATE TABLE temp_listings (data jsonb);
+>
+> CREATE TABLE temp_reviews (data jsonb);
+
+![](./media/image24.jpeg)
+
+2.  Usando il comando COPY, popolare ogni tabella temporanea con i data
+    dei file JSON in un account di archiviazione pubblico.
+
++++\COPY temp_calendar (data) FROM PROGRAM
+'curl <https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/calendar.json'+++>
+
++++\COPY temp_listings (data) FROM PROGRAM
+'curl <https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/listings.json'+++> 
+
++++\COPY temp_reviews (data) FROM PROGRAM
+'curl <https://solliancepublicdata.blob.core.windows.net/ms-postgresql-labs/reviews.json'+++> 
+
+![](./media/image25.jpeg)
+
+![](./media/image26.jpeg)
+
+3.  Eseguire il comando seguente per creare le tabelle per
+    l'archiviazione dei data nella forma usata da questo lab:
+
+> CREATE TABLE listings (
+>
+> listing_id int,
+>
+> name varchar(50),
+>
+> street varchar(50),
+>
+> city varchar(50),
+>
+> state varchar(50),
+>
+> country varchar(50),
+>
+> zipcode varchar(50),
+>
+> bathrooms int,
+>
+> bedrooms int,
+>
+> latitude decimal(10,5),
+>
+> longitude decimal(10,5),
+>
+> summary varchar (2000),
+>
+> description varchar(2000),
+>
+> host_id Varchar (2000),
+>
+> host_url Varchar (2000),
+>
+> listing_url Varchar (2000),
+>
+> room_type Varchar (2000),
+>
+> amenities JSONB,
+>
+> host_verifications jsonb,
+>
+> Data JSONB
+>
+> );
+
+![](./media/image27.jpeg)
+
+> CREATE TABLE reviews (
+>
+> id int,
+>
+> listing_id int,
+>
+> reviewer_id int,
+>
+> reviewer_name varchar(50),
+>
+> date date,
+>
+> Comments Varchar(2000)
+>
+> );
+>
+> CREATE TABLE calendar (
+>
+> listing_id int,
+>
+> date date,
+>
+> price decimal(10,2),
+>
+> available boolean
+>
+> );
+
+![](./media/image28.jpeg)
+
+4.  Infine, eseguire le istruzioni **INSERT INTO** seguenti per caricare
+    i data dalle tabelle temporanee alle tabelle principali, estraendo i
+    data dal campo data JSON in singole colonne:
+
+> INSERT INTO listings
+>
+> SELECT
+>
+> data\['id'\]::int,
+>
+> replace(data\['name'\]::varchar(50), '"', ''),
+>
+> replace(data\['street'\]::varchar(50), '"', ''),
+>
+> replace(data\['city'\]::varchar(50), '"', ''),
+>
+> replace(data\['state'\]::varchar(50), '"', ''),
+>
+> replace(data\['country'\]::varchar(50), '"', ''),
+>
+> replace(data\['zipcode'\]::varchar(50), '"', ''),
+>
+> data\['bathrooms'\]::int,
+>
+> data\['bedrooms'\]::int,
+>
+> data\['latitude’\]::d ecimal(10,5),
+>
+> data\['longitude'\]::d ecimal(10,5),
+>
+> replace(data\['description'\]::varchar(2000), '"', ''),
+>
+> replace(data\['summary'\]::varchar(2000), '"', ''),
+>
+> replace(data\['host_id'\]::varchar(50), '"', ''),
+>
+> replace(data\['host_url'\]::varchar(50), '"', ''),
+>
+> replace(data\['listing_url'\]::varchar(50), '"', ''),
+>
+> replace(data\['room_type'\]::varchar(50), '"', ''),
+>
+> data\['amenities'\]::jsonb,
+>
+> data\['host_verifications'\]::jsonb,
+>
+> Data::JSONB
+>
+> FROM temp_listings;
+>
+> INSERT INTO reviews
+>
+> SELECT
+>
+> data\['id'\]::int,
+>
+> data\['listing_id'\]::int,
+>
+> data\['reviewer_id'\]::int,
+>
+> replace(data\['reviewer_name'\]::varchar(50), '"', ''),
+>
+> to_date(replace(data\['date'\]::varchar(50), '"', ''), 'YYYY-MM-DD'),
+>
+> replace(data\['comments'\]::varchar(2000), '"', '')
+>
+> FROM temp_reviews;
+>
+> INSERT INTO calendar
+>
+> SELECT
+>
+> data\['listing_id'\]::int,
+>
+> to_date(replace(data\['date'\]::varchar(50), '"', ''), 'YYYY-MM-DD'),
+>
+> datA\['price'\]::decimal(10,2),
+>
+> replace(data\['available'\]::varchar(50), '"', '')::boolean
+>
+> FROM temp_calendar;
+
+![](./media/image29.jpeg)
+
+## Esercizio 2: Aggiungere le estensioni di Azure AI e Vector all'elenco Consentiti
+
+Durante questo laboratorio, si usano le estensioni azure_ai e pgvector
+per aggiungere funzionalità di AI generativa al database PostgreSQL. In
+questo esercizio, aggiungi queste estensioni all'elenco Consentiti del
+suo server, come descritto in come utilizzare le estensioni PostgreSQL.
+
+1.  Nella Home page, fare clic su **Resource Groups**.
+
+![](./media/image30.jpeg)
+
+2.  Fare clic sul nome del resource group name.
+
+![](./media/image14.png)
+
+3.  Nel resource group, selezionare risorsa **PostgreSQL Flexible
+    Server.**
+
+![](./media/image15.png)
+
+4.  Dal menu di spostamento a sinistra del database selezionare **Server
+    parameters** in **Settings**, quindi immettere
+    +++**azure.extensions**+++ nella casella di ricerca. Espandi l'
+    elenco a discesa **VALUE**, quindi individua e seleziona la casella
+    accanto a ciascuna delle seguenti estensioni:
 
     - AZURE_AI
 
     - POSTGIS
 
-    - VECTOR
+    - VETTORE
 
-    ![](./media/image30.jpeg)
-    
-    ![](./media/image31.jpeg)
-    
-    ![](./media/image32.jpeg)
+![](./media/image31.jpeg)
 
-5.  Select **Save** on the toolbar, which will trigger a deployment on
-    the database.
+![](./media/image32.jpeg)
 
-    ![](./media/image33.jpeg)
+![](./media/image33.jpeg)
 
-## Exercise 3: Create an Azure OpenAI resource
+5.  Selezionare **Save** sulla barra degli strumenti, che attiverà una
+    deployment nel database.
 
-The azure_ai extension requires an underlying Azure OpenAI service to
-create vector embeddings. In this exercise, you will provision an Azure
-OpenAI resource in the Azure portal and deploy an embedding model into
-that service.
+![](./media/image34.jpeg)
 
-### Task 1: Provision an Azure OpenAI service
+## Esercizio 3: Creare una risorsa Azure OpenAI
 
-In this task, you create a new Azure OpenAI service.
+L'estensione azure_ai richiede un servizio Azure OpenAI sottostante per
+creare incorporamenti vettoriali. In questo esercizio si effettuerà il
+provisioning di una risorsa Azure OpenAI nel portale di Azure e si
+distribuirà un modello di incorporamento in tale servizio.
 
-1.  From the Azure portal home page, click on **Azure portal
-    menu** represented by three horizontal bars on the left side of the
-    Microsoft Azure command bar as shown in the below image.
+### Attività 1: Effettuare il provisioning di un servizio Azure OpenAI
 
-    ![](./media/image34.jpeg)
+In questa attività viene creato un nuovo servizio Azure OpenAI.
 
-2.  Navigate and click on **+ Create a resource**.
+1.  Nella home page del portale di Azure fare clic sul **Azure portal
+    menu** rappresentato da tre barre orizzontali sul lato sinistro
+    della barra dei comandi di Microsoft Azure, come illustrato
+    nell'immagine seguente.
 
-    ![](./media/image35.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image35.jpeg)
 
-3.  On **Create a resource** page, in the **Search services and
-    marketplace** search bar, type +++**Azure OpenAI**+++, then press
-    the **Enter** button.
+2.  Naviga e fai clic su **+ Create a resource**.
 
-    ![](./media/image36.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image36.jpeg)
 
-4.  In the **Marketplace** page, navigate to the **Azure
-    OpenAI** section, click on the Create button dropdown, then
-    select **Azure OpenAI** as shown in the image. (In case, you've
-    already clicked on the **Azure** **OpenAI** tile, then click on
-    the **Create** button on the **Azure OpenAI page**).
+3.  Nella pagina **Create a resource**, nella barra di ricerca dei
+    **Search services an d marketplace**, digitare +++**Azure
+    OpenAI**+++, quindi premere il pulsante **Enter**.
 
-    ![](./media/Picture1.png)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image37.jpeg)
 
-5.  On the Create Azure OpenAI **Basics** tab, enter the following
-    information and click on **Next** button.
+4.  Nella pagina **Marketplace** passare alla sezione **Azure OpenAI**,
+    fare clic sull'elenco a discesa del pulsante Crea, quindi
+    selezionare **Azure OpenAI** come illustrato nell'immagine. (Nel
+    caso in cui tu abbia già cliccato sul pulsante **Azure OpenAI**,
+    quindi fare clic sul pulsante **Create** nella pagina **Azure
+    OpenAI**).
 
-    | **Subscription** | Select **Azure subscription** |
-    |:-----|:----|
-    | **Resource group** | Select resource group **rg-postgresql-labs**(which you have created in Ex1> Task 1) |
-    | **Region** | Select East US2 |
-    | Name | Enter a globally unique name, such as +++aoai-postgres-labs-XXXX+++ (XXXX can be a unique number) |
-    | **Pricing tier** | Select Standard S0 |    
+![Uno screenshot di una pagina del software I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image38.png)
 
-    ![](./media/image38.jpeg)
+5.  Nella scheda Crea Azure OpenAI **Basics** immettere le informazioni
+    seguenti e fare clic sul pulsante **Next**.
 
-7.  In the **Network** tab, leave all the radio buttons in the default
-    state, and click on the **Next** button.
+[TABLE]
 
-    ![](./media/image39.jpeg)
+6.  ![Uno screenshot di un computer I contenuti generati
+    dall'intelligenza artificiale potrebbero non essere
+    corretti.](./media/image39.png)
 
-8.  In the **Tags** tab, leave all the fields in the default state, and
-    click on the **Next** button.
+7.  Nella **Network tab**, lasciare tutti i pulsanti di opzione nello
+    stato predefinito e fare clic sul pulsante **Next**.
 
-    ![](./media/Picture2.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image40.jpeg)
 
-9.  In the **Review+submit** tab, once the Validation is Passed, click
-    on the **Create** button.
+8.  Nella scheda **Tags** , lascia tutti i campi nello stato predefinito
+    e fai clic sul pulsante **Next**.
 
-    ![](./media/image41.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image41.png)
 
-10.  Wait for the deployment to complete. The deployment will take around
-    2-3 minutes.
+9.  Nella scheda **Review+submit**, una volta superata la convalida,
+    fare clic sul pulsante **Create**.
 
-     >[!Note] **Note:** If you see a message that the Azure OpenAI Service is
-currently available to customers via an application form. The selected
-subscription has not been enabled for the service and does not have a
-quota for any pricing tiers; you will need to click the link to request
-access to the Azure OpenAI service and fill out the request form.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image42.png)
 
-### Task 2: Retrieve the key and endpoint of Azure OpenAI service
+10. Attendere il completamento della distribuzione. La deployment
+    richiederà circa 2-3 minuti.
 
-1.  On the resource's **Overview** page, select the **Go to
-    resource** button. If prompted, select the lab credentials:
+\[! Nota\] **Nota:** Se viene visualizzato un messaggio che indica che
+il servizio Azure OpenAI è attualmente disponibile per i clienti tramite
+un modulo di richiesta. La sottoscrizione selezionata non è stata
+abilitata per il servizio e non dispone di una quota per i piani
+tariffari. Sarà necessario fare clic sul collegamento per richiedere
+l'accesso al servizio Azure OpenAI e compilare il modulo di richiesta.
 
-    ![](./media/image42.jpeg)
+### Attività 2: Recuperare la chiave e l'endpoint del servizio Azure OpenAI
 
-2.  In your **Azure OpenAI home** window, navigate to the **Resource
-    Management** section, and click on **Keys and Endpoints**.
+1.  Nella pagina **Overview** della risorsa, selezionare il pulsante
+    **Go to resource**. Se richiesto, selezionare le credenziali del
+    lab:
 
-    ![](./media/image43.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image43.jpeg)
 
-3.  In **Keys and Endpoints** page, copy **KEY1, KEY
-    2,** and **Endpoint** values and paste them in a notepad as shown in
-    the below image, then **save** the notepad to use the information in
-    the upcoming tasks.
+2.  Nella finestra **Azure OpenAI** **home,** passare alla sezione
+    **Resource Management** e fare clic su **Keys and Endpoints**.
 
-    ![](./media/image44.jpeg)
-    
-    ![](./media/image45.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image44.jpeg)
 
-    **Note:** You can use either KEY1 or KEY2. Always having two keys allows
-    you to securely rotate and regenerate keys without causing a service
-    disruption.
+3.  Nella pagina **Keys and Endpoints,** copiare i valori **KEY1, KEY
+    2** ed **Endpoint** e incollarli in un blocco note come illustrato
+    nell'immagine seguente, quindi **save** il notepad per usare le
+    informazioni nelle attività future.
 
-### Task 3: Deploy an embedding model
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image45.jpeg)
 
-The azure_ai extension allows the creation of vector embeddings from
-text. To create these embeddings requires a deployed
-text-embedding-ada-002 (version 2) model within your Azure OpenAI
-service. In this task, you will use Azure OpenAI Studio to create a
-model deployment that you can employ.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image46.jpeg)
 
-1.  In **Azure OpenAI** page, click on **Overview** in the left-sided
-    navigation menu, scroll down and click on **Go to Azure OpenAI
-    Studio** button as shown in the below image.
+**Nota:** È possibile utilizzare KEY1 o KEY2. Avere sempre due chiavi
+consente di ruotare e rigenerare le chiavi in modo sicuro senza causare
+un'interruzione del servizio.
 
-    ![](./media/Picture3.png)
+### Attività 3: Distribuire un modello di incorporamento
 
-    >[!Alert] **Important:** If you’re in the new Azure OpenAI Studio, switch to the
-    old look of Azure OpenAI Studio.
+L'estensione azure_ai consente la creazione di incorporamenti vettoriali
+dal testo. Per creare questi incorporamenti è necessario un modello
+text-embedding-ada-002 (versione 2) distribuito all'interno del servizio
+Azure OpenAI. In questa attività si userà Azure OpenAI Studio per creare
+una distribuzione del modello che è possibile usare.
 
-2.  In Azure OpenAI Studio, select the **Create new deployment**, and
-    select **+ Create new deployment** from the toolbar.
+1.  Nella pagina **Azure OpenAI** fare clic su Overview nel menu di
+    navigazione a sinistra, scorrere verso il basso e fare clic sul
+    pulsante **Go to Azure OpenAI Studio** come illustrato nell'immagine
+    seguente.
 
-    ![](./media/image47.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image47.png)
 
-    ![](./media/image48.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image48.png)
 
-3.  In the **Deploy model** dialog, set the following and
-    select **Create** to deploy the model.
+2.  In **Azure** **AI Foundry | Home page di Azure Open AI Service**,
+    passare alla sezione **Components** e fare clic su **Deployments**.
 
-    - **Select a model**: Choose **text-embedding-ada-002** from the
-      list.
+3.  Nella finestra **Deployments,** visualizzare il modello **+Deploy**
+    e selezionare **Deploy base model.**
 
-    - **Model version**: Ensure **2 (Default)** is selected.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image49.png)
+
+4.  Nella finestra di dialogo **Select a model**, naviga e seleziona
+    attentamente **text-embedding-ada-002** , quindi fai clic sul
+    pulsante **Confirm**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image50.png)
+
+5.  Nella finestra di dialogo **Deploy model** , impostare quanto segue
+    e selezionare **Create** per distribuire il modello.
+
+    - **Select a model** : scegli **text-embedding-ada-002**
+      dall'elenco.
+
+    - **Model Version**: assicurarsi che sia selezionato **2
+      (predefinito**).
 
     - **Deployment name**: Enter +++**embeddings**+++
 
-    ![](./media/image49.jpeg)
-    
-    ![](./media/image50.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image51.png)
 
-4.  In the **Deployments** window, copy **Deployment name** and paste
-    them in a notepad (as shown in the image), and then **save** the
-    notepad to use the information in the upcoming task.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image52.png)
 
-    ![](./media/image51.jpeg)
+6.  Nella finestra **Deployment**, copiare il **Deployment name** e
+    incollarlo in un blocco note (come mostrato nell'immagine), quindi
+    **save** il blocco note per utilizzare le informazioni nell'attività
+    successiva.
 
-## Exercise 4: Install and configure the azure_ai extension
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image53.png)
 
-In this exercise, you install the azure_ai extension into your database
-and configure it to connect to your Azure OpenAI service.
+## Esercizio 4: Installare e configurare l'estensione azure_ai
 
-### Task 1: Connect to the database using psql in the Azure Cloud Shell
+In questo esercizio si installa l'estensione azure_ai nel database e la
+si configura per la connessione al servizio Azure OpenAI.
 
-In this task, you use the psql command-line utility from the Azure Cloud
-Shell to connect to your database.
+### Attività 1: Connettersi al database usando psql in Azure Cloud Shell
 
-1.  Select the **Cloud Shell** icon in the Azure portal toolbar to open
-    a new Cloud Shell pane at the top of your browser window.
+In questa attività si usa l'utilità della riga di comando psql di Azure
+Cloud Shell per connettersi al database.
 
-2.  Paste **Connection details** into the Cloud Shell.
+1.  Selezionare l' icona **Cloud Shell** nella barra degli strumenti del
+    di Azure portal per aprire un nuovo riquadro di Cloud Shell nella
+    parte superiore della finestra del browser.
 
-    ![](./media/image18.jpeg)
+2.  Incollare i **Connection details** in Cloud Shell.
 
-3.  At the Cloud Shell prompt, replace the **{your_password}** token
-    with the password you assigned to the **s2admin** user when creating
-    your database, the password should be **Seattle123Seattle123**.
+![Schermata del computer di una schermata nera I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image21.jpeg)
 
-    ![](./media/image19.jpeg)
+3.  Al prompt di Cloud Shell, sostituire il token **{your_password}**
+    con la password assegnata all' utente **s2admin** durante la
+    creazione del database, la password deve essere
+    **Seattle123Seattle123.**
 
-4.  Connect to your database using the psql command-line utility by
-    entering the following at the prompt:
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image22.jpeg)
 
-    +++**psql**+++
-    
-    ![](./media/image20.jpeg)
+4.  Connettersi al database utilizzando l'utilità della riga di comando
+    psql immettendo quanto segue al prompt:
 
-### Task 2: Install the azure_ai extension
++++**psql**+++
 
-The azure_ai extension allows you to integrate Azure OpenAI and Azure
-Cognitive Services into your database. To enable the extension in your
-database, follow the steps below:
+![Uno sfondo nero con un quadrato nero I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image23.jpeg)
 
-1.  Verify that the extension was successfully added to the allowlist by
-    running the following from the psql command prompt:
+### Attività 2: Installare l'estensione azure_ai
 
-    +++SHOW azure.extensions;+++
-    
-    ![](./media/image52.jpeg)
+L'estensione azure_ai consente di integrare Azure OpenAI e Azure
+Cognitive Services nel database. Per abilitare l'estensione nel suo
+database, procedi nel seguente modo:
 
-2.  Install the azure_ai extension using the CREATE EXTENSION command.
+1.  Verificare che l'estensione sia stata aggiunta correttamente
+    all'elenco Consentiti eseguendo quanto segue dal prompt dei comandi
+    psql:
 
-    +++CREATE EXTENSION IF NOT EXISTS azure_ai;+++
-    
-    ![](./media/image53.jpeg)
++++SHOW azure.extensions;+++
 
-### Task 3: Review the objects contained within the azure_ai extension
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image54.jpeg)
 
-Reviewing the objects within the azure_ai extension can provide a better
-understanding of its capabilities. In this task, you inspect the various
-schemas, user-defined functions (UDFs), and composite types added to the
-database by the extension.
+2.  Installare l'estensione azure_ai utilizzando il comando CREATE
+    EXTENSION.
 
-1.  You can use the \dx meta-command from the **psql** command prompt to
-    list the objects contained within the extension.
++++CREATE EXTENSION IF NOT EXISTS azure_ai;+++
 
-    >[!Note] **Note:** Click on any key to continue when the cloud shell prompts
-with **More…**
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image55.jpeg)
 
-    +++\dx+ azure_ai+++
+### Attività 3: Esaminare gli oggetti contenuti nell'estensione azure_ai
 
-    ![](./media/image54.jpeg)
-    
-    ![](./media/image55.jpeg)
+La revisione degli oggetti all'interno dell'estensione azure_ai può
+fornire una migliore comprensione delle sue funzionalità. In questa
+attività vengono esaminati i vari schemi, le funzioni definite
+dall'utente e i tipi compositi aggiunti al database dall'estensione.
 
-    The meta-command output shows the azure_ai extension creates three
-schemas, multiple user-defined functions (UDFs), and several composite
-types in the database. The table below lists the schemas added by the
-extension and describes each.
+1.  È possibile utilizzare il meta-comando \dx dal prompt dei comandi
+    **psql** per elencare gli oggetti contenuti all'interno
+    dell'estensione.
 
-    | **Schema** | **Description** |
-    |:-----|:-------|
-    | azure_ai | The principal schema where the configuration table and UDFs for interacting with it reside. |
-    | azure_openai | Contains the UDFs that enable calling an Azure OpenAI endpoint. |
-    | azure_cognitive | Provides UDFs and composite types related to integrating the database with Azure Cognitive Services. |
+\[! Note\] **Note:** fare clic su un tasto qualsiasi per continuare
+quando viene visualizzata la shell cloud con **Altro...**
 
-2.  The functions and types are all associated with one of the schemas.
-    To review the functions defined in the azure_ai schema, use the \df
-    meta-command, specifying the schema whose functions should be
-    displayed. The \x auto command preceding \df allows the expanded
-    display to be automatically applied when necessary to make the
-    output from the command easier to view in the Azure Cloud Shell.
++++\dx+ azure_ai+++
 
-     +++\x auto+++
-     +++\df+ azure_ai.*+++
+![](./media/image56.jpeg)
 
-    ![](./media/image56.jpeg)
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image57.jpeg)
 
-The azure_ai.set_setting() function lets you set the endpoint and key
-values for Azure AI services. It accepts a **key** and the **value** to
-assign it. The azure_ai.get_setting() function provides a way to
-retrieve the values you set with the set_setting() function. It accepts
-the **key** of the setting you want to view. For both methods, the key
-must be one of the following:
+L'output del meta-comando mostra che l'estensione azure_ai crea tre
+schemi, più funzioni definite dall'utente (UDFs) e diversi tipi
+compositi nel database. Nella tabella seguente sono elencati gli schemi
+aggiunti dall'estensione e vengono descritti ciascuno di essi.
 
-### Task 4: Set the Azure OpenAI endpoint and key
-
-Before using the azure_openai functions, configure the extension to your
-Azure OpenAI service endpoint and key.
-
-1.  In the command below, replace
-    the **{endpoint}** and **{api-key}** tokens with values you
-    retrieved from the Azure portal, then run the commands from the psql
-    command prompt in the Cloud Shell pane to add your values to the
-    configuration table.
-
-    ```
-    SELECT azure_ai.set_setting('azure_openai.endpoint','{endpoint}');
-    SELECT azure_ai.set_setting('azure_openai.subscription_key', '{api-key}');
-    ```
-
-    ![](./media/image57.jpeg)
-
-2.  Verify the settings written in the configuration table using the
-    following queries:
-
-    ```
-    SELECT azure_ai.get_setting('azure_openai.endpoint');
-    SELECT azure_ai.get_setting('azure_openai.subscription_key');
-    ```
-
-    The azure_ai extension is now connected to your Azure OpenAI account and
-ready to generate vector embeddings.
-
-    ![](./media/image58.jpeg)
-
-## Exercise 5: Generate vector embeddings with Azure OpenAI
-
-The azure_ai extension's azure_openai schema enables Azure OpenAI to
-create vector embeddings for text values. Using this schema, you can
-generate embeddings with Azure OpenAI directly from the database to
-create vector representations of input text, which can then be used in
-vector similarity searches, as well as consumed by machine learning
-models.
-
-Embeddings are a concept in machine learning and natural language
-processing (NLP) that involves representing objects, such as words,
-documents, or entities, as vectors in a multi-dimensional space.
-Embeddings allow machine learning models to evaluate how closely related
-information is. This technique efficiently identifies relationships and
-similarities between data, allowing algorithms to identify patterns and
-make accurate predictions.
-
-### Task 1: Enable vector support with the pgvector extension
-
-The azure_ai extension allows you to generate embeddings for input text.
-To enable the generated vectors to be stored alongside the rest of your
-data in the database, you must install the pgvector extension by
-following the guidance in the enable vector support in your database
-documentation.
-
-1.  Install the pgvector extension using the CREATE EXTENSION command.
-
-    +++CREATE EXTENSION IF NOT EXISTS vector; +++
-
-    ![](./media/image59.jpeg)
-
-2.  With vector supported added to your database, add a new column to
-    the listings table using the vector data type to store embeddings
-    within the table. The text-embedding-ada-002 model produces vectors
-    with 1536 dimensions, so you must specify 1536 as the vector size.
-    
-    ```
-    ALTER TABLE listings
-    ADD COLUMN description_vector vector(1536);
-    ```
-
-    ![](./media/image60.jpeg)
-
-### Task 2: Generate and store vector embeddings
-
-The listings table is now ready to store embeddings. Using the
-azure_openai.create_embeddings() function, you create vectors for the
-description field and insert them into the newly created
-description_vector column in the listings table.
-
-1.  Before using the create_embeddings() function, run the following
-    command to inspect it and review the required arguments:
-
-    +++\df+ azure_openai.\* +++
-
-    ![](./media/image61.jpeg)
-
-    The Argument data types property in the output of the \df+
-azure_openai.\* command reveals the list of arguments the function
-expects.
-
-    | **Argument** | **Type** | **Default** | **Description**  |
-    |:---|:----|:-------|:--------|
-    | deployment_name | text |  | Name of the deployment in Azure OpenAI studio that contains the text-embeddings-ada-002 model. |
-    | input | text |  | Input text used to create embeddings. |
-    |timeout_ms  | integer | 3600000 | Timeout in milliseconds after which the operation is stopped. |
-    | throw_on_error |  boolean| true | Flag indicating whether the function should, on error, throw an exception resulting in a rollback of the wrapping transactions. |
-    
-2.  Using the deployment name, run the following query to update each
-    record in the listings table, inserting the generated vector
-    embeddings for the description field into the description_vector
-    column using the azure_openai.create_embeddings() function. Replace
-    {your-deployment-name} with the **Deployment name** value you copied
-    from the Azure OpenAI Studio **Deployments** page. Note that this
-    query takes approximately five minutes to complete.
-
-    ```
-    DO $$
-    
-    DECLARE counter integer := (SELECT COUNT(*) FROM listings WHERE description <> '' AND description_vector IS NULL);
-    DECLARE r record;
-    BEGIN
-        RAISE NOTICE 'Total descriptions to embed: %', counter;
-        WHILE counter > 0 LOOP
-            BEGIN
-                FOR r IN
-                    SELECT listing_id FROM listings WHERE description <> '' AND description_vector IS NULL
-                LOOP
-                    BEGIN
-                        UPDATE listings
-                        SET description_vector = azure_openai.create_embeddings('{your-deployment-name}', description)
-                        WHERE listing_id = r.listing_id;
-                    EXCEPTION
-                        WHEN OTHERS THEN
-                            RAISE NOTICE 'Waiting 1 second before trying again...';
-                            PERFORM pg_sleep(1);
-                    END;
-                    counter := (SELECT COUNT(*) FROM listings WHERE description <> '' AND description_vector IS NULL);
-                    IF counter % 25 = 0 THEN
-                        RAISE NOTICE 'Remaining descriptions to embed: %', counter;
-                    END IF;
-                END LOOP;
-            END;
-        END LOOP;
-    END;
-    $$;
-    ```
-
-    ![](./media/image62.jpeg)
-
-    The above query uses a WHILE loop to retrieve records from the listings
-table where the description_vector field is null, and the description
-field is not an empty string. The query then attempts to update the
-description_vector column with a vector representation of the
-description column using the azure_openai.create_embeddings function.
-The loop is used when performing this update to prevent calls to create
-embeddings function from exceeding the call rate limit of the Azure
-OpenAI service. If the call rate limit is exceeded, you will see
-warnings similar to the following in the output:
-
-    >[!Note] **NOTE**: Waiting 1 second before trying again...
-
-    ![](./media/image63.jpeg)
-
-    ![](./media/image64.jpeg)
-
-3.  You can verify that the description_vector column has been populated
-    for all listings records by running the following query:
-
-    +++SELECT COUNT(*) FROM listings WHERE description_vector IS NULL AND description <> '';+++
-
-    The result of the query should be a count of 0.
-
-    ![](./media/image65.jpeg)
-
-### Task 3: Perform a vector similarity search
-
-Vector similarity is a method used to measure two items\\ similarity by
-representing them as vectors, a series of numbers. Vectors are often
-used to perform searches using LLMs. Vector similarity is commonly
-calculated using distance metrics, such as Euclidean distance or cosine
-similarity. Euclidean distance measures the straight-line distance
-between two vectors in the n-dimensional space, while cosine similarity
-measures the cosine of the angle between two vectors. Each embedding is
-a vector of floating point numbers, so the distance between two
-embeddings in the vector space correlates with the semantic similarity
-between two inputs in the original format.
-
-1.  Before executing a vector similarity search, run the below query
-    using the ILIKE clause to observe the results of searching for
-    records using a natural language query without using vector
-    similarity:
-
-    +++SELECT listing_id, name, description FROM listings WHERE description ILIKE '%Properties with a private room near Discovery Park%';+++
-
-    ![](./media/image66.jpeg)
-
-    The query returns zero results because it is attempting to match the
-text in the description field with the natural language query provided.
-
-2.  Now, execute a cosine similarity search query against the listings
-    table to perform a vector similarity search against listing
-    descriptions. The embeddings are generated for an input question and
-    then cast to a vector array (::vector), which allows it to be
-    compared against the vectors stored in the listings table. Replace
-    {your-deployment-name} with the **Deployment name** value you copied
-    from the Azure OpenAI Studio **Deployments** page.
-
-    +++SELECT listing_id, name, description FROM listings
-ORDER BY description_vector <=> azure_openai.create_embeddings('{your-deployment-name}', 'Properties with a private room near Discovery Park')::vector
-LIMIT 3;+++
-
-    ![](./media/image67.jpeg)
-
-    The query uses the \<=\> [vector
-operator](https://github.com/pgvector/pgvector#vector-operators), which
-represents the \\cosine distance\\ operator used to calculate the
-distance between two vectors in a multi-dimensional space.
-
-3.  Run the same query again using the EXPLAIN ANALYZE clause to view
-    the query planning and execution times.
-    Replace **{your-deployment-name}** with the **Deployment
-    name** value you copied from the Azure OpenAI
-    Studio **Deployments** page.
-
-    ```
-    EXPLAIN ANALYZE
-    SELECT listing_id, name, description FROM listings
-    ORDER BY description_vector <=> azure_openai.create_embeddings('{your-deployment-name}', 'Properties with a private room near Discovery Park')::vector
-    LIMIT 3;
-    ```
-
-    ![](./media/image68.jpeg)
-
-    ![](./media/image69.jpeg)
-
-    ![](./media/image70.jpeg)
-
-    In the output, notice the query plan, which will start with something
-    similar to:
-    
-    Limit (cost=1098.54..1098.55 rows=3 width=261) (actual
-    time=10.505..10.507 rows=3 loops=1) -\> Sort (cost=1098.54..1104.10
-    rows=2224 width=261) (actual time=10.504..10.505 rows=3 loops=1)
-    
-    …
-    
-    Sort Method: top-N heapsort Memory: 27kB -\> Seq Scan on listings
-    (cost=0.00..1069.80 rows=2224 width=261) (actual time=0.005..9.997
-    rows=2224 loops=1) The query is using a sequential scan sort to perform
-    the lookup. The planning and execution times will be listed at the end
-    of the results, and should look similar to the following: Planning Time:
-    62.020 ms Execution Time: 10.530 ms
-
-4.  To enable more efficient searching over the vector field, create an
-    index on listings using cosine distance
-    and [HNSW](https://github.com/pgvector/pgvector#hnsw), which is
-    short for Hierarchical Navigable Small World. HNSW allows pgvector
-    to utilize the latest graph-based algorithms to approximate
-    nearest-neighbor queries.
-
-    +++CREATE INDEX ON listings USING hnsw (description_vector
+[TABLE]
+
+2.  Le funzioni e i tipi sono tutti associati a uno degli schemi. Per
+    rivedere le funzioni definite nello schema azure_ai, utilizzare il
+    meta-comando \df, specificando lo schema le cui funzioni devono
+    essere visualizzate. Il comando \x auto che precede \df consente di
+    applicare automaticamente la visualizzazione espansa quando
+    necessario per semplificare la visualizzazione dell'output del
+    comando in Azure Cloud Shell.
+
++++\x auto+++ +++\df+ azure_ai.\*+++
+
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image58.jpeg)
+
+La funzione azure_ai.set_setting() consente di impostare i valori
+dell'endpoint e della chiave per i servizi di intelligenza artificiale
+di Azure. Accetta una **key** e il **value** da assegnare. La funzione
+azure_ai.get_setting() fornisce un modo per recuperare i valori
+impostati con la funzione set_setting(). Accetta la **key**
+dell'impostazione che si desidera visualizzare. Per entrambi i metodi,
+la chiave deve essere una delle seguenti:
+
+### Attività 4: Impostare l'endpoint e la chiave di Azure OpenAI
+
+Prima di usare le funzioni azure_openai, configurare l'estensione per
+l'endpoint e la chiave del servizio Azure OpenAI.
+
+1.  Nel comando seguente sostituire i token **{endpoint}** e
+    **{api-key}** con i valori recuperati dal portale di Azure, quindi
+    eseguire i comandi dal prompt dei comandi psql nel riquadro Cloud
+    Shell per aggiungere i valori alla tabella di configurazione.
+
+2.  SELEZIONA
+    azure_ai.set_setting('azure_openai.endpoint','{endpoint}');
+
+3.  SELEZIONA azure_ai.set_setting('azure_openai.subscription_key',
+    '{api-key}');
+
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image59.jpeg)
+
+4.  Verificare le impostazioni scritte nella tabella di configurazione
+    utilizzando le query seguenti:
+
+5.  SELEZIONA azure_ai.get_setting('azure_openai.endpoint');
+
+6.  SELEZIONA azure_ai.get_setting('azure_openai.subscription_key');
+
+L'estensione azure_ai è ora connessa all'account Azure OpenAI ed è
+pronta per generare incorporamenti vettoriali.
+
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image60.jpeg)
+
+## Esercizio 5: Generare incorporamenti vettoriali con Azure OpenAI
+
+Lo schema di azure_openai dell'estensione azure_ai consente ad Azure
+OpenAI di creare incorporamenti vettoriali per i valori di testo. Usando
+questo schema, è possibile generare incorporamenti con Azure OpenAI
+direttamente dal database per creare rappresentazioni vettoriali del
+testo di input, che possono quindi essere usate nelle ricerche di
+somiglianza vettoriale, nonché utilizzate dai modelli di Machine
+Learning.
+
+Gli incorporamenti sono un concetto dell'apprendimento automatico e
+dell'elaborazione del linguaggio naturale (NLP) che prevede la
+rappresentazione di oggetti, come parole, documenti o entità, come
+vettori in uno spazio multidimensionale. Gli incorporamenti consentono
+ai modelli di apprendimento automatico di valutare la stretta
+correlazione delle informazioni. Questa tecnica identifica in modo
+efficiente le relazioni e le somiglianze tra i data, consentendo agli
+algoritmi di identificare modelli e fare previsioni accurate.
+
+### Attività 1: Abilitare il supporto vettoriale con l'estensione pgvector
+
+L'estensione azure_ai consente di generare incorporamenti per il testo
+di input. Per consentire l'archiviazione dei vettori generati insieme al
+resto dei data nel database, è necessario installare l'estensione
+pgvector seguendo le indicazioni riportate nella documentazione relativa
+al supporto del vettore di abilitazione.
+
+1.  Installare l'estensione pgvector utilizzando il comando CREATE
+    EXTENSION.
+
++++CREATE EXTENSION IF NOT EXISTS vector; +++
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image61.jpeg)
+
+2.  Con il vettore supportato aggiunto al database, aggiungi una nuova
+    colonna alla tabella degli elenchi utilizzando il tipo di data
+    vettoriale per memorizzare gli incorporamenti all'interno della
+    tabella. Il modello text-embedding-ada-002 produce vettori con
+    dimensioni 1536, quindi è necessario specificare 1536 come
+    dimensione del vettore.
+
+3.  Elenchi ALTER TABLE
+
+4.  AGGIUNGI COLONNA description_vector vector(1536);
+
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image62.jpeg)
+
+### Attività 2: Generare e memorizzare gli embedding vettoriali
+
+La tabella delle inserzioni è ora pronta per memorizzare gli
+incorporamenti. Utilizzando la funzione
+azure_openai.create_embeddings(), si creano vettori per il campo
+description e li si inserisce nella colonna description_vector appena
+creata nella tabella degli elenchi.
+
+1.  Prima di utilizzare la funzione create_embeddings(), eseguire il
+    comando seguente per esaminarla ed esaminare gli argomenti
+    richiesti:
+
++++\df+ azure_openai. \* +++
+
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image63.jpeg)
+
+La proprietà Tipi di data Argomento nell'output del comando \df+
+azure_openai.\* rivela l'elenco di argomenti previsti dalla funzione.
+
+[TABLE]
+
+2.  Utilizzando il nome della distribuzione, esegui la seguente query
+    per aggiornare ogni record nella tabella degli elenchi, inserendo
+    gli incorporamenti vettoriali generati per il campo description
+    nella colonna description_vector utilizzando la funzione
+    azure_openai.create_embeddings(). Sostituire {your-deployment-name}
+    con il valore del **Deployment name** copiato dalla pagina
+    **Deployment** di Azure OpenAI Studio . Si noti che il completamento
+    di questa query richiede circa cinque minuti.
+
+> DO $$
+>
+> DECLARE counter integer := (SELECT COUNT(\*) FROM listings WHERE
+> description \<\> '' AND description_vector IS NULL);
+>
+> DECLARE r record;
+>
+> BEGIN
+>
+> RAISE NOTICE 'Total descriptions to embed: %', counter;
+>
+> WHILE counter \> 0 LOOP
+>
+> BEGIN
+>
+> FOR r IN
+>
+> SELECT listing_id FROM listings WHERE description \<\> '' AND
+> description_vector IS NULL
+>
+> LOOP
+>
+> BEGIN
+>
+> UPDATE listings
+>
+> SET description_vector =
+> azure_openai.create_embeddings('{your-deployment-name}', description)
+>
+> WHERE listing_id = r.listing_id;
+>
+> EXCEPTION
+>
+> WHEN OTHERS THEN
+>
+> RAISE NOTICE 'Waiting 1 second before trying again...';
+>
+> PERFORM pg_sleep(1);
+>
+> END;
+>
+> counter := (SELECT COUNT(\*) FROM listings WHERE description \<\>' AND
+> description_vector IS NULL);
+>
+> IF counter % 25 = 0 THEN
+>
+> RAISE NOTICE 'Remaining descriptions to embed: %', counter;
+>
+> END IF;
+>
+> END LOOP;
+>
+> END;
+>
+> END LOOP;
+>
+> END;
+>
+> $$;
+
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image64.jpeg)
+
+La query precedente utilizza un ciclo WHILE per recuperare i record
+dalla tabella degli elenchi in cui il campo description_vector è null e
+il campo della descrizione non è una stringa vuota. La query tenta
+quindi di aggiornare la colonna description_vector con una
+rappresentazione vettoriale della colonna di descrizione usando la
+funzione azure_openai.create_embeddings. Il ciclo viene usato durante
+l'esecuzione di questo aggiornamento per evitare che le chiamate per
+creare la funzione di incorporamento superino il limite di frequenza
+delle chiamate del servizio Azure OpenAI. Se il limite di velocità delle
+chiamate viene superato, nell'output verranno visualizzati avvisi simili
+ai seguenti:
+
+\[! NOTA\] **NOTA**: Attendere 1 secondo prima di riprovare...
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image65.jpeg)
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image66.jpeg)
+
+3.  È possibile verificare che la colonna description_vector sia stata
+    compilata per tutti i record di inserzioni eseguendo la query
+    seguente:
+
++++SELECT COUNT(\*) FROM listings WHERE description_vector IS NULL AND
+description\<\> '';+++
+
+Il risultato della query dovrebbe essere un conteggio pari a 0.
+
+![Una schermata nera con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image67.jpeg)
+
+### Attività 3: Eseguire una ricerca di somiglianza vettoriale
+
+La somiglianza vettoriale è un metodo utilizzato per misurare la
+somiglianza di due elementi rappresentandoli come vettori, una serie di
+numeri. I vettori sono spesso utilizzati per eseguire ricerche
+utilizzando gli LLM. La somiglianza vettoriale è comunemente calcolata
+utilizzando metriche di distanza, come la distanza euclidea o la
+somiglianza del coseno. La distanza euclidea misura la distanza in linea
+retta tra due vettori nello spazio n-dimensionale, mentre la somiglianza
+del coseno misura il coseno dell'angolo tra due vettori. Ogni
+incorporamento è un vettore di numeri in virgola mobile, quindi la
+distanza tra due incorporamenti nello spazio vettoriale è correlata alla
+somiglianza semantica tra due input nel formato originale.
+
+1.  Prima di eseguire una ricerca di somiglianza vettoriale, eseguire la
+    query seguente utilizzando la clausola ILIKE per osservare i
+    risultati della ricerca di record utilizzando una query in
+    linguaggio naturale senza utilizzare la somiglianza vettoriale:
+
++++SELECT listing_id, name, description FROM listings WHERE description
+ILIKE '%Properties with a private room near Discovery Park%';+++
+
+![Uno sfondo nero con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image68.jpeg)
+
+La query restituisce zero risultati perché sta tentando di far
+corrispondere il testo nel campo della descrizione con la query in
+linguaggio naturale fornita.
+
+2.  A questo punto, eseguire una query di ricerca di somiglianza del
+    coseno sulla tabella degli elenchi per eseguire una ricerca di
+    somiglianza vettoriale sulle descrizioni degli elenchi. Gli
+    incorporamenti vengono generati per una domanda di input e quindi
+    inseriti in un array vettoriale (::vector), che consente di
+    confrontarlo con i vettori memorizzati nella tabella degli elenchi.
+    Sostituire {your-deployment-name} con il valore del **Deployment
+    name** copiato dalla pagina **Deployments** di Azure OpenAI Studio .
+
++++SELECT listing_id, name, description FROM listings ORDER BY
+description_vector \<=\>
+azure_openai.create_embeddings('{your-deployment-name}', 'Properties
+with a private room near Discovery Park')::vector LIMIT 3;+++
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image69.jpeg)
+
+La query utilizza la *vector operator* \<=\>, che rappresenta
+l'operatore \cosene distance\\ utilizzato per calcolare la distanza tra
+due vettori in uno spazio multidimensionale.
+
+3.  Eseguire nuovamente la stessa query utilizzando la clausola EXPLAIN
+    ANALYZE per visualizzare i tempi di pianificazione ed esecuzione
+    delle query. Sostituire **{your-deployment-name}** con il valore del
+    **Deployment name** copiato dalla pagina **Deployments** di Azure
+    OpenAI Studio .
+
+> EXPLAIN ANALYZE 
+>
+> SELECT listing_id, name, description FROM listings 
+>
+> ORDER BY description_vector \<=\>
+> azure_openai.create_embeddings('{your-deployment-name}', 'Properties
+> with a private room near Discovery Park')::vector 
+>
+> LIMIT 3; 
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image70.jpeg)
+
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image71.jpeg)
+
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image72.jpeg)
+
+Nell'output si noti il piano di query, che inizierà con qualcosa di
+simile a:
+
+Limit (cost=1098.54..1098.55 rows=3 width=261) (actual
+time=10.505..10.507 rows=3 loops=1) -\> Sort (cost=1098.54..1104.10
+rows=2224 width=261) (actual time=10.504..10.505 rows=3 loops=1) 
+
+…
+
+Metodo di ordinamento: top-N heapsort Memory: 27kB -\> Seq Scan on
+listings (cost=0.00..1069.80 rows=2224 width=261) (actual
+time=0.005..9.997 rows=2224 loops=1) La query utilizza un ordinamento a
+scansione sequenziale per eseguire la ricerca. I tempi di pianificazione
+ed esecuzione saranno elencati alla fine dei risultati e dovrebbero
+essere simili ai seguenti: Planning Time: 62.020 ms Tempo di esecuzione:
+10.530 ms
+
+4.  Per consentire una ricerca più efficiente sul campo vettoriale,
+    creare un indice sulle inserzioni utilizzando la distanza del coseno
+    e [HNSW](https://github.com/pgvector/pgvector#hnsw), che è
+    l'abbreviazione di Hierarchical Navigable Small World. HNSW consente
+    a pgvector di utilizzare i più recenti algoritmi basati su grafici
+    per approssimare le query più vicine.
+
++++CREATE INDEX ON listings USING hnsw (description_vector
 vector_cosine_ops);+++
 
-![](./media/image71.jpeg)
+![](./media/image73.jpeg)
 
-5.  To observe the impact of the hnsw index on the table, run the query
-    again with the EXPLAIN ANALYZE clause to compare the query planning
-    and execution times. Replace **{your-deployment-name}** with
-    the **Deployment name** value you copied from the Azure OpenAI
-    Studio **Deployments** page.
-    
-    ```
-    EXPLAIN ANALYZE
-    SELECT listing_id, name, description FROM listings
-    ORDER BY description_vector <=> azure_openai.create_embeddings('{your-deployment-name}', 'Properties with a private room near Discovery Park')::vector
-    LIMIT 3;
-    ```
-    ![](./media/image72.jpeg)
-    
-    ![](./media/image73.jpeg)
-    
-    ![](./media/image74.jpeg)
+5.  Per osservare l'impatto dell'indice hnsw sulla tabella, eseguire
+    nuovamente la query con la clausola EXPLAIN ANALYZE per confrontare
+    i tempi di pianificazione ed esecuzione della query. Sostituire
+    **{your-deployment-name}** con il valore **Deployment name** copiato
+    dalla pagina **Deployments** di Azure OpenAI Studio .
 
-    In the output, notice the query plan now includes a more efficient index
-    scan:
-    
-    Limit (cost=116.48..119.33 rows=3 width=261) (actual time=1.112..1.130
-    rows=3 loops=1) -\> Index Scan using listings_description_vector_idx on
-    listings (cost=116.48..2228.28 rows=2224 width=261) (actual
-    time=1.111..1.128 rows=3 loops=1)
-    
-    The query execution times should reflect a significant reduction in the
-    time it took to plan and run the query:
-    
-    Planning Time: 56.802 ms
-    
-    Execution Time: 1.167 ms
+> EXPLAIN ANALYZE 
+>
+> SELECT listing_id, name, description FROM listings 
+>
+> ORDER BY description_vector \<=\>
+> azure_openai.create_embeddings('{your-deployment-name}', 'Properties
+> with a private room near Discovery Park')::vector 
+>
+> LIMIT 3; 
 
-## Exercise 6: Integrate Azure AI Services
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image74.jpeg)
 
-The Azure AI services integrations included in the azure_cognitive
-schema of the azure_ai extension provide a rich set of AI Language
-features accessible directly from the database. The functionalities
-include sentiment analysis, language detection, key phrase extraction,
-entity recognition, and text summarization. These capabilities are
-enabled through the Azure AI Language service.
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image75.jpeg)
 
-To review the complete list of Azure AI capabilities accessible through
-the extension, view the Integrate Azure Database for PostgreSQL Flexible
-Server with Azure Cognitive Services documentation.
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image76.jpeg)
 
-**Task 1: Provision an Azure AI Language service**
+Nell'output si noti che il piano di query include ora un'analisi
+dell'indice più efficiente:
 
-An Azure AI Languageservice is required to take advantage of the
-azure_ai extensions cognitive functions. In this exercise, you will
-create an Azure AI Language service.
+Limit (cost=116.48..119.33 rows=3 width=261) (actual time=1.112..1.130
+rows=3 loops=1) -\> Index Scan using listings_description_vector_idx on
+listings (cost=116.48..2228.28 rows=2224 width=261) (actual
+time=1.111..1.128 rows=3 loops=1)
 
-1.  From the Azure portal home page, click on **Azure portal
-    menu** represented by three horizontal bars on the left side of the
-    Microsoft Azure command bar as shown in the below image.
+I tempi di esecuzione della query devono riflettere una riduzione
+significativa del tempo necessario per pianificare ed eseguire la query:
 
-    ![](./media/image75.jpeg)
+Tempo di pianificazione: 56.802 ms
 
-2.  On the **Create a resource** page, select **AI + Machine
-    Learning** from the left-hand menu, then select **Language
+Tempo di esecuzione: 1.167 ms
+
+## Esercizio 6: Integrare i servizi di AI di Azure
+
+Le integrazioni dei servizi di AI di Azure incluse nello schema di
+azure_cognitive dell'estensione azure_ai offrono un set completo di
+funzionalità del linguaggio di AI accessibili direttamente dal database.
+Le funzionalità includono l'analisi del sentiment, il rilevamento della
+lingua, l'estrazione di frasi chiave, il riconoscimento di entità e il
+riassunto del testo. Queste funzionalità sono abilitate tramite il
+servizio Azure AI Language.
+
+Per esaminare l'elenco completo delle funzionalità di AI di Azure
+accessibili tramite l'estensione, visualizzare la documentazione
+Integrare il server flessibile di Database di Azure per PostgreSQL con
+Servizi cognitivi di Azure.
+
+### Attività 1: Effettuare il provisioning di un servizio di linguaggio di AI di Azure
+
+È necessario un Azure AI Languageservice per sfruttare le funzioni
+cognitive delle estensioni azure_ai. In questo esercizio verrà creato un
+servizio di linguaggio di AI di Azure.
+
+1.  Nella home page del portale di Azure fare clic sul **Azure portal
+    menu** rappresentato da tre barre orizzontali sul lato sinistro
+    della barra dei comandi di Microsoft Azure, come illustrato
+    nell'immagine seguente.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image77.jpeg)
+
+2.  Nella pagina **Create a resource,** selezionare **AI + Machine
+    Learning** dal menu a sinistra, quindi selezionare **Language
     service**.
 
-    ![](./media/image76.jpeg)
-    
-    ![](./media/image77.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image78.jpeg)
 
-3.  On the **Select additional features** dialog, select **Continue to
-    create your resource**.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image79.jpeg)
 
-    ![](./media/image78.jpeg)
+3.  Nella finestra di dialogo **Select additional features,**
+    selezionare **Continue to create your resource.**
 
-4.  On the Create Language **Basics** tab, enter the following:
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image80.jpeg)
 
+4.  Nella scheda Crea nozioni **Basics** sulla lingua, immettere quanto
+    segue:
 
-    | **Parameter** | **Value** | 
-    |:---|:----|
-    |**Project details** | |
-    | Subscription | Select the subscription you use for lab resources. | 
-    |Resource group  | Select the resource group you created in Exercise 1>Task 1. | 
-    | **Instance details** |  |
-    | Region | Select the **region** you used for your **Azure Database for PostgreSQL Flexible Server resource**. |
-    | Name | Enter a globally unique name, such as +++lang-postgres-labs-SUFFIX+++, where SUFFIX is a unique string, such as your initials. |
-    | Pricing tier | Select the standard pricing tier, S (1K Calls per minute). |
-    |Responsible AI Notice  | Check the box to certify you have reviewed and acknowledged the Responsible AI Notice. |
-    
-    ![](./media/image79.jpeg)
-    
-    ![](./media/image80.jpeg)
+[TABLE]
 
-6.  The default settings will be used for the remaining tabs of the
-    Language service configuration, so select the **Review +
-    create** button.
+5.  ![Uno screenshot di un computer I contenuti generati
+    dall'intelligenza artificiale potrebbero non essere
+    corretti.](./media/image81.png)
 
-7.  Select the **Create** button on the **Review + create** tab to
-    provision the Language service.
+6.  ![Uno screenshot di un computer I contenuti generati
+    dall'intelligenza artificiale potrebbero non essere
+    corretti.](./media/image82.jpeg)
 
-    ![](./media/image81.jpeg)
+7.  Le impostazioni predefinite verranno usate per le schede rimanenti
+    della configurazione del servizio di linguaggio, quindi selezionare
+    il pulsante **Review + create**.
 
-8.  Select **Go to resource group** on the deployment page when the
-    language service deployment is complete.
+8.  Selezionare il pulsante **Create** nella scheda **Review + create**
+    per effettuare il provisioning del servizio di linguaggio.
 
-    ![](./media/image82.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image83.png)
 
-**Task 2: Set the Azure AI Language service endpoint and key**
+9.  Al termine della distribuzione della distribuzione, selezionare **Go
+    to resource group** nella pagina di deployment.
 
-As with the azure_openai functions, to successfully make calls against
-Azure AI services using the azure_ai extension, you must provide the
-endpoint and a key for your Azure AI Language service.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image84.jpeg)
 
-1.  In the Language home page, select the **Keys and Endpoint** item
-    under **Resource Management** from the left-hand navigation menu.
+### Attività 2: Impostare l'endpoint e la chiave del servizio di linguaggio di Azure per intelligenza artificiale
 
-2.  In **Keys and Endpoints** page, copy **KEY1, KEY
-    2,** and **Endpoint** values and paste them in a notepad as shown in
-    the below image, then **Save** the notepad to use the information in
-    the upcoming tasks.
+Come per le funzioni azure_openai, per effettuare correttamente chiamate
+contro i servizi di intelligenza artificiale di Azure usando
+l'estensione azure_ai, è necessario fornire l'endpoint e una chiave per
+il servizio di linguaggio di AI di Azure.
 
-    ![](./media/image83.jpeg)
+1.  Nella home page Lingua selezionare la voce **Keys and Endpoint** in
+    **Resource Management** dal menu di spostamento a sinistra.
 
-3.  Copy your endpoint and access key values, then in the command below,
-    replace the {endpoint} and {api-key} tokens with values you
-    retrieved from the Azure portal. Run the commands from the psql
-    command prompt in the Cloud Shell to add your values to the
-    configuration table.
+2.  Nella pagina **Keys and Endpoint** copiare i valori **KEY1, KEY 2**
+    ed **Endpoint** e incollarli in un blocco note come illustrato
+    nell'immagine seguente, quindi **Save** il blocco note per usare le
+    informazioni nelle attività future.
 
-    >[!Note] **Note:** Connect to the psql command prompt before executing the below
-commands.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image85.jpeg)
 
-    ```
-    SELECT azure_ai.set_setting('azure_cognitive.endpoint','{endpoint}');
-    SELECT azure_ai.set_setting('azure_cognitive.subscription_key', '{api-key}');
-    ```
+3.  Copiare i valori dell'endpoint e della chiave di accesso, quindi nel
+    comando seguente sostituire i token {endpoint} e {api-key} con i
+    valori recuperati dal portale di Azure. Eseguire i comandi dal
+    prompt dei comandi psql in Cloud Shell per aggiungere i valori alla
+    tabella di configurazione.
 
-    ![](./media/image84.jpeg)
+\[! Nota\] **Nota:** Connettersi al prompt dei comandi psql prima di
+eseguire i comandi seguenti.
 
-**Task 3: Analyze the sentiment of reviews**
+SELEZIONA azure_ai.set_setting('azure_cognitive.endpoint','{endpoint}');
 
-In this task, you will use the azure_cognitive.analyze_sentiment
-function to evaluate reviews of Airbnb listings.
+SELEZIONA azure_ai.set_setting('azure_cognitive.subscription_key',
+'{api-key}');
 
-1.  To perform sentiment analysis using the azure_cognitive schema in
-    the azure_ai extension, you use the analyze_sentiment function. Run
-    the command below to review that function:
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image86.jpeg)
 
-     +++\df azure_cognitive.analyze_sentiment+++
+### Attività 3: Analizzare il sentiment delle recensioni
 
-    ![](./media/image85.jpeg)
+In questa attività, utilizzerai la funzione
+azure_cognitive.analyze_sentiment per valutare le recensioni degli
+annunci Airbnb.
 
-    The output shows the function\\s schema, name, result data type, and
-argument data types. This information helps in gaining an understanding
-of how to use the function.
+1.  Per eseguire l'analisi del sentiment utilizzando lo schema
+    azure_cognitive nell'estensione azure_ai, utilizzare la funzione
+    analyze_sentiment. Esegui il comando seguente per rivedere quella
+    funzione:
 
-2.  It is also essential to understand the structure of the result data
-    type the function outputs so you can correctly handle its return
-    value. Run the following command to inspect the
-    sentiment_analysis_result type:
++++\df azure_cognitive.analyze_sentiment+++
 
-    +++\dT+ azure_cognitive.sentiment_analysis_result+++
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image87.jpeg)
 
-    ![](./media/image86.jpeg)
+L'output mostra lo schema della funzione, il nome, il tipo di data dei
+risultati e i tipi di data degli argomenti. Queste informazioni aiutano
+a comprendere come utilizzare la funzione.
 
-3.  The output of the above command reveals the
-    sentiment_analysis_result type is a tuple. To understand the
-    structure of that tuple, run the following command to look at the
-    columns contained within the sentiment_analysis_result composite
-    type:
+2.  È inoltre essenziale comprendere la struttura del tipo di data dei
+    risultati emessi dalla funzione in modo da poter gestire
+    correttamente il valore restituito. Eseguire il comando seguente per
+    esaminare il tipo di sentiment_analysis_result:
 
-    +++\d+ azure_cognitive.sentiment_analysis_result+++
++++\dT+ azure_cognitive.sentiment_analysis_result+++
 
-    ![](./media/image87.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image88.jpeg)
 
-    The output of that command should look similar to the following:
-Composite type "azure_cognitive.sentiment_analysis_result"
+3.  L'output del comando precedente rivela che il tipo
+    sentiment_analysis_result è una tupla. Per comprendere la struttura
+    di tale tupla, eseguire il comando seguente per esaminare le colonne
+    contenute all'interno del tipo composito sentiment_analysis_result:
 
-    Column | Type | Collation | Nullable | Default | Storage | Description
-    ----------------+------------------+-----------+----------+---------+----------+-------------
-    
-    sentiment | text | | | | extended |
-    
-    positive_score | double precision | | | | plain |
-    
-    neutral_score | double precision | | | | plain |
-    
-    negative_score | double precision | | | | plain |
-    
-    The azure_cognitive.sentiment_analysis_result is a composite type
-    containing the sentiment predictions of the input text. It includes the
-    sentiment, which can be positive, negative, neutral, or mixed, and the
-    scores for positive, neutral, and negative aspects found in the text.
-    The scores are represented as real numbers between 0 and 1. For example,
-    in (neutral,0.26,0.64,0.09), the sentiment is neutral with a positive
-    score of 0.26, neutral of 0.64, and negative at 0.09.
++++\d+ azure_cognitive.sentiment_analysis_result +++
 
-## Exercise 7: Execute a final query to tie it all together
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image89.jpeg)
 
-In this exercise, you connect to your database in **pgAdmin** and
-execute a final query that ties together your work with the azure_ai,
-postgis, and pgvector extensions across labs 3 and 4.
+L'output di tale comando dovrebbe essere simile al seguente: Tipo
+composito "azure_cognitive.sentiment_analysis_result"
 
-### Task 1: Install pgAdmin
+Column | Type | Collation | Nullable | Default | Storage | Description
+----------------+------------------+-----------+----------+---------+----------+-------------
 
-1.  Open a web browser and navigate to
-    the https://www.pgadmin.org/download/pgadmin-4-windows/
+sentiment | Text | | | | extended |
 
-2.  Click on the latest version of **pgAdmin**
+positive_score | double precision | | | | plain | 
 
-    ![](./media/image88.jpeg)
+neutral_score | double precision | | | | plain | 
 
-3.  Select **pgadmin4-8.9-x64.exe**
+negative_score | double precision | | | | plain | 
 
-    ![](./media/image89.jpeg)
+la azure_cognitive.sentiment_analysis_result è un tipo composito
+contenente le previsioni del sentiment del testo di input. Include il
+sentiment, che può essere positivo, negativo, neutro o misto, e i
+punteggi per gli aspetti positivi, neutri e negativi presenti nel testo.
+I punteggi sono rappresentati come numeri reali compresi tra 0 e 1. Ad
+esempio, in (neutro,0,26,0,64,0,09), il sentiment è neutro con un
+punteggio positivo di 0.26, neutro di 0.64 e negativo a 0.09.
 
-4.  Run and install downloaded file
+## Esercizio 7: Esecuzione di una query finale per collegare il tutto
 
-    ![](./media/image90.jpeg)
+In questo esercizio, ci si connette al database in **pgAdmin** e si
+esegue una query finale che collega il lavoro con le estensioni
+azure_ai, postgis e pgvector nei lab 3 e 4.
 
-5.  On the Select Setup Install Mode tab, select **Install for me
-    only(recommended)**
+### Attività 1: Installare pgAdmin
 
-    ![](./media/image91.jpeg)
+1.  Apri un browser Web e vai al
+    <https://www.pgadmin.org/download/pgadmin-4-windows/>
 
-6.  Click on **Next** button
+2.  Clicca sull'ultima versione di **pgAdmin**
 
-    ![](./media/image92.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image90.jpeg)
 
-7.  Select the **I accept the agreement** and click on **Next** button
+3.  Seleziona **pgadmin4-8.9-x64.exe**
 
-    ![](./media/image93.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image91.jpeg)
 
-8.  Select the path and click on **Next** button
+4.  Esegui e installa il file scaricato
 
-    ![](./media/image94.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image92.jpeg)
 
-9.  In the **Setup-pgAdmin 4** window, click on the **Next** button
+5.  Nella scheda Seleziona modalità di installazione dell'installazione,
+    selezionare **Install for me only(recommended) **
 
-    ![](./media/image95.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image93.jpeg)
 
-10. Click on the **Install** button
+6.  Fare clic sul pulsante Next
 
-    ![](./media/image96.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image94.jpeg)
 
-11. In the **Setup-pgAdmin 4** window, click on the **Finish** button
+7.  Seleziona la **I accept the agreement** e clicca sul pulsante Next
 
-    ![](./media/image97.jpeg)
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image95.jpeg)
 
-### Task 2: Connect to the database using pgAdmin
+8.  Seleziona il percorso e fai clic sul pulsante Next
 
-In this task, you will open pgAdmin and connect to your database.
+![Uno screenshot di un errore del computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image96.jpeg)
 
-1.  In your Windows search box, type +++**pgAdmin**+++, then click
-    on **pgAdmin**
+9.  Nella finestra **Setup-pgAdmin 4**, fare clic sul pulsante Next
 
-    ![](./media/image98.jpeg)
-    
-    ![](./media/image99.jpeg)
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image97.jpeg)
 
-2.  Register your server by right-clicking **Servers** in the Object
-    Explorer and selecting **Register \> Server**.
+10. Fare clic sul pulsante Install
 
-    ![](./media/image100.jpeg)
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image98.jpeg)
 
-3.  In the **Register - Server** dialog, paste your Azure Database for
-    PostgreSQL Flexible Server server name( which you have saved in
-    Exercise 1\> Task 1)into the **Name** field on the **General** tab.
+11. Nella finestra **Setup-pgAdmin 4**, fare clic sul pulsante Finish
 
-    ![](./media/image101.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image99.jpeg)
 
-4.  Next, select the **Connection** tab and paste your server name into
-    the **Hostname/address** field. Enter +++**s2admin**+++ into
-    the **Username** field, enter +++**Seattle123Seattle123**+++ into
-    the **Password** box, and optionally, select **Save password**.
+### Attività 2: Connettersi al database utilizzando pgAdmin
 
-    ![](./media/image102.jpeg)
+In questa attività, aprirai pgAdmin e ti connetterai al suo database.
 
-5.  Finally, select the **Parameters** tab and set the **SSL
-    mode** to **require**. Select **Save** to register your server.
+1.  Nella casella di ricerca di Windows, digita +++**pgAdmin**+++,
+    quindi fai clic su **pgAdmin**
 
-    ![](./media/image103.jpeg)
-    
-    ![](./media/image104.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image100.jpeg)
 
-6.  Once connected to your server, expand the **Databases** node and
-    select the **airbnb** database. Right-click the **airbnb** database
-    and select **Query Tool** from the context menu.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image101.jpeg)
 
-    ![](./media/image105.jpeg)
-    
-    ![](./media/image106.jpeg)
+2.  Registrare il server facendo clic con il pulsante destro del mouse
+    su **Servers** in Esplora oggetti e scegliendo **Register \>
+    server**.
 
-### **Task 3: Verify that the PostGIS extension is installed in your
-database**
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image102.jpeg)
 
-To install the postgis extension in your database, you will use the
-CREATE EXTENSION command.
+3.  Nella finestra di dialogo **Register - Server** incollare il nome
+    del server del server flessibile di Database di Azure per PostgreSQL
+    (salvato nell'Esercizio 1\> Attività 1) nel campo **Name** della
+    scheda **General**.
 
-1.  In the query window you opened above, run the CREATE EXTENSION
-    command with the IF NOT EXISTS clause to install the postgis
-    extension in your database.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image103.jpeg)
 
-    +++CREATE EXTENSION IF NOT EXISTS postgis;+++
+4.  Quindi, seleziona la scheda **Connection** e incolla il nome del suo
+    server nel campo **Hostname/address**. Inserisci +++**s2admin**+++
+    nel campo **Username**, inserisci +++**Seattle123Seattle123**+++
+    nella casella **Password** e, facoltativamente, seleziona **Save
+    password**.
 
-    ![](./media/image107.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image104.jpeg)
 
-    With the PostGIS extension now loaded, you are ready to begin working with geospatial data in the database. The listings table you created and populated above contains the latitude and longitude of all listed properties. To use these data for geospatial analysis, you must alter the listings table to add a geometry column that accepts the point data type. These new data types are included in the postgis extension.
+5.  Infine, seleziona la scheda **Parameters** e imposta la **SSL mode**
+    su **require**. Seleziona **Save** per registrare il server.
 
-2.  To accommodate point data, add a new geometry column to the table
-    that accepts point data. Copy and paste the following query into the
-    open pgAdmin query window:
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image105.jpeg)
 
-3.  ALTER TABLE listings
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image106.jpeg)
 
-    +++ADD COLUMN listing_location geometry(point, 4326); +++
+6.  Una volta connesso al suo server, espandi il nodo **Databases** e
+    seleziona il database di **airbnb**. Fai clic con il pulsante destro
+    del mouse sul database di **airbnb** e seleziona **Query Tool** dal
+    menu contestuale.
 
-4.  Next, update the table with geospatial data associated with each
-    listing by adding the longitude and latitude values into the
-    geometry column.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image107.jpeg)
 
-5.  UPDATE listings
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image108.jpeg)
 
-    +++SET listing_location = ST_SetSRID(ST_Point(longitude, latitude),
+### Task 3: Verificare che l'estensione PostGIS sia installata nel database
+
+Per installare l'estensione postgis nel suo database, utilizzerai il
+comando CREATE EXTENSION.
+
+1.  Nella finestra di query che hai aperto sopra, esegui il comando
+    CREATE EXTENSION con la clausola IF NOT EXISTS per installare
+    l'estensione postgis nel suo database.
+
++++CREATE EXTENSION IF NOT EXISTS postgis;+++
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image109.jpeg)
+
+Con l'estensione PostGIS ora caricata, sei pronto per iniziare a
+lavorare con i data geospaziali nel database. La tabella degli annunci
+creata e compilata in precedenza contiene la latitudine e la longitudine
+di tutte le proprietà elencate. Per utilizzare questi data per l'analisi
+geospaziale, è necessario modificare la tabella degli elenchi per
+aggiungere una colonna geometrica che accetti il tipo di data punto.
+Questi nuovi tipi di data sono inclusi nell'estensione postgis.
+
+2.  Per contenere i data punto, aggiungere una nuova colonna geometry
+    alla tabella che accetta i data punto. Copia e incolla la seguente
+    query nella finestra di query pgAdmin aperta:
+
+3.  Elenchi ALTER TABLE
+
++++ ADD COLUMN listing_location geometry(point, 4326); +++
+
+4.  Successivamente, aggiornare la tabella con i data geospaziali
+    associati a ciascun elenco aggiungendo i valori di longitudine e
+    latitudine nella colonna della geometria.
+
+5.  UPDATE gli annunci
+
++++SET listing_location = ST_SetSRID(ST_Point(longitude, latitude),
 4326);+++
 
-    ![](./media/image108.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image110.jpeg)
 
-### Task 4: Execute a query and view results on a map
+### Attività 4: Esecuzione di una query e visualizzazione dei risultati su una mappa
 
-1.  Copy and paste the following query into the open query editor, then
-    run it to view the data stored in the **listing_location** column.
+1.  Copiare e incollare la query seguente nell'editor di query aperto,
+    quindi eseguirla per visualizzare i data archiviati nella colonna
+    **listing_location**.
 
-    +++SELECT listing_id, name, listing_location FROM listings LIMIT 50;+++
++++ SELECT listing_id, name, listing_location FROM listings LIMIT 50;+++
 
-    In the Data Output panel, select the **View all geometries** in this
-    column button displayed in the **listing_location column** of the query
-    results.
-    
-    ![](./media/image109.jpeg)
-    
-    ![](./media/image110.jpeg)
+Nel pannello Output data, selezionare il pulsante **View all
+geometries** in questa colonna visualizzato nella **listing_location
+column** dei risultati della query.
 
-2.  Now, run the following query to perform a **geospatial proximity
-    query**, returning properties that are available for the week of
-    January 13, 2016, are under $75.00 per night, and are within a short
-    distance of Discovery Park in Seattle. The query uses the ST_DWithin
-    function provided by the PostGIS extension to identify listings
-    within a given distance from the park, which has a longitude of
-    -122.410347 and a latitude of 47.655598.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image111.jpeg)
 
-    ```
-    SELECT name, listing_location, summary
-    FROM listings l
-    INNER JOIN calendar c ON l.listing_id = c.listing_id
-    WHERE ST_DWithin(
-        listing_location,
-        ST_GeomFromText('POINT(-122.410347 47.655598)', 4326),
-        0.025
-    )
-    AND c.date = '2016-01-13'
-    AND c.available = 't'
-    AND c.price <= 75.00;
-    ```
-    ![](./media/image111.jpeg)
-    
-    ![](./media/image112.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image112.jpeg)
 
-### Task 5: Clean up resources
+2.  A questo punto, eseguire la query seguente per eseguire una
+    **geospatial proximity query**, restituendo le proprietà disponibili
+    per la settimana del 13 gennaio 2016, che costano meno di $ 75,00 a
+    notte e che si trovano a breve distanza dal Discovery Park di
+    Seattle. La query utilizza la funzione ST_DWithin fornita
+    dall'estensione PostGIS per identificare gli annunci entro una
+    determinata distanza dal parco, che ha una longitude di -122.410347
+    e una latitude di 47.655598.
 
-It is crucial that you clean up any resources you created for these labs
-once you have completed them. You are charged for the configured
-capacity, not how much the database is used. To delete your resource
-group and all resources you created for this lab, follow the
-instructions below:
+> SELECT name, listing_location, summary 
+>
+> FROM listings l 
+>
+> INNER JOIN calendar c ON l.listing_id = c.listing_id 
+>
+> WHERE ST_DWithin( 
+>
+>    listing_location, 
+>
+>     ST_GeomFromText('POINT(-122.410347 47.655598)', 4326), 
+>
+> 0.025
+>
+> )
 
-To avoid incurring unnecessary Azure costs, you should delete the
-resources you created in this quick start if they're no longer needed.
-To manage resources, you can use the [Azure
-portal](https://portal.azure.com/?azure-portal=true).
+AND c.date = '2016-01-13' 
 
-1.  To delete the storage account, navigate to **Azure portal
-    Home** page, click on **Resource groups**.
+AND c.available = 't' 
 
-    ![](./media/image113.jpeg)
+AND c.price \<= 75.00;
 
-2.  Click on the resource group that you've created.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image113.jpeg)
 
-    ![](./media/image114.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image114.jpeg)
 
-3.  In the **Resource group** home page, select the **delete resource
-    group** .
+**Sommario**
 
-    ![](./media/image115.jpeg)
+In questo lab sono stati integrati correttamente i servizi di AI di
+Azure con PostgreSQL per creare un potente ambiente di database
+abilitato per l'intelligenza artificiale. Si è iniziato effettuando il
+provisioning delle risorse di Azure e configurando il database
+PostgreSQL con le estensioni necessarie. Sono stati quindi generati
+incorporamenti vettoriali per i data testuali ed eseguite ricerche di
+somiglianza vettoriale per trovare record semanticamente simili.
+Inoltre, è stata usata l'estensione PostGIS per l'analisi dei data
+geospaziali e il servizio Azure AI Language per l'analisi del sentiment.
+Infine, hai ottimizzato le tue query utilizzando l'indicizzazione e
+analizzato le loro prestazioni, dimostrando l'efficienza e la capacità
+di questa soluzione integrata per l'analisi avanzata dei data.
 
-4.  In the **Delete Resources** pane that appears on the right side,
-    navigate to **Enter "resource group name" to confirm
-    deletion** field, then click on the **Delete** button.
-
-    ![](./media/image116.jpeg)
-
-5.  On **Delete confirmation** dialog box, click on **Delete** button.
-
-    ![](./media/image117.jpeg)
-
-6.  Click on the bell icon, you'll see the notification --**Deleted
-    resource group AOAI-RG89.**
-
-    ![](./media/image118.jpeg)
-
-**Summary**
-
-In this lab, you've successfully integrated Azure AI services with
-PostgreSQL to create a powerful AI-enabled database environment. You've
-started by provisioning Azure resources and configuring your PostgreSQL
-database with necessary extensions. You then generated vector embeddings
-for textual data and performed vector similarity searches to find
-semantically similar records. Additionally, you utilized the PostGIS
-extension for geospatial data analysis and the Azure AI Language service
-for sentiment analysis. Finally, you've optimized your queries using
-indexing and analyzed their performance, demonstrating the efficiency
-and capability of this integrated solution for advanced data analysis.
-
+ 

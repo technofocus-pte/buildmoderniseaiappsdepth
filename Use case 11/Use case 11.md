@@ -1,623 +1,800 @@
-# Use case 11 - Building a Copilot using Azure OpenAI, Azure Cosmos DB for NoSQL
+# Caso d'uso 11 - Creazione di un Copilot con Azure OpenAI, Azure Cosmos DB per NoSQL
 
-In this use case, you will connect a Blazor web application to Azure
-Cosmos DB for NoSQL and Azure OpenAI using .NET software development
-kits. Your code manages and queries items in an API for NoSQL container.
-Your code also sends prompts to Azure OpenAI and parses the responses.
+In questo caso d'uso, si connetterà un'applicazione Web Blazor ad Azure
+Cosmos DB per NoSQL e Azure OpenAI usando i kit di sviluppo software
+.NET. Il codice gestisce ed esegue query sugli elementi in un
+contenitore API per NoSQL. Il codice invia anche prompt ad Azure OpenAI
+e analizza le risposte.
 
-**Lab duration:** 45 minutes
+**Durata del laboratorio:** 45 minuti
 
-**Lab Type**: Instructor led
+**Tipo di laboratorio**: Guidato da un istruttore
 
-**Objective**
+**Obiettivo**
 
-- To set up the development environment for Blazor, PostgreSQL, and
+- Per configurare l'ambiente di sviluppo per Blazor, PostgreSQL e
   OpenAI.
 
-- To create a Blazor project and design a responsive chat interface.
+- Per creare un progetto Blazor e progettare un'interfaccia di chat
+  reattiva.
 
-- To configure PostgreSQL database on Azure and connect it to the Blazor
-  app.
+- Per configurare il database PostgreSQL in Azure e connetterlo all'app
+  Blazor.
 
-- To integrate Azure OpenAI for enhanced chat functionalities.
+- Per integrare Azure OpenAI per funzionalità di chat avanzate.
 
-- To deploy the Blazor application and PostgreSQL database on Azure.
+- Per distribuire l'applicazione Blazor e il database PostgreSQL in
+  Azure.
 
-- To test the application in order to ensure seamless interaction
-  between components.
+- Testare l'applicazione al fine di garantire un'interazione senza
+  soluzione di continuità tra i componenti.
 
-- To monitor and troubleshoot the deployed application on Azure.
+- Per monitorare e risolvere i problemi dell'applicazione distribuita in
+  Azure.
 
-**Key Technologies Used:** Azure Cosmos DB for NoSQL, Azure OpenAI
+**Tecnologie chiave utilizzate:** Azure Cosmos DB per NoSQL, Azure
+OpenAI
 
-## Exercise 1: Deploy the infrastructure and complete the initial setup
+## Esercizio 0: Informazioni sulla macchina virtuale e sulle credenziali
 
-To complete this project, you need an Azure Cosmos DB for NoSQL account
-and an Azure OpenAI account. To streamline this process, deploy a Bicep
-template to Azure with both of these accounts.
+In questa attività, identificheremo e comprenderemo le credenziali che
+utilizzeremo in tutto il laboratorio.
 
-### Task 1: Deploy infrastructure from template
+1.  **Instructions tab** Tenere la guida del laboratorio con le
+    istruzioni da seguire durante il laboratorio.
 
-1.  Open a new browser and enter the following URL in the address
-    bar: +++https://portal.azure.com/+++ to open the Azure Portal.
+2.  **Resources tab** contiene le credenziali necessarie per
+    l'esecuzione del lab.
 
-    ![](./media/image1.jpeg)
+    - **URL**: URL del portale di Azure
 
-2.  In the Azure portal, click on the **\[\>\_\] (Cloud Shell)** button
-    at the top of the page to the right of the search box. A Cloud Shell
-    pane will open at the bottom of the portal. The first time you open
-    the Cloud Shell, you may be prompted to choose the type of shell you
-    want to use (**Bash** or **PowerShell**). Select **Bash**. If you
-    don't see this option, then skip this step.
+    - **Subscription**: questo è l'ID dell'abbonamento assegnato
+      all'utente
 
-    ![](./media/image2.jpeg)
-    
-    ![](./media/image3.jpeg)
+    - **Username**: l'ID utente con cui è necessario accedere ai servizi
+      di Azure.
 
-3.  In the **Getting Started** dialog, select **Mount storage account**, select your **subscription** and then click on **Apply**.
+    - **Password**: password per l'account di accesso di Azure.
+      Chiamiamo questo nome utente e password come credenziali di
+      accesso di Azure. Useremo questi crediti ogni volta che
+      menzioniamo le credenziali di accesso di Azure.
 
-    ![](./media/image4.jpeg)
+    - **Resource group**: il **Resource Group** assegnato all'utente.
 
-4.	In the **Mount storage account** dialog, select **we will create a storage account for you** and click on **Next**.
+\[! Alert\] **Importante:** assicurarsi di creare tutte le risorse in
+questo Resource group
 
-    ![](./media/image5.jpeg)
-    
-    ![](./media/image6.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image1.png)
 
-5.  Ensure the type of shell indicated on the top left of the Cloud
-    Shell pane is switched to **Bash**. If it's **PowerShell**, switch
-    to **Bash** by using the drop-down menu.
+3.  **Help Tab** contiene le informazioni di supporto. Il valore **ID**
+    è l'ID i **Lab instance** che verrà utilizzato durante l'esecuzione
+    del lab.
 
-    ![](./media/image7.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image2.png)
 
-6.  Once the terminal starts, click on **Manage files -\> Upload**.
+## Esercizio 1: Distribuire l'infrastruttura e completare la configurazione iniziale
 
-    ![](./media/image8.jpeg)
+Per completare questo progetto, è necessario un account Azure Cosmos DB
+per NoSQL e un account Azure OpenAI. Per semplificare questo processo,
+distribuire un modello Bicep in Azure con entrambi questi account.
 
-7.  Select **azuredeploy.JSON** file from the path **C:\Labfiles\Build
-    and Test a custom chat application Using Azure Cosmos DB and
-    AzureOpenAI** and select **Open**.
+### Attività 1: Distribuire l'infrastruttura dal modello
 
-    ![](./media/image9.jpeg)
+1.  Aprire il file dal percorso **C:\Labfiles\Build and Test custom chat
+    application Using Azure Cosmos DB and AzureOpenAI** e aggiornare la
+    versione di Azure OpenAI alla riga 96 in modo che sia +++0125+++.
+    **Save** il file.
 
-    You should get a success message for the file upload.
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image3.png)
 
-    ![](./media/image10.jpeg)
+2.  Aprire un nuovo browser e immettere l'URL seguente nella barra degli
+    indirizzi: +++<https://portal.azure.com/+++> per aprire il Azure
+    Portal.
 
-8.  Create a new shell variable named **resourceGroupName** with the
-    name of the Azure resource group that you create
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image4.jpeg)
+
+3.  Nel Azure Portal, fare clic sul pulsante **\[\>\_\] (Cloud Shell)**
+    nella parte superiore della pagina a destra della casella di
+    ricerca. Verrà aperto un riquadro Cloud Shell nella parte inferiore
+    del portale. La prima volta che si apre Cloud Shell, potrebbe essere
+    richiesto di scegliere il tipo di shell che si desidera utilizzare
+    (**Bash** or **PowerShell**). Seleziona **Bash**. Se non vedi questa
+    opzione, salta questo passaggio.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image5.jpeg)
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image6.jpeg)
+
+4.  Nella finestra di dialogo **Getting Started**, selezionare **Mount
+    storage account**, selezionare la **subscription** e quindi fare
+    clic su **Apply**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image7.jpeg)
+
+5.  Nella finestra di dialogo **Mount storage account**, selezionare
+    **we will create a storage account for you** e fare clic su
+    **Next**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image8.jpeg)
+
+![Un primo piano dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image9.jpeg)
+
+6.  Assicurarsi che il tipo di shell indicato nella parte superiore
+    sinistra del riquadro Cloud Shell sia impostato su **Bash**. Se si
+    tratta di **PowerShell**, passare a **Bash** utilizzando il menu a
+    discesa.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image10.jpeg)
+
+7.  Una volta avviato il terminale, fai clic su **Manage files -\>
+    Upload**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image11.jpeg)
+
+8.  Selezionare **azuredeploy.JSON** file dal percorso **C:\Labfiles\\
+    Build and Test a custom chat application Using Azure Cosmos DB e
+    AzureOpenAI** e selezionare **Open**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image12.jpeg)
+
+Dovresti ricevere un messaggio di successo per il caricamento del file.
+
+![Uno sfondo bianco con testo nero I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image13.jpeg)
+
+9.  Creare una nuova variabile della shell denominata
+    **resourceGroupName** con il nome del Azure resource group creato
     (mslearn-cosmos-openai).
 
-    +++resourceGroupName="mslearn-cosmos-openai"+++
++++resourceGroupName="ResourceGroup1"+++( Get the Resource Group name
+from the Resources tab) 
 
-    ![](./media/image11.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image14.png)
 
-8.  Create a resource group using the **az group create** command. Then,
-    execute the following command
+10. Distribuire il file modello di **azuredeploy.json** nel gruppo di
+    risorse usando az group deployment create. Quindi, esegui il
+    seguente comando.
 
-    +++az group create --name $resourceGroupName --location "uksouth"+++
-    
-    ![](./media/image12.jpeg)
++++az deployment group create --resource-group $resourceGroupName --name
+zero-touch-deployment --template-file azuredeploy.json+++
 
-9.  Deploy the **azuredeploy.json** template file to the resource group
-    using az group deployment create. Then, execute the following
-    command.
+**Nota:** Questa distribuzione può richiedere circa 5-10 minuti.
 
-    +++az deployment group create --resource-group $resourceGroupName --name zero-touch-deployment --template-file azuredeploy.json+++
-    
-    **Note:** This deployment can take approximately 5-10 minutes.
-    
-    ![](./media/image13.jpeg)
-    
-    ![](./media/image14.jpeg)
+![Uno screenshot dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image15.jpeg)
 
-### Task 2: Get Azure Cosmos DB for NoSQL and Azure OpenAI account credentials
+![Uno screenshot dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image16.jpeg)
 
-The above deployment has deployed Azure Cosmos DB for NoSQL and Azure
-OpenAI accounts and then stored their credentials in the Azure App
-Service web app's configuration. Now, you have the choice of using the
-Azure portal or Azure CLI to retrieve the credentials for each service.
+### Attività 2: Ottenere le credenziali dell'account Azure Cosmos DB per NoSQL e Azure OpenAI
 
-1.  From the Azure portal Home page, click on **Resource groups.**
+La distribuzione precedente ha distribuito gli account Azure Cosmos DB
+per NoSQL e Azure OpenAI e quindi ha archiviato le credenziali nella
+configurazione dell'app Web del servizio app di Azure. A questo punto, è
+possibile scegliere di usare il portale di Azure o l'interfaccia della
+riga di comando di Azure per recuperare le credenziali per ogni
+servizio.
 
-    ![](./media/image15.jpeg)
+1.  Nella home page del portale di Azure fare clic su **Resource
+    Groups.**
 
-2.  Select the **mslearn-cosmos-openai** resource group.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image17.jpeg)
 
-    ![](./media/image16.jpeg)
+2.  Selezionare il resource group.
 
-3.  On the **Resource Groups** page, expand the **Essentials** panel and
-    observe the **Deployments** header. The status for the deployment
-    should be **Succeeded** at this point.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image18.png)
 
-    ![](./media/image17.jpeg)
+3.  Nella pagina **Resource Groups** espandere il pannello
+    **Essentials** e osservare l' intestazione **Deployments**. A questo
+    punto, lo stato della distribuzione dovrebbe essere **Succeeded**.
 
-4.  Now, select the **Azure Cosmos DB** account to navigate to the
-    resource's page.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image19.png)
 
-    ![](./media/image18.jpeg)
+4.  A questo punto, selezionare l' account **Azure Cosmos DB** per
+    passare alla pagina della resource.
 
-5.  Select the **Keys** option in the **Settings** section of the
-    resource navigation menu. Record the value of
-    the **URI** and **PRIMARY KEY** fields. You use these values later.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image20.png)
 
-    ![](./media/image19.jpeg)
+5.  Selezionare l' opzione **Keys** nella sezione **Settings** del menu
+    di navigazione delle risorse. Registrare il valore dei campi **URI**
+    e **PRIMARY KEY**. Questi valori verranno utilizzati in un secondo
+    momento.
 
-6.  Return to the **Resource Groups** page. Select the **Azure
-    OpenAI** account.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image21.jpeg)
 
-    ![](./media/image20.jpeg)
+6.  Tornare alla pagina **Resource Groups**. Selezionare l' account
+    **Azure OpenAI**.
 
-7.  In your **Azure Open AI** window, navigate to the **Resource
-    Management** section, and click on **Keys and Endpoints**.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image22.png)
 
-    ![](./media/image21.jpeg)
+7.  Nella finestra **Azure Open AI** passare alla sezione **Resource
+    Management** e fare clic su **Keys and Endpoints**.
 
-8.  In **Keys and Endpoints** page, copy **KEY1,** (*You can use either
-    KEY1 or KEY2)* and **Endpoint** and then **Save** the notepad to use
-    the information in the upcoming tasks.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image23.jpeg)
 
-    ![](./media/image22.jpeg)
+8.  Nella pagina **Keys and Endpoints ,** copiare **KEY1** (*è possibile
+    utilizzare KEY1 o KEY2)* e **Endpoint**, quindi **Save** il notepad
+    per utilizzare le informazioni nelle attività future.
 
-### Task 3: Run the Docker
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image24.jpeg)
 
-1.  In your Windows search box, type Docker , then click on **Docker
-    Desktop**.
+### Attività 3: Eseguire la finestra mobile
 
-    ![](./media/image23.jpeg)
+1.  Nella casella di ricerca di Windows, digita +++Docker+++ , quindi
+    fai clic su **Docker Desktop**.
 
-2.  Run the Docker Desktop.
+![Uno screenshot di un desktop I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image25.jpeg)
 
-    ![](./media/image24.jpeg)
+2.  **Run** il desktop Docker.
 
-## Exercise 2 - Setup and build the starter application
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image26.jpeg)
 
-1.  From the VM searchbar, search for +++Visual Studio+++ and
-    select **Visual Studio Code**.
+## Esercizio 2 - Configurare e creare l'applicazione iniziale
 
-2.  Click on **File** -\> **Open Folder**
+1.  Dalla barra di ricerca della macchina virtuale cercare +++Visual
+    Studio+++ e selezionare **Visual Studio Code**.
 
-    ![](./media/image25.jpeg)
-
-3.  Select **cosmosdb-chatgpt** from **C:\LabFiles** and click
-    on **Select Folder**.
-
-    ![](./media/image26.jpeg)
-
-4.  Click on **Yes, I trust the authors** option in the **Do you trust
-    the authors dialog**.
-
-    ![](./media/image27.jpeg)
-
-5.  If there is an already open terminal, delete it.
-
-    ![](./media/image28.jpeg)
-
-6.  In the **Visual Studio Code** editor, click on **Terminal**, open
-    a **New Terminal**.
-
-    ![](./media/image29.jpeg)
-
-7.  In a .NET application, it's common to use the configuration
-    providers to inject new settings into your application. For this
-    application, use the **appsettings.Development.json** file to
-    provide the most current values for the Azure OpenAI endpoint and
-    key.
-
-8.  Open the **appsettings.Development.JSON** file. Replace the already
-    existing values for uri and key values of **Azure Cosmos
-    DB** and **Azure OpenAI** resources in the file with the values that
-    we saved earlier.
-
-    ![](./media/image30.jpeg)
-
-9.  **Build** the .NET project by executing the below command.
-
-    +++dotnet build+++
-
-    ![](./media/image31.jpeg)
-
-## Exercise 3: Understand the code
-
-### Task 1: Add required members and a client instance
-
-1.  Open the **Services/OpenAiService.cs** file. This file implements
-    the class variables required to use the Azure OpenAI client. It
-    implements a few static prompts and create a new instance of the
-    OpenAIClient class.
-
-2.  This code block creates a new string variable named
-    \_systemPromptText with a static block of text to send to the AI
-    assistant before each prompt.
-
-    private readonly string _systemPrompt = @"
-    You are an AI assistant that helps people find information.
-    Provide concise answers that are polite and professional." + Environment.NewLine;
-
-3.  This code block creates another new string variable named
-    \_summarizePrompt with a static block of text to send to the AI
-    assistant with instructions on how to summarize a conversation.
-
-    private readonly string _summarizePrompt = @"
-    Summarize this prompt in one or two words to use as a label in a button on a web page.
-    Do not use any punctuation." + Environment.NewLine;
-
-4.  This code block creates a new instance of the OpenAIClient class
-    using the endpoint to build a Uri and the key to build an
-    AzureKeyCredential.
-
-    ```nocopy
-      Uri uri = new(endpoint);
-          AzureKeyCredential credential = new(key);
-          _client = new(
-              endpoint: uri,
-              keyCredential: credential
-          );
-    ```
-
-
-### Task 2: Ask the AI model a question
-
-First, implement a question-answer conversation by sending a system
-prompt, a question, and session ID so the AI model can provide an answer
-in the context of the current conversation. Make sure you measure the
-number of tokens it takes to parse the prompt and return a response (or
-completion in this context).
-
-1.  This code block creates a new variable named options of type
-    ChatCompletionsOptions. Adds the two message variables to the
-    Messages list and sets the value of User to the sessionId
-    constructor parameter.
-
-    ```nocopy
-    ChatCompletionsOptions options = new()
-        {
-            DeploymentName = "chatmodel",
-            Messages = {
-                new ChatRequestSystemMessage(_systemPrompt),
-                new ChatRequestUserMessage(userPrompt)
-            },
-            User = sessionId,
-            MaxTokens = 4000,
-            Temperature = 0.3f,
-            NucleusSamplingFactor = 0.5f,
-            FrequencyPenalty = 0,
-            PresencePenalty = 0
-        };
-    ```
-2.  The GetChatCompletionsAsync method of the Azure OpenAI client
-    variable (\_client) is invoked Asynchronously. The result is stored
-    in a variable named completions of type ChatCompletions.
-
-    Response<ChatCompletions> completionsResponse = await_client.GetChatCompletionsAsync(options);
-    ChatCompletions completions = completionsResponse.Value;
-
-3.  Finally, the below block of code, returns a tuple as the result of
-    the GetChatCompletionAsync method with the content of the completion
-    as a string, the number of tokens associated with the prompt, and
-    the number of tokens for the response.
-
-    ```nocopy
-    return (
-            completionText: completions.Choices[0].Message.Content,
-            completionTokens: completions.Usage.CompletionTokens
-        );
-    ```
-
-### Task 3: Ask the AI model to summarize a conversation
-
-Now, send the AI model a different system prompt, your current
-conversation, and session ID so the AI model can summarize the
-conversation in a couple of words.
-
-2.  The below code creates a ChatCompletionsOptions variable named
-    options with the two message variables in the Messages list, User
-    set to the sessionId constructor parameter, MaxTokens set to 200,
-    and the remaining properties.
-
-    ```nocopy
-    ChatCompletionsOptions options = new()
-        {
-             DeploymentName = "chatmodel",
-            Messages = {
-                 new ChatRequestSystemMessage(_systemPrompt),
-                new ChatRequestUserMessage(conversationText)
-            },
-            User = sessionId,
-            MaxTokens = 200,
-            Temperature = 0.0f,
-            NucleusSamplingFactor = 1.0f,
-            FrequencyPenalty = 0,
-            PresencePenalty = 0
-        };
-    ```
-
-3.  The below code invokes the \_client.GetChatCompletionsAsync
-    asynchronously with the model name (\_modelName) and the options
-    variable as parameter and stores the result in a variable named
-    completions of type ChatCompletions. It returns the content of the
-    completion as a string as the result of the SummarizeAsync method.
-
-    ```nocopy
-    Response<ChatCompletions> completionsResponse = await _client.GetChatCompletionsAsync(options);
-    ChatCompletions completions = completionsResponse.Value;
-    string completionText = completions.Choices[0].Message.Content;
-    return completionText;
-    ```
-
-    ![](./media/image32.jpeg)
-
-### Task 4 - Connect to Azure Cosmos DB for NoSQL
-
-The CosmosDbService class contains a stub implementation of a service
-similar to the OpenAiService class you worked on previously in this
-module. In contrast, this class uses the .NET SDK for Azure Cosmos DB,
-which works slightly different.
-
-This section exaplins the implementation of the class variables and
-client required to access Azure Cosmos DB for NoSQL using the client.
-
-1.  Open the **Services/CosmosDbService.cs** file.
-
-    ![](./media/image33.jpeg)
-
-2.  The below code creates a variable named options of type
-    CosmosSerializationOptions and Set the PropertyNamingPolicy property
-    of the variable to CosmosPropertyNamingPolicy.CamelCase.
-
-    ```nocopy
-    CosmosSerializationOptions options = new()
-    {
-        PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
-    };
-    ```
-
-    **Note:** Setting this property will ensure that the JSON produced by
-the SDK is both serialized and deserialized in camel case regardless of
-how it's corresponding property is cased in the .NET class.
-
-3.  The below code creates a new instance of type CosmosClient named
-    client using the CosmosClientBuilder class, endpoint, key, and
-    serialization options you specified earlier.
-
-    ```nocopy
-    CosmosClient client = new CosmosClientBuilder(endpoint, key)
-        .WithSerializerOptions(options)
-        .Build();
-    ```
-    
-4.  The below code create a new nullable variable of type Database named
-    database by calling the GetDatabase method of the client variable.
-
-    **Database? database = client?.GetDatabase(databaseName);**
-
-5.  The below code assigns the constructor's container variable to the
-    class' \_container variable only if it's not null. If it's null,
-    throw an ArgumentException.
-
-    ```nocopy
-    _container = container ??
-    throw new ArgumentException("Unable to connect to existing Azure Cosmos DB container or database.");
-    ```
-    
-    ![](./media/image34.jpeg)
-
-### Task 5 - Implement the Azure Cosmos DB for NoSQL service
-
-The Azure Cosmos DB service (CosmosDbService) manages querying,
-creating, deleting, and updating sessions and messages in your AI
-assistant application. To manage all of these operations, the service is
-required to implement multiple methods for each potential operation
-using various features of the .NET SDK.
-
-There are multiple key requirements to tackle in this exercise:
-
-- Implement operations to create a session or message
-
-- Implement queries to retrieve multiple sessions or messages
-
-- Implement an operation to update a single session or batch update
-  multiple messages
-
-- Implement an operation to query and delete multiple related sessions
-  and messages
-
-Azure Cosmos DB for NoSQL stores data in JSON format allowing us to
-store many types of data in a single container. This application stores
-both a chat "session" with the AI assistant and the individual
-"messages" within each session. With the API for NoSQL, the application
-can store both types of data in the same container and then
-differentiate between these types using a simple type field.
-
-1.  Open the **Services/CosmosDbService.cs** file.
-
-2.  The below code creates a new variable named partitionKey of type
-    PartitionKey using the current session's SessionId property as the
-    parameter.
-
-    **PartitionKey partitionKey = new(session.SessionId);**
-
-3.  The below code invokes the CreateItemAsync method of the container
-    passing in the session parameter and partitionKey variable. Returns
-    the response as the result of the InsertSessionAsync method.
-
-    ```nocopy
-    return await _container.CreateItemAsync<Session>(
-        item: session,
-        partitionKey: partitionKey
-    );
-    ```
-
-4.  The below code creates a PartitionKey variable using
-    session.SessionId as the value of the partition key.Creates a new
-    message variable named newMessage with the Timestamp property
-    updated to the current UTC timestamp. Invoke the CreateItemAsync
-    passing in both the new message and partition key variables. Return
-    the response as the result of InsertMessageAsync.
-
-    ```nocopy
-    PartitionKey partitionKey = new(message.SessionId);
-    Message newMessage = message with { TimeStamp = DateTime.UtcNow };
-    return await _container.CreateItemAsync<Message>(
-        item: newMessage,
-        partitionKey: partitionKey
-    );
-    ```
-    
-    ![](./media/image35.jpeg)
-
-### Task 6: Retrieve multiple sessions or messages
-
-There are two main use cases where the application needs to retrieve
-multiple items from our container. First, the application retrieves all
-sessions for the current user by filtering the items to ones where type
-= Session. Second, the application retrieves all messages for a session
-by performing a similar filter where type = Session & sessionId = . Both
-queries are here implemented using the .NET SDK and a feed iterator.
-
-1.  The below code creates a new variable named query of type
-    QueryDefinition. It uses the fluent WithParameter method to assign
-    the name of the Session class as the value for the parameter. Then
-    invokes the generic GetItemQueryIterator\<\> method on the
-    \_container variable passing in the generic type Session and the
-    query variable as a parameter. Store the result in a variable of
-    type FeedIterator named response.
-
-    ```nocopy
-    QueryDefinition query = new QueryDefinition("SELECT DISTINCT * FROM c WHERE c.type = @type")
-    .WithParameter("@type", nameof(Session));
-    FeedIterator<Session> response = _container.GetItemQueryIterator<Session>(query);
-    ```
-    
-2.  The below code within the while loop, asynchronously get the next
-    page of results by invoking ReadNextAsync on the response variable
-    and then add those results to the list variable named output.
-    Outside the while loop, the output variable is returned with a list
-    of sessions as the result of the GetSessionsAsync method.
-    
-    ```nocopy
-    FeedResponse<Session> results = await response.ReadNextAsync();
-    output.AddRange(results);
-    return output;
-    ```
-
-4.  The below code uses the fluent WithParameter method to assign the
-    @sessionId parameter to the session identifier passed in as a
-    parameter, and the @type parameter to the name of the Message class.
-
-    ```nocopy
-    QueryDefinition query = new QueryDefinition("SELECT * FROM c WHERE  c.sessionId = @sessionId AND c.type = @type")
-        .WithParameter("@sessionId", sessionId)
-        .WithParameter("@type", nameof(Message));
-    ```
-    
-4.  Create a FeedIterator\< Message \> using the query variable and the
-    GetItemQueryIterator\<\> method.
-
-    FeedIterator<Message> response = _container.GetItemQueryIterator<Message>(query);
-
-    ![](./media/image36.jpeg)
-
-## Exercise 4: Execute the app
-
-Now your application has a full implementation of Azure OpenAI and Azure
-Cosmos DB. You can test the application end-to-end by debugging the
-solution.
-
-1.  From the **Visual Studio Code Terminal**, build the project using
-    the below command.
-
-    +++**dotnet build**+++
-
-    ![](./media/image37.jpeg)
-
-2.  Start the application with hot reloads enabled using dotnet watch.
-
-    +++**dotnet watch run --non-interactive**+++
-    
-    ![](./media/image38.jpeg)
-
-3.  Visual Studio Code launches the in-tool simple browser with the web
-    application running. In the web application, create a new chat
-    session by clicking on **+ Create New Chat** and ask the AI
-    assistant a question. Then, close the running web application.
-
-    ![](./media/image39.jpeg)
-
-4.  Paste the following text in the text box and click on
-    the **Send** icon.
-
-    +++How many wins does it take to promote to the Premier League?+++
-    
-    ![](./media/image40.jpeg)
-    
-    ![](./media/image41.jpeg)
-
-5.  Paste the following text in the text box and click on
-    the **Send** icon.
-
-    +++What is Azure OpenAI?+++
-    
-    ![](./media/image42.jpeg)
-    
-    ![](./media/image43.jpeg)
-
-6.  Close the terminal.
-
-## Exercise 5: Clean up resource group
-
-1.  Open a new browser and enter the following URL in the address
-    bar: +++https://portal.azure.com/+++ to open the Azure Portal.
-
-2.  Click on the **Portal Menu**, then select **Resource group.**
-
-    ![](./media/image15.jpeg)
-
-3.  Select the **mslearn-cosmos-openai** resource group.
-
-    ![](./media/image16.jpeg)
-
-4.  In the Resource group page, navigate to command bar and click
-    on **Delete resource group**.
-
-    ![](./media/image44.jpeg)
-
-5.  In the **Delete Resource group** pane that appears on the right
-    side, enter the **resource group name** and click
-    on **Delete** button.
-
-    ![](./media/image45.jpeg)
-
-6.  Once the Resource group is deleted, from the Azure portal home page,
-    search for **Azure AI Services** and select it.
-
-    ![](./media/image46.jpeg)
-
-7.  Select **Azure OpenAI** from the left pane and then select **Manage
-    deleted resources**.
-
-    ![](./media/image47.jpeg)
-
-8.  Select the resource that gets listed there and then click
-    on **Purge**.
-
-    ![](./media/image48.jpeg)
-
-9.  Click on **Yes**.
-
-    ![](./media/image49.jpeg)
-    
-    ![](./media/image50.jpeg)
-
-**Summary**
-
-This lab provided a comprehensive guide to building, deploying, and
-testing a custom chat application using Blazor, PostgreSQL, and Azure
-OpenAI. In this lab, you've learned to set up the necessary development
-environment, created and designed a Blazor-based chat interface,
-configured and connected a PostgreSQL database on Azure, integrated
-Azure OpenAI for enhanced functionalities, and finally deployed and
-tested the application on Azure. This hands-on experience equipped you
-with the skills to develop and manage modern web applications using
-cutting-edge technologies and cloud services
-
+2.  Fare clic su **File** -\> **Open Folder**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image27.jpeg)
+
+3.  Seleziona **cosmosdb-chatgpt** da **C:\LabFiles** e fai clic su
+    **Select Folder**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image28.jpeg)
+
+4.  Fare clic sull'opzione **Yes, I trust the authors** nella **Do you
+    trust the authors dialog.** ![Uno screenshot di un computer I
+    contenuti generati dall'intelligenza artificiale potrebbero non
+    essere corretti.](./media/image29.jpeg)
+
+5.  Nell'editor di **Visual Studio Code**, fare clic su **Terminal**,
+    aprire un **New Terminal**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image30.jpeg)
+
+6.  In un'applicazione .NET è comune usare i provider di configurazione
+    per inserire nuove impostazioni nell'applicazione. Per questa
+    applicazione, utilizzare le **appsettings. Development.json** file
+    per fornire i valori più aggiornati per l'endpoint e la chiave di
+    Azure OpenAI.
+
+7.  Apri le **appsettings.Development.JSON** file. Sostituire i
+    segnaposto per i valori uri e chiave delle **Azure Cosmos DB** e
+    **Azure OpenAI** risorse nel file con i valori salvati in
+    precedenza.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image31.jpeg)
+
+8.  **Build** il progetto .NET eseguendo il comando seguente.
+
++++dotnet build+++
+
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image32.jpeg)
+
+## Esercizio 3: Comprendere il codice
+
+### Attività 1: Aggiungere membri necessari e un'istanza client
+
+1.  Apri il file **Services/OpenAiService.cs**. Questo file implementa
+    le variabili di classe necessarie per usare il client Azure OpenAI.
+    Implementa alcuni prompt statici e crea una nuova istanza della
+    classe OpenAIClient.
+
+2.  Questo blocco di codice crea una nuova variabile stringa denominata
+    \_systemPromptText con un blocco statico di testo da inviare
+    all'assistente di intelligenza artificiale prima di ogni prompt.
+
+> private readonly string \_systemPrompt = @"
+>
+> Sei un assistente AI che aiuta le persone a trovare informazioni.
+>
+> Fornisci risposte concise, educate e professionali." +
+> Environment.NewLine;
+
+3.  Questo blocco di codice crea un'altra nuova variabile stringa
+    named_summarizePrompt con un blocco statico di testo da inviare
+    all'assistente AI con le istruzioni su come riassumere una
+    conversazione.
+
+> private readonly string \_summarizePrompt = @"
+>
+> Riassumi questo prompt in una o due parole da utilizzare come
+> etichetta in un pulsante in una pagina web.
+>
+> Non usare alcuna punteggiatura." + Environment.NewLine;
+
+4.  Questo blocco di codice crea una nuova istanza della classe
+    OpenAIClient usando l'endpoint per creare un URI e la chiave per
+    creare un AzureKeyCredential.
+
+> Uri uri =new(endpoint);
+>
+> AzureKeyCredential credential = new(key);
+>
+> \_client = new(
+>
+> endpoint: uri,
+>
+> keyCredential: credential
+>
+> );
+
+**Attività 2: Porre una domanda al modello di AI**
+
+Innanzitutto, implementa una conversazione domanda-risposta inviando un
+prompt di sistema, una domanda e un ID sessione in modo che il modello
+di AI possa fornire una risposta nel contesto della conversazione
+corrente. Assicurati di misurare il numero di token necessari per
+analizzare il prompt e restituire una risposta (o un completamento in
+questo contesto).
+
+1.  Questo blocco di codice crea una nuova variabile denominata options
+    di tipo ChatCompletionsOptions. Aggiunge le due variabili di
+    messaggio all'elenco Messaggi e imposta il valore di User sul
+    parametro del costruttore sessionId.
+
+> ChatCompletionsOptions options = new()
+>
+> {
+>
+> DeploymentName = "chatmodel",
+>
+> Messages = {
+>
+> new ChatRequestSystemMessage(\_systemPrompt),
+>
+> new ChatRequestUserMessage(userPrompt)
+>
+> },
+>
+> User = sessionId,
+>
+> MaxTokens = 4000,
+>
+> Temperature = 0,3f,
+>
+> NucleusSamplingFactor = 0,5f,
+>
+> FrequencyPenalty = 0,
+>
+> PresencePenalty= 0
+>
+> };
+
+2.  Il metodo GetChatCompletionsAsync della variabile client Azure
+    OpenAI (\_client) viene richiamato in Asynchronously. Il risultato
+    viene archiviato in una variabile denominata completions di tipo
+    ChatCompletions.
+
+> Response\<ChatCompletions\> completionsResponse= await_client.
+> GetChatCompletionsAsync(options);
+>
+> ChatCompletions completions = completionsResponse.Value;
+
+3.  Infine, il blocco di codice seguente, restituisce una tupla come
+    risultato del metodo GetChatCompletionAsync con il contenuto del
+    completamento come stringa, il numero di token associati al prompt e
+    il numero di token per la risposta.
+
+> return (
+>
+> completionText: completions.Choices\[0\]. Message.Content,
+>
+> completionTokens: completions.Usage.CompletionTokens
+>
+> );
+
+**Attività 3: Chiedere al modello di AI di riassumere una
+conversazione**
+
+A questo punto, invia al modello di AI un prompt di sistema diverso, la
+conversazione corrente e l'ID della sessione in modo che il modello di
+AI possa riassumere la conversazione in un paio di parole.
+
+2.  Il codice seguente crea una variabile ChatCompletionsOptions
+    denominata options con le due variabili di messaggio nell'elenco
+    Messaggi, l'utente impostato sul parametro del costruttore
+    sessionId, MaxTokens impostato su 200 e le proprietà rimanenti.
+
+> ChatCompletionsOptions options = new()
+>
+> {
+>
+> DeploymentName = "chatmodel",
+>
+> Messages = {
+>
+> new ChatRequestSystemMessage(\_systemPrompt),
+>
+> new ChatRequestUserMessage(conversationText)
+>
+> },
+>
+> User = sessionId,
+>
+> MaxTokens = 200,
+>
+> Temperature = 0,0 f,
+>
+> NucleusSamplingFactor = 1.0f,
+>
+> FrequencyPenality = 0,
+>
+> PresencePenality = 0
+>
+> };
+
+3.  Il codice seguente richiama il \_client. GetChatCompletionsAsync
+    asynchronously con il nome del modello (\_modelName) e la variabile
+    options come parametro e archivia il risultato in una variabile
+    denominata completions di tipo ChatCompletions. Restituisce il
+    contenuto del completamento come stringa come risultato del metodo
+    SummarizeAsync.
+
+> Response\<ChatCompletions\> completionsResponse = await \_client.
+> GetChatCompletionsAsync(options);
+>
+> ChatCompletions completions = completionsResponse.Value;
+>
+> string completionText = completions. Choices\[0\]. Message.Content;
+>
+> return completionText;
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image33.jpeg)
+
+**Attività 4 - Connettersi ad Azure Cosmos DB per NoSQL**
+
+La classe CosmosDbService contiene un'implementazione stub di un
+servizio simile alla classe OpenAiService su cui si è lavorato in
+precedenza in questo modulo. Al contrario, questa classe usa .NET SDK
+per Azure Cosmos DB, che funziona in modo leggermente diverso.
+
+Questa sezione illustra l'implementazione delle variabili di classe e
+del client necessarie per accedere ad Azure Cosmos DB per NoSQL usando
+il client.
+
+1.  Apri il file **Services/CosmosDbService.cs**.
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image34.jpeg)
+
+2.  Il codice seguente crea una variabile denominata options di tipo
+    CosmosSerializationOptions e imposta la proprietà
+    PropertyNamingPolicy della variabile su
+    CosmosPropertyNamingPolicy.CamelCase.
+
+> CosmosSerializationOptions options= new()
+>
+> {
+>
+> PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
+>
+> };
+
+**Nota:** l'impostazione di questa proprietà garantirà che il codice
+JSON prodotto dall'SDK sia serializzato e deserializzato nel caso camel,
+indipendentemente dal modo in cui la proprietà corrispondente è
+racchiusa nella classe .NET.
+
+3.  Il codice seguente crea una nuova istanza di tipo CosmosClient
+    denominata client usando la classe CosmosClientBuilder, l'endpoint,
+    la chiave e le opzioni di serializzazione specificate in precedenza.
+
+> CosmosClient client = new CosmosClientBuilder(endpoint, key)
+>
+> . WithSerializerOptions(options)
+>
+> . Build();
+
+4.  Il codice seguente crea una nuova variabile nullable di tipo
+    Database denominata database chiamando il metodo GetDatabase della
+    variabile client.
+
+**Database? database = client?. GetDatabase(databaseName);**
+
+5.  Il codice seguente assegna la variabile contenitore del costruttore
+    alla variabile class’\_container solo se non è null. Se è null,
+    generare un'eccezione ArgumentException.
+
+> \_container = container ??
+>
+> throw new ArgumentException("Unable to connect to existing Azure
+> Cosmos DB container or database."); 
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image35.jpeg)
+
+**Attività 5 - Implementare il servizio Azure Cosmos DB per NoSQL**
+
+Il servizio Azure Cosmos DB (CosmosDbService) gestisce l'esecuzione di
+query, la creazione, l'eliminazione e l'aggiornamento di sessioni e
+messaggi nell'applicazione dell'assistente di AI. Per gestire tutte
+queste operazioni, il servizio deve implementare più metodi per ogni
+potenziale operazione usando varie funzionalità di .NET SDK.
+
+Ci sono diversi requisiti chiave da affrontare in questo esercizio:
+
+- Implementare le operazioni per creare una sessione o un messaggio
+
+- Implementare query per recuperare più sessioni o messaggi
+
+- Implementare un'operazione per aggiornare una singola sessione o
+  aggiornare in batch più messaggi
+
+- Implementare un'operazione per eseguire query ed eliminare più
+  sessioni e messaggi correlati
+
+Azure Cosmos DB per NoSQL archivia i data in formato JSON, consentendo
+di archiviare molti tipi di data in un unico contenitore. Questa
+applicazione memorizza sia una "sessione" di chat con l'assistente AI
+che i singoli "messaggi" all'interno di ogni sessione. Con l'API per
+NoSQL, l'applicazione può archiviare entrambi i tipi di data nello
+stesso contenitore e quindi distinguere tra questi tipi utilizzando un
+semplice campo di tipo.
+
+1.  Apri il file **Services/CosmosDbService.cs**.
+
+2.  Il codice seguente crea una nuova variabile denominata partitionKey
+    di tipo PartitionKey usando la proprietà SessionId della sessione
+    corrente come parametro.
+
+**PartitionKey partitionKey = new(session. SessionId);**
+
+3.  Il codice seguente richiama il metodo CreateItemAsync del
+    contenitore passando il parametro session e la variabile
+    partitionKey. Restituisce la risposta come risultato del metodo
+    InsertSessionAsync.
+
+> Return await \_container. CreateItemAsync\<Session\>(
+>
+> item: session,
+>
+> partitionKey: partitionKey
+>
+> );
+
+4.  Il codice seguente crea una variabile PartitionKey usando session.
+    SessionId come valore della chiave di partizione. Crea una nuova
+    variabile di messaggio denominata newMessage con la proprietà
+    Timestamp aggiornata al timestamp UTC corrente. Richiamare
+    CreateItemAsync passando sia il nuovo messaggio che le variabili
+    della chiave di partizione. Restituisci la risposta come risultato
+    di InsertMessageAsync.
+
+> PartitionKey partitionKey = new(message. SessionId);
+>
+> Message newMessage = message with { TimeStamp = DateTime.UtcNow };
+>
+> return await \_container. CreateItemAsync\<Message\>(
+>
+> item: newMessage,
+>
+> partitionKey: partitionKey
+>
+> );
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image36.jpeg)
+
+**Attività 6: Recuperare più sessioni o messaggi**
+
+Esistono due casi d'uso principali in cui l'applicazione deve recuperare
+più elementi dal contenitore. Innanzitutto, l'applicazione recupera
+tutte le sessioni per l'utente corrente filtrando gli elementi in base a
+quelli in cui type = Session. In secondo luogo, l'applicazione recupera
+tutti i messaggi per una sessione eseguendo un filtro simile in cui type
+= Session & sessionId = . Entrambe le query vengono implementate qui
+usando .NET SDK e un iteratore di feed.
+
+1.  Il codice seguente crea una nuova variabile denominata query di tipo
+    QueryDefinition. Utilizza il metodo fluente WithParameter per
+    assegnare il nome della classe Session come valore per il parametro.
+    Richiama quindi il metodo generico GetItemQueryIterator\<\> sulla
+    variabile \_container passando il tipo generico Session e la
+    variabile di query come parametro. Archiviare il risultato in una
+    variabile di tipo FeedIterator denominata response.
+
+> QueryDefinition query = new QueryDefinition("SELECT DISTINCT \* FROM c
+> WHERE c.type = @type")
+>
+> . WithParameter("@type", nameof(Session));
+>
+> FeedIterator\<Session\> response = \_container.
+> GetItemQueryIterator\<Session\>(query);
+
+2.  Il codice seguente all'interno del ciclo while, ottiene in modo
+    asincrono la pagina successiva di risultati richiamando
+    ReadNextAsync sulla variabile di risposta e quindi aggiunge tali
+    risultati alla variabile di elenco denominata output. All'esterno
+    del while loop, la variabile di output viene restituita con un
+    elenco di sessioni come risultato del metodo GetSessionsAsync.
+
+> FeedResponse\<Session\> results = await response. ReadNextAsync();
+>
+> output. AddRange(results);
+>
+> return output;
+
+3.  Nel codice seguente viene utilizzato il metodo fluent WithParameter
+    per assegnare il parametro @sessionId all'identificatore di sessione
+    passato come parametro e il parametro @type al nome della classe
+    Message.
+
+> QueryDefinition query = new QueryDefinition("SELECT \* FROM c WHERE
+> c.sessionId = @sessionId AND c.type = @type")
+>
+> . WithParameter("@sessionId", sessionId)
+>
+> . WithParameter("@type", nameof(Message));
+
+4.  Creare un FeedIterator \<Message \> using the query variable and the
+    GetItemQueryIterator\<\>method.
+
+FeedIterator response = \_container.GetItemQueryIterator(query);
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image37.jpeg)
+
+## Esercizio 4: Eseguire l'app
+
+A questo punto l'applicazione dispone di un'implementazione completa di
+Azure OpenAI e Azure Cosmos DB. È possibile testare l'applicazione
+end-to-end eseguendo il debug della soluzione.
+
+1.  Dal terminale di **Visual Studio Code,** compilare il progetto
+    usando il comando seguente.
+
++++**dotnet build**+++
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image38.jpeg)
+
+2.  Avviare l'applicazione con i ricarichi a caldo abilitati usando
+    dotnet watch.
+
++++**dotnet watch run --non-interactive**+++
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image39.jpeg)
+
+3.  Visual Studio Code avvia il browser semplice nello strumento con
+    l'applicazione Web in esecuzione. Nell'applicazione web, crea una
+    nuova sessione di chat facendo clic su **+ Create New Chat** e fai
+    una domanda all'assistente AI. Quindi, chiudi l'applicazione Web in
+    esecuzione.
+
+![Uno screenshot di una chat I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image40.jpeg)
+
+4.  Incolla il seguente testo nella casella di testo e fai clic sull'
+    icona **Send**.
+
++++ How many wins does it take to promote to the Premier League?+++
+
+![Uno screenshot di una chat I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image41.jpeg)
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image42.jpeg)
+
+5.  Incolla il seguente testo nella casella di testo e fai clic sull'
+    icona **Send**.
+
++++What is Azure OpenAI?+++
+
+![Uno screenshot di una chat I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image43.jpeg)
+
+![Uno screenshot di una chat I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image44.jpeg)
+
+6.  Chiudere il terminale.
+
+## Esercizio 5: Pulire il gruppo di risorse
+
+1.  Aprire un nuovo browser e immettere l'URL seguente nella barra degli
+    indirizzi: +++<https://portal.azure.com/+++> per aprire il di Azure
+    Portal.
+
+2.  Nella pagina Resource group, selezionare il **assigned Resource
+    group**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image45.png)
+
+3.  Selezionare tutte le **resources**, quindi selezionare **Delete**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image46.png)
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image47.png)
+
+4.  Digita +++**delete**+++ nella casella di testo e fai clic su
+    **Delete**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image48.png)
+
+![Uno screenshot di un errore del computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image49.png)
+
+5.  Una notifica di esito positivo per le risorse eliminate conferma
+    l'eliminazione.
+
+6.  Dopo aver eliminato le risorse, nella home page del di Azure Portal,
+    cercare **Azure AI Services** e selezionarlo.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image50.jpeg)
+
+7.  Selezionare **Azure OpenAI** nel riquadro sinistro e quindi
+    selezionare **Manage deleted Resources**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image51.jpeg)
+
+8.  Seleziona la risorsa che viene elencata lì e quindi fai clic su
+    **Purge**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image52.jpeg)
+
+9.  Fare clic su **Yes**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image53.jpeg)
+
+**Sommario**
+
+Questo lab ha fornito una guida completa alla creazione, alla
+distribuzione e al test di un'applicazione di chat personalizzata usando
+Blazor, PostgreSQL e Azure OpenAI. In questo lab hai imparato a
+configurare l'ambiente di sviluppo necessario, a creare e progettare
+un'interfaccia di chat basata su Blazor, a configurare e connettere un
+database PostgreSQL su Azure, a integrare Azure OpenAI per funzionalità
+avanzate e infine a distribuire e testare l'applicazione su Azure.
+Questa esperienza pratica ti ha fornito le competenze per sviluppare e
+gestire moderne applicazioni web utilizzando tecnologie all'avanguardia
+e servizi cloud.

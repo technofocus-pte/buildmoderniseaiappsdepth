@@ -1,530 +1,721 @@
-# Usecase 09 - Building a Chat bot experience using Azure Cosmos DB for MongoDB and Azure OpenAI Service
+# Caso d'uso 09 - Creazione di un'esperienza di chat bot usando Azure Cosmos DB per MongoDB e il servizio Azure OpenAI
 
-**Objective:**
+**Obiettivo:**
 
-This usecase will create an intelligent solution that combines
-vCore-based Azure Cosmos DB for MongoDB vector search and document
-retrieval with Azure OpenAI services to build a chat bot experience.
+Questo caso d'uso creerà una soluzione intelligente che combina Azure
+Cosmos DB basato su vCore per la ricerca vettoriale MongoDB e il
+recupero di documenti con Azure OpenAI services per creare un'esperienza
+di chat bot.
 
-![](./media/image1.jpeg)
+![Diagramma di un'applicazione software I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image1.jpeg)
 
-**Key technologies used** -- Azure OpenAI Service, Azure Cosmos DB,
-ChatGPT model
+**Principali tecnologie utilizzate**: servizio Azure OpenAI, Azure
+Cosmos DB, modello ChatGPT
 
-**Estimated duration** -- 60 minutes
+**Durata stimata**: 60 minuti
 
-**Lab Type** -- Instructor led
+**Tipo di laboratorio** -- Guidato dall'istruttore
 
-**Important:** If any of the commands does not get **pasted** in
-the **PowerShell**, please open a notepad, keep the cursor at an empty
-space of the notepad and then click on the T button of the command to be
-pasted. The contents will get copied to the notepad and then you can
-copy and paste from the notepad onto the PowerShell.
+**Importante:** se uno qualsiasi dei comandi non viene **pasted** in
+**PowerShell**, aprire un blocco note, tenere il cursore in uno spazio
+vuoto del blocco note e quindi fare clic sul pulsante T del comando da
+incollare. Il contenuto verrà copiato nel blocco note e quindi sarà
+possibile copiare e incollare dal blocco note su PowerShell.
 
-## Exercise 1: Provision Azure resources
+## Esercizio 0: Informazioni sulla macchina virtuale e sulle credenziali
 
-### Task 1: Create Azure resources using script
+In questa attività, identificheremo e comprenderemo le credenziali che
+utilizzeremo in tutto il laboratorio.
 
-1.	Login to Azure portal at +++**https://portal.azure.com**+++ and login using your Azure login credentials from the **Resources** tab.
-   
-2.	From Azure portal, select your subscription. From the left pane, select Resource providers under Settings, select +++**Microsoft.Alertsmanagement**+++ and click on **Register**.
+1.  **Instructions tab** Tenere la guida del laboratorio con le
+    istruzioni da seguire durante il laboratorio.
 
-    ![](./media/pic100.jpg)
+2.  **Resources tab** contiene le credenziali necessarie per
+    l'esecuzione del lab.
 
-3.  From the VM, search for +++**power shell**+++, right click on **Windows
-    PowerShell** and select **Run as administrator**. Click
-    on **Yes** in the confirmation dialog.
+    - **URL**: URL del portale di Azure
 
-    ![](./media/image2.jpeg)
+    - **Subscription**: questo è l'ID dell'abbonamento assegnato
+      all'utente
 
-    ![](./media/image3.jpeg)
+    - **Username**: l'ID utente con cui è necessario accedere ai servizi
+      di Azure.
 
-4.  Execute the below command to install Az in the PowerShell.
+    - **Password**: password per l'account di accesso di Azure.
+      Chiamiamo questo nome utente e password come credenziali di
+      accesso di Azure. Useremo questi crediti ogni volta che
+      menzioniamo le credenziali di accesso di Azure.
 
-    +++**Install-Module Az**+++
+    - **Resource Group**: il **Resource Group** assegnato all'utente.
 
-    Select **A** (Yes to all) when prompted.
-    
-    **Note:** This will take upto 5 minutes to complete.
+\[! Vigile\] **Importante:** assicurarsi di creare tutte le risorse in
+questo Resource group
 
-    ![](./media/image4.jpeg)
-    
-    ![](./media/image5.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image2.png)
 
-5.  Once done, execute the below command to import the Az module.
+3.  **Help** tab contiene le informazioni di supporto. Il valore **ID**
+    è l'ID **Lab Instance** che verrà utilizzato durante l'esecuzione
+    del lab.
 
-    +++**Import-Module Az**+++
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image3.png)
 
-    ![](./media/image6.jpeg)
+## Esercizio 1: Effettuare il provisioning delle risorse di Azure
 
-6.  Execute the below command to use browser-based sign-in
+### Attività 1: Creare risorse di Azure usando script
 
-    +++Update-AzConfig -EnableLoginByWam $false+++
+1.  Login al portale di Azure all'indirizzo
+    +++\*\*[https://portal.azure.com\*\*+++]() e accedere usando le
+    credenziali di accesso di Azure dalla **Resources tab**.
 
-    ![](./media/image7.jpeg)
+2.  Dal portale di Azure selezionare la sottoscrizione. Nel riquadro
+    sinistro selezionare Provider di risorse in Impostazioni,
+    selezionare +++**Microsoft.Alertsmanagement**+++ e fare clic su
+    **Register**.
 
-7.  Execute the below command and select your Azure login if prompted,
-    to login to Azure.
+![Uno screenshot dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image4.jpeg)
 
-    +++Connect-AzAccount+++
-    
-    ![](./media/image8.jpeg)
+3.  Dalla VM, cerca +++**power shell**+++, fai clic con il pulsante
+    destro del mouse su **Windows PowerShell** e seleziona **Run as
+    administrator**. Fare clic su **Yes** nella finestra di dialogo di
+    conferma.
 
-8.  Execute the below commands to navigate to the **LabFiles** folder.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image5.jpeg)
 
-    +++cd\\+++
-    
-    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
+![Uno screenshot di un errore del computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image6.jpeg)
 
-    ![](./media/image9.jpeg)
+4.  Eseguire il comando seguente per installare Az in PowerShell.
 
-9.  Execute the below command to install **Microsoft
-    Bicep** using **winget**.
++++**Install-Module** **Az**+++
 
-    +++winget install -e --id Microsoft.Bicep+++
-    
-    Type **Y** if prompted.
-    
-    ![](./media/image10.jpeg)
+Selezionare **A** (Sì a tutti) quando richiesto.
 
-10.  **Close** the PowerShell and **open** it again.
+**Nota:** il completamento dell'operazione richiederà fino a 5 minuti.
 
-11.  Redo the **login to Azure** step of executing Connect-AzAccount.
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image7.jpeg)
 
-12. Execute the below commands to navigate to the **LabFiles** folder.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image8.jpeg)
 
-    +++cd\\+++
-    
-    +++cd LabFiles\\'Build a Chat bot'\Labs\deploy+++
+5.  Al termine, eseguire il comando seguente per importare il modulo Az.
 
-    ![](./media/image9.jpeg)
++++**Import-Module Az**+++
 
-14. Execute the below command replacing **\< Subscription id \>** with
-    your subscription id.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image9.jpeg)
 
-    +++Set-AzContext -SubscriptionId < Subscription id >+++
+6.  Esegui il comando seguente per utilizzare l'accesso basato su
+    browser
 
-    >[!Note] **Note:** To get your subscription id, login to https://portal.azure.com and click on Subscriptions. Copy the
-Subscription id from the Subscription page.
++++Update-AzConfig -EnableLoginByWam $false+++
 
-    ![](./media/image11.jpeg)
-    
-    ![](./media/image12.jpeg)
+![Uno screenshot dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image10.jpeg)
 
-15. Create a new **Resource group** named **mongo-devguide-rg** in Azure
-    by executing the below command.
+7.  Eseguire il comando seguente e selezionare l'account di accesso ad
+    Azure, se richiesto, per accedere ad Azure.
 
-    +++New-AzResourceGroup -Name mongo-devguide-rg -Location 'francecentral'+++
++++Connect-AzAccount+++
 
-    ![](./media/image13.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image11.jpeg)
 
-    >[!Note] **Note:** The location **francecentral** is used here. It can be changed
-to a **nearest location**
+8.  Esegui i comandi seguenti per accedere alla cartella **LabFiles**.
 
-16. Execute the below command to deploy the resources like Azure Cosmos
-    DB workspace, Azure OpenAI in Azure.
++++cd\\++
 
-    ```
-    New-AzResourceGroupDeployment -ResourceGroupName mongo-devguide-rg  -TemplateFile .\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json -c
-    ```
++++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
 
-    >[!Note] **Note:** The deployment will take around 10 to 15 minutes.
+![Un cartello rettangolare blu con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image12.jpeg)
 
-    >[!Note] **Note:** Type Y when prompted.
+9.  Esegui il comando seguente per installare **Microsoft Bicep**
+    utilizzando **winget**.
 
-    ![](./media/image14.jpeg)
-    
-    ![](./media/image15.jpeg)
++++winget install -e --id Microsoft.Bicep+++
 
-### Task 2: Check the created resources in Azure
+Digitare **Y** se richiesto.
 
-1.  Login to **Azure portal** at +++https://portal.azure.com/+++ using
-    your **Azure login credentials**. Select **Resource groups**.
+![Schermo di un computer con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image13.jpeg)
 
-    ![](./media/image16.jpeg)
+10. **Close** PowerShell e **open it again**.
 
-2.  From the Resource groups list, select **mongo-devguide-rg**.
+11. Eseguire il comando seguente e selezionare l'account di accesso ad
+    Azure, se richiesto, per accedere ad Azure.
 
-    ![](./media/image17.jpeg)
++++Connect-AzAccount+++
 
-3.  Notice that a set of resources including **Azure OpenAI
-    resource**, **App Service**, **Azure Cosmos DB for MongoDB** are
-    created.
+12. Esegui i comandi seguenti per accedere alla cartella **LabFiles**.
 
-    ![](./media/image18.jpeg)
++++cd\\++
 
-4.  Click on the **Azure OpenAI** resource.
++++cd LabFiles\\Build a Chat bot'\Labs\deploy+++
 
-    ![](./media/image19.jpeg)
+![Un cartello rettangolare blu con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image12.jpeg)
 
-5.  Select **Keys and Endpoint** under **Resource Management**.
+13. Eseguire il comando seguente per impostare l'ID sottoscrizione.
 
-    ![](./media/image20.jpeg)
++++Set-AzContext -SubscriptionId @lab.CloudSubscription.Id+++
 
-6.  Copy and save the **Key 1** and **Endpoint** in a notepad for later
-    reference.
+![Schermata del computer di una schermata blu I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image14.jpeg)
 
-    ![](./media/image21.jpeg)
+14. Aprire il file **azuredeploy.bicep** nel percorso
+    **C:\LabFiles\Build a Chat bot\Labs\deploy** e sostituire le lettere
+    **dgxxxxxxx** alla riga 35 con <+++dg@lab.LabInstance.Id>+++. Alla
+    riga **74**, aggiornare la versione come +++**0125**+++.
 
-7.  Back in the **mongo-devguide-rg** resource group page, select
-    the **Azure Cosmos DB for Mongo DB** resource.
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image15.png)
 
-    ![](./media/image22.jpeg)
+![](./media/image16.png)
 
-8.  Click on **Connection strings** under **Settings**. Copy the value of Self (always this cluster.
+15. Eseguire il comando seguente per distribuire le risorse come l'area
+    di lavoro Azure Cosmos DB, Azure OpenAI in Azure.
 
-    ![](./media/image99.jpg)
+New-AzResourceGroupDeployment -ResourceGroupName @lab.
+CloudResourceGroup(ResourceGroup1). Name -TemplateFile
+.\azuredeploy.bicep -TemplateParameterFile .\azuredeploy.parameters.json
+-c '''
 
-9.  Copy the connection string and paste it in a notepad. Replace the
-    \< **password** \> with +++**myMongoDB98**+++ in the copied
-    connection string and save it in the notepad.
+\>\[! Note\] \*\*Note:\*\* La distribuzione richiederà dai 10 ai 15
+minuti circa.
 
-## Exercise 2: Explore and use Azure OpenAI models from code
+Se si verifica un problema con la distribuzione e non riesce, provare ad
+aggiornare il nome nel passaggio 14 con un nome diverso e riprovare.
 
-### Task 1: Set up the Environment
+\>\[! Note\] \*\*Note:\*\* Digitare Y quando richiesto.
 
-1.  From the lab VM windows search bar, search for +++Visual studio
-    code+++ and open **Visual Studio Code**.
+![Schermata del computer di una schermata blu I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image17.jpeg)
 
-    ![](./media/image24.jpeg)
+![](./media/image18.jpeg)
 
-2.  Click on **Open Folder**. (If it does not pop up, select **File -\>
-    Open Folder**)
+\>\[! Note\]\*\*Note:\*\* se non è disponibile alcun aggiornamento in
+PowerShell dopo 15-20 minuti, controllare in Resource Group -\>
+Distribuzioni nel portale di Azure o premere \*\*Enter\*\* nella
+\*\*PowerShell\*\* window.
 
-    ![](./media/image25.jpeg)
+### Attività 2: Controllare le risorse create in Azure
 
-3.  Navigate to **C:\Labfiles**, click on **Build a Chat bot** folder
-    and select **Select Folder.**
+1.  Accedere al **Azure Portal** all'indirizzo
+    +++<https://portal.azure.com/+++> usando le **Azure Login
+    credentials**. Selezionare **Resource Groups**.
 
-    ![](./media/image26.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image19.jpeg)
 
-4.  Click on **Yes, I trust the Authors** in the pop up.
+2.  Nell'elenco Resource groups, selezionare **Assigned Resource
+    Group**.
 
-    ![](./media/image27.jpeg)
+![Uno screenshot di una pagina web I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image20.png)
 
-5.  From Visual Studio Code,
-    open **lab_0_explore_and_use_models.ipynb** from
-    the **Labs** folder.
+3.  Si noti che viene creato un set di risorse, tra cui **Azure OpenAI
+    resources**, **App Service**, **Azure Cosmos DB for MongoDB**.
 
-    ![](./media/image28.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image21.png)
 
-6.  Click on **Select Kernel.**
+4.  Fare clic sulla risorsa **Azure OpenAI**.
 
-7.  Select **Install** in the **Do you want to install the recommended
-    extensions for Python** pop up.
+![](./media/image22.png)
 
-    ![](./media/image29.jpeg)
+5.  Selezionare **Keys and Endpoint** in **Resource Management**.
 
-8.  Click on **Allow access** if prompted.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image23.jpeg)
 
-    ![](./media/image30.jpeg)
+6.  Copiare e salvare la **Key 1** e **Endpoint** in un blocco note per
+    riferimento futuro.
 
-9.  Click on **Select Kernel**. Select **Python Environments** and
-    then **Python 3.12.3** or higher that gets listed as
-    the **Suggested** or **Recommended** option.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image24.jpeg)
 
-    ![](./media/image31.jpeg)
-    
-    ![](./media/image32.jpeg)
+7.  Tornare alla pagina del gruppo di risorse e selezionare la risorsa
+    **Azure Cosmos DB for Mongo DB**.
 
-10. Open the **.env** file
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image25.png)
 
-11. Replace **DB_CONNECTION
-    STRING**, **AOAI_KEY** and **AOAI_Endpoint** that we saved in
-    the **notepad** earlier in Task 2 of Exercise 1.
+8.  Fare clic su **Connection Strings** in **Settings**. Copia il valore
+    di Self (sempre questo cluster.
 
-    ![](./media/image36.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image26.jpeg)
 
-Now, the environment variables are set to point to the Azure resources
-that we have created already.
+9.  Copiare la stringa di connessione e incollarla in un notepad.
+    Sostituisci il della \<**password\>** con +++**myMongoDB98**+++
+    nella stringa di connessione copiata e salvalo nel notepad.
 
-### Task 2: Execute the code
+## Esercizio 2: Esplorare e usare i modelli Azure OpenAI dal codice
 
-1.  Back in the **Lab 0 ipynb** file, **execute** the **first cell** by
-    clicking on the Play button, to install the latest OpenAI client
-    library.
+### Attività 1: Configurare l'ambiente
 
-    ![](./media/image37.jpeg)
-    
-    ![](./media/image38.jpeg)
+1.  Dalla barra di ricerca di Windows della macchina virtuale lab
+    cercare +++Visual Studio code+++ e aprire **Visual Studio Code**.
 
-2.  **Execute** the next cell to install the **Python-dotenv**
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image27.jpeg)
 
-    ![](./media/image39.jpeg)
+2.  Fare clic su **Open Folder**. (Se non viene visualizzato,
+    selezionare **File -\> Open Folder**)
 
-3.  Press **Ctrl+Shift+P**, type +++Reload Window+++ and select
-    Developer:Reload Window option that gets listed.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image28.jpeg)
 
-    ![](./media/image40.jpeg)
+3.  Vai su **C:\Labfiles**, fai clic su **Build a** **Chat bot** e
+    seleziona **Select Folder.**
 
-4.  Execute from the **first cell** again.
+![Uno screenshot di un chat bot I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image29.jpeg)
 
-5.  **Execute** the next cell to import the required OpenAI library, os
-    to access the environment variables and dotenv to load the
-    environment variables from .env file.
+4.  Clicca su **Yes, I trust the Authors** nel pop-up.
 
-    ![](./media/image41.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image30.jpeg)
 
-6.  **Execute** the next cell to create the **Azure OpenAI client** to
-    call the Azure OpenAI Chat completion API:
+5.  Da Visual Studio Code aprire **lab_0_explore_and_use_models.ipynb**
+    dalla **Labs** Folder**.**
 
-    ![](./media/image42.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image31.jpeg)
 
-7.  **Execute** the next cell to call
-    the **.chat.completions.create()** method on the client to perform
-    a **chat completion**. You should get a chat response.
+6.  Fare clic su **Select Kernel.**
 
-    ![](./media/image43.jpeg)
+7.  Seleziona **Install** nel popup **Do you want to install the
+    recommended extensions for Python.**
 
-## Exercise 3: First Cosmos DB for MongoDB API application
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image32.jpeg)
 
-This exercise will cover how to create your first Cosmos DB project.
-We'll use a notebook to demonstrate the basic CRUD operations.
+8.  Fare clic su **Allow access** se richiesto.
 
-1.  Open the file **lab_1_first_application.ipynb** from
-    the **Labs** folder.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image33.jpeg)
 
-2.  Click on **Select kernel** and choose the **Python version**.
+9.  Fare clic su **Select Kernel**. Selezionare **Python Environments**
+    e quindi **Python 3.12.3** o versione successiva che viene elencato
+    come **Suggested** o **Recommended**.
 
-    ![](./media/image44.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image34.jpeg)
 
-3.  **Execute** the first cell to do install **pymongo**.
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image35.jpeg)
 
-    ![](./media/image45.jpeg)
+10. Apri il .**env** file
 
-4.  **Execute** the next cell to do the required **imports**
+11. Sostituire **DB_CONNECTION STRING,** **AOAI_KEY** e
+    **AOAI_Endpoint** salvati nel **notepad** in precedenza
+    nell'attività 2 dell'esercizio 1.
 
-    ![](./media/image46.jpeg)
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image36.jpeg)
 
-5.  Execute the next cell to **Create a database.**
+A questo punto, le variabili di ambiente sono impostate in modo che
+puntino alle Azure resources già create.
 
-    >[!Note] **Note:** This will use the connection string that we updated in the
-.env file
+### Attività 2: Eseguire il codice
 
-    ![](./media/image47.jpeg)
+1.  Torna nel file **Lab 0 ipynb**, **execute** la **first cell**
+    facendo clic sul pulsante Riproduci per installare l'ultima libreria
+    client OpenAI.
 
-6.  **Execute** the next cell to create a **collection**.
+![Uno schermo nero con uno sfondo nero I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image37.jpeg)
 
-    ![](./media/image48.jpeg)
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image38.jpeg)
 
-7.  **Execute** the next cell to create a **document**. One method of
-    creating a document is using the insert_one method. This method
-    takes a single document and inserts it into the database.
+2.  **Execute** la cella successiva per installare **Python-dotenv**
 
-    ![](./media/image49.jpeg)
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image39.jpeg)
 
-8.  **Execute** the next cell to **retrieve a single document** from the
-    database. The **find_one** method is used here for this purpose.
+3.  Premi **Ctrl+Shift+P**, digita +++Reload Window+++ e seleziona
+    l'opzione Developer:Reload Window che viene elencata.
 
-    ![](./media/image50.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image40.jpeg)
 
-9.  **Execute** the next cell in which **find_one_and_update** method is
-    used to update a single document in the database.
+4.  Eseguire nuovamente dalla **first cell**.
 
-    ![](./media/image51.jpeg)
+5.  **Execute** la cella successiva per importare la libreria OpenAI
+    richiesta, os per accedere alle variabili d'ambiente e dotenv per
+    caricare le variabili d'ambiente dal .env file.
 
-10. **Execute** the next cell in which **delete_one** method is used to
-    delete a single document from the database.
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image41.jpeg)
 
-    ![](./media/image52.jpeg)
+6.  **Execute** la cella successiva per creare il **Azure OpenAI
+    client** per chiamare l'API di completamento di Azure OpenAI Chat:
 
-11. The **find** method is used to query for multiple documents in the
-    database. **Execute** the **next 3 cells** one by one to see it in
-    action.
+![Schermo di un computer con testo I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image42.jpeg)
 
-    ![](./media/image53.jpeg)
-    
-    ![](./media/image54.jpeg)
+7.  **Execute** la cella successiva per chiamare il metodo
+    **.chat.completions.create()** sul client per eseguire il di una
+    **chat Completion**. Dovresti ricevere una risposta in chat.
 
-    ![](./media/image55.jpeg)
-    
-    ![](./media/image56.jpeg)
+![Schermo di un computer con del testo I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image43.jpeg)
 
-12. The following cell will **delete** the database and collection
-    created in this exercise. This is done by using
-    the **drop_database** method on the database object
+## Esercizio 3: Prima applicazione API Cosmos DB per MongoDB
 
-    ![](./media/image57.jpeg)
+Questo esercizio illustra come creare il primo progetto Cosmos DB.
+Utilizzeremo un taccuino per illustrare le operazioni CRUD di base.
 
-## Exercise 4: Load data into Cosmos DB using the MongoDB API
+1.  Apri il file **lab_1_first_application.ipynb** dalla cartella
+    **Labs.**
 
-The previous exercise demonstrated how to add data to a collection
-individually. This exercise will demonstrate how to load data using bulk
-operations into multiple collections. This data will be used in
-subsequent labs to explain further the capabilities of Azure Cosmos DB
-API for MongoDB about AI.
+2.  Fare clic su **Select kernel** e scegliere la **Python version**.
 
-This notebook demonstrates how to load data into Cosmos DB from Cosmic
-Works JSON files into the database using the MongoDB API.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image44.jpeg)
 
-1.  Open the file **lab_2_load_data.ipynb** from the **Labs** folder.
-    Click on **Select Kernel** and select the **Python version**.
+3.  **Execute** la prima cella per eseguire l'installazione di
+    **pymongo**.
 
-    ![](./media/image58.jpeg)
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image45.jpeg)
 
-2.  Execute the first cell to install **requests**.
+4.  **Execute** la cella successiva per eseguire le **imports**
+    richieste
 
-    ![](./media/image59.jpeg)
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image46.jpeg)
 
-3.  **Execute** the next cell to do the required **imports**.
+5.  Eseguire la cella successiva per **Create a Database.**
 
-    ![](./media/image60.jpeg)
+\[! Nota\] **Nota:** Questo utilizzerà la stringa di connessione che
+abbiamo aggiornato nel .env file
 
-4.  **Execute** the next cell which establishes a **connection** with
-    the **database**.
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image47.jpeg)
 
-    ![](./media/image61.jpeg)
-    
-    ![](./media/image62.jpeg)
+6.  **Execute** la cella successiva per creare una **collection**.
 
-5.  **Execute** the next cell to **load** the **products**.
+![Una schermata nera con testo bianco I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image48.jpeg)
 
-    ![](./media/image63.jpeg)
+7.  **Execute** la cella successiva per creare un **document**. Un
+    metodo per creare un documento consiste nell'utilizzare il metodo
+    insert_one. Questo metodo prende un singolo documento e lo inserisce
+    nel database.
 
-6.  **Execute** the next cells
-    to **load** the **customers** and **sales** **raw data**. In this
-    repository, the customer and sales data are stored in the same file.
-    The type field is used to differentiate between the two types of
-    documents.
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image49.jpeg)
 
-    ![](./media/image64.jpeg)
-    
-    ![](./media/image65.jpeg)
-    
-    ![](./media/image66.jpeg)
+8.  **Execute** la cella successiva per **retrieve a single document**
+    dal database. A tale scopo viene utilizzato il metodo **find_one**.
 
-7.  **Execute** the next cell to **clean up**.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image50.jpeg)
 
-    ![](./media/image67.jpeg)
+9.  **Execute** la cella successiva in cui viene utilizzato
+    **find_one_and_update** metodo per aggiornare un singolo documento
+    nel database.
 
-## Exercise 5: Vector Search using vCore-based Azure Cosmos DB for MongoDB
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image51.jpeg)
 
-1.  Open the
-    file **lab_3_mongodb_vector_search.ipynb** from **Labs** folder.
+10. **Execute** la cella successiva in cui viene utilizzato
+    **delete_one** metodo per eliminare un singolo documento dal
+    database.
 
-2.  Click on **Select Kernel** and select the **Python version**.
+![](./media/image52.jpeg)
 
-    ![](./media/image68.jpeg)
+11. Il metodo **find** viene utilizzato per eseguire una query per più
+    documenti nel database. **Execute** le **next 3 cells** una per una
+    per vederlo in azione.
 
-3.  **Execute** the first cell to install **tenacity**.
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image53.jpeg)
 
-    ![](./media/image69.jpeg)
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image54.jpeg)
 
-4.  **Execute** the next cell to perform the required **imports**.
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image55.jpeg)
 
-    ![](./media/image70.jpeg)
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image56.jpeg)
 
-5.  **Execute** the next cell to **load** the **settings** from the .env
-    file.
+12. Nella cella seguente verranno **delete** il database e la raccolta
+    creati in questo esercizio. Questa operazione viene eseguita
+    utilizzando il metodo **drop_database** sull'oggetto database
 
-    ![](./media/image71.jpeg)
+![Schermo di un computer con testo I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image57.jpeg)
 
-6.  Execute the next cell to establish **connectivity** to
-    the **database**.
+## Esercizio 4: Caricare i data in Cosmos DB usando l'API MongoDB
 
-    ![](./media/image72.jpeg)
+Nell'esercizio precedente è stato illustrato come aggiungere data a una
+raccolta singolarmente. In questo esercizio viene illustrato come
+caricare i data utilizzando operazioni di massa in più raccolte. Questi
+data verranno usati nei laboratori successivi per illustrare
+ulteriormente le funzionalità dell'API Azure Cosmos DB per MongoDB
+sull'intelligenza artificiale.
 
-7.  **Execute** the next cell to establish **Azure OpenAI
+Questo notebook illustra come caricare i data in Cosmos DB dai file JSON
+di Cosmic Works nel database usando l'API MongoDB.
+
+1.  Apri il file **lab_2_load_data.ipynb** dalla cartella **Labs**. Fare
+    clic su **Select Kernel** e selezionare la **Python version**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image58.jpeg)
+
+2.  Eseguire la prima cella per installare le **requests**.
+
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image59.jpeg)
+
+3.  **Execute** la cella successiva per eseguire le **imports**
+    richieste.
+
+![Schermo di un computer con testo verde I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image60.jpeg)
+
+4.  **Execute** la cella successiva che stabilisce una **connection**
+    con il **database**.
+
+![Schermo di un computer con testo I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image61.jpeg)
+
+![Schermata di testo del computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image62.jpeg)
+
+5.  **Execute** la cella successiva per **load** i **products**.
+
+![Schermata dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image63.jpeg)
+
+6.  **Execute** le celle successive per **load** i **customers e sales
+    raw data**. In questo repository, i data dei clienti e delle vendite
+    sono memorizzati nello stesso file. Il campo type viene utilizzato
+    per distinguere tra i due tipi di documenti.
+
+![Schermata di un codice informatico I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image64.jpeg)
+
+![](./media/image65.jpeg)
+
+![Schermata di un codice informatico I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image66.jpeg)
+
+7.  **Execute** la cella successiva da **clean up**.
+
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image67.jpeg)
+
+## Esercizio 5: Ricerca vettoriale con Azure Cosmos DB basato su vCore per MongoDB
+
+1.  Apri il file **lab_3_mongodb_vector_search.ipynb** dalla cartella
+    **Labs.**
+
+2.  Fare clic su **Select Kernel** e selezionare la **Python version**.
+
+![](./media/image68.jpeg)
+
+3.  **Execute** la prima cella per installare la **tenacity**.
+
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image69.jpeg)
+
+4.  **Execute** la cella successiva per eseguire le **imports**
+    richieste.
+
+![Schermo di un computer con testo I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image70.jpeg)
+
+5.  **Execute** la cella successiva per **load** le **settings** dal
+    .env file.
+
+![Schermo di un computer con testo I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image71.jpeg)
+
+6.  **Execute** la cella successiva per stabilire **connectivity** al
+    **database**.
+
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image72.jpeg)
+
+7.  **Execute** la cella successiva per stabilire la **Azure OpenAI
     connectivity**.
 
-    ![](./media/image73.jpeg)
+![Schermata di un codice informatico I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image73.jpeg)
 
-8.  The process of creating a vector embedding field on each document
-    only needs to be done once. However, if a document changes, the
-    vector embedding field will need to be updated with an updated
-    vector. It is done in the next two cells. **Execute** the next two
-    cells and observe the **embeddings** obtained as output in the
-    second one.
+8.  Il processo di creazione di un campo di incorporamento vettoriale su
+    ciascun documento deve essere eseguito una sola volta. Tuttavia, se
+    un documento viene modificato, il campo di incorporamento vettoriale
+    dovrà essere aggiornato con un vettore aggiornato. Viene fatto nelle
+    due celle successive. **Execute** le due celle successive e osserva
+    gli **embeddings** ottenuti come output nella seconda.
 
-    ![](./media/image74.jpeg)
-    
-    ![](./media/image75.jpeg)
+![Schermata di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image74.jpeg)
 
-9.  **Execute** the next cell to **Vectorize and update all documents in
-    the Cosmic Works database.**
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image75.jpeg)
 
-    ![](./media/image76.jpeg)
+9.  **Execute** la cella successiva per**Vectorize and update all
+    documents in the Cosmic Works database.**
 
-10. **Execute** the next **3** cells to add **vector
-    fields** to **products, customer and sales documents.**
+![Schermata del computer di un codice di programma I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image76.jpeg)
 
-   **Note:** The first cell will take around 5 minutes, second one around 3 minutes and the third one around 20 minutes to complete execution.
+10. **Execute** le **3** celle successive per aggiungere **vector
+    fields** a **products, customer and sales documents.**
 
-    ![](./media/image77.jpeg)
+> **Nota:** la prima cella impiegherà circa 5 minuti, la seconda circa 3
+> minuti e la terza circa 20 minuti per completare l'esecuzione.
 
-11. **Execute** the next cell to create **products vector index**.
+! \[\](./media/image77.jpeg)
 
-    ![](./media/image78.jpeg)
-    
-    ![](./media/image79.jpeg)
+11. **Execute** la cella successiva per creare l **products vector
+    index.**
 
-12. Now that each document has its associated vector embedding and the
-    vector indexes have been created on each collection, we can now use
-    the vector search capabilities of vCore-based Azure Cosmos DB for
-    MongoDB. **Execute** the next **3** cells.
+![Schermata dello schermo di un computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image77.jpeg)
 
-    ![](./media/image80.jpeg)
-    
-    ![](./media/image81.jpeg)
-    
-    ![](./media/image82.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image78.jpeg)
 
-13. **Execute** the next cells to observe the usage of **vector search
-    results** in a RAG pattern with Chat GPT-3.5
+12. Ora che a ogni documento è associato l'incorporamento vettoriale e
+    gli indici vettoriali sono stati creati in ogni raccolta, è ora
+    possibile usare le funzionalità di ricerca vettoriale di Azure
+    Cosmos DB basato su vCore per MongoDB. **Execute** le prossime **3**
+    celle.
 
-    ![](./media/image83.jpeg)
-    
-    ![](./media/image84.jpeg)
-    
-    ![](./media/image85.jpeg)
+![](./media/image79.jpeg)
 
-14. Observe the output of the following cells.
+![](./media/image80.jpeg)
 
-    ![](./media/image86.jpeg)
-    
-    ![](./media/image87.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image81.jpeg)
 
-## Exercise 6: Delete the deployed resources
+13. **Execute** le celle successive per osservare l'utilizzo dei
+    **vector search results** in un modello RAG con Chat GPT-3.5
 
-1.  From the Azure portal(+++**https://portal.azure.com**+++), select
-    the resource group **mongo-devguide-rg** and then select **Delete
-    resource group**.
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image82.jpeg)
 
-    ![](./media/image88.jpeg)
+![Schermata di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image83.jpeg)
 
-2.  Type the resource group name **mongo-devguide-rg** in the **Enter
-    resource group name** to confirm deletion text box and click
-    on **Delete**.
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image84.jpeg)
 
-    ![](./media/image89.jpeg)
+14. Osservare l'output delle seguenti celle.
 
-3.  Click on **Delete** in the **Delete confirmation** dialog.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image85.jpeg)
 
-    ![](./media/image90.jpeg)
+![Uno screenshot di un programma per computer I contenuti generati
+dall'intelligenza artificiale potrebbero non essere
+corretti.](./media/image86.jpeg)
 
-4.  Once the Resource group is deleted, from the Azure portal home page,
-    search for +++**Azure AI Services**+++ and select it.
+## 
 
-    ![](./media/image91.jpeg)
+## Esercizio 6: Eliminare le risorse distribuite
 
-5.  Select **Azure OpenAI** from the left pane and then select **Manage
-    deleted resources**.
+1.  Nel portale di Azure
+    (+++[https://portal.azure.com+++](https://portal.azure.com+++/))
+    selezionare il gruppo di risorse assegnato.
 
-    ![](./media/image92.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image87.png)
 
-6.  Select the resource that gets listed there and then click
-    on **Purge**.
+2.  Seleziona tutte le risorse sottostanti, fai clic sui **three dots**
+    nel menu e seleziona **Delete** per eliminare tutte le risorse.
 
-    ![](./media/image93.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image88.png)
 
-7.  Click on **Yes**.
+3.  Digita +++**delete**+++ nella casella di testo e fai clic sul
+    pulsante Delete.
 
-    ![](./media/image94.jpeg)
-    
-    ![](./media/image95.jpeg)
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image89.png)
 
-**Summary:**
+4.  Dopo aver eliminato le risorse, nella home page del portale di Azure
+    cercare **+++Azure AI Services+++** e selezionarlo.
 
-You have successfully created a solution with Azure Cosmos DB for
-MongoDB vector search and document retrieval with Azure OpenAI services.
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image90.jpeg)
 
+5.  Selezionare **Azure OpenAI** nel riquadro sinistro e quindi
+    selezionare **Manage Deleted resources**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image91.jpeg)
+
+6.  Seleziona la risorsa che viene elencata lì e quindi fai clic su
+    **Purge**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image92.jpeg)
+
+7.  Fare clic su **yes**.
+
+![Uno screenshot di un computer I contenuti generati dall'intelligenza
+artificiale potrebbero non essere corretti.](./media/image93.jpeg)
+
+**Sommario:**
+
+È stata creata una soluzione con Azure Cosmos DB per la ricerca
+vettoriale MongoDB e il recupero di documenti con i servizi Azure
+OpenAI.
