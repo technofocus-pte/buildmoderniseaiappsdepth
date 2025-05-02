@@ -86,7 +86,7 @@ perform the following steps
 
     +++export AZ_KUBERNETES_CLUSTER=javaakscluster@lab.LabInstance.Id+++
 
-    +++export AZ_LOCATION="westus"+++
+    +++export AZ_LOCATION="@lab.CloudResourceGroup(ResourceGroup1).Location"+++
 
     +++export AZ_KUBERNETES_CLUSTER_DNS_PREFIX="javaakscontainer"+++
 
