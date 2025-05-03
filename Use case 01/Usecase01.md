@@ -284,10 +284,6 @@ creates the Todo table in the database.
 
     ![](./media/image32.jpeg)
 
-7.  Click on **Allow access**.
-
-    ![](./media/image31.jpeg)
-
 8.  To test the application, you can use cURL.In a separate new instance of Gitbash , create a new to-do item in the
 database with the following command. You should see the log in the Quarkus console:
 
@@ -295,17 +291,17 @@ database with the following command. You should see the log in the Quarkus conso
 
     ![](./media/image33.jpeg)
 
-7.  This command should return the created item (with an identifier):
+8.  This command should return the created item (with an identifier):
 
     ![](./media/image33.jpeg)
 
-8.  Create a second to-do by using the following cURL command:
+9.  Create a second to-do by using the following cURL command:
 
     +++curl --header "Content-Type: application/json" --request POST --data '{"description":"Take Azure Container Apps MS Learn","details":"Take the ACA Learn module","done": "false"}' http://127.0.0.1:8080/api/todos+++
 
     ![](./media/image34.jpeg)
 
-9.  Next, retrieve the data by using a new cURL request:
+10.  Next, retrieve the data by using a new cURL request:
 
     +++curl http://127.0.0.1:8080/api/todos+++
 
