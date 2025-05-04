@@ -267,7 +267,7 @@ to reconfigure the firewall to access the Azure database again.
     Database instances in Azure are listed here.
 
 2.  Select the database that you created
-    earlier(**dotnetappsqldbdbserver98**). The connection you created
+    earlier(**dotnetappsqldbdbserver@lab.LabInstance.Id**). The connection you created
     earlier is automatically filled at the bottom.
 
 3.  Type the database administrator **password** you created
