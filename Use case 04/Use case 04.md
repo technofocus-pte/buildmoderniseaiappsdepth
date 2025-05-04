@@ -366,7 +366,7 @@ Make some changes in your code to use the Done property.
 
     ![](./media/image50.jpeg)
 
-2.  Open **Views\Todos\Create.cshtml**. Add the following code after the
+2.  Open **Views\Todos\Create.cshtml**. Add the following code after the code block of 
     < div class="form-group" > for **CreatedDate**.
 
     ![](./media/image51.jpeg)
